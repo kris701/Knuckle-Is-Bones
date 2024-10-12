@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace KnuckleBone.Core.Models
+namespace KnuckleBones.OpenGL.Models
 {
     public class SettingsDefinition
     {
@@ -14,5 +10,6 @@ namespace KnuckleBone.Core.Models
         public bool IsVsync { get; set; } = true;
         public float MusicVolume { get; set; } = 0.2f;
         public float EffectsVolume { get; set; } = 0.2f;
+        public Guid ResourcePack { get; set; } = new Guid("4f686e3a-9bd8-41cd-854c-17cca5fce01b");
     }
 }

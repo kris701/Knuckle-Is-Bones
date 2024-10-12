@@ -16,4 +16,8 @@
 	  <SignAssembly>True</SignAssembly>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Core\" />
+  </ItemGroup>
+
 </Project>

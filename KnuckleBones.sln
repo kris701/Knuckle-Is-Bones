@@ -3,9 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnuckleBones.OpenGL", "KnuckleBones.OpenGL\KnuckleBones.OpenGL.csproj", "{B4AB0EFF-7F14-4B7B-9184-F6A0A77B0A89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnuckleBones.OpenGL", "KnuckleBones.OpenGL\KnuckleBones.OpenGL.csproj", "{B4AB0EFF-7F14-4B7B-9184-F6A0A77B0A89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnuckleBone.Core", "KnuckleBone.Core\KnuckleBone.Core.csproj", "{4536E184-7752-4DB1-8ABD-479EEE08F1FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnuckleBone.Core", "KnuckleBone.Core\KnuckleBone.Core.csproj", "{4536E184-7752-4DB1-8ABD-479EEE08F1FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5D8C619D-5A84-4A7F-A376-4E5D0EDAF234}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
