@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnuckleBones.OpenGL", "KnuckleBones.OpenGL\KnuckleBones.OpenGL.csproj", "{B4AB0EFF-7F14-4B7B-9184-F6A0A77B0A89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnuckleBone.Core", "KnuckleBone.Core\KnuckleBone.Core.csproj", "{4536E184-7752-4DB1-8ABD-479EEE08F1FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4AB0EFF-7F14-4B7B-9184-F6A0A77B0A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4AB0EFF-7F14-4B7B-9184-F6A0A77B0A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4AB0EFF-7F14-4B7B-9184-F6A0A77B0A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4AB0EFF-7F14-4B7B-9184-F6A0A77B0A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4536E184-7752-4DB1-8ABD-479EEE08F1FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4536E184-7752-4DB1-8ABD-479EEE08F1FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4536E184-7752-4DB1-8ABD-479EEE08F1FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4536E184-7752-4DB1-8ABD-479EEE08F1FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {876DEB2F-99C6-4ABA-9FEE-9190361577CE}
+	EndGlobalSection
+EndGlobal
