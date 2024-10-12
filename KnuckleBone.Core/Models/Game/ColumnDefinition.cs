@@ -7,8 +7,13 @@
         public int GetValue()
         {
             int value = 0;
-            foreach (var cell in Cells)
-                value += cell;
+            var max = Cells.Max();
+            for (int i = 1; i <= max; i++)
+            {
+                var count = Cells.Count(x => x == i);
+                if (count > 0)
+                    value += (int)Math.Pow(i, count);
+            }
             return value;
         }
 

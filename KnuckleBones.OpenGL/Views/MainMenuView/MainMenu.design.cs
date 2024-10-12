@@ -1,6 +1,8 @@
 ﻿using KnuckleBones.OpenGL.Helpers;
+using KnuckleBones.OpenGL.Views.MainGameView;
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
+using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
 
 namespace KnuckleBones.OpenGL.Views.MainMenuView
@@ -24,6 +26,17 @@ namespace KnuckleBones.OpenGL.Views.MainMenuView
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx72),
                 Text = "KnuckleBones",
                 FontColor = Color.White,
+            });
+            AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new MainGame(Parent)))
+            {
+                HorizontalAlignment = HorizontalAlignment.Middle,
+                Y = 300,
+                Width = 400,
+                Height = 50,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                Text = "Start",
+                FontColor = Color.White,
+                FillClickedColor = BasicTextures.GetClickedTexture()
             });
 
             base.Initialize();
