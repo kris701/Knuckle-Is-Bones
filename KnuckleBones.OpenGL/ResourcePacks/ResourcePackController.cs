@@ -1,4 +1,4 @@
-﻿using KnuckleBone.Core.Resources;
+﻿using KnuckleBones.Core.Resources;
 using MonoGame.OpenGL.Formatter.Audio;
 using MonoGame.OpenGL.Formatter.Fonts;
 using MonoGame.OpenGL.Formatter.Textures;

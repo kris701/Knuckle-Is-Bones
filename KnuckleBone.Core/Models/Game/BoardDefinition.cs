@@ -1,32 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KnuckleBone.Core.Models.Game
+﻿namespace KnuckleBones.Core.Models.Game
 {
-    public class BoardDefinition
+    public class BoardDefinition : IDefinition
     {
-        public DiceDefinition?[,] Board { get; set; }
+        public Guid ID { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public List<ColumnDefinition> Columns { get; set; }
 
         public int GetValue()
         {
             int value = 0;
-            for (int x = 0; x < Board.Length; x++)
-                for (int y = 0; y < Board.GetLength(x); y++)
-                    if (Board[x, y] != null)
-                        value += Board[x, y].Value;
-
+            foreach (var column in Columns)
+                value += column.GetValue();
             return value;
         }
 
         public bool IsFull()
         {
-            for (int x = 0; x < Board.Length; x++)
-                for (int y = 0; y < Board.GetLength(x); y++)
-                    if (Board[x, y] != null)
-                        return false;
+            foreach (var column in Columns)
+                if (!column.IsFull())
+                    return false;
             return true;
         }
     }

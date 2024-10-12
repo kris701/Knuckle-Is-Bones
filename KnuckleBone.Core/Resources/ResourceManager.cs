@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace KnuckleBone.Core.Resources
+namespace KnuckleBones.Core.Resources
 {
     public static class ResourceManager
     {

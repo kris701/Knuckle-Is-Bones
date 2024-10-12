@@ -1,4 +1,4 @@
-﻿namespace KnuckleBone.Core.Models
+﻿namespace KnuckleBones.Core.Models
 {
     public interface IDefinition : IIdentifiable
     {
