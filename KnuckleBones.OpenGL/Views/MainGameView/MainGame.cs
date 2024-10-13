@@ -39,6 +39,8 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
         {
             if (!Engine.TakeTurn())
                 return;
+            if (Engine.GameOver)
+                ShowGameOverView();
 
             UpdateBoard(Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, true);
             UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);

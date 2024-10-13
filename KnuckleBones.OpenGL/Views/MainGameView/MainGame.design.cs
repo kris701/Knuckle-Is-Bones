@@ -16,10 +16,25 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);
             UpdateDice();
 
+#if DEBUG
+            AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new MainGame(Parent)))
+            {
+                X = 0,
+                Y = 0,
+                Width = 50,
+                Height = 25,
+                Text = "Reload",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx10),
+                FillColor = BasicTextures.GetBasicRectange(Color.White),
+                FontColor = Color.Black,
+                FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray)
+            });
+#endif
+
             base.Initialize();
         }
 
-        public void UpdateBoard(IOpponent opponent, BoardDefinition board, int offset, bool flip)
+        private void UpdateBoard(IOpponent opponent, BoardDefinition board, int offset, bool flip)
         {
             int dir = 1;
             if (flip)
@@ -79,19 +94,67 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             }
         }
 
-        public void UpdateDice()
+        private void UpdateDice()
         {
             ClearLayer(1);
             AddControl(1, new LabelControl()
             {
                 X = 10,
-                Y = 10,
+                Y = 100,
                 Width = 50,
                 Height = 50,
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
                 Text = $"{Engine.State.CurrentDice.Value}",
                 FontColor = Color.White,
                 FillColor = BasicTextures.GetBasicRectange(Color.Gray)
+            });
+        }
+
+        private void ShowGameOverView()
+        {
+            if (!Engine.GameOver)
+                return;
+
+            ClearLayer(2);
+            var won = "";
+            if (Engine.State.Turn == Engine.State.FirstOpponent.OpponentID)
+                won = "First opponent won!";
+            else
+                won = "Second opponent won!";
+
+            AddControl(2, new LabelControl()
+            {
+                X = 500,
+                Y = 400,
+                Width = 500,
+                Height = 200,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
+                Text = $"Game Over!",
+                FontColor = Color.White,
+                FillColor = BasicTextures.GetBasicRectange(Color.Gray)
+            });
+            AddControl(2, new LabelControl()
+            {
+                X = 500,
+                Y = 600,
+                Width = 500,
+                Height = 100,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                Text = won,
+                FontColor = Color.White,
+                FillColor = BasicTextures.GetBasicRectange(Color.Gray)
+            });
+            AddControl(2, new ButtonControl(Parent, (x) => SwitchView(new MainGame(Parent)))
+            {
+                X = 500,
+                Y = 700,
+                Width = 500,
+                Height = 100,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                Text = "Play Again",
+                FontColor = Color.White,
+                FillColor = BasicTextures.GetBasicRectange(Color.Gray),
+                FillClickedColor = BasicTextures.GetBasicRectange(Color.DarkGray)
             });
         }
     }
