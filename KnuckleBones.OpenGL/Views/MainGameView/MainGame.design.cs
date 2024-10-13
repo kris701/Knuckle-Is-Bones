@@ -25,9 +25,9 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
                 Text = "",
                 FontColor = Color.White,
-                FillColor = BasicTextures.GetBasicRectange(Color.Gray)
+                FillColor = BasicTextures.GetBasicRectange(Color.Blue)
             };
-            AddControl(1, _diceLabel);
+            AddControl(1000, _diceLabel);
 
 #if DEBUG
             AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new MainGame(Parent)))
@@ -60,9 +60,9 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 Width = 50,
                 Height = 50,
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-                FontColor = Color.White,
+                FontColor = Color.Black,
                 Text = $"{board.GetValue()}",
-                FillColor = BasicTextures.GetBasicRectange(Color.Gray)
+                FillColor = BasicTextures.GetBasicRectange(Color.Gold)
             });
             if (!_controlsLocked && opponent is PlayerOpponent)
             {
@@ -119,7 +119,7 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
 
             ClearLayer(2);
             var won = "";
-            if (Engine.State.Turn == Engine.State.FirstOpponent.OpponentID)
+            if (Engine.State.Winner == Engine.State.FirstOpponent.OpponentID)
                 won = "First opponent won!";
             else
                 won = "Second opponent won!";

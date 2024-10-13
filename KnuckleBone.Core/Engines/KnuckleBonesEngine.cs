@@ -108,6 +108,12 @@ namespace KnuckleBones.Core.Engines
             {
                 OnGameOver?.Invoke();
                 GameOver = true;
+                var opponent1Value = State.FirstOpponentBoard.GetValue();
+                var opponent2Value = State.SecondOpponentBoard.GetValue();
+                if (opponent1Value > opponent2Value)
+                    State.Winner = State.FirstOpponent.OpponentID;
+                else
+                    State.Winner = State.SecondOpponent.OpponentID;
                 return true;
             }
 

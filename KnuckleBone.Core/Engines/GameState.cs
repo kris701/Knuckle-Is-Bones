@@ -5,6 +5,7 @@ namespace KnuckleBones.Core.Engines
 {
     public class GameState
     {
+        public Guid Winner { get; set; }
         public Guid Turn { get; set; }
         public IOpponent FirstOpponent { get; set; }
         public BoardDefinition FirstOpponentBoard { get; set; }
