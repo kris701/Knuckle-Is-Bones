@@ -1,5 +1,4 @@
-﻿using KnuckleBones.OpenGL.Models;
-using KnuckleBones.OpenGL.ResourcePacks;
+﻿using KnuckleBones.OpenGL.ResourcePacks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,8 +35,6 @@ namespace KnuckleBones.OpenGL
         public FontController Fonts { get; private set; }
         public ResourcePackController ResourcePackController { get; private set; }
 
-        public SettingsDefinition Settings { get; private set; }
-
         private readonly Func<KnuckleBoneWindow, IView> _screenToLoad;
         private SpriteBatch? _spriteBatch;
         private Matrix _scaleMatrix;
@@ -52,6 +49,10 @@ namespace KnuckleBones.OpenGL
             Content.RootDirectory = _contentDir;
             _screenToLoad = screen;
             IsMouseVisible = true;
+
+            Device.PreferredBackBufferHeight = 800;
+            Device.PreferredBackBufferWidth = 400;
+            Device.ApplyChanges();
         }
 
         protected override void Initialize()
@@ -60,24 +61,19 @@ namespace KnuckleBones.OpenGL
 
             var thisVersion = Assembly.GetEntryAssembly()?.GetName().Version!;
             var thisVersionStr = $"v{thisVersion.Major}.{thisVersion.Minor}.{thisVersion.Build}";
-            Window.Title = $"KnuckleBone {thisVersionStr}";
+            Window.Title = $"KnuckleBones {thisVersionStr}";
 
             Audio = new AudioController(Content);
             Textures = new TextureController(Content);
             Fonts = new FontController(Content);
             ResourcePackController = new ResourcePackController(this);
 
-            if (File.Exists("settings.json"))
-                Settings = JsonSerializer.Deserialize<SettingsDefinition>(File.ReadAllText("settings.json"));
-            else
-                Settings = new SettingsDefinition();
-
             BasicTextures.Initialize(GraphicsDevice);
             MediaPlayer.IsRepeating = true;
             SoundEffect.Initialize();
             BackroundWorkers = new List<IBackgroundWorker>();
             LoadMods();
-            ApplySettings();
+            ResourcePackController.LoadResourcePack(new Guid("4f686e3a-9bd8-41cd-854c-17cca5fce01b"));
 
             foreach (var worker in BackroundWorkers)
                 worker.Initialize();
@@ -117,27 +113,6 @@ namespace KnuckleBones.OpenGL
             _spriteBatch.End();
 
             base.Draw(gameTime);
-        }
-
-        public void ApplySettings()
-        {
-            Device.PreferredBackBufferHeight = Settings.ScreenHeight;
-            Device.PreferredBackBufferWidth = Settings.ScreenWidth;
-            Device.SynchronizeWithVerticalRetrace = Settings.IsVsync;
-            Device.HardwareModeSwitch = false;
-            Device.IsFullScreen = Settings.IsFullscreen;
-            if (Settings.IsFullscreen)
-            {
-                Device.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-                Device.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            }
-            ResourcePackController.LoadResourcePack(Settings.ResourcePack);
-            MediaPlayer.Volume = Settings.MusicVolume;
-            SoundEffect.MasterVolume = Settings.EffectsVolume;
-            Device.ApplyChanges();
-            XScale = Device.PreferredBackBufferWidth / (float)IWindow.BaseScreenSize.X;
-            YScale = Device.PreferredBackBufferHeight / (float)IWindow.BaseScreenSize.Y;
-            _scaleMatrix = Matrix.CreateScale(XScale, YScale, 1.0f);
         }
     }
 }

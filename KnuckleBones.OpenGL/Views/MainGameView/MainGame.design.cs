@@ -5,29 +5,50 @@ using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
+using System.Collections.Generic;
 
 namespace KnuckleBones.OpenGL.Views.MainGameView
 {
     public partial class MainGame : BaseView
     {
         private LabelControl _diceLabel;
+        private StackPanelControl _gameOverPanel;
+        private LabelControl _winnerLabel;
 
         public override void Initialize()
         {
-            UpdateBoard(Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, true);
-            UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);
-            _diceLabel = new LabelControl()
+            AddControl(0, new LabelControl()
             {
-                X = 175,
-                Y = 375,
-                Width = 50,
+                Text = "KnuckleBones",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                Width = 400,
                 Height = 50,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Text = "",
-                FontColor = Color.White,
-                FillColor = BasicTextures.GetBasicRectange(Color.Blue)
-            };
-            AddControl(1000, _diceLabel);
+                FillColor = BasicTextures.GetBasicRectange(Color.Black)
+            });
+            AddControl(0, new LabelControl()
+            {
+                Text = "Player",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                Width = 90,
+                Height = 220,
+                X = 310,
+                Y = 50,
+                FillColor = BasicTextures.GetBasicRectange(Color.Black)
+            });
+            AddControl(0, new LabelControl()
+            {
+                Text = "CPU",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                Width = 90,
+                Height = 250,
+                Y = 580,
+                FillColor = BasicTextures.GetBasicRectange(Color.Black)
+            });
+
+            UpdateFirstOpponentBoard();
+            UpdateSecondOpponentBoard();
+            SetupDice();
+            SetupGameOverView();
 
 #if DEBUG
             AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new MainGame(Parent)))
@@ -47,39 +68,58 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             base.Initialize();
         }
 
-        private void UpdateBoard(IOpponent opponent, BoardDefinition board, int offset, bool flip)
+        private void UpdateFirstOpponentBoard()
         {
-            int dir = 1;
-            if (flip)
-                dir = -1;
-            ClearLayer(offset);
-            AddControl(offset, new LabelControl()
+            ClearLayer(10);
+            GeneratePointsBox(10, Engine.State.FirstOpponentBoard, 10, 60);
+            if (!_controlsLocked && Engine.State.FirstOpponent is PlayerOpponent)
+                GenerateSelectionBoxes(10, Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, 60);
+            GenerateGrid(10, Engine.State.FirstOpponentBoard, 100, 220, true);
+        }
+
+        private void UpdateSecondOpponentBoard()
+        {
+            ClearLayer(20);
+            GeneratePointsBox(20, Engine.State.SecondOpponentBoard, 315, 715);
+            if (!_controlsLocked && Engine.State.SecondOpponent is PlayerOpponent)
+                GenerateSelectionBoxes(20, Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 100, 100);
+            GenerateGrid(20, Engine.State.SecondOpponentBoard, 100, 580);
+        }
+
+        private void GeneratePointsBox(int layer, BoardDefinition board, int x, int y)
+        {
+            AddControl(layer, new LabelControl()
             {
-                X = 25,
-                Y = 100 + offset + 75,
-                Width = 50,
-                Height = 50,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                X = x,
+                Y = y,
+                Width = 75,
+                Height = 75,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
                 FontColor = Color.Black,
                 Text = $"{board.GetValue()}",
                 FillColor = BasicTextures.GetBasicRectange(Color.Gold)
             });
-            if (!_controlsLocked && opponent is PlayerOpponent)
+        }
+
+        private void GenerateSelectionBoxes(int layer, IOpponent opponent, BoardDefinition board, int x, int y)
+        {
+            AddControl(layer, new LabelControl()
             {
-                var yOffset = 0;
-                if (flip)
-                    yOffset = (board.Columns[0].Cells.Count - 1) * 75;
-                AddControl(offset, new LabelControl()
-                {
-                    X = 100 + opponent.GetTargetColumn(board) * 75,
-                    Y = 90 + offset + 75 - yOffset,
-                    Width = 50,
-                    Height = 50 + (board.Columns[0].Cells.Count - 1) * 75 + 20,
-                    Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-                    FontColor = Color.White,
-                    FillColor = BasicTextures.GetBasicRectange(Color.Red)
-                });
-            }
+                X = x + opponent.GetTargetColumn(board) * 75,
+                Y = y,
+                Width = 50,
+                Height = 50 + (board.Columns[0].Cells.Count - 1) * 75 + 20,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                FontColor = Color.White,
+                FillColor = BasicTextures.GetBasicRectange(Color.Red)
+            });
+        }
+
+        private void GenerateGrid(int layer, BoardDefinition board, int x, int y, bool flip = false)
+        {
+            var dir = 1;
+            if (flip)
+                dir = -1;
             var columnIndex = 0;
             foreach (var column in board.Columns)
             {
@@ -90,10 +130,10 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                     if (cell != 0)
                         text = $"{cell}";
 
-                    AddControl(offset, new LabelControl()
+                    AddControl(layer, new LabelControl()
                     {
-                        X = 100 + columnIndex * 75,
-                        Y = 100 + offset + 75 + (cellOffset * 75) * dir,
+                        X = x + columnIndex * 75,
+                        Y = y + (cellOffset * 75) * dir,
                         Width = 50,
                         Height = 50,
                         Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
@@ -107,57 +147,65 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             }
         }
 
-        private void UpdateDice(int value)
+        private void SetupDice()
         {
-            _diceLabel.Text = $"{value}";
+            _diceLabel = new LabelControl()
+            {
+                X = 159,
+                Y = 380,
+                Width = 75,
+                Height = 75,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                Text = "",
+                FontColor = Color.White,
+                FillColor = BasicTextures.GetBasicRectange(Color.Blue)
+            };
+            AddControl(1000, _diceLabel);
         }
 
-        private void ShowGameOverView()
+        private void SetupGameOverView()
         {
-            if (!Engine.GameOver)
-                return;
-
-            ClearLayer(2);
-            var won = "";
-            if (Engine.State.Winner == Engine.State.FirstOpponent.OpponentID)
-                won = "First opponent won!";
-            else
-                won = "Second opponent won!";
-
-            AddControl(2, new LabelControl()
+            _winnerLabel = new LabelControl()
             {
-                X = 500,
-                Y = 400,
-                Width = 500,
-                Height = 200,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
-                Text = $"Game Over!",
-                FontColor = Color.White,
-                FillColor = BasicTextures.GetBasicRectange(Color.Gray)
-            });
-            AddControl(2, new LabelControl()
-            {
-                X = 500,
-                Y = 600,
-                Width = 500,
+                Width = 400,
                 Height = 100,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Text = won,
+                Y = 100,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                Text = "",
                 FontColor = Color.White,
-                FillColor = BasicTextures.GetBasicRectange(Color.Gray)
-            });
-            AddControl(2, new ButtonControl(Parent, (x) => SwitchView(new MainGame(Parent)))
+                FillColor = BasicTextures.GetBasicRectange(Color.Black)
+            };
+            _gameOverPanel = new StackPanelControl(new List<IControl>()
             {
-                X = 500,
-                Y = 700,
-                Width = 500,
-                Height = 100,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Text = "Play Again",
-                FontColor = Color.White,
-                FillColor = BasicTextures.GetBasicRectange(Color.Gray),
-                FillClickedColor = BasicTextures.GetBasicRectange(Color.DarkGray)
-            });
+                new LabelControl()
+                {
+                    Width = 400,
+                    Height = 100,
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                    Text = $"Game Over!",
+                    FontColor = Color.White,
+                    FillColor = BasicTextures.GetBasicRectange(Color.Black)
+                },
+                _winnerLabel,
+                new ButtonControl(Parent, (x) => SwitchView(new MainGame(Parent)))
+                {
+                    Width = 400,
+                    Height = 110,
+                    Y = 200,
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                    Text = "Play Again",
+                    FontColor = Color.White,
+                    FillColor = BasicTextures.GetBasicRectange(Color.Black),
+                    FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray),
+                }
+            })
+            {
+                Y = 270,
+                Width = 400,
+                Height = 300,
+                IsVisible = false
+            };
+            AddControl(1001, _gameOverPanel);
         }
     }
 }

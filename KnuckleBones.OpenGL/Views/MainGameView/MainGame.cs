@@ -36,21 +36,21 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             _enterKeyWatcher = new KeyWatcher(Keys.Enter, TakeTurn);
             _rollTimer = new GameTimer(TimeSpan.FromMilliseconds(50), (x) =>
             {
-                UpdateDice(_rnd.Next(1, Engine.State.CurrentDice.Sides + 1));
+                _diceLabel.Text = $"{_rnd.Next(1, Engine.State.CurrentDice.Sides + 1)}";
                 _rolledTimes++;
                 if (_rolledTimes > 10)
                 {
                     _rolledTimes = 0;
                     _rolling = false;
-                    UpdateDice(Engine.State.CurrentDice.Value);
+                    _diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
 
                     if (Engine.GetCurrentOpponent() is not PlayerOpponent)
                         TakeTurn();
                     else
                     {
                         _controlsLocked = false;
-                        UpdateBoard(Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, true);
-                        UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);
+                        UpdateFirstOpponentBoard();
+                        UpdateSecondOpponentBoard();
                     }
                 }
             });
@@ -61,18 +61,24 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 {
                     _moving = false;
 
-                    UpdateBoard(Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, true);
-                    UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);
+                    UpdateFirstOpponentBoard();
+                    UpdateSecondOpponentBoard();
 
                     if (Engine.GameOver)
                     {
-                        ShowGameOverView();
+                        if (Engine.State.Winner == Engine.State.FirstOpponent.OpponentID)
+                            _winnerLabel.Text = "Player won!";
+                        else
+                            _winnerLabel.Text = "CPU won!";
+                        _gameOverPanel.IsVisible = true;
                         return;
                     }
 
                     _diceLabel.X = _origin.X;
                     _diceLabel.Y = _origin.Y;
                     _rolling = true;
+                    _diceLabel.Initialize();
+                    return;
                 }
                 var dir = _target.Y - _diceLabel.Y;
                 if (dir > 0)
@@ -100,6 +106,9 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
 
         private void TakeTurn()
         {
+            if (_moving || _rolling)
+                return;
+
             if (Engine.State.Turn == Engine.State.FirstOpponent.OpponentID)
                 _target = new Point(_origin.X, _origin.Y - 100);
             else
@@ -125,8 +134,8 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                     current = 0;
                 player.SetTargetColumn(current);
             }
-            UpdateBoard(Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, true);
-            UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);
+            UpdateFirstOpponentBoard();
+            UpdateSecondOpponentBoard();
         }
 
         private void MoveRight()
@@ -143,8 +152,8 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                     current = board.Columns.Count - 1;
                 player.SetTargetColumn(current);
             }
-            UpdateBoard(Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, true);
-            UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);
+            UpdateFirstOpponentBoard();
+            UpdateSecondOpponentBoard();
         }
     }
 }

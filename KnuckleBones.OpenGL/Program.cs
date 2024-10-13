@@ -1,4 +1,4 @@
-﻿using KnuckleBones.OpenGL.Views.MainMenuView;
+﻿using KnuckleBones.OpenGL.Views.MainGameView;
 using System;
 
 namespace KnuckleBones.OpenGL
@@ -8,7 +8,7 @@ namespace KnuckleBones.OpenGL
         [STAThread]
         private static void Main()
         {
-            using (var mainWindow = new KnuckleBoneWindow((g) => new MainMenu(g)))
+            using (var mainWindow = new KnuckleBoneWindow((g) => new MainGame(g)))
                 mainWindow.Run();
         }
     }
