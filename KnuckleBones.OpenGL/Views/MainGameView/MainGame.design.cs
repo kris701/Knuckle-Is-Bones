@@ -10,11 +10,24 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
 {
     public partial class MainGame : BaseView
     {
+        private LabelControl _diceLabel;
+
         public override void Initialize()
         {
             UpdateBoard(Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, true);
             UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);
-            UpdateDice();
+            _diceLabel = new LabelControl()
+            {
+                X = 175,
+                Y = 375,
+                Width = 50,
+                Height = 50,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                Text = "",
+                FontColor = Color.White,
+                FillColor = BasicTextures.GetBasicRectange(Color.Gray)
+            };
+            AddControl(1, _diceLabel);
 
 #if DEBUG
             AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new MainGame(Parent)))
@@ -51,7 +64,7 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 Text = $"{board.GetValue()}",
                 FillColor = BasicTextures.GetBasicRectange(Color.Gray)
             });
-            if (opponent is PlayerOpponent)
+            if (!_controlsLocked && opponent is PlayerOpponent)
             {
                 var yOffset = 0;
                 if (flip)
@@ -94,20 +107,9 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             }
         }
 
-        private void UpdateDice()
+        private void UpdateDice(int value)
         {
-            ClearLayer(1);
-            AddControl(1, new LabelControl()
-            {
-                X = 10,
-                Y = 100,
-                Width = 50,
-                Height = 50,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Text = $"{Engine.State.CurrentDice.Value}",
-                FontColor = Color.White,
-                FillColor = BasicTextures.GetBasicRectange(Color.Gray)
-            });
+            _diceLabel.Text = $"{value}";
         }
 
         private void ShowGameOverView()

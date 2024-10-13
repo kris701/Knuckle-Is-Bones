@@ -6,6 +6,8 @@ using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Input;
 using MonoGame.OpenGL.Formatter.Views;
 using System;
+using System.Threading;
+using KnuckleBones.Core.Helpers;
 
 namespace KnuckleBones.OpenGL.Views.MainGameView
 {
@@ -17,6 +19,11 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
         private KeyWatcher _leftKeyWatcher;
         private KeyWatcher _rightKeyWatcher;
         private KeyWatcher _enterKeyWatcher;
+        private GameTimer _rollTimer;
+        private bool _controlsLocked = true;
+        private bool _rolling = true;
+        private int _rolledTimes = 0;
+        private Random _rnd = new Random();
 
         public MainGame(IWindow parent) : base(parent, ID)
         {
@@ -24,6 +31,26 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             _leftKeyWatcher = new KeyWatcher(Microsoft.Xna.Framework.Input.Keys.Left, MoveLeft);
             _rightKeyWatcher = new KeyWatcher(Microsoft.Xna.Framework.Input.Keys.Right, MoveRight);
             _enterKeyWatcher = new KeyWatcher(Microsoft.Xna.Framework.Input.Keys.Enter, TakeTurn);
+            _rollTimer = new GameTimer(TimeSpan.FromMilliseconds(75), (x) =>
+            {
+                UpdateDice(_rnd.Next(1, Engine.State.CurrentDice.Sides + 1));
+                _rolledTimes++;
+                if (_rolledTimes > 10)
+                {
+                    _rolledTimes = 0;
+                    _rolling = false;
+                    UpdateDice(Engine.State.CurrentDice.Value);
+
+                    if (Engine.GetCurrentOpponent() is not PlayerOpponent)
+                        TakeTurn();
+                    else
+                    {
+                        _controlsLocked = false;
+                        UpdateBoard(Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, true);
+                        UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);
+                    }
+                }
+            });
             Initialize();
         }
 
@@ -33,25 +60,32 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             _leftKeyWatcher.Update(keyState);
             _rightKeyWatcher.Update(keyState);
             _enterKeyWatcher.Update(keyState);
+            if (_rolling)
+                _rollTimer.Update(gameTime.ElapsedGameTime);
         }
 
         private void TakeTurn()
         {
             if (!Engine.TakeTurn())
                 return;
+            _controlsLocked = true;
+
             if (Engine.GameOver)
+            {
                 ShowGameOverView();
+                return;
+            }
+
+            _rolling = true;
 
             UpdateBoard(Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, true);
             UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);
-            UpdateDice();
-
-            if (Engine.GetCurrentOpponent() is not PlayerOpponent)
-                TakeTurn();
         }
 
         private void MoveLeft()
         {
+            if (_controlsLocked)
+                return;
             var opponent = Engine.GetCurrentOpponent();
             if (opponent is PlayerOpponent player)
             {
@@ -64,11 +98,12 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             }
             UpdateBoard(Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, true);
             UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);
-            UpdateDice();
         }
 
         private void MoveRight()
         {
+            if (_controlsLocked)
+                return;
             var opponent = Engine.GetCurrentOpponent();
             if (opponent is PlayerOpponent player)
             {
@@ -81,7 +116,6 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             }
             UpdateBoard(Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, true);
             UpdateBoard(Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 300, false);
-            UpdateDice();
         }
     }
 }
