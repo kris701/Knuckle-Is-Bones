@@ -2,7 +2,7 @@
 {
     public class PlayerOpponent : BaseOpponent
     {
-        private int _targetColumn = -1;
+        private int _targetColumn = 0;
 
         public PlayerOpponent(Guid iD, string name, string description) : base(iD, name, description)
         {

@@ -12,6 +12,17 @@
         {
         }
 
-        public override int GetTargetColumn(BoardDefinition board) => _rnd.Next(0, board.Columns.Count);
+        public override int GetTargetColumn(BoardDefinition board)
+        {
+            int target = -1;
+            bool valid = false;
+            while (!valid)
+            {
+                target = _rnd.Next(0, board.Columns.Count);
+                if (!board.Columns[target].IsFull())
+                    valid = true;
+            }
+            return target;
+        }
     }
 }

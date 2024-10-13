@@ -1,5 +1,6 @@
 ﻿using KnuckleBones.Core.Models.Game;
 using KnuckleBones.Core.Models.Game.Opponents;
+using System.ComponentModel;
 
 namespace KnuckleBones.Core.Engines
 {
@@ -40,6 +41,24 @@ namespace KnuckleBones.Core.Engines
             State.CurrentDice = new DiceDefinition() { Sides = 6 };
             State.CurrentDice.Value = _rnd.Next(1, State.CurrentDice.Sides + 1);
             State.Turn = State.FirstOpponent.OpponentID;
+        }
+
+        public IOpponent GetCurrentOpponent()
+        {
+            if (State.Turn == State.FirstOpponent.OpponentID)
+                return State.FirstOpponent;
+            else if (State.Turn == State.SecondOpponent.OpponentID)
+                return State.SecondOpponent;
+            return null;
+        }
+
+        public BoardDefinition GetCurrentOpponentBoard()
+        {
+            if (State.Turn == State.FirstOpponent.OpponentID)
+                return State.FirstOpponentBoard;
+            else if (State.Turn == State.SecondOpponent.OpponentID)
+                return State.SecondOpponentBoard;
+            return null;
         }
 
         public bool TakeTurn()
