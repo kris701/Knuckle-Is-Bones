@@ -18,7 +18,7 @@ namespace KnuckleBones.Core.Engines
         public KnuckleBonesEngine()
         {
             State = new GameState();
-            State.FirstOpponent = new PlayerOpponent(Guid.NewGuid(), "player", "");
+            State.FirstOpponent = new PlayerOpponent(Guid.NewGuid(), "Player", "");
             State.FirstOpponentBoard = new BoardDefinition()
             {
                 Columns = new List<ColumnDefinition>()
@@ -93,7 +93,7 @@ namespace KnuckleBones.Core.Engines
                 return false;
             if (State.CurrentDice.Value == 0)
                 return false;
-            var columnID = opponent.GetTargetColumn(board);
+            var columnID = opponent.GetTargetColumn();
             if (columnID < 0 || columnID >= board.Columns.Count)
                 return false;
             var column = board.Columns[columnID];

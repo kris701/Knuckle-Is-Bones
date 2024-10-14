@@ -12,6 +12,8 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
     public partial class MainGame : BaseView
     {
         private LabelControl _diceLabel;
+        private BoardControl _board1;
+        private BoardControl _board2;
         private StackPanelControl _gameOverPanel;
         private LabelControl _winnerLabel;
 
@@ -19,29 +21,29 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
         {
             AddControl(0, new LabelControl()
             {
-                Text = "KnuckleBones",
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-                Width = 400,
-                Height = 50,
+                Text = $"{Engine.State.FirstOpponent.Name}",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                Width = 200,
+                Height = 520,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Top,
                 FillColor = BasicTextures.GetBasicRectange(Color.Black)
             });
             AddControl(0, new LabelControl()
             {
-                Text = "Player",
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-                Width = 90,
-                Height = 220,
-                X = 310,
-                Y = 50,
+                Text = $"{Engine.State.SecondOpponent.Name}",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                Width = 200,
+                Height = 520,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Left,
                 FillColor = BasicTextures.GetBasicRectange(Color.Black)
             });
-            AddControl(0, new LabelControl()
+            AddControl(0, new TileControl()
             {
-                Text = "CPU",
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-                Width = 90,
-                Height = 250,
-                Y = 580,
+                Width = 1920,
+                Height = 40,
+                VerticalAlignment = VerticalAlignment.Middle,
                 FillColor = BasicTextures.GetBasicRectange(Color.Black)
             });
 
@@ -71,19 +73,21 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
         private void UpdateFirstOpponentBoard()
         {
             ClearLayer(10);
-            GeneratePointsBox(10, Engine.State.FirstOpponentBoard, 10, 60);
-            if (!_controlsLocked && Engine.State.FirstOpponent is PlayerOpponent)
-                GenerateSelectionBoxes(10, Engine.State.FirstOpponent, Engine.State.FirstOpponentBoard, 100, 60);
-            GenerateGrid(10, Engine.State.FirstOpponentBoard, 100, 220, true);
+            _board1 = new BoardControl(Parent, Engine.State.FirstOpponentBoard, 710, 10, 500, 500, true);
+            GeneratePointsBox(10, Engine.State.FirstOpponentBoard, 1390, 175);
+            if (!_rolling && Engine.State.Turn == Engine.State.FirstOpponent.OpponentID)
+                _board1.HighlightColumn(Engine.State.FirstOpponent.GetTargetColumn());
+            AddControl(10, _board1);
         }
 
         private void UpdateSecondOpponentBoard()
         {
             ClearLayer(20);
-            GeneratePointsBox(20, Engine.State.SecondOpponentBoard, 315, 715);
-            if (!_controlsLocked && Engine.State.SecondOpponent is PlayerOpponent)
-                GenerateSelectionBoxes(20, Engine.State.SecondOpponent, Engine.State.SecondOpponentBoard, 100, 100);
-            GenerateGrid(20, Engine.State.SecondOpponentBoard, 100, 580);
+            _board2 = new BoardControl(Parent, Engine.State.SecondOpponentBoard, 710, 570, 500, 500, false);
+            GeneratePointsBox(20, Engine.State.SecondOpponentBoard, 375, 735);
+            if (!_rolling && Engine.State.Turn == Engine.State.SecondOpponent.OpponentID)
+                _board2.HighlightColumn(Engine.State.SecondOpponent.GetTargetColumn());
+            AddControl(20, _board2);
         }
 
         private void GeneratePointsBox(int layer, BoardDefinition board, int x, int y)
@@ -92,70 +96,24 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             {
                 X = x,
                 Y = y,
-                Width = 75,
-                Height = 75,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                Width = 150,
+                Height = 150,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
                 FontColor = Color.Black,
                 Text = $"{board.GetValue()}",
                 FillColor = BasicTextures.GetBasicRectange(Color.Gold)
             });
         }
 
-        private void GenerateSelectionBoxes(int layer, IOpponent opponent, BoardDefinition board, int x, int y)
-        {
-            AddControl(layer, new LabelControl()
-            {
-                X = x + opponent.GetTargetColumn(board) * 75,
-                Y = y,
-                Width = 50,
-                Height = 50 + (board.Columns[0].Cells.Count - 1) * 75 + 20,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-                FontColor = Color.White,
-                FillColor = BasicTextures.GetBasicRectange(Color.Red)
-            });
-        }
-
-        private void GenerateGrid(int layer, BoardDefinition board, int x, int y, bool flip = false)
-        {
-            var dir = 1;
-            if (flip)
-                dir = -1;
-            var columnIndex = 0;
-            foreach (var column in board.Columns)
-            {
-                var cellOffset = 0;
-                foreach (var cell in column.Cells)
-                {
-                    var text = "";
-                    if (cell != 0)
-                        text = $"{cell}";
-
-                    AddControl(layer, new LabelControl()
-                    {
-                        X = x + columnIndex * 75,
-                        Y = y + (cellOffset * 75) * dir,
-                        Width = 50,
-                        Height = 50,
-                        Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-                        FontColor = Color.White,
-                        Text = text,
-                        FillColor = BasicTextures.GetBasicRectange(Color.Gray)
-                    });
-                    cellOffset++;
-                }
-                columnIndex++;
-            }
-        }
-
         private void SetupDice()
         {
             _diceLabel = new LabelControl()
             {
-                X = 159,
-                Y = 380,
-                Width = 75,
-                Height = 75,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                X = 375,
+                VerticalAlignment = VerticalAlignment.Middle,
+                Width = 150,
+                Height = 150,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
                 Text = "",
                 FontColor = Color.White,
                 FillColor = BasicTextures.GetBasicRectange(Color.Blue)
@@ -200,7 +158,8 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 }
             })
             {
-                Y = 270,
+                HorizontalAlignment = HorizontalAlignment.Middle,
+                VerticalAlignment = VerticalAlignment.Middle,
                 Width = 400,
                 Height = 300,
                 IsVisible = false

@@ -9,6 +9,8 @@ namespace KnuckleBones.Core.Models.Game.Opponents
         public string Description { get; set; }
         public Guid OpponentID { get; set; }
 
+        internal int _targetColumn = 0;
+
         public BaseOpponent(Guid iD, string name, string description)
         {
             ID = iD;
@@ -23,6 +25,6 @@ namespace KnuckleBones.Core.Models.Game.Opponents
             OpponentID = opponentID;
         }
 
-        public abstract int GetTargetColumn(BoardDefinition board);
+        public int GetTargetColumn() => _targetColumn;
     }
 }

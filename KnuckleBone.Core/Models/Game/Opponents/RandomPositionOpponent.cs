@@ -1,6 +1,6 @@
 ﻿namespace KnuckleBones.Core.Models.Game.Opponents
 {
-    public class RandomPositionOpponent : BaseOpponent
+    public class RandomPositionOpponent : BaseOpponent, ICPUOpponent
     {
         private readonly Random _rnd = new Random();
 
@@ -12,7 +12,7 @@
         {
         }
 
-        public override int GetTargetColumn(BoardDefinition board)
+        public void SetTargetColumn(BoardDefinition board)
         {
             int target = -1;
             bool valid = false;
@@ -22,7 +22,7 @@
                 if (!board.Columns[target].IsFull())
                     valid = true;
             }
-            return target;
+            _targetColumn = target;
         }
     }
 }

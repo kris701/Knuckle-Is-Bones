@@ -12,6 +12,6 @@ namespace KnuckleBones.Core.Engines
         public IOpponent SecondOpponent { get; set; }
         public BoardDefinition SecondOpponentBoard { get; set; }
 
-        public DiceDefinition? CurrentDice { get; set; }
+        public DiceDefinition CurrentDice { get; set; }
     }
 }

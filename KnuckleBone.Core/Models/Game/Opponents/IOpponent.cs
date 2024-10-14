@@ -4,6 +4,6 @@
     {
         public Guid OpponentID { get; set; }
 
-        public int GetTargetColumn(BoardDefinition board);
+        public int GetTargetColumn();
     }
 }

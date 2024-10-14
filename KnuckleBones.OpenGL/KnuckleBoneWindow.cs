@@ -44,15 +44,17 @@ namespace KnuckleBones.OpenGL
         public KnuckleBoneWindow(Func<KnuckleBoneWindow, IView> screen) : base()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            _scaleMatrix = Matrix.CreateScale(XScale, YScale, 1.0f);
             Device = new GraphicsDeviceManager(this);
             Content.RootDirectory = _contentDir;
             _screenToLoad = screen;
             IsMouseVisible = true;
 
-            Device.PreferredBackBufferHeight = 800;
-            Device.PreferredBackBufferWidth = 400;
+            Device.PreferredBackBufferWidth = 1068;
+            Device.PreferredBackBufferHeight = 600;
             Device.ApplyChanges();
+            XScale = (float)Device.PreferredBackBufferWidth / (float)IWindow.BaseScreenSize.X;
+            YScale = (float)Device.PreferredBackBufferHeight / (float)IWindow.BaseScreenSize.Y;
+            _scaleMatrix = Matrix.CreateScale(XScale, YScale, 1.0f);
         }
 
         protected override void Initialize()

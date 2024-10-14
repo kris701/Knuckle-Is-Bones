@@ -19,13 +19,13 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
         private KeyWatcher _rightKeyWatcher;
         private KeyWatcher _enterKeyWatcher;
         private GameTimer _rollTimer;
-        private GameTimer _moveTimer;
-        private bool _controlsLocked = true;
+        private GameTimer _rollWaitTimer;
+        private GameTimer _selectWaitTimer;
+        private bool _selectWait = false;
         private bool _rolling = true;
+        private bool _rollWait = false;
+        private int _movePosition = 0;
         private int _rolledTimes = 0;
-        private bool _moving = false;
-        private Point _origin;
-        private Point _target;
         private Random _rnd = new Random();
 
         public MainGame(IWindow parent) : base(parent, ID)
@@ -42,54 +42,30 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 {
                     _rolledTimes = 0;
                     _rolling = false;
+                    _rollWait = true;
                     _diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
-
-                    if (Engine.GetCurrentOpponent() is not PlayerOpponent)
-                        TakeTurn();
-                    else
-                    {
-                        _controlsLocked = false;
-                        UpdateFirstOpponentBoard();
-                        UpdateSecondOpponentBoard();
-                    }
                 }
             });
-            _moveTimer = new GameTimer(TimeSpan.FromMilliseconds(33), (x) =>
+            _rollWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(750), (x) =>
             {
-                var current = new Point((int)_diceLabel.X, (int)_diceLabel.Y);
-                if (current.X == _target.X && current.Y == _target.Y)
+                _rollWait = false;
+                _diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
+
+                if (Engine.GetCurrentOpponent() is ICPUOpponent cpu)
                 {
-                    _moving = false;
-
-                    UpdateFirstOpponentBoard();
-                    UpdateSecondOpponentBoard();
-
-                    if (Engine.GameOver)
-                    {
-                        if (Engine.State.Winner == Engine.State.FirstOpponent.OpponentID)
-                            _winnerLabel.Text = "Player won!";
-                        else
-                            _winnerLabel.Text = "CPU won!";
-                        _gameOverPanel.IsVisible = true;
-                        return;
-                    }
-
-                    _diceLabel.X = _origin.X;
-                    _diceLabel.Y = _origin.Y;
-                    _rolling = true;
-                    _diceLabel.Initialize();
-                    return;
+                    _selectWait = true;
+                    _movePosition = cpu.GetTargetColumn();
+                    cpu.SetTargetColumn(Engine.GetCurrentOpponentBoard());
                 }
-                var dir = _target.Y - _diceLabel.Y;
-                if (dir > 0)
-                    _diceLabel.Y += 10;
-                else
-                    _diceLabel.Y -= 10;
-                _diceLabel.Initialize();
+                UpdateFirstOpponentBoard();
+                UpdateSecondOpponentBoard();
+            });
+            _selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(750), (x) =>
+            {
+                _selectWait = false;
+                TakeTurn();
             });
             Initialize();
-
-            _origin = new Point((int)_diceLabel.X, (int)_diceLabel.Y);
         }
 
         public override void OnUpdate(GameTime gameTime)
@@ -100,60 +76,75 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             _enterKeyWatcher.Update(keyState);
             if (_rolling)
                 _rollTimer.Update(gameTime.ElapsedGameTime);
-            if (_moving)
-                _moveTimer.Update(gameTime.ElapsedGameTime);
+            if (_rollWait)
+                _rollWaitTimer.Update(gameTime.ElapsedGameTime);
+            if (_selectWait)
+                _selectWaitTimer.Update(gameTime.ElapsedGameTime);
         }
 
         private void TakeTurn()
         {
-            if (_moving || _rolling)
+            if (_rolling || _rollWait || _selectWait)
                 return;
-
-            if (Engine.State.Turn == Engine.State.FirstOpponent.OpponentID)
-                _target = new Point(_origin.X, _origin.Y - 100);
-            else
-                _target = new Point(_origin.X, _origin.Y + 100);
 
             if (!Engine.TakeTurn())
                 return;
-            _controlsLocked = true;
-            _moving = true;
+
+            if (Engine.GameOver)
+            {
+                UpdateFirstOpponentBoard();
+                UpdateSecondOpponentBoard();
+
+                if (Engine.State.Winner == Engine.State.FirstOpponent.OpponentID)
+                    _winnerLabel.Text = "Player won!";
+                else
+                    _winnerLabel.Text = "CPU won!";
+                _gameOverPanel.IsVisible = true;
+
+                return;
+            }
+
+            _rolling = true;
+            UpdateFirstOpponentBoard();
+            UpdateSecondOpponentBoard();
         }
 
         private void MoveLeft()
         {
-            if (_controlsLocked)
-                return;
             var opponent = Engine.GetCurrentOpponent();
-            if (opponent is PlayerOpponent player)
+            if (opponent is PlayerOpponent player && Engine.State.Turn == player.OpponentID)
             {
                 var board = Engine.GetCurrentOpponentBoard();
-                var current = player.GetTargetColumn(board);
+                var current = player.GetTargetColumn();
                 current--;
                 if (current < 0)
                     current = 0;
                 player.SetTargetColumn(current);
             }
-            UpdateFirstOpponentBoard();
-            UpdateSecondOpponentBoard();
+
+            if (Engine.State.Turn == Engine.State.FirstOpponent.OpponentID)
+                _board1.HighlightColumn(Engine.State.FirstOpponent.GetTargetColumn());
+            if (Engine.State.Turn == Engine.State.SecondOpponent.OpponentID)
+                _board2.HighlightColumn(Engine.State.SecondOpponent.GetTargetColumn());
         }
 
         private void MoveRight()
         {
-            if (_controlsLocked)
-                return;
             var opponent = Engine.GetCurrentOpponent();
-            if (opponent is PlayerOpponent player)
+            if (opponent is PlayerOpponent player && Engine.State.Turn == player.OpponentID)
             {
                 var board = Engine.GetCurrentOpponentBoard();
-                var current = player.GetTargetColumn(board);
+                var current = player.GetTargetColumn();
                 current++;
                 if (current >= board.Columns.Count)
                     current = board.Columns.Count - 1;
                 player.SetTargetColumn(current);
             }
-            UpdateFirstOpponentBoard();
-            UpdateSecondOpponentBoard();
+
+            if (Engine.State.Turn == Engine.State.FirstOpponent.OpponentID)
+                _board1.HighlightColumn(Engine.State.FirstOpponent.GetTargetColumn());
+            if (Engine.State.Turn == Engine.State.SecondOpponent.OpponentID)
+                _board2.HighlightColumn(Engine.State.SecondOpponent.GetTargetColumn());
         }
     }
 }
