@@ -1,5 +1,4 @@
 ﻿using KnuckleBones.Core.Models.Game;
-using KnuckleBones.Core.Models.Game.Opponents;
 using KnuckleBones.OpenGL.Helpers;
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
@@ -75,8 +74,8 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             ClearLayer(10);
             _board1 = new BoardControl(Parent, Engine.State.FirstOpponentBoard, 710, 10, 500, 500, true);
             GeneratePointsBox(10, Engine.State.FirstOpponentBoard, 1390, 175);
-            if (!_rolling && Engine.State.Turn == Engine.State.FirstOpponent.OpponentID)
-                _board1.HighlightColumn(Engine.State.FirstOpponent.GetTargetColumn());
+            if (!_rolling && Engine.State.Turn == Engine.State.FirstOpponent.Module.OpponentID)
+                _board1.HighlightColumn(Engine.State.FirstOpponent.Module.GetTargetColumn());
             AddControl(10, _board1);
         }
 
@@ -85,8 +84,8 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             ClearLayer(20);
             _board2 = new BoardControl(Parent, Engine.State.SecondOpponentBoard, 710, 570, 500, 500, false);
             GeneratePointsBox(20, Engine.State.SecondOpponentBoard, 375, 735);
-            if (!_rolling && Engine.State.Turn == Engine.State.SecondOpponent.OpponentID)
-                _board2.HighlightColumn(Engine.State.SecondOpponent.GetTargetColumn());
+            if (!_rolling && Engine.State.Turn == Engine.State.SecondOpponent.Module.OpponentID)
+                _board2.HighlightColumn(Engine.State.SecondOpponent.Module.GetTargetColumn());
             AddControl(20, _board2);
         }
 

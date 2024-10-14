@@ -1,12 +1,12 @@
 ﻿using KnuckleBones.Core.Engines;
-using KnuckleBones.Core.Models.Game.Opponents;
-using Microsoft.Xna.Framework.Input;
+using KnuckleBones.Core.Helpers;
+using KnuckleBones.Core.Models.Game.OpponentModules;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Input;
 using MonoGame.OpenGL.Formatter.Views;
 using System;
-using KnuckleBones.Core.Helpers;
 
 namespace KnuckleBones.OpenGL.Views.MainGameView
 {
@@ -15,18 +15,18 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
         public static Guid ID = new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361");
 
         public KnuckleBonesEngine Engine { get; set; }
-        private KeyWatcher _leftKeyWatcher;
-        private KeyWatcher _rightKeyWatcher;
-        private KeyWatcher _enterKeyWatcher;
-        private GameTimer _rollTimer;
-        private GameTimer _rollWaitTimer;
-        private GameTimer _selectWaitTimer;
+        private readonly KeyWatcher _leftKeyWatcher;
+        private readonly KeyWatcher _rightKeyWatcher;
+        private readonly KeyWatcher _enterKeyWatcher;
+        private readonly GameTimer _rollTimer;
+        private readonly GameTimer _rollWaitTimer;
+        private readonly GameTimer _selectWaitTimer;
         private bool _selectWait = false;
         private bool _rolling = true;
         private bool _rollWait = false;
         private int _movePosition = 0;
         private int _rolledTimes = 0;
-        private Random _rnd = new Random();
+        private readonly Random _rnd = new Random();
 
         public MainGame(IWindow parent) : base(parent, ID)
         {
@@ -51,11 +51,12 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 _rollWait = false;
                 _diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
 
-                if (Engine.GetCurrentOpponent() is ICPUOpponent cpu)
+                var current = Engine.GetCurrentOpponent();
+                if (current.Module is not PlayerOpponentModule)
                 {
                     _selectWait = true;
-                    _movePosition = cpu.GetTargetColumn();
-                    cpu.SetTargetColumn(Engine.GetCurrentOpponentBoard());
+                    _movePosition = current.Module.GetTargetColumn();
+                    current.Module.SetTargetColumn(Engine.GetCurrentOpponentBoard());
                 }
                 UpdateFirstOpponentBoard();
                 UpdateSecondOpponentBoard();
@@ -95,7 +96,7 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 UpdateFirstOpponentBoard();
                 UpdateSecondOpponentBoard();
 
-                if (Engine.State.Winner == Engine.State.FirstOpponent.OpponentID)
+                if (Engine.State.Winner == Engine.State.FirstOpponent.Module.OpponentID)
                     _winnerLabel.Text = "Player won!";
                 else
                     _winnerLabel.Text = "CPU won!";
@@ -112,7 +113,7 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
         private void MoveLeft()
         {
             var opponent = Engine.GetCurrentOpponent();
-            if (opponent is PlayerOpponent player && Engine.State.Turn == player.OpponentID)
+            if (opponent.Module is PlayerOpponentModule player && Engine.State.Turn == player.OpponentID)
             {
                 var board = Engine.GetCurrentOpponentBoard();
                 var current = player.GetTargetColumn();
@@ -122,16 +123,16 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 player.SetTargetColumn(current);
             }
 
-            if (Engine.State.Turn == Engine.State.FirstOpponent.OpponentID)
-                _board1.HighlightColumn(Engine.State.FirstOpponent.GetTargetColumn());
-            if (Engine.State.Turn == Engine.State.SecondOpponent.OpponentID)
-                _board2.HighlightColumn(Engine.State.SecondOpponent.GetTargetColumn());
+            if (Engine.State.Turn == Engine.State.FirstOpponent.Module.OpponentID)
+                _board1.HighlightColumn(Engine.State.FirstOpponent.Module.GetTargetColumn());
+            if (Engine.State.Turn == Engine.State.SecondOpponent.Module.OpponentID)
+                _board2.HighlightColumn(Engine.State.SecondOpponent.Module.GetTargetColumn());
         }
 
         private void MoveRight()
         {
             var opponent = Engine.GetCurrentOpponent();
-            if (opponent is PlayerOpponent player && Engine.State.Turn == player.OpponentID)
+            if (opponent.Module is PlayerOpponentModule player && Engine.State.Turn == player.OpponentID)
             {
                 var board = Engine.GetCurrentOpponentBoard();
                 var current = player.GetTargetColumn();
@@ -141,10 +142,10 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 player.SetTargetColumn(current);
             }
 
-            if (Engine.State.Turn == Engine.State.FirstOpponent.OpponentID)
-                _board1.HighlightColumn(Engine.State.FirstOpponent.GetTargetColumn());
-            if (Engine.State.Turn == Engine.State.SecondOpponent.OpponentID)
-                _board2.HighlightColumn(Engine.State.SecondOpponent.GetTargetColumn());
+            if (Engine.State.Turn == Engine.State.FirstOpponent.Module.OpponentID)
+                _board1.HighlightColumn(Engine.State.FirstOpponent.Module.GetTargetColumn());
+            if (Engine.State.Turn == Engine.State.SecondOpponent.Module.OpponentID)
+                _board2.HighlightColumn(Engine.State.SecondOpponent.Module.GetTargetColumn());
         }
     }
 }

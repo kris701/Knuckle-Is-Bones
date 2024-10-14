@@ -17,7 +17,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\Core\" />
+    <None Remove="Resources\Core\Boards\normal.json" />
+    <None Remove="Resources\Core\Dice\normal.json" />
+    <None Remove="Resources\Core\Opponents\player.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Core\Boards\normal.json" />
+    <EmbeddedResource Include="Resources\Core\Dice\normal.json" />
+    <EmbeddedResource Include="Resources\Core\Opponents\random.json" />
+    <EmbeddedResource Include="Resources\Core\Opponents\player.json" />
   </ItemGroup>
 
 </Project>

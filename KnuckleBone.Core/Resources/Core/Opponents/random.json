@@ -1,0 +1,8 @@
+{
+  "ID": "42244cf9-6ad3-4729-8376-a0d323440a18",
+  "Name": "Random",
+  "Description": "",
+  "Module": {
+    "OpponentModule": "Random"
+  }
+}

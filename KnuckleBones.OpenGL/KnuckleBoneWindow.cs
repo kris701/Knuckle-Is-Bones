@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text.Json;
 
 namespace KnuckleBones.OpenGL
 {
@@ -52,8 +51,8 @@ namespace KnuckleBones.OpenGL
             Device.PreferredBackBufferWidth = 1068;
             Device.PreferredBackBufferHeight = 600;
             Device.ApplyChanges();
-            XScale = (float)Device.PreferredBackBufferWidth / (float)IWindow.BaseScreenSize.X;
-            YScale = (float)Device.PreferredBackBufferHeight / (float)IWindow.BaseScreenSize.Y;
+            XScale = Device.PreferredBackBufferWidth / (float)IWindow.BaseScreenSize.X;
+            YScale = Device.PreferredBackBufferHeight / (float)IWindow.BaseScreenSize.Y;
             _scaleMatrix = Matrix.CreateScale(XScale, YScale, 1.0f);
         }
 

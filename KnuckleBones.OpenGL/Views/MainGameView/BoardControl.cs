@@ -11,13 +11,13 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
 {
     public class BoardControl : CollectionControl
     {
-        private BoardDefinition _board;
-        private int _rows;
-        private int _columns;
-        private float _cellWidth;
-        private float _cellHeight;
-        private float _margin = 5;
-        private TileControl _columnHighlight;
+        private readonly BoardDefinition _board;
+        private readonly int _rows;
+        private readonly int _columns;
+        private readonly float _cellWidth;
+        private readonly float _cellHeight;
+        private readonly float _margin = 5;
+        private readonly TileControl _columnHighlight;
 
         public BoardControl(IWindow parent, BoardDefinition board, float x, float y, float width, float height, bool flip = false)
         {

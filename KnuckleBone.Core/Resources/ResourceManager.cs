@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using KnuckleBones.Core.Models.Game;
+using System.Reflection;
+using System.Text.Json;
 
 namespace KnuckleBones.Core.Resources
 {
@@ -6,7 +8,9 @@ namespace KnuckleBones.Core.Resources
     {
         private static readonly Guid _coreID = new Guid("f06a2262-4c0b-4bca-bd1d-d13504e572bc");
 
-        //public static BaseBuilder<EnemyTypeDefinition> EnemyTypes = new BaseBuilder<EnemyTypeDefinition>("Resources.Core.EnemyTypes", Assembly.GetExecutingAssembly());
+        public static BaseBuilder<BoardDefinition> Boards = new BaseBuilder<BoardDefinition>("Resources.Core.Boards", Assembly.GetExecutingAssembly());
+        public static BaseBuilder<OpponentDefinition> Opponents = new BaseBuilder<OpponentDefinition>("Resources.Core.Opponents", Assembly.GetExecutingAssembly());
+        public static BaseBuilder<DiceDefinition> Dice = new BaseBuilder<DiceDefinition>("Resources.Core.Dice", Assembly.GetExecutingAssembly());
 
         public static List<ResourceDefinition> LoadedResources { get; internal set; } = new List<ResourceDefinition>() {
             new ResourceDefinition(_coreID, "1.0.0", "Core", "Core Game Components")
@@ -32,8 +36,12 @@ namespace KnuckleBones.Core.Resources
 
             foreach (var folder in definitionFile.Directory.GetDirectories())
             {
-                //if (folder.Name.ToUpper() == "ENEMYTYPES")
-                //    EnemyTypes.LoadExternalResources(folder.GetFiles().ToList());
+                if (folder.Name.ToUpper() == "BOARDS")
+                    Boards.LoadExternalResources(folder.GetFiles().ToList());
+                else if (folder.Name.ToUpper() == "OPPONENTS")
+                    Opponents.LoadExternalResources(folder.GetFiles().ToList());
+                else if (folder.Name.ToUpper() == "DICE")
+                    Dice.LoadExternalResources(folder.GetFiles().ToList());
             }
 
             if (!LoadedResources.Any(x => x.ID == resourceDefinition.ID))
@@ -42,7 +50,9 @@ namespace KnuckleBones.Core.Resources
 
         public static void UnloadExternalResources()
         {
-            //EnemyTypes.Reload();
+            Boards.Reload();
+            Opponents.Reload();
+            Dice.Reload();
 
             LoadedResources.Clear();
             LoadedResources = new List<ResourceDefinition>() {
@@ -52,7 +62,9 @@ namespace KnuckleBones.Core.Resources
 
         public static void ReloadResources()
         {
-            //EnemyTypes.Reload();
+            Boards.Reload();
+            Opponents.Reload();
+            Dice.Reload();
 
             foreach (var resource in LoadedResources)
                 if (resource.ID != _coreID)

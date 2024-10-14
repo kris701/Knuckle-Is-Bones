@@ -1,6 +1,5 @@
 ﻿using KnuckleBones.Core.Models.Game;
-using KnuckleBones.Core.Models.Game.Opponents;
-using System.ComponentModel;
+using KnuckleBones.Core.Resources;
 
 namespace KnuckleBones.Core.Engines
 {
@@ -18,45 +17,29 @@ namespace KnuckleBones.Core.Engines
         public KnuckleBonesEngine()
         {
             State = new GameState();
-            State.FirstOpponent = new PlayerOpponent(Guid.NewGuid(), "Player", "");
-            State.FirstOpponentBoard = new BoardDefinition()
-            {
-                Columns = new List<ColumnDefinition>()
-                {
-                    new ColumnDefinition(){ Cells = new List<int>(){ 0, 0, 0 } },
-                    new ColumnDefinition(){ Cells = new List<int>(){ 0, 0, 0 } },
-                    new ColumnDefinition(){ Cells = new List<int>(){ 0, 0, 0 } },
-                }
-            };
-            State.SecondOpponent = new RandomPositionOpponent(Guid.NewGuid(), "CPU", "");
-            State.SecondOpponentBoard = new BoardDefinition()
-            {
-                Columns = new List<ColumnDefinition>()
-                {
-                    new ColumnDefinition(){ Cells = new List<int>(){ 0, 0, 0 } },
-                    new ColumnDefinition(){ Cells = new List<int>(){ 0, 0, 0 } },
-                    new ColumnDefinition(){ Cells = new List<int>(){ 0, 0, 0 } },
-                }
-            };
-            State.CurrentDice = new DiceDefinition() { Sides = 6 };
+            State.FirstOpponent = ResourceManager.Opponents.GetResource(new Guid("d6032478-b6ec-483e-8750-5976830d66b2")).Clone();
+            State.FirstOpponentBoard = ResourceManager.Boards.GetResource(new Guid("907bddf8-cbe1-49f4-a1f8-92ad5266f116")).Clone();
+            State.SecondOpponent = ResourceManager.Opponents.GetResource(new Guid("42244cf9-6ad3-4729-8376-a0d323440a18")).Clone();
+            State.SecondOpponentBoard = ResourceManager.Boards.GetResource(new Guid("907bddf8-cbe1-49f4-a1f8-92ad5266f116")).Clone();
+            State.CurrentDice = ResourceManager.Dice.GetResource(new Guid("fb539a3a-9989-4623-88d1-bf216320f717")).Clone();
             State.CurrentDice.Value = _rnd.Next(1, State.CurrentDice.Sides + 1);
-            State.Turn = State.FirstOpponent.OpponentID;
+            State.Turn = State.FirstOpponent.Module.OpponentID;
         }
 
-        public IOpponent GetCurrentOpponent()
+        public OpponentDefinition GetCurrentOpponent()
         {
-            if (State.Turn == State.FirstOpponent.OpponentID)
+            if (State.Turn == State.FirstOpponent.Module.OpponentID)
                 return State.FirstOpponent;
-            else if (State.Turn == State.SecondOpponent.OpponentID)
+            else if (State.Turn == State.SecondOpponent.Module.OpponentID)
                 return State.SecondOpponent;
             return null;
         }
 
         public BoardDefinition GetCurrentOpponentBoard()
         {
-            if (State.Turn == State.FirstOpponent.OpponentID)
+            if (State.Turn == State.FirstOpponent.Module.OpponentID)
                 return State.FirstOpponentBoard;
-            else if (State.Turn == State.SecondOpponent.OpponentID)
+            else if (State.Turn == State.SecondOpponent.Module.OpponentID)
                 return State.SecondOpponentBoard;
             return null;
         }
@@ -66,20 +49,20 @@ namespace KnuckleBones.Core.Engines
             if (GameOver)
                 return false;
 
-            IOpponent opponent;
+            OpponentDefinition opponent;
             BoardDefinition board;
 
-            IOpponent opponent2;
+            OpponentDefinition opponent2;
             BoardDefinition board2;
 
-            if (State.Turn == State.FirstOpponent.OpponentID)
+            if (State.Turn == State.FirstOpponent.Module.OpponentID)
             {
                 opponent = State.FirstOpponent;
                 board = State.FirstOpponentBoard;
                 opponent2 = State.SecondOpponent;
                 board2 = State.SecondOpponentBoard;
             }
-            else if (State.Turn == State.SecondOpponent.OpponentID)
+            else if (State.Turn == State.SecondOpponent.Module.OpponentID)
             {
                 opponent = State.SecondOpponent;
                 board = State.SecondOpponentBoard;
@@ -93,7 +76,7 @@ namespace KnuckleBones.Core.Engines
                 return false;
             if (State.CurrentDice.Value == 0)
                 return false;
-            var columnID = opponent.GetTargetColumn();
+            var columnID = opponent.Module.GetTargetColumn();
             if (columnID < 0 || columnID >= board.Columns.Count)
                 return false;
             var column = board.Columns[columnID];
@@ -111,19 +94,18 @@ namespace KnuckleBones.Core.Engines
                 var opponent1Value = State.FirstOpponentBoard.GetValue();
                 var opponent2Value = State.SecondOpponentBoard.GetValue();
                 if (opponent1Value > opponent2Value)
-                    State.Winner = State.FirstOpponent.OpponentID;
+                    State.Winner = State.FirstOpponent.Module.OpponentID;
                 else
-                    State.Winner = State.SecondOpponent.OpponentID;
+                    State.Winner = State.SecondOpponent.Module.OpponentID;
                 return true;
             }
 
-            State.CurrentDice = new DiceDefinition() { Sides = 6 };
             State.CurrentDice.Value = _rnd.Next(1, State.CurrentDice.Sides + 1);
 
-            if (State.Turn == State.FirstOpponent.OpponentID)
-                State.Turn = State.SecondOpponent.OpponentID;
+            if (State.Turn == State.FirstOpponent.Module.OpponentID)
+                State.Turn = State.SecondOpponent.Module.OpponentID;
             else
-                State.Turn = State.FirstOpponent.OpponentID;
+                State.Turn = State.FirstOpponent.Module.OpponentID;
 
             return true;
         }
