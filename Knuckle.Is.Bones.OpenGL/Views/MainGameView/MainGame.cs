@@ -1,12 +1,15 @@
-﻿using KnuckleBones.Core.Engines;
+﻿using Knuckle.Is.Bones.Core.Models.Saves;
+using KnuckleBones.Core.Engines;
 using KnuckleBones.Core.Helpers;
 using KnuckleBones.Core.Models.Game.OpponentModules;
+using KnuckleBones.Core.Resources;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Input;
 using MonoGame.OpenGL.Formatter.Views;
 using System;
+using System.IO;
 
 namespace KnuckleBones.OpenGL.Views.MainGameView
 {
@@ -30,7 +33,22 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
 
         public MainGame(IWindow parent) : base(parent, ID)
         {
-            Engine = new KnuckleBonesEngine();
+            if (File.Exists("save.json"))
+                Engine = new KnuckleBonesEngine(new GameSaveDefinition("save.json"));
+            else
+            {
+                Engine = new KnuckleBonesEngine(new GameSaveDefinition(new GameState()
+                {
+                    FirstOpponent = ResourceManager.Opponents.GetResource(new Guid("d6032478-b6ec-483e-8750-5976830d66b2")).Clone(),
+                    FirstOpponentBoard = ResourceManager.Boards.GetResource(new Guid("907bddf8-cbe1-49f4-a1f8-92ad5266f116")).Clone(),
+                    SecondOpponent = ResourceManager.Opponents.GetResource(new Guid("42244cf9-6ad3-4729-8376-a0d323440a18")).Clone(),
+                    SecondOpponentBoard = ResourceManager.Boards.GetResource(new Guid("907bddf8-cbe1-49f4-a1f8-92ad5266f116")).Clone(),
+                    CurrentDice = ResourceManager.Dice.GetResource(new Guid("fb539a3a-9989-4623-88d1-bf216320f717")).Clone(),
+                }));
+                Engine.State.CurrentDice.Value = _rnd.Next(1, Engine.State.CurrentDice.Sides + 1);
+                Engine.State.Turn = Engine.State.FirstOpponent.Module.OpponentID;
+            }
+
             _leftKeyWatcher = new KeyWatcher(Keys.Left, MoveLeft);
             _rightKeyWatcher = new KeyWatcher(Keys.Right, MoveRight);
             _enterKeyWatcher = new KeyWatcher(Keys.Enter, TakeTurn);

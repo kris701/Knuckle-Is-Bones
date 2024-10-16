@@ -29,4 +29,8 @@
     <EmbeddedResource Include="Resources\Core\Opponents\player.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ToolsSharp" Version="1.0.4" />
+  </ItemGroup>
+
 </Project>

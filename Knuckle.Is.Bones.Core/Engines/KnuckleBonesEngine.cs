@@ -1,4 +1,5 @@
-﻿using KnuckleBones.Core.Models.Game;
+﻿using Knuckle.Is.Bones.Core.Models.Saves;
+using KnuckleBones.Core.Models.Game;
 using KnuckleBones.Core.Resources;
 
 namespace KnuckleBones.Core.Engines
@@ -9,21 +10,16 @@ namespace KnuckleBones.Core.Engines
     {
         public GameEventHandler? OnGameOver;
 
+        public GameSaveDefinition Save { get; }
         public GameState State { get; }
         public bool GameOver { get; set; }
 
         private readonly Random _rnd = new Random();
 
-        public KnuckleBonesEngine()
+        public KnuckleBonesEngine(GameSaveDefinition save)
         {
-            State = new GameState();
-            State.FirstOpponent = ResourceManager.Opponents.GetResource(new Guid("d6032478-b6ec-483e-8750-5976830d66b2")).Clone();
-            State.FirstOpponentBoard = ResourceManager.Boards.GetResource(new Guid("907bddf8-cbe1-49f4-a1f8-92ad5266f116")).Clone();
-            State.SecondOpponent = ResourceManager.Opponents.GetResource(new Guid("42244cf9-6ad3-4729-8376-a0d323440a18")).Clone();
-            State.SecondOpponentBoard = ResourceManager.Boards.GetResource(new Guid("907bddf8-cbe1-49f4-a1f8-92ad5266f116")).Clone();
-            State.CurrentDice = ResourceManager.Dice.GetResource(new Guid("fb539a3a-9989-4623-88d1-bf216320f717")).Clone();
-            State.CurrentDice.Value = _rnd.Next(1, State.CurrentDice.Sides + 1);
-            State.Turn = State.FirstOpponent.Module.OpponentID;
+            Save = save;
+            State = save.State;
         }
 
         public OpponentDefinition GetCurrentOpponent()
@@ -32,7 +28,7 @@ namespace KnuckleBones.Core.Engines
                 return State.FirstOpponent;
             else if (State.Turn == State.SecondOpponent.Module.OpponentID)
                 return State.SecondOpponent;
-            return null;
+            throw new Exception("Unknown opponents turn?");
         }
 
         public BoardDefinition GetCurrentOpponentBoard()
@@ -41,7 +37,7 @@ namespace KnuckleBones.Core.Engines
                 return State.FirstOpponentBoard;
             else if (State.Turn == State.SecondOpponent.Module.OpponentID)
                 return State.SecondOpponentBoard;
-            return null;
+            throw new Exception("Unknown opponents turn?");
         }
 
         public bool TakeTurn()
@@ -97,6 +93,7 @@ namespace KnuckleBones.Core.Engines
                     State.Winner = State.FirstOpponent.Module.OpponentID;
                 else
                     State.Winner = State.SecondOpponent.Module.OpponentID;
+                Save.Save();
                 return true;
             }
 
@@ -107,6 +104,7 @@ namespace KnuckleBones.Core.Engines
             else
                 State.Turn = State.FirstOpponent.Module.OpponentID;
 
+            Save.Save();
             return true;
         }
 
