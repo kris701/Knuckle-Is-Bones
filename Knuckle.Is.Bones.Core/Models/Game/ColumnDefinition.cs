@@ -22,13 +22,8 @@ namespace KnuckleBones.Core.Models.Game
         public int GetValue()
         {
             int value = 0;
-            var max = Cells.Max();
-            for (int i = 1; i <= max; i++)
-            {
-                var count = Cells.Count(x => x == i);
-                if (count > 0)
-                    value += (int)Math.Pow(i, count);
-            }
+            for (int i = 0; i < Cells.Count; i++)
+                value += Cells[i] * Cells.Count(x => x == Cells[i]);
             return value;
         }
 
