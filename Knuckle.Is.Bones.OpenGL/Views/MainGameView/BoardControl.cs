@@ -1,6 +1,7 @@
 ﻿using KnuckleBones.Core.Models.Game;
 using KnuckleBones.OpenGL.Helpers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
@@ -74,7 +75,7 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                         Font = parent.Fonts.GetFont(FontSizes.Ptx48),
                         FontColor = Color.White,
                         Text = text,
-                        FillColor = BasicTextures.GetBasicRectange(Color.Gray)
+                        FillColor = GetBackgroundForCount(column.Cells, cell)
                     });
                     if (flip)
                         cellOffset--;
@@ -83,6 +84,20 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 }
                 columnIndex++;
             }
+        }
+
+        private Texture2D GetBackgroundForCount(List<int> cells, int value)
+        {
+            if (value == 0)
+                return BasicTextures.GetBasicRectange(Color.Gray);
+            switch (cells.Count(x => x == value))
+            {
+                case 0:
+                case 1: return BasicTextures.GetBasicRectange(Color.Gray);
+                case 2: return BasicTextures.GetBasicRectange(Color.Blue);
+                case 3: return BasicTextures.GetBasicRectange(Color.Gold);
+            }
+            return BasicTextures.GetBasicRectange(Color.Gray);
         }
 
         public void HighlightColumn(int columnID)
