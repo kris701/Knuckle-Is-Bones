@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
-    public partial class StartGame : BaseView
+    public partial class StartGame : BaseAnimatedView
     {
         private readonly Random _rnd = new Random();
         private PageHandler<ButtonControl> _boardsPageHandler;

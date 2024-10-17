@@ -9,10 +9,20 @@ using System.IO;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 {
-    public partial class MainMenu : BaseView
+    public partial class MainMenu : BaseAnimatedView
     {
         public override void Initialize()
         {
+            AddControl(0, new LabelControl()
+            {
+                Text = "Knuckle Is Bones",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx72),
+                Y = 100,
+                HorizontalAlignment = HorizontalAlignment.Middle,
+                Width = 200,
+                Height = 150
+            });
+
             AddControl(0, new ButtonControl(Parent, (x) =>
             {
                 SwitchView(new MainGame(Parent, new Core.Models.Saves.GameSaveDefinition("save.json")));
@@ -20,7 +30,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
             {
                 Text = "Continue",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Y = 100,
+                Y = 300,
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 FillClickedColor = BasicTextures.GetClickedTexture(),
                 FillColor = BasicTextures.GetBasicRectange(Color.Gray),
@@ -33,7 +43,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
             {
                 Text = "New Game",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Y = 200,
+                Y = 400,
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 FillClickedColor = BasicTextures.GetClickedTexture(),
                 FillColor = BasicTextures.GetBasicRectange(Color.Gray),

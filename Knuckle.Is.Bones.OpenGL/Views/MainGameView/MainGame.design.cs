@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
-    public partial class MainGame : BaseView
+    public partial class MainGame : BaseAnimatedView
     {
         private LabelControl _diceLabel;
         private BoardControl _board1;

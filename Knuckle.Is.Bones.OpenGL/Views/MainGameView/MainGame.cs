@@ -12,7 +12,7 @@ using System.IO;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
-    public partial class MainGame : BaseView
+    public partial class MainGame : BaseAnimatedView
     {
         public static Guid ID = new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361");
 
@@ -32,7 +32,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
         private int _rolledTimes = 0;
         private readonly Random _rnd = new Random();
 
-        public MainGame(IWindow parent, GameSaveDefinition save) : base(parent, ID)
+        public MainGame(IWindow parent, GameSaveDefinition save) : base(
+            parent,
+            ID,
+            parent.Textures.GetTextureSet(new Guid("aeb7a8dd-d580-4550-af87-1db80e522dfa")),
+            parent.Textures.GetTextureSet(new Guid("e650684b-a4cf-4950-990e-60b08aac57c5")))
         {
             Save = save;
             Engine = new KnuckleBonesEngine(save);
