@@ -103,9 +103,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 UpdateSecondOpponentBoard();
 
                 if (Engine.State.Winner == Engine.State.FirstOpponent.Module.OpponentID)
-                    _winnerLabel.Text = "Player won!";
+                    _winnerLabel.Text = "First Opponent Won!";
                 else
-                    _winnerLabel.Text = "CPU won!";
+                    _winnerLabel.Text = "Second Opponent Won!";
                 _gameOverPanel.IsVisible = true;
                 if (File.Exists("save.json"))
                     File.Delete("save.json");
