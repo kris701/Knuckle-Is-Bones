@@ -1,5 +1,5 @@
-﻿using KnuckleBones.Core.Models.Game;
-using KnuckleBones.OpenGL.Helpers;
+﻿using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.OpenGL.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.OpenGL.Formatter;
@@ -8,7 +8,7 @@ using MonoGame.OpenGL.Formatter.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KnuckleBones.OpenGL.Views.MainGameView
+namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
     public class BoardControl : CollectionControl
     {

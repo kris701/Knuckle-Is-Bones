@@ -1,8 +1,8 @@
-﻿using KnuckleBones.Core.Models;
+﻿using Knuckle.Is.Bones.Core.Models;
 using System.Reflection;
 using System.Text.Json;
 
-namespace KnuckleBones.Core.Resources
+namespace Knuckle.Is.Bones.Core.Resources
 {
     public class BaseBuilder<T> where T : IDefinition
     {

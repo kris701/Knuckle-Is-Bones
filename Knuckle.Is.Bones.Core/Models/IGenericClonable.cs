@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KnuckleBones.Core.Models
+namespace Knuckle.Is.Bones.Core.Models
 {
     public interface IGenericClonable<T>
     {

@@ -1,8 +1,8 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Saves;
-using KnuckleBones.Core.Models.Game;
-using KnuckleBones.Core.Resources;
+using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.Core.Resources;
 
-namespace KnuckleBones.Core.Engines
+namespace Knuckle.Is.Bones.Core.Engines
 {
     public delegate void GameEventHandler();
 

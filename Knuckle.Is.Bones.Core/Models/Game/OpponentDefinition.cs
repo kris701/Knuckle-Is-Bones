@@ -1,7 +1,7 @@
-﻿using KnuckleBones.Core.Models.Game.OpponentModules;
+﻿using Knuckle.Is.Bones.Core.Models.Game.OpponentModules;
 using System.Text.Json.Serialization;
 
-namespace KnuckleBones.Core.Models.Game
+namespace Knuckle.Is.Bones.Core.Models.Game
 {
     public class OpponentDefinition : IDefinition, IGenericClonable<OpponentDefinition>
     {

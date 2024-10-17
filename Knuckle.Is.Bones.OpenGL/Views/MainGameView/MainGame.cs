@@ -1,8 +1,8 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Saves;
-using KnuckleBones.Core.Engines;
-using KnuckleBones.Core.Helpers;
-using KnuckleBones.Core.Models.Game.OpponentModules;
-using KnuckleBones.Core.Resources;
+using Knuckle.Is.Bones.Core.Engines;
+using Knuckle.Is.Bones.Core.Helpers;
+using Knuckle.Is.Bones.Core.Models.Game.OpponentModules;
+using Knuckle.Is.Bones.Core.Resources;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.OpenGL.Formatter;
@@ -11,13 +11,15 @@ using MonoGame.OpenGL.Formatter.Views;
 using System;
 using System.IO;
 
-namespace KnuckleBones.OpenGL.Views.MainGameView
+namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
     public partial class MainGame : BaseView
     {
         public static Guid ID = new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361");
 
         public KnuckleBonesEngine Engine { get; set; }
+        public GameSaveDefinition Save {  get; set; }
+
         private readonly KeyWatcher _leftKeyWatcher;
         private readonly KeyWatcher _rightKeyWatcher;
         private readonly KeyWatcher _enterKeyWatcher;
@@ -31,23 +33,10 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
         private int _rolledTimes = 0;
         private readonly Random _rnd = new Random();
 
-        public MainGame(IWindow parent) : base(parent, ID)
+        public MainGame(IWindow parent, GameSaveDefinition save) : base(parent, ID)
         {
-            if (File.Exists("save.json"))
-                Engine = new KnuckleBonesEngine(new GameSaveDefinition("save.json"));
-            else
-            {
-                Engine = new KnuckleBonesEngine(new GameSaveDefinition(new GameState()
-                {
-                    FirstOpponent = ResourceManager.Opponents.GetResource(new Guid("d6032478-b6ec-483e-8750-5976830d66b2")).Clone(),
-                    FirstOpponentBoard = ResourceManager.Boards.GetResource(new Guid("907bddf8-cbe1-49f4-a1f8-92ad5266f116")).Clone(),
-                    SecondOpponent = ResourceManager.Opponents.GetResource(new Guid("42244cf9-6ad3-4729-8376-a0d323440a18")).Clone(),
-                    SecondOpponentBoard = ResourceManager.Boards.GetResource(new Guid("907bddf8-cbe1-49f4-a1f8-92ad5266f116")).Clone(),
-                    CurrentDice = ResourceManager.Dice.GetResource(new Guid("fb539a3a-9989-4623-88d1-bf216320f717")).Clone(),
-                }));
-                Engine.State.CurrentDice.Value = _rnd.Next(1, Engine.State.CurrentDice.Sides + 1);
-                Engine.State.Turn = Engine.State.FirstOpponent.Module.OpponentID;
-            }
+            Save = save;
+            Engine = new KnuckleBonesEngine(save);
 
             _leftKeyWatcher = new KeyWatcher(Keys.Left, MoveLeft);
             _rightKeyWatcher = new KeyWatcher(Keys.Right, MoveRight);
@@ -119,6 +108,8 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                 else
                     _winnerLabel.Text = "CPU won!";
                 _gameOverPanel.IsVisible = true;
+                if (File.Exists("save.json"))
+                    File.Delete("save.json");
 
                 return;
             }

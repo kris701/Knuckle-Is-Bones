@@ -1,4 +1,4 @@
-﻿namespace KnuckleBones.Core.Helpers
+﻿namespace Knuckle.Is.Bones.Core.Helpers
 {
     public class GameTimer
     {

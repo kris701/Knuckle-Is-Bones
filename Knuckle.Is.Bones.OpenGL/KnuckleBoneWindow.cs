@@ -1,4 +1,4 @@
-﻿using KnuckleBones.OpenGL.ResourcePacks;
+﻿using Knuckle.Is.Bones.OpenGL.ResourcePacks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace KnuckleBones.OpenGL
+namespace Knuckle.Is.Bones.OpenGL
 {
     public class KnuckleBoneWindow : Game, IWindow
     {
@@ -62,7 +62,7 @@ namespace KnuckleBones.OpenGL
 
             var thisVersion = Assembly.GetEntryAssembly()?.GetName().Version!;
             var thisVersionStr = $"v{thisVersion.Major}.{thisVersion.Minor}.{thisVersion.Build}";
-            Window.Title = $"KnuckleBones {thisVersionStr}";
+            Window.Title = $"Knuckle Is Bones {thisVersionStr}";
 
             Audio = new AudioController(Content);
             Textures = new TextureController(Content);

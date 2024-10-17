@@ -1,7 +1,7 @@
-﻿using KnuckleBones.Core.Models;
+﻿using Knuckle.Is.Bones.Core.Models;
 using System.Text.Json.Serialization;
 
-namespace KnuckleBones.Core.Resources
+namespace Knuckle.Is.Bones.Core.Resources
 {
     public class ResourceDefinition : IDefinition
     {

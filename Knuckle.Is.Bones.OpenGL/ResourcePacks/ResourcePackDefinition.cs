@@ -1,11 +1,11 @@
-﻿using KnuckleBones.Core.Models;
+﻿using Knuckle.Is.Bones.Core.Models;
 using MonoGame.OpenGL.Formatter.Audio;
 using MonoGame.OpenGL.Formatter.Fonts;
 using MonoGame.OpenGL.Formatter.Textures;
 using System;
 using System.Collections.Generic;
 
-namespace KnuckleBones.OpenGL.ResourcePacks
+namespace Knuckle.Is.Bones.OpenGL.ResourcePacks
 {
     public class ResourcePackDefinition : IDefinition
     {

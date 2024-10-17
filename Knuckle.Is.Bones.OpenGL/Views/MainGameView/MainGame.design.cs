@@ -1,12 +1,14 @@
-﻿using KnuckleBones.Core.Models.Game;
-using KnuckleBones.OpenGL.Helpers;
+﻿using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
+using Knuckle.Is.Bones.OpenGL.Views.StartGameView;
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
 using System.Collections.Generic;
 
-namespace KnuckleBones.OpenGL.Views.MainGameView
+namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
     public partial class MainGame : BaseView
     {
@@ -52,7 +54,7 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
             SetupGameOverView();
 
 #if DEBUG
-            AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new MainGame(Parent)))
+            AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new MainGame(Parent, Save)))
             {
                 X = 0,
                 Y = 0,
@@ -144,13 +146,24 @@ namespace KnuckleBones.OpenGL.Views.MainGameView
                     FillColor = BasicTextures.GetBasicRectange(Color.Black)
                 },
                 _winnerLabel,
-                new ButtonControl(Parent, (x) => SwitchView(new MainGame(Parent)))
+                new ButtonControl(Parent, (x) => SwitchView(new StartGame(Parent)))
                 {
                     Width = 400,
                     Height = 110,
                     Y = 200,
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
                     Text = "Play Again",
+                    FontColor = Color.White,
+                    FillColor = BasicTextures.GetBasicRectange(Color.Black),
+                    FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray),
+                },
+                new ButtonControl(Parent, (x) => SwitchView(new MainMenu(Parent)))
+                {
+                    Width = 400,
+                    Height = 110,
+                    Y = 300,
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                    Text = "Main Menu",
                     FontColor = Color.White,
                     FillColor = BasicTextures.GetBasicRectange(Color.Black),
                     FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray),

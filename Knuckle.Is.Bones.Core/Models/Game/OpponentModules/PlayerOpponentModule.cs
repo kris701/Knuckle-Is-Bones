@@ -1,19 +1,17 @@
-﻿namespace KnuckleBones.Core.Models.Game.OpponentModules
+﻿using System.Text.Json.Serialization;
+
+namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
 {
     public class PlayerOpponentModule : IOpponentModule
     {
-        public Guid OpponentID { get; set; }
+        public Guid OpponentID { get; set; } = Guid.NewGuid();
 
         private int _targetColumn = 0;
 
+        [JsonConstructor]
         public PlayerOpponentModule(Guid opponentID)
         {
             OpponentID = opponentID;
-        }
-
-        public PlayerOpponentModule()
-        {
-            OpponentID = Guid.NewGuid();
         }
 
         public void SetTargetColumn(BoardDefinition board) => throw new NotImplementedException();
@@ -22,6 +20,6 @@
 
         public int GetTargetColumn() => _targetColumn;
 
-        public IOpponentModule Clone() => new PlayerOpponentModule();
+        public IOpponentModule Clone() => new PlayerOpponentModule(OpponentID);
     }
 }

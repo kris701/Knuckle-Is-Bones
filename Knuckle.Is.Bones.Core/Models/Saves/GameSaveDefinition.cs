@@ -1,5 +1,5 @@
-﻿using KnuckleBones.Core.Engines;
-using KnuckleBones.Core.Models;
+﻿using Knuckle.Is.Bones.Core.Engines;
+using Knuckle.Is.Bones.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

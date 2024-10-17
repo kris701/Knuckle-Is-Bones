@@ -1,8 +1,8 @@
-﻿using KnuckleBones.Core.Models.Game;
+﻿using Knuckle.Is.Bones.Core.Models.Game;
 using System.Reflection;
 using System.Text.Json;
 
-namespace KnuckleBones.Core.Resources
+namespace Knuckle.Is.Bones.Core.Resources
 {
     public static class ResourceManager
     {

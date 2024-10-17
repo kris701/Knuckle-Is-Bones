@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KnuckleBones.OpenGL.Helpers
+namespace Knuckle.Is.Bones.OpenGL.Helpers
 {
     public static class FontSizes
     {

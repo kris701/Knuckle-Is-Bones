@@ -1,7 +1,7 @@
-﻿using KnuckleBones.Core.Models;
-using KnuckleBones.Core.Models.Game;
+﻿using Knuckle.Is.Bones.Core.Models;
+using Knuckle.Is.Bones.Core.Models.Game;
 
-namespace KnuckleBones.Core.Engines
+namespace Knuckle.Is.Bones.Core.Engines
 {
     public class GameState : IGenericClonable<GameState>
     {

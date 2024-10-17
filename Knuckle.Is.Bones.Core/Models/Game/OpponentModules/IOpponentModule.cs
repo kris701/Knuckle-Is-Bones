@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace KnuckleBones.Core.Models.Game.OpponentModules
+namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
 {
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "OpponentModule")]
     [JsonDerivedType(typeof(PlayerOpponentModule), typeDiscriminator: "Player")]

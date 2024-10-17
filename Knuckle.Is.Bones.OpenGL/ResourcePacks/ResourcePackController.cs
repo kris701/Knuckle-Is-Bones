@@ -1,4 +1,4 @@
-﻿using KnuckleBones.Core.Resources;
+﻿using Knuckle.Is.Bones.Core.Resources;
 using MonoGame.OpenGL.Formatter.Audio;
 using MonoGame.OpenGL.Formatter.Fonts;
 using MonoGame.OpenGL.Formatter.Textures;
@@ -8,7 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 
-namespace KnuckleBones.OpenGL.ResourcePacks
+namespace Knuckle.Is.Bones.OpenGL.ResourcePacks
 {
     public class ResourcePackController
     {

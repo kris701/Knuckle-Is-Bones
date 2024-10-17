@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace KnuckleBones.Core.Models.Game
+namespace Knuckle.Is.Bones.Core.Models.Game
 {
     public class DiceDefinition : IDefinition, IGenericClonable<DiceDefinition>
     {
