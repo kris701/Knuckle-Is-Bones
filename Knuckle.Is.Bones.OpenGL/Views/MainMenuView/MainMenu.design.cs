@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
+using System;
 using System.IO;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
@@ -13,14 +14,21 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
     {
         public override void Initialize()
         {
-            AddControl(0, new LabelControl()
+            AddControl(0, new TileControl()
             {
-                Text = "Knuckle Is Bones",
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx72),
+                Width = 1920,
+                Height = 1080,
+                FillColor = BasicTextures.GetBasicRectange(Color.Black)
+            });
+
+            AddControl(0, new AnimatedTileControl()
+            {
                 Y = 100,
                 HorizontalAlignment = HorizontalAlignment.Middle,
-                Width = 200,
-                Height = 150
+                Width = 800,
+                Height = 264,
+                FrameTime = TimeSpan.FromMilliseconds(Parent.Textures.GetTextureSet(new Guid("af1a8619-0867-44ce-89ab-e2d42912ba44")).FrameTime),
+                TileSet = Parent.Textures.GetTextureSet(new Guid("af1a8619-0867-44ce-89ab-e2d42912ba44")).GetLoadedContent()
             });
 
             AddControl(0, new ButtonControl(Parent, (x) =>
@@ -30,7 +38,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
             {
                 Text = "Continue",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Y = 300,
+                Y = 400,
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 FillClickedColor = BasicTextures.GetClickedTexture(),
                 FillColor = BasicTextures.GetBasicRectange(Color.Gray),
@@ -43,7 +51,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
             {
                 Text = "New Game",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Y = 400,
+                Y = 550,
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 FillClickedColor = BasicTextures.GetClickedTexture(),
                 FillColor = BasicTextures.GetBasicRectange(Color.Gray),

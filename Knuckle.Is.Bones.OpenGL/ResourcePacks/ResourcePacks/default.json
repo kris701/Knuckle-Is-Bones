@@ -36,6 +36,14 @@
   "Textures": [],
   "TextureSets": [
     {
+      "ID": "af1a8619-0867-44ce-89ab-e2d42912ba44",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/MainMenu/title_1",
+        "Views/MainMenu/title_2"
+      ]
+    },
+    {
       "ID": "aeb7a8dd-d580-4550-af87-1db80e522dfa",
       "FrameTime": 10,
       "Contents": [
