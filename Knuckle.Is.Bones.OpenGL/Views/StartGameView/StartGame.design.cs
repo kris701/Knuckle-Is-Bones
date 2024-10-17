@@ -34,6 +34,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 save.State.CurrentDice.Value = _rnd.Next(1, save.State.CurrentDice.Sides + 1);
                 save.State.Turn = save.State.FirstOpponent.Module.OpponentID;
 
+                save.Save();
+
                 SwitchView(new MainGame(Parent, save));
             })
             {

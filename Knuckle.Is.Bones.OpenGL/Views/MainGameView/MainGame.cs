@@ -109,6 +109,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 _gameOverPanel.IsVisible = true;
                 if (File.Exists("save.json"))
                     File.Delete("save.json");
+                if (Parent is KnuckleBoneWindow window)
+                {
+                    if (Engine.State.FirstOpponent.Module is PlayerOpponentModule)
+                        window.User.AllTimeScore += Engine.State.FirstOpponentBoard.GetValue();
+                    if (Engine.State.SecondOpponent.Module is PlayerOpponentModule)
+                        window.User.AllTimeScore += Engine.State.SecondOpponentBoard.GetValue();
+                    window.User.Save();
+                }
 
                 return;
             }

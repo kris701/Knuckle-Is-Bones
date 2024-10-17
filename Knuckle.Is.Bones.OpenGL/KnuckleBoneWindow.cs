@@ -1,4 +1,5 @@
-﻿using Knuckle.Is.Bones.OpenGL.ResourcePacks;
+﻿using Knuckle.Is.Bones.Core.Models.Saves;
+using Knuckle.Is.Bones.OpenGL.ResourcePacks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,6 +15,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
+using ToolsSharp;
 
 namespace Knuckle.Is.Bones.OpenGL
 {
@@ -33,6 +36,7 @@ namespace Knuckle.Is.Bones.OpenGL
         public TextureController Textures { get; private set; }
         public FontController Fonts { get; private set; }
         public ResourcePackController ResourcePackController { get; private set; }
+        public UserSaveDefinition User {  get; private set; }
 
         private readonly Func<KnuckleBoneWindow, IView> _screenToLoad;
         private SpriteBatch? _spriteBatch;
@@ -47,6 +51,11 @@ namespace Knuckle.Is.Bones.OpenGL
             Content.RootDirectory = _contentDir;
             _screenToLoad = screen;
             IsMouseVisible = true;
+
+            if (File.Exists("user.json"))
+                User = JsonSerializerHelpers.DeserializeOrDefault<UserSaveDefinition>(File.ReadAllText("user.json"), () => new UserSaveDefinition());
+            else
+                User = new UserSaveDefinition();
 
             Device.PreferredBackBufferWidth = 1068;
             Device.PreferredBackBufferHeight = 600;
