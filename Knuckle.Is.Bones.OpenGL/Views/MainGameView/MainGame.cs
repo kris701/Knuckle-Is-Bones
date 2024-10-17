@@ -1,8 +1,7 @@
-﻿using Knuckle.Is.Bones.Core.Models.Saves;
-using Knuckle.Is.Bones.Core.Engines;
+﻿using Knuckle.Is.Bones.Core.Engines;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game.OpponentModules;
-using Knuckle.Is.Bones.Core.Resources;
+using Knuckle.Is.Bones.Core.Models.Saves;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.OpenGL.Formatter;
@@ -18,7 +17,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
         public static Guid ID = new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361");
 
         public KnuckleBonesEngine Engine { get; set; }
-        public GameSaveDefinition Save {  get; set; }
+        public GameSaveDefinition Save { get; set; }
 
         private readonly KeyWatcher _leftKeyWatcher;
         private readonly KeyWatcher _rightKeyWatcher;
