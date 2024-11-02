@@ -50,5 +50,5 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           skipIfReleaseExists: true
-          artifacts: "Output/KnuckleIsBonesSetup.exe;Output/*.zip"
+          artifacts: "Output/KnuckleIsBonesSetup.exe,Output/*.zip"
           tag: "v${{ steps.get-version.outputs.package-version }}"
