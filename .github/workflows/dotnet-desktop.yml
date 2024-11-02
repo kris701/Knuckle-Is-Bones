@@ -52,3 +52,4 @@ jobs:
           skipIfReleaseExists: true
           artifacts: "Output/KnuckleIsBonesSetup.exe,Output/*.zip"
           tag: "v${{ steps.get-version.outputs.package-version }}"
+          generateReleaseNotes: true
