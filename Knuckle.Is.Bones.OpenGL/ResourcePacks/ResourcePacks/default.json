@@ -44,6 +44,72 @@
       ]
     },
     {
+      "ID": "d7ae88e1-8b8e-4ea9-9c99-e78e2d91943a",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/MainGame/gameover_1",
+        "Views/MainGame/gameover_2"
+      ]
+    },
+    {
+      "ID": "d9d352d4-ee90-4d1e-98b4-c06c043e6dce",
+      "FrameTime": 750,
+      "Contents": [
+        "Shared/button_1",
+        "Shared/button_2"
+      ]
+    },
+    {
+      "ID": "de7f2a5a-82c7-4700-b2ba-926bceb1689a",
+      "FrameTime": 750,
+      "Contents": [
+        "Shared/button_small_1",
+        "Shared/button_small_2"
+      ]
+    },
+    {
+      "ID": "cfa11efd-0284-4abb-bd12-9df0837081b0",
+      "FrameTime": 500,
+      "Contents": [
+        "Shared/button_small_1_select",
+        "Shared/button_small_2_select"
+      ]
+    },
+    {
+      "ID": "a05f00b0-fcdd-41a8-a350-90bf0956c3b5",
+      "FrameTime": 750,
+      "Contents": [
+        "Shared/square_1",
+        "Shared/square_2"
+      ]
+    },
+
+    {
+      "ID": "3365fe57-9c47-44ec-b3d2-457fa0fdf3c4",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/MainGame/combo_1_1",
+        "Views/MainGame/combo_1_2"
+      ]
+    },
+    {
+      "ID": "936d00f9-2f70-40f6-9d1b-b13cec0fc54a",
+      "FrameTime": 650,
+      "Contents": [
+        "Views/MainGame/combo_2_1",
+        "Views/MainGame/combo_2_2"
+      ]
+    },
+    {
+      "ID": "d02a3300-76fa-4965-9f41-18f4af4832a3",
+      "FrameTime": 500,
+      "Contents": [
+        "Views/MainGame/combo_3_1",
+        "Views/MainGame/combo_3_2"
+      ]
+    },
+
+    {
       "ID": "aeb7a8dd-d580-4550-af87-1db80e522dfa",
       "FrameTime": 10,
       "Contents": [

@@ -2,6 +2,7 @@
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game.OpponentModules;
 using Knuckle.Is.Bones.Core.Models.Saves;
+using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.OpenGL.Formatter;
@@ -22,6 +23,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
         private readonly KeyWatcher _leftKeyWatcher;
         private readonly KeyWatcher _rightKeyWatcher;
         private readonly KeyWatcher _enterKeyWatcher;
+        private readonly KeyWatcher _escapeKeyWatcher;
         private readonly GameTimer _rollTimer;
         private readonly GameTimer _rollWaitTimer;
         private readonly GameTimer _selectWaitTimer;
@@ -44,6 +46,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
             _leftKeyWatcher = new KeyWatcher(Keys.Left, MoveLeft);
             _rightKeyWatcher = new KeyWatcher(Keys.Right, MoveRight);
             _enterKeyWatcher = new KeyWatcher(Keys.Enter, TakeTurn);
+            _escapeKeyWatcher = new KeyWatcher(Keys.Escape, () => {
+                if (_rolling || _rollWait || _selectWait)
+                    return;
+                SwitchView(new MainMenu(Parent));
+            });
             _rollTimer = new GameTimer(TimeSpan.FromMilliseconds(50), (x) =>
             {
                 _diceLabel.Text = $"{_rnd.Next(1, Engine.State.CurrentDice.Sides + 1)}";
@@ -85,6 +92,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
             _leftKeyWatcher.Update(keyState);
             _rightKeyWatcher.Update(keyState);
             _enterKeyWatcher.Update(keyState);
+            _escapeKeyWatcher.Update(keyState);
             if (_rolling)
                 _rollTimer.Update(gameTime.ElapsedGameTime);
             if (_rollWait)

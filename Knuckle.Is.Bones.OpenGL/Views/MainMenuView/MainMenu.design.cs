@@ -27,11 +27,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 Width = 800,
                 Height = 264,
-                FrameTime = TimeSpan.FromMilliseconds(Parent.Textures.GetTextureSet(new Guid("af1a8619-0867-44ce-89ab-e2d42912ba44")).FrameTime),
-                TileSet = Parent.Textures.GetTextureSet(new Guid("af1a8619-0867-44ce-89ab-e2d42912ba44")).GetLoadedContent()
+                TileSet = Parent.Textures.GetTextureSet(new Guid("af1a8619-0867-44ce-89ab-e2d42912ba44"))
             });
 
-            AddControl(0, new ButtonControl(Parent, (x) =>
+            int offset = 0;
+            if (File.Exists("save.json"))
+                offset = 150;
+
+            AddControl(0, new AnimatedButtonControl(Parent, (x) =>
             {
                 SwitchView(new MainGame(Parent, new Core.Models.Saves.GameSaveDefinition("save.json")));
             })
@@ -41,21 +44,33 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
                 Y = 400,
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 FillClickedColor = BasicTextures.GetClickedTexture(),
-                FillColor = BasicTextures.GetBasicRectange(Color.Gray),
+                TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
                 IsVisible = File.Exists("save.json"),
-                Width = 200,
+                Width = 400,
                 Height = 100
             });
 
-            AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new StartGame(Parent)))
+            AddControl(0, new AnimatedButtonControl(Parent, (x) => SwitchView(new StartGame(Parent)))
             {
                 Text = "New Game",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Y = 550,
+                Y = 400 + offset,
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 FillClickedColor = BasicTextures.GetClickedTexture(),
-                FillColor = BasicTextures.GetBasicRectange(Color.Gray),
-                Width = 200,
+                TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+                Width = 400,
+                Height = 100
+            });
+
+            AddControl(0, new AnimatedButtonControl(Parent, (x) => (Parent as KnuckleBoneWindow).Exit())
+            {
+                Text = "Exit",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                Y = 550 + offset,
+                HorizontalAlignment = HorizontalAlignment.Middle,
+                FillClickedColor = BasicTextures.GetClickedTexture(),
+                TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+                Width = 400,
                 Height = 100
             });
 

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
+using MonoGame.OpenGL.Formatter.Textures;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,9 +20,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
         private readonly float _cellHeight;
         private readonly float _margin = 5;
         private readonly TileControl _columnHighlight;
+        private readonly IWindow _parent;
 
         public BoardControl(IWindow parent, BoardDefinition board, float x, float y, float width, float height, bool flip = false)
         {
+            _parent = parent;
             _board = board;
             _columns = board.Columns.Count;
             _rows = board.Columns.Max(x => x.Cells.Count);
@@ -33,15 +36,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
             _cellWidth = ((width - _margin) / _columns) - _margin;
             _cellHeight = ((height - _margin) / _rows) - _margin;
-
-            Children.Add(new TileControl()
-            {
-                Width = width,
-                Height = height,
-                X = x,
-                Y = y,
-                FillColor = BasicTextures.GetBasicRectange(Color.DarkGray)
-            });
 
             _columnHighlight = new TileControl()
             {
@@ -66,7 +60,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                     if (cell != 0)
                         text = $"{cell}";
 
-                    Children.Add(new LabelControl()
+                    Children.Add(new AnimatedLabelControl()
                     {
                         X = x + columnIndex * (_cellWidth + _margin) + _margin,
                         Y = y + (cellOffset * (_cellHeight + _margin) + _margin),
@@ -75,7 +69,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                         Font = parent.Fonts.GetFont(FontSizes.Ptx48),
                         FontColor = Color.White,
                         Text = text,
-                        FillColor = GetBackgroundForCount(column.Cells, cell)
+                        TileSet = GetBackgroundForCount(column.Cells, cell)
                     });
                     if (flip)
                         cellOffset--;
@@ -86,18 +80,19 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
             }
         }
 
-        private Texture2D GetBackgroundForCount(List<int> cells, int value)
+        private TextureSetDefinition GetBackgroundForCount(List<int> cells, int value)
         {
             if (value == 0)
-                return BasicTextures.GetBasicRectange(Color.Gray);
+                return _parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"));
             switch (cells.Count(x => x == value))
             {
                 case 0:
-                case 1: return BasicTextures.GetBasicRectange(Color.Gray);
-                case 2: return BasicTextures.GetBasicRectange(Color.Blue);
-                case 3: return BasicTextures.GetBasicRectange(Color.Gold);
+                case 1: return _parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"));
+                case 2: return _parent.Textures.GetTextureSet(new System.Guid("936d00f9-2f70-40f6-9d1b-b13cec0fc54a"));
+                case 3: return _parent.Textures.GetTextureSet(new System.Guid("d02a3300-76fa-4965-9f41-18f4af4832a3"));
+                case 4: return _parent.Textures.GetTextureSet(new System.Guid("d02a3300-76fa-4965-9f41-18f4af4832a3"));
             }
-            return BasicTextures.GetBasicRectange(Color.Gray);
+            return _parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"));
         }
 
         public void HighlightColumn(int columnID)

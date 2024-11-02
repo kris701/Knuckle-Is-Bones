@@ -4,7 +4,9 @@ using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
+using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
@@ -16,14 +18,28 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
     public partial class StartGame : BaseAnimatedView
     {
         private readonly Random _rnd = new Random();
-        private PageHandler<ButtonControl> _boardsPageHandler;
-        private PageHandler<ButtonControl> _dicePageHandler;
-        private PageHandler<ButtonControl> _firstOpponentsPageHandler;
-        private PageHandler<ButtonControl> _secondOpponentsPageHandler;
+        private PageHandler<AnimatedButtonControl> _boardsPageHandler;
+        private PageHandler<AnimatedButtonControl> _dicePageHandler;
+        private PageHandler<AnimatedButtonControl> _firstOpponentsPageHandler;
+        private PageHandler<AnimatedButtonControl> _secondOpponentsPageHandler;
+
+        private AnimatedButtonControl _startButton;
+        private bool _boardSelected = false;
+        private bool _diceSelected = false;
+        private bool _opponentOneSelected = false;
+        private bool _opponentTwoSelected = false;
 
         public override void Initialize()
         {
-            AddControl(0, new ButtonControl(Parent, (x) =>
+            AddControl(0, new TileControl()
+            {
+                Width = 1920,
+                Height = 1080,
+                FillColor = BasicTextures.GetBasicRectange(Color.Black)
+            });
+            var textureSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce"));
+
+            _startButton = new AnimatedButtonControl(Parent, (x) =>
             {
                 if (_selectedBoard == Guid.Empty)
                     return;
@@ -57,19 +73,91 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 Text = "Start",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
                 Y = 980,
-                HorizontalAlignment = HorizontalAlignment.Middle,
+                HorizontalAlignment = HorizontalAlignment.Right,
                 FillClickedColor = BasicTextures.GetClickedTexture(),
-                FillColor = BasicTextures.GetBasicRectange(Color.Gray),
-                Width = 300,
+                TileSet = textureSet,
+                FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
+                IsEnabled = false,
+                Alpha = 100,
+                Width = 400,
+                Height = 100
+            };
+            AddControl(0, _startButton);
+            AddControl(0, new AnimatedButtonControl(Parent, (x) => SwitchView(new MainMenu(Parent)))
+            {
+                Text = "Back",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                Y = 980,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                FillClickedColor = BasicTextures.GetClickedTexture(),
+                TileSet = textureSet,
+                Width = 400,
                 Height = 100
             });
 
+            var margin = 50;
+            var width = (1920 - margin * 2) / 4;
 
-            SetupPageControl(_boardsPageHandler, 100, 100, 400, 500, "Boards", ResourceManager.Boards.GetResources(), ResourceManager.Boards.GetResource, SelectBoard_Click);
-            SetupPageControl(_dicePageHandler, 500, 100, 400, 500, "Dice", ResourceManager.Dice.GetResources(), ResourceManager.Dice.GetResource, SelectDice_Click);
-            SetupPageControl(_firstOpponentsPageHandler, 900, 100, 400, 500, "First Opponent", ResourceManager.Opponents.GetResources(), ResourceManager.Opponents.GetResource, SelectFirstOpponent_Click);
-            SetupPageControl(_secondOpponentsPageHandler, 1300, 100, 400, 500, "Second Opponent", ResourceManager.Opponents.GetResources(), ResourceManager.Opponents.GetResource, SelectSecondOpponent_Click);
-
+            SetupPageControl(
+                _boardsPageHandler, 
+                margin + (width) * 0, 
+                100, 
+                width, 
+                500, 
+                "Boards", 
+                ResourceManager.Boards.GetResources(), 
+                ResourceManager.Boards.GetResource, 
+                SelectBoard_Click, 
+                () =>
+                    {
+                        _boardSelected = true;
+                        CheckIfAllOptionsChecked();
+                    });
+            SetupPageControl(
+                _dicePageHandler, 
+                margin + (width) * 1, 
+                100, 
+                width, 
+                500, 
+                "Dice", 
+                ResourceManager.Dice.GetResources(), 
+                ResourceManager.Dice.GetResource, 
+                SelectDice_Click, 
+                () =>
+                    {
+                        _diceSelected = true;
+                        CheckIfAllOptionsChecked();
+                    });
+            SetupPageControl(
+                _firstOpponentsPageHandler, 
+                margin + (width) * 2, 
+                100, 
+                width, 
+                500, 
+                "Player 1", 
+                ResourceManager.Opponents.GetResources(), 
+                ResourceManager.Opponents.GetResource, 
+                SelectFirstOpponent_Click, 
+                () =>
+                    {
+                        _opponentOneSelected = true;
+                        CheckIfAllOptionsChecked();
+                    });
+            SetupPageControl(
+                _secondOpponentsPageHandler, 
+                margin + (width) * 3, 
+                100, 
+                width, 
+                500, 
+                "Player 2", 
+                ResourceManager.Opponents.GetResources(), 
+                ResourceManager.Opponents.GetResource, 
+                SelectSecondOpponent_Click, 
+                () =>
+                    {
+                        _opponentTwoSelected = true;
+                        CheckIfAllOptionsChecked();
+                    });
 
 #if DEBUG
             AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new StartGame(Parent)))
@@ -89,7 +177,16 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
             base.Initialize();
         }
 
-        private void SetupPageControl(PageHandler<ButtonControl> pagehandler, float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IDefinition> getMethod, Action<ButtonControl> clicked)
+        private void CheckIfAllOptionsChecked()
+        {
+            if (_boardSelected && _diceSelected && _opponentOneSelected && _opponentTwoSelected)
+            {
+                _startButton.IsEnabled = true;
+                _startButton.Alpha = 256;
+            }
+        }
+
+        private void SetupPageControl(PageHandler<AnimatedButtonControl> pagehandler, float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IDefinition> getMethod, Action<AnimatedButtonControl> clicked, Action onAnySelected)
         {
             AddControl(1, new LabelControl()
             {
@@ -99,16 +196,21 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 Y = y + 10,
                 Height = 50,
                 Width = width,
-                FontColor = Color.White
+                FontColor = new Color(217,68,144)
             });
 
-            var controlList = new List<ButtonControl>();
+            var textureSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+            var controlList = new List<AnimatedButtonControl>();
             foreach (var id in ids)
             {
                 var item = getMethod(id);
-                controlList.Add(new ButtonControl(Parent, (x) => clicked(x))
+                controlList.Add(new AnimatedButtonControl(Parent, (x) =>
                 {
-                    FillColor = BasicTextures.GetBasicRectange(Color.Gray),
+                    clicked(x as AnimatedButtonControl);
+                    onAnySelected();
+                })
+                {
+                    TileSet = textureSet,
                     FillClickedColor = BasicTextures.GetClickedTexture(),
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
                     Text = $"{item.Name}",
@@ -118,7 +220,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                     Tag = item.ID
                 });
             }
-            pagehandler = new PageHandler<ButtonControl>(this, controlList)
+            pagehandler = new PageHandler<AnimatedButtonControl>(this, controlList)
             {
                 LeftButtonX = 10,
                 LeftButtonY = -50,

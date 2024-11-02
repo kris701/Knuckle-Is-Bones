@@ -20,32 +20,30 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
         public override void Initialize()
         {
+            AddControl(0, new TileControl()
+            {
+                Width = 1920,
+                Height = 1080,
+                FillColor = BasicTextures.GetBasicRectange(Color.Black)
+            });
+
             AddControl(0, new LabelControl()
             {
                 Text = $"{Engine.State.FirstOpponent.Name}",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Width = 200,
-                Height = 520,
+                Width = 300,
+                Height = 100,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Top,
-                FillColor = BasicTextures.GetBasicRectange(Color.Black)
             });
             AddControl(0, new LabelControl()
             {
                 Text = $"{Engine.State.SecondOpponent.Name}",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Width = 200,
-                Height = 520,
+                Width = 300,
+                Height = 100,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 HorizontalAlignment = HorizontalAlignment.Left,
-                FillColor = BasicTextures.GetBasicRectange(Color.Black)
-            });
-            AddControl(0, new TileControl()
-            {
-                Width = 1920,
-                Height = 40,
-                VerticalAlignment = VerticalAlignment.Middle,
-                FillColor = BasicTextures.GetBasicRectange(Color.Black)
             });
 
             UpdateFirstOpponentBoard();
@@ -69,6 +67,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 #endif
 
             base.Initialize();
+
+            UpdateFirstOpponentBoard();
+            UpdateSecondOpponentBoard();
         }
 
         private void UpdateFirstOpponentBoard()
@@ -93,22 +94,22 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
         private void GeneratePointsBox(int layer, BoardDefinition board, int x, int y)
         {
-            AddControl(layer, new LabelControl()
+            AddControl(layer, new AnimatedLabelControl()
             {
                 X = x,
                 Y = y,
                 Width = 150,
                 Height = 150,
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
-                FontColor = Color.Black,
+                FontColor = Color.Gold,
                 Text = $"{board.GetValue()}",
-                FillColor = BasicTextures.GetBasicRectange(Color.Gold)
+                TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
             });
         }
 
         private void SetupDice()
         {
-            _diceLabel = new LabelControl()
+            _diceLabel = new AnimatedLabelControl()
             {
                 X = 375,
                 VerticalAlignment = VerticalAlignment.Middle,
@@ -117,7 +118,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
                 Text = "",
                 FontColor = Color.White,
-                FillColor = BasicTextures.GetBasicRectange(Color.Blue)
+                TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
             };
             AddControl(1000, _diceLabel);
         }
@@ -126,8 +127,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
         {
             _winnerLabel = new LabelControl()
             {
-                Width = 400,
+                Width = 500,
                 Height = 100,
+                HorizontalAlignment = HorizontalAlignment.Middle,
                 Y = 100,
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
                 Text = "",
@@ -136,44 +138,54 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
             };
             _gameOverPanel = new StackPanelControl(new List<IControl>()
             {
+                new AnimatedTileControl()
+                {
+                    Width = 600,
+                    Height = 500,
+                    TileSet = Parent.Textures.GetTextureSet(new System.Guid("d7ae88e1-8b8e-4ea9-9c99-e78e2d91943a"))
+                },
                 new LabelControl()
                 {
-                    Width = 400,
+                    Y = 20,
+                    Width = 500,
                     Height = 100,
+                    HorizontalAlignment = HorizontalAlignment.Middle,
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
                     Text = $"Game Over!",
                     FontColor = Color.White,
                     FillColor = BasicTextures.GetBasicRectange(Color.Black)
                 },
                 _winnerLabel,
-                new ButtonControl(Parent, (x) => SwitchView(new StartGame(Parent)))
+                new AnimatedButtonControl(Parent, (x) => SwitchView(new StartGame(Parent)))
                 {
-                    Width = 400,
+                    Width = 500,
                     Height = 110,
-                    Y = 200,
+                    HorizontalAlignment = HorizontalAlignment.Middle,
+                    Y = 230,
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
                     Text = "Play Again",
                     FontColor = Color.White,
-                    FillColor = BasicTextures.GetBasicRectange(Color.Black),
+                    TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
                     FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray),
                 },
-                new ButtonControl(Parent, (x) => SwitchView(new MainMenu(Parent)))
+                new AnimatedButtonControl(Parent, (x) => SwitchView(new MainMenu(Parent)))
                 {
-                    Width = 400,
+                    Width = 500,
                     Height = 110,
-                    Y = 300,
+                    HorizontalAlignment = HorizontalAlignment.Middle,
+                    Y = 350,
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
                     Text = "Main Menu",
                     FontColor = Color.White,
-                    FillColor = BasicTextures.GetBasicRectange(Color.Black),
+                    TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
                     FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray),
                 }
             })
             {
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 VerticalAlignment = VerticalAlignment.Middle,
-                Width = 400,
-                Height = 300,
+                Width = 600,
+                Height = 500,
                 IsVisible = false
             };
             AddControl(1001, _gameOverPanel);
