@@ -7,7 +7,7 @@
 	  <Authors>Kristian Skov Johansen</Authors>
 	  <Copyright>Kristian Skov Johansen</Copyright>
 	  <Product>Knuckle.Is.Bones Core</Product>
-	  <Version>0.1.0</Version>
+	  <Version>0.1.1</Version>
 	  <SelfContained>true</SelfContained>
 	  <DebugType>embedded</DebugType>
 	  <PublishReadyToRun>false</PublishReadyToRun>
