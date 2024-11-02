@@ -11,7 +11,7 @@ using System.IO;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 {
-    public partial class MainMenu : BaseAnimatedView
+    public partial class MainMenu : BaseFadeView
     {
         public override void Initialize()
         {

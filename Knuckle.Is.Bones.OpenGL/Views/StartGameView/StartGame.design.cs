@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
-    public partial class StartGame : BaseAnimatedView
+    public partial class StartGame : BaseFadeView
     {
         private readonly Random _rnd = new Random();
         private PageHandler<AnimatedButtonControl> _boardsPageHandler;
