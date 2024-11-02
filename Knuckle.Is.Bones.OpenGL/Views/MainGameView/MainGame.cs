@@ -43,8 +43,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
             _rightKeyWatcher = new KeyWatcher(Keys.Right, MoveRight);
             _enterKeyWatcher = new KeyWatcher(Keys.Enter, TakeTurn);
             _escapeKeyWatcher = new KeyWatcher(Keys.Escape, () => {
-                if (_rolling || _rollWait || _selectWait)
-                    return;
+                if ((Engine.State.FirstOpponent.Module is PlayerOpponentModule) || (Engine.State.SecondOpponent.Module is PlayerOpponentModule))
+                    if (_rolling || _rollWait || _selectWait)
+                        return;
                 SwitchView(new MainMenu(Parent));
             });
             _rollTimer = new GameTimer(TimeSpan.FromMilliseconds(50), (x) =>
@@ -136,6 +137,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
         private void MoveLeft()
         {
+            if (_rolling || _rollWait || _selectWait)
+                return;
+
             var opponent = Engine.GetCurrentOpponent();
             if (opponent.Module is PlayerOpponentModule player && Engine.State.Turn == player.OpponentID)
             {
@@ -155,6 +159,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
         private void MoveRight()
         {
+            if (_rolling || _rollWait || _selectWait)
+                return;
+
             var opponent = Engine.GetCurrentOpponent();
             if (opponent.Module is PlayerOpponentModule player && Engine.State.Turn == player.OpponentID)
             {
