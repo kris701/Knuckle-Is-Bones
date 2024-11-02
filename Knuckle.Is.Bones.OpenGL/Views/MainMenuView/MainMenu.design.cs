@@ -86,6 +86,16 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
                 Height = 100
             });
 
+            AddControl(0, new LabelControl()
+            {
+                Text = "Made by Kristian Skov",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Width = 500,
+                Height = 100
+            });
+
 #if DEBUG
             AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new MainMenu(Parent)))
             {
