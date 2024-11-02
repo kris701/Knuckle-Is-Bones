@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Views.HowToPlayView;
 using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using Knuckle.Is.Bones.OpenGL.Views.StartGameView;
 using Microsoft.Xna.Framework;
@@ -62,11 +63,22 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
                 Height = 100
             });
 
+            AddControl(0, new AnimatedButtonControl(Parent, (x) => SwitchView(new HowToPlay(Parent)))
+            {
+                Text = "How to Play",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                Y = 550 + offset,
+                HorizontalAlignment = HorizontalAlignment.Middle,
+                FillClickedColor = BasicTextures.GetClickedTexture(),
+                TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+                Width = 400,
+                Height = 100
+            });
             AddControl(0, new AnimatedButtonControl(Parent, (x) => (Parent as KnuckleBoneWindow).Exit())
             {
                 Text = "Exit",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                Y = 550 + offset,
+                Y = 700 + offset,
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 FillClickedColor = BasicTextures.GetClickedTexture(),
                 TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
