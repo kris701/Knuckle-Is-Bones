@@ -66,7 +66,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                         Y = y + (cellOffset * (_cellHeight + _margin) + _margin),
                         Width = _cellWidth,
                         Height = _cellHeight,
-                        Font = parent.Fonts.GetFont(FontSizes.Ptx48),
+                        Font = parent.Fonts.GetFont(FontSizes.Ptx24),
                         FontColor = Color.White,
                         Text = text,
                         TileSet = GetBackgroundForCount(column.Cells, cell)

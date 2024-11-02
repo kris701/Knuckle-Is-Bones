@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.Core.Models.Game.OpponentModules;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Knuckle.Is.Bones.OpenGL.Views.StartGameView;
@@ -7,6 +8,7 @@ using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
@@ -46,6 +48,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 HorizontalAlignment = HorizontalAlignment.Left,
             });
 
+            if (Engine.State.FirstOpponent.Module is PlayerOpponentModule || Engine.State.SecondOpponent.Module is PlayerOpponentModule)
+                SetupControlsView();
+
             UpdateFirstOpponentBoard();
             UpdateSecondOpponentBoard();
             SetupDice();
@@ -70,6 +75,43 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
             UpdateFirstOpponentBoard();
             UpdateSecondOpponentBoard();
+        }
+
+        private void SetupControlsView()
+        {
+            AddControl(0, new AnimatedLabelControl()
+            {
+                X = 1500,
+                Y = 900,
+                Width = 150,
+                Height = 150,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
+                FontColor = Color.White,
+                Text = $"<",
+                TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
+            });
+            AddControl(0, new AnimatedLabelControl()
+            {
+                X = 1700,
+                Y = 900,
+                Width = 150,
+                Height = 150,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
+                FontColor = Color.White,
+                Text = $">",
+                TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
+            });
+            AddControl(0, new AnimatedLabelControl()
+            {
+                X = 1300,
+                Y = 900,
+                Width = 150,
+                Height = 150,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                FontColor = Color.White,
+                Text = $"Enter",
+                TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
+            });
         }
 
         private void UpdateFirstOpponentBoard()
@@ -100,7 +142,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 Y = y,
                 Width = 150,
                 Height = 150,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
                 FontColor = Color.Gold,
                 Text = $"{board.GetValue()}",
                 TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
@@ -115,7 +157,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 VerticalAlignment = VerticalAlignment.Middle,
                 Width = 150,
                 Height = 150,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
                 Text = "",
                 FontColor = Color.White,
                 TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
