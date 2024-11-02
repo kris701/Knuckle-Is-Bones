@@ -19,9 +19,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
     {
         private readonly Random _rnd = new Random();
         private PageHandler<AnimatedButtonControl> _boardsPageHandler;
+        private AnimatedTextboxControl _boardsDescription;
         private PageHandler<AnimatedButtonControl> _dicePageHandler;
+        private AnimatedTextboxControl _diceDescription;
         private PageHandler<AnimatedButtonControl> _firstOpponentsPageHandler;
+        private AnimatedTextboxControl _firstOpponentDescription;
         private PageHandler<AnimatedButtonControl> _secondOpponentsPageHandler;
+        private AnimatedTextboxControl _secondOpponentDescription;
 
         private AnimatedButtonControl _startButton;
         private bool _boardSelected = false;
@@ -96,11 +100,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
             });
 
             var margin = 50;
-            var width = (1920 - margin * 2) / 4;
+            var width = (1920 - margin * 2) / 4 - margin;
 
             SetupPageControl(
                 _boardsPageHandler, 
-                margin + (width) * 0, 
+                margin + (width + margin) * 0, 
                 100, 
                 width, 
                 500, 
@@ -113,9 +117,21 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                         _boardSelected = true;
                         CheckIfAllOptionsChecked();
                     });
+            _boardsDescription = new AnimatedTextboxControl()
+            {
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                Margin = 25,
+                FontColor = Color.White,
+                TileSet = Parent.Textures.GetTextureSet(new Guid("29744523-5a1b-43cd-abd8-ecb79006d148")),
+                X = margin + (width + margin) * 0,
+                Y = 600,
+                Width = width,
+                Height = 350,
+            };
+            AddControl(0, _boardsDescription);
             SetupPageControl(
                 _dicePageHandler, 
-                margin + (width) * 1, 
+                margin + (width + margin) * 1, 
                 100, 
                 width, 
                 500, 
@@ -128,9 +144,21 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                         _diceSelected = true;
                         CheckIfAllOptionsChecked();
                     });
+            _diceDescription = new AnimatedTextboxControl()
+            {
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                Margin = 25,
+                FontColor = Color.White,
+                TileSet = Parent.Textures.GetTextureSet(new Guid("29744523-5a1b-43cd-abd8-ecb79006d148")),
+                X = margin + (width + margin) * 1,
+                Y = 600,
+                Width = width,
+                Height = 350,
+            };
+            AddControl(0, _diceDescription);
             SetupPageControl(
                 _firstOpponentsPageHandler, 
-                margin + (width) * 2, 
+                margin + (width + margin) * 2, 
                 100, 
                 width, 
                 500, 
@@ -143,9 +171,21 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                         _opponentOneSelected = true;
                         CheckIfAllOptionsChecked();
                     });
+            _firstOpponentDescription = new AnimatedTextboxControl()
+            {
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                Margin = 25,
+                FontColor = Color.White,
+                TileSet = Parent.Textures.GetTextureSet(new Guid("29744523-5a1b-43cd-abd8-ecb79006d148")),
+                X = margin + (width + margin) * 2,
+                Y = 600,
+                Width = width,
+                Height = 350,
+            };
+            AddControl(0, _firstOpponentDescription);
             SetupPageControl(
                 _secondOpponentsPageHandler, 
-                margin + (width) * 3, 
+                margin + (width + margin) * 3, 
                 100, 
                 width, 
                 500, 
@@ -158,6 +198,18 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                         _opponentTwoSelected = true;
                         CheckIfAllOptionsChecked();
                     });
+            _secondOpponentDescription = new AnimatedTextboxControl()
+            {
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                Margin = 25,
+                FontColor = Color.White,
+                TileSet = Parent.Textures.GetTextureSet(new Guid("29744523-5a1b-43cd-abd8-ecb79006d148")),
+                X = margin + (width + margin) * 3,
+                Y = 600,
+                Width = width,
+                Height = 350,
+            };
+            AddControl(0, _secondOpponentDescription);
 
 #if DEBUG
             AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new StartGame(Parent)))
@@ -217,7 +269,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                     FontColor = Color.White,
                     Height = 50,
                     Width = width - 20,
-                    Tag = item.ID
+                    Tag = item
                 });
             }
             pagehandler = new PageHandler<AnimatedButtonControl>(this, controlList)

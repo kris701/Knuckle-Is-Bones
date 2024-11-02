@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Knuckle.Is.Bones.Core.Models;
+using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
@@ -32,13 +33,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 return;
             if (sender is AnimatedButtonControl button)
             {
-                if (button.Tag is Guid boardID)
+                if (button.Tag is IDefinition def)
                 {
                     sender.TileSet = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
                     if (_selectedBoardButton != null)
                         _selectedBoardButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
                     _selectedBoardButton = sender;
-                    _selectedBoard = boardID;
+                    _selectedBoard = def.ID;
+                    _boardsDescription.Text = def.Description;
                 }
             }
         }
@@ -49,13 +51,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 return;
             if (sender is AnimatedButtonControl button)
             {
-                if (button.Tag is Guid boardID)
+                if (button.Tag is IDefinition def)
                 {
                     sender.TileSet = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
                     if (_selectedFirstOpponentButton != null)
                         _selectedFirstOpponentButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
                     _selectedFirstOpponentButton = sender;
-                    _selectedFirstOpponent = boardID;
+                    _selectedFirstOpponent = def.ID;
+                    _firstOpponentDescription.Text = def.Description;
                 }
             }
         }
@@ -66,13 +69,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 return;
             if (sender is AnimatedButtonControl button)
             {
-                if (button.Tag is Guid boardID)
+                if (button.Tag is IDefinition def)
                 {
                     sender.TileSet = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
                     if (_selectedSecondOpponentButton != null)
                         _selectedSecondOpponentButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
                     _selectedSecondOpponentButton = sender;
-                    _selectedSecondOpponent = boardID;
+                    _selectedSecondOpponent = def.ID;
+                    _secondOpponentDescription.Text = def.Description;
                 }
             }
         }
@@ -83,13 +87,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 return;
             if (sender is AnimatedButtonControl button)
             {
-                if (button.Tag is Guid boardID)
+                if (button.Tag is IDefinition def)
                 {
                     sender.TileSet = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
                     if (_selectedDiceButton != null)
                         _selectedDiceButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
                     _selectedDiceButton = sender;
-                    _selectedDice = boardID;
+                    _selectedDice = def.ID;
+                    _diceDescription.Text = def.Description;
                 }
             }
         }

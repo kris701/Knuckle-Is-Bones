@@ -107,6 +107,14 @@
         "Views/MainGame/combo_3_1",
         "Views/MainGame/combo_3_2"
       ]
+    },
+    {
+      "ID": "29744523-5a1b-43cd-abd8-ecb79006d148",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/StartGame/description_1",
+        "Views/StartGame/description_2"
+      ]
     }
   ],
   "Songs": [],

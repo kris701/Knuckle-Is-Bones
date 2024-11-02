@@ -25,18 +25,28 @@ namespace Knuckle.Is.Bones.Core.Engines
         {
             if (State.Turn == State.FirstOpponent.Module.OpponentID)
                 return State.FirstOpponent;
-            else if (State.Turn == State.SecondOpponent.Module.OpponentID)
-                return State.SecondOpponent;
-            throw new Exception("Unknown opponents turn?");
+            return State.SecondOpponent;
         }
 
         public BoardDefinition GetCurrentOpponentBoard()
         {
             if (State.Turn == State.FirstOpponent.Module.OpponentID)
                 return State.FirstOpponentBoard;
-            else if (State.Turn == State.SecondOpponent.Module.OpponentID)
-                return State.SecondOpponentBoard;
-            throw new Exception("Unknown opponents turn?");
+            return State.SecondOpponentBoard;
+        }
+
+        public OpponentDefinition GetNextOpponent()
+        {
+            if (State.Turn != State.FirstOpponent.Module.OpponentID)
+                return State.FirstOpponent;
+            return State.SecondOpponent;
+        }
+
+        public BoardDefinition GetNextOpponentBoard()
+        {
+            if (State.Turn != State.FirstOpponent.Module.OpponentID)
+                return State.FirstOpponentBoard;
+            return State.SecondOpponentBoard;
         }
 
         public bool TakeTurn()

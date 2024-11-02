@@ -1,7 +1,7 @@
 {
   "ID": "fb539a3a-9989-4623-88d1-bf216320f717",
   "Name": "Normal",
-  "Description": "",
+  "Description": "A normal 6 sided dice",
   "Sides": 6,
   "Value": 0
 }

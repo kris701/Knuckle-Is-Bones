@@ -69,7 +69,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 {
                     _selectWait = true;
                     _movePosition = current.Module.GetTargetColumn();
-                    current.Module.SetTargetColumn(Engine.GetCurrentOpponentBoard());
+                    current.Module.SetTargetColumn(Engine.State.CurrentDice, Engine.GetCurrentOpponentBoard(), Engine.GetNextOpponentBoard());
                 }
                 UpdateFirstOpponentBoard();
                 UpdateSecondOpponentBoard();

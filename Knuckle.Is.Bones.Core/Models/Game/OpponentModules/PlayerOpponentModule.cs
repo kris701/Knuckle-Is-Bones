@@ -14,7 +14,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
             OpponentID = opponentID;
         }
 
-        public void SetTargetColumn(BoardDefinition board) => throw new NotImplementedException();
+        public void SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard) => throw new NotImplementedException();
 
         public void SetTargetColumn(int targetColumn) => _targetColumn = targetColumn;
 

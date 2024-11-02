@@ -2,7 +2,7 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
 {
-    public class RandomPositionOpponentModule : IOpponentModule
+    public class DefensiveOpponentModule : IOpponentModule
     {
         public Guid OpponentID { get; set; } = Guid.NewGuid();
 
@@ -10,13 +10,24 @@ namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
         private int _targetColumn = 0;
 
         [JsonConstructor]
-        public RandomPositionOpponentModule(Guid opponentID)
+        public DefensiveOpponentModule(Guid opponentID)
         {
             OpponentID = opponentID;
         }
 
         public void SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard)
         {
+            var index = 0;
+            foreach(var column in opponentBoard.Columns)
+            {
+                if (column.Cells.Any(x => x == diceValue.Value))
+                {
+                    _targetColumn = index;
+                    return;
+                }
+                index++;
+            }
+
             int target = -1;
             bool valid = false;
             while (!valid)
@@ -30,6 +41,6 @@ namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
 
         public int GetTargetColumn() => _targetColumn;
 
-        public IOpponentModule Clone() => new RandomPositionOpponentModule(OpponentID);
+        public IOpponentModule Clone() => new DefensiveOpponentModule(OpponentID);
     }
 }
