@@ -5,8 +5,26 @@ on:
     branches: [ "main" ]
 
 jobs:
+  check-tag:
+    name: Check build tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Package version
+        id: get-version
+        uses: kzrnm/get-net-sdk-project-versions-action@v1
+        with:
+          proj-path: .\Knuckle.Is.Bones.OpenGL\Knuckle.Is.Bones.OpenGL.csproj
+
+      - uses: mukunku/tag-exists-action@v1.6.0
+        id: check-tag
+        with: 
+          tag: 'v${{ steps.get-version.outputs.package-version }}'
+
   build:
-    name: Build and Publish
+    name: Build and Create Release
+    if: steps.check-tag.outputs.exists == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
