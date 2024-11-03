@@ -19,6 +19,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
         private BoardControl _board2;
         private CanvasPanelControl _gameOverPanel;
         private LabelControl _winnerLabel;
+        private LabelControl _pointsGainedLabel;
 
         public override void Initialize()
         {
@@ -48,8 +49,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 HorizontalAlignment = HorizontalAlignment.Left,
             });
 
-            if (Engine.State.FirstOpponent.Module is PlayerOpponentModule || Engine.State.SecondOpponent.Module is PlayerOpponentModule)
-                SetupControlsView();
+            SetupControlsView();
 
             UpdateFirstOpponentBoard();
             UpdateSecondOpponentBoard();
@@ -79,39 +79,57 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
         private void SetupControlsView()
         {
-            AddControl(0, new AnimatedLabelControl()
+            AddControl(0, new AnimatedButtonControl(Parent, (b) => Escape())
             {
-                X = 1500,
-                Y = 900,
-                Width = 150,
-                Height = 150,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
-                FontColor = Color.White,
-                Text = $"<",
-                TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
-            });
-            AddControl(0, new AnimatedLabelControl()
-            {
-                X = 1700,
-                Y = 900,
-                Width = 150,
-                Height = 150,
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
-                FontColor = Color.White,
-                Text = $">",
-                TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
-            });
-            AddControl(0, new AnimatedLabelControl()
-            {
-                X = 1300,
-                Y = 900,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
                 Width = 150,
                 Height = 150,
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
                 FontColor = Color.White,
-                Text = $"Enter",
-                TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
+                Text = $"Esc",
+                TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5")),
+                FillClickedColor = BasicTextures.GetClickedTexture(),
             });
+            if (Engine.State.FirstOpponent.Module is PlayerOpponentModule || Engine.State.SecondOpponent.Module is PlayerOpponentModule)
+            {
+                AddControl(0, new AnimatedButtonControl(Parent, (b) => MoveLeft())
+                {
+                    X = 1500,
+                    Y = 900,
+                    Width = 150,
+                    Height = 150,
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
+                    FontColor = Color.White,
+                    Text = $"<",
+                    TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5")),
+                    FillClickedColor = BasicTextures.GetClickedTexture(),
+                });
+                AddControl(0, new AnimatedButtonControl(Parent, (b) => MoveRight())
+                {
+                    X = 1700,
+                    Y = 900,
+                    Width = 150,
+                    Height = 150,
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
+                    FontColor = Color.White,
+                    Text = $">",
+                    TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5")),
+                    FillClickedColor = BasicTextures.GetClickedTexture(),
+                });
+                AddControl(0, new AnimatedButtonControl(Parent, (b) => TakeTurn())
+                {
+                    X = 1300,
+                    Y = 900,
+                    Width = 150,
+                    Height = 150,
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                    FontColor = Color.White,
+                    Text = $"Enter",
+                    TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5")),
+                    FillClickedColor = BasicTextures.GetClickedTexture(),
+                });
+            }
         }
 
         private void UpdateFirstOpponentBoard()
@@ -170,7 +188,16 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
             _winnerLabel = new LabelControl()
             {
                 Width = 500,
-                Height = 100,
+                Height = 75,
+                HorizontalAlignment = HorizontalAlignment.Middle,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                Text = "",
+                FontColor = Color.White,
+            };
+            _pointsGainedLabel = new LabelControl()
+            {
+                Width = 500,
+                Height = 75,
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
                 Text = "",
@@ -196,6 +223,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                         FontColor = Color.White,
                     },
                     _winnerLabel,
+                    _pointsGainedLabel,
                     new AnimatedButtonControl(Parent, (x) => SwitchView(new StartGame(Parent)))
                     {
                         Width = 500,
@@ -205,7 +233,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                         Text = "Play Again",
                         FontColor = Color.White,
                         TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
-                        FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray),
+                        FillClickedColor = BasicTextures.GetClickedTexture(),
                     },
                     new AnimatedButtonControl(Parent, (x) => SwitchView(new MainMenu(Parent)))
                     {
@@ -216,7 +244,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                         Text = "Main Menu",
                         FontColor = Color.White,
                         TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
-                        FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray),
+                        FillClickedColor = BasicTextures.GetClickedTexture(),
                     }
                 })
             })

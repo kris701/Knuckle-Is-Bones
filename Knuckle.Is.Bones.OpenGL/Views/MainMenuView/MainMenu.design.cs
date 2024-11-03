@@ -88,6 +88,16 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 
             AddControl(0, new LabelControl()
             {
+                Text = $"Points: {(Parent as KnuckleBoneWindow).User.AllTimeScore}",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Width = 500,
+                Height = 100
+            });
+
+            AddControl(0, new LabelControl()
+            {
                 Text = "Made by Kristian Skov",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
                 HorizontalAlignment = HorizontalAlignment.Right,

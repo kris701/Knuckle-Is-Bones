@@ -42,12 +42,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
             _leftKeyWatcher = new KeyWatcher(Keys.Left, MoveLeft);
             _rightKeyWatcher = new KeyWatcher(Keys.Right, MoveRight);
             _enterKeyWatcher = new KeyWatcher(Keys.Enter, TakeTurn);
-            _escapeKeyWatcher = new KeyWatcher(Keys.Escape, () => {
-                if ((Engine.State.FirstOpponent.Module is PlayerOpponentModule) || (Engine.State.SecondOpponent.Module is PlayerOpponentModule))
-                    if (_rolling || _rollWait || _selectWait)
-                        return;
-                SwitchView(new MainMenu(Parent));
-            });
+            _escapeKeyWatcher = new KeyWatcher(Keys.Escape, Escape);
             _rollTimer = new GameTimer(TimeSpan.FromMilliseconds(50), (x) =>
             {
                 _diceLabel.Text = $"{_rnd.Next(1, Engine.State.CurrentDice.Sides + 1)}";
@@ -111,6 +106,22 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 UpdateFirstOpponentBoard();
                 UpdateSecondOpponentBoard();
 
+                var pointsGained = 0;
+                if (Parent is KnuckleBoneWindow window)
+                {
+                    if ((Engine.State.FirstOpponent.Module is PlayerOpponentModule) && (Engine.State.SecondOpponent.Module is not PlayerOpponentModule))
+                        pointsGained = (int)(Engine.State.FirstOpponentBoard.GetValue() * Engine.State.SecondOpponent.Difficulty);
+                    if ((Engine.State.SecondOpponent.Module is PlayerOpponentModule) && (Engine.State.FirstOpponent.Module is PlayerOpponentModule))
+                        pointsGained = (int)(Engine.State.SecondOpponentBoard.GetValue() * Engine.State.FirstOpponent.Difficulty);
+
+                    window.User.AllTimeScore += pointsGained;
+                    window.User.Save();
+                }
+                if (pointsGained > 0)
+                    _pointsGainedLabel.Text = $"Gained {pointsGained} points.";
+                else
+                    _pointsGainedLabel.Text = "No points awarded";
+
                 if (Engine.State.Winner == Engine.State.FirstOpponent.Module.OpponentID)
                     _winnerLabel.Text = "First Opponent Won!";
                 else
@@ -118,14 +129,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 _gameOverPanel.IsVisible = true;
                 if (File.Exists("save.json"))
                     File.Delete("save.json");
-                if (Parent is KnuckleBoneWindow window)
-                {
-                    if (Engine.State.FirstOpponent.Module is PlayerOpponentModule)
-                        window.User.AllTimeScore += Engine.State.FirstOpponentBoard.GetValue();
-                    if (Engine.State.SecondOpponent.Module is PlayerOpponentModule)
-                        window.User.AllTimeScore += Engine.State.SecondOpponentBoard.GetValue();
-                    window.User.Save();
-                }
 
                 return;
             }
@@ -177,6 +180,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 _board1.HighlightColumn(Engine.State.FirstOpponent.Module.GetTargetColumn());
             if (Engine.State.Turn == Engine.State.SecondOpponent.Module.OpponentID)
                 _board2.HighlightColumn(Engine.State.SecondOpponent.Module.GetTargetColumn());
+        }
+
+        private void Escape()
+        {
+            if ((Engine.State.FirstOpponent.Module is PlayerOpponentModule) || (Engine.State.SecondOpponent.Module is PlayerOpponentModule))
+                if (_rolling || _rollWait || _selectWait)
+                    return;
+            SwitchView(new MainMenu(Parent));
         }
     }
 }

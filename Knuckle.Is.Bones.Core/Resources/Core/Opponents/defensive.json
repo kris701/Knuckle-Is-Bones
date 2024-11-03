@@ -3,6 +3,7 @@
   "Name": "Defensive",
   "Description": "An AI that will always try to remove dice from the opponents board.",
   "Difficulty": 2,
+  "RequiredPoints": 0,
   "Module": {
     "OpponentModule": "Defensive"
   }
