@@ -17,7 +17,7 @@ jobs:
         id: get-version
         uses: kzrnm/get-net-sdk-project-versions-action@v1
         with:
-          proj-path: .\Knuckle.Is.Bones.OpenGL\Knuckle.Is.Bones.OpenGL.csproj
+          proj-path: Knuckle.Is.Bones.OpenGL/Knuckle.Is.Bones.OpenGL.csproj
 
       - uses: mukunku/tag-exists-action@v1.6.0
         id: check-tag
