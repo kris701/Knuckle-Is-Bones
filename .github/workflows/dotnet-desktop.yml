@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Compile project as publish files (WINDOWS)
         run: dotnet publish .\Knuckle.Is.Bones.OpenGL\Knuckle.Is.Bones.OpenGL.csproj --configuration Release /p:PublishProfile="windows.pubxml"
 

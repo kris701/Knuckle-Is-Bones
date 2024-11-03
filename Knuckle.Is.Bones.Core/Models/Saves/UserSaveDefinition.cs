@@ -2,9 +2,16 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Saves
 {
-    public class UserSaveDefinition
+    public class UserSaveDefinition<T>
     {
         public int AllTimeScore { get; set; }
+        public T UIData { get; set; }
+
+        public UserSaveDefinition(int allTimeScore, T uIData)
+        {
+            AllTimeScore = allTimeScore;
+            UIData = uIData;
+        }
 
         public void Save()
         {

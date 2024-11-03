@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
-    public partial class StartGame : BaseFadeView
+    public partial class StartGame : BaseKnuckleBoneFadeView
     {
         public static Guid ID = new Guid("9ba30a3d-f77c-4aa4-b390-8c8789dba4c0");
 
@@ -22,7 +22,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
         private Guid _selectedDice = Guid.Empty;
         private AnimatedButtonControl? _selectedDiceButton;
 
-        public StartGame(IWindow parent) : base(parent, ID)
+        public StartGame(KnuckleBoneWindow parent) : base(parent, ID)
         {
             Initialize();
         }

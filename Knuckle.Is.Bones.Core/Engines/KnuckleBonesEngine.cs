@@ -13,8 +13,6 @@ namespace Knuckle.Is.Bones.Core.Engines
         public GameState State { get; }
         public bool GameOver { get; set; }
 
-        private readonly Random _rnd = new Random();
-
         public KnuckleBonesEngine(GameSaveDefinition save)
         {
             Save = save;
@@ -106,7 +104,7 @@ namespace Knuckle.Is.Bones.Core.Engines
                 return true;
             }
 
-            State.CurrentDice.Value = _rnd.Next(1, State.CurrentDice.Sides + 1);
+            State.CurrentDice.RollValue();
 
             if (State.Turn == State.FirstOpponent.Module.OpponentID)
                 State.Turn = State.SecondOpponent.Module.OpponentID;

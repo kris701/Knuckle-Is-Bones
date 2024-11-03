@@ -12,10 +12,11 @@ using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
-    public partial class StartGame : BaseFadeView
+    public partial class StartGame : BaseKnuckleBoneFadeView
     {
         private readonly Random _rnd = new Random();
         private PageHandler<AnimatedButtonControl> _boardsPageHandler;
@@ -41,6 +42,17 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 Height = 1080,
                 FillColor = BasicTextures.GetBasicRectange(Color.Black)
             });
+
+            AddControl(0, new LabelControl()
+            {
+                Text = $"Points: {(Parent as KnuckleBoneWindow).User.AllTimeScore}",
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                HorizontalAlignment = HorizontalAlignment.Middle,
+                VerticalAlignment = VerticalAlignment.Top,
+                Width = 500,
+                Height = 100
+            });
+
             var textureSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce"));
 
             _startButton = new AnimatedButtonControl(Parent, (x) =>
@@ -66,7 +78,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 save.State.FirstOpponent.Module.OpponentID = Guid.NewGuid();
                 save.State.SecondOpponent.Module.OpponentID = Guid.NewGuid();
 
-                save.State.CurrentDice.Value = _rnd.Next(1, save.State.CurrentDice.Sides + 1);
+                save.State.CurrentDice.RollValue();
                 save.State.Turn = save.State.FirstOpponent.Module.OpponentID;
 
                 save.Save();
@@ -76,6 +88,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
             {
                 Text = "Start",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                FontColor = Color.Gray,
                 Y = 980,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 FillClickedColor = BasicTextures.GetClickedTexture(),
@@ -235,10 +248,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
             {
                 _startButton.IsEnabled = true;
                 _startButton.Alpha = 256;
+                _startButton.FontColor = Color.White;
             }
         }
 
-        private void SetupPageControl(PageHandler<AnimatedButtonControl> pagehandler, float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IDefinition> getMethod, Action<AnimatedButtonControl> clicked, Action onAnySelected)
+        private void SetupPageControl(PageHandler<AnimatedButtonControl> pagehandler, float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IUnlockable> getMethod, Action<AnimatedButtonControl> clicked, Action onAnySelected)
         {
             AddControl(1, new LabelControl()
             {
@@ -251,11 +265,19 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 FontColor = new Color(217,68,144)
             });
 
+            var items = new List<IUnlockable>();
+            foreach (var id in ids)
+                items.Add(getMethod(id));
+            items = items.OrderBy(x => x.RequiredPoints).ToList();
+
             var textureSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
             var controlList = new List<AnimatedButtonControl>();
-            foreach (var id in ids)
+            foreach (var item in items)
             {
-                var item = getMethod(id);
+                var isUnlocked = (Parent as KnuckleBoneWindow).User.AllTimeScore >= item.RequiredPoints;
+                var text = $"{item.Name}";
+                if (!isUnlocked)
+                    text += $"({item.RequiredPoints}P)";
                 controlList.Add(new AnimatedButtonControl(Parent, (x) =>
                 {
                     clicked(x as AnimatedButtonControl);
@@ -264,12 +286,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 {
                     TileSet = textureSet,
                     FillClickedColor = BasicTextures.GetClickedTexture(),
+                    FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-                    Text = $"{item.Name}",
-                    FontColor = Color.White,
+                    Text = text,
+                    FontColor = isUnlocked ? Color.White : Color.Gray,
+                    Alpha = isUnlocked ? 256 : 100,
                     Height = 50,
                     Width = width - 20,
-                    Tag = item
+                    Tag = item,
+                    IsEnabled = isUnlocked
                 });
             }
             pagehandler = new PageHandler<AnimatedButtonControl>(this, controlList)

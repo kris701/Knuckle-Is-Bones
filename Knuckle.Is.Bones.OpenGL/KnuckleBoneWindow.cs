@@ -1,7 +1,9 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Saves;
+using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.ResourcePacks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Helpers;
@@ -18,7 +20,7 @@ namespace Knuckle.Is.Bones.OpenGL
         private static readonly string _modsDir = "Mods";
 
         public ResourcePackController ResourcePackController { get; private set; }
-        public UserSaveDefinition User {  get; private set; }
+        public UserSaveDefinition<SettingsDefinition> User {  get; private set; }
 
         private readonly Func<KnuckleBoneWindow, IView> _screenToLoad;
 
@@ -32,14 +34,11 @@ namespace Knuckle.Is.Bones.OpenGL
             IsMouseVisible = true;
 
             if (File.Exists("user.json"))
-                User = JsonSerializerHelpers.DeserializeOrDefault<UserSaveDefinition>(File.ReadAllText("user.json"), () => new UserSaveDefinition());
+                User = JsonSerializerHelpers.DeserializeOrDefault<UserSaveDefinition<SettingsDefinition>>(File.ReadAllText("user.json"), () => new UserSaveDefinition<SettingsDefinition>(0, new SettingsDefinition()));
             else
-                User = new UserSaveDefinition();
+                User = new UserSaveDefinition<SettingsDefinition>(0, new SettingsDefinition());
 
-            Device.PreferredBackBufferWidth = 1068;
-            Device.PreferredBackBufferHeight = 600;
-            Device.ApplyChanges();
-            UpdateScale();
+            ApplySettings();
         }
 
         protected override void Initialize()
@@ -70,6 +69,24 @@ namespace Knuckle.Is.Bones.OpenGL
             if (IsActive)
                 Console.WriteLine("aaa");
             base.Update(tst);
+        }
+
+        public void ApplySettings()
+        {
+            Device.PreferredBackBufferWidth = User.UIData.ResolutionX;
+            Device.PreferredBackBufferHeight = User.UIData.ResolutionY;
+            Device.SynchronizeWithVerticalRetrace = User.UIData.IsVsync;
+            Device.HardwareModeSwitch = false;
+            Device.IsFullScreen = User.UIData.IsFullscreen;
+            if (Device.IsFullScreen)
+            {
+                Device.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                Device.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            }
+            MediaPlayer.Volume = User.UIData.MusicVolume;
+            SoundEffect.MasterVolume = User.UIData.EffectsVolume;
+            Device.ApplyChanges();
+            UpdateScale();
         }
     }
 }

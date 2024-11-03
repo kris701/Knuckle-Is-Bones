@@ -2,6 +2,7 @@
   "ID": "907bddf8-cbe1-49f4-a1f8-92ad5266f116",
   "Name": "Normal",
   "Description": "A normal 3x3 field.",
+  "RequiredPoints": 0,
   "Columns": [
     {
       "Cells": [ 0, 0, 0 ]

@@ -3,5 +3,6 @@
   "Name": "Small",
   "Description": "A small 3 sided dice",
   "Sides": 3,
-  "Value": 0
+  "Value": 0,
+  "RequiredPoints": 0
 }

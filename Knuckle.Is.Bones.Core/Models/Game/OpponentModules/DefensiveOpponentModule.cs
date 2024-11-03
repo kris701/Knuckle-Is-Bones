@@ -20,7 +20,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
             var index = 0;
             foreach(var column in opponentBoard.Columns)
             {
-                if (column.Cells.Any(x => x == diceValue.Value))
+                if (column.Cells.Any(x => x == diceValue.Value) && !myBoard.Columns[index].IsFull())
                 {
                     _targetColumn = index;
                     return;
