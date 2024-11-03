@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
 {
-    public partial class HowToPlay : BaseFadeView
+    public partial class HowToPlay : BaseKnuckleBoneFadeView
     {
         public override void Initialize()
         {

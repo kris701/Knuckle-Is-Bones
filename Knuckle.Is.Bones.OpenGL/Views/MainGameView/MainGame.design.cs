@@ -12,7 +12,7 @@ using System.Reflection.Emit;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
-    public partial class MainGame : BaseFadeView
+    public partial class MainGame : BaseKnuckleBoneFadeView
     {
         private LabelControl _diceLabel;
         private BoardControl _board1;

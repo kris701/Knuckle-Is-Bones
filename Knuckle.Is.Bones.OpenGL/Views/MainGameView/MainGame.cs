@@ -13,7 +13,7 @@ using System.IO;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
-    public partial class MainGame : BaseFadeView
+    public partial class MainGame : BaseKnuckleBoneFadeView
     {
         public static Guid ID = new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361");
 
@@ -34,7 +34,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
         private int _rolledTimes = 0;
         private readonly Random _rnd = new Random();
 
-        public MainGame(IWindow parent, GameSaveDefinition save) : base(parent, ID)
+        public MainGame(KnuckleBoneWindow parent, GameSaveDefinition save) : base(parent, ID)
         {
             Save = save;
             Engine = new KnuckleBonesEngine(save);
@@ -107,16 +107,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 UpdateSecondOpponentBoard();
 
                 var pointsGained = 0;
-                if (Parent is KnuckleBoneWindow window)
-                {
-                    if ((Engine.State.FirstOpponent.Module is PlayerOpponentModule) && (Engine.State.SecondOpponent.Module is not PlayerOpponentModule))
-                        pointsGained = (int)(Engine.State.FirstOpponentBoard.GetValue() * Engine.State.SecondOpponent.Difficulty);
-                    if ((Engine.State.SecondOpponent.Module is PlayerOpponentModule) && (Engine.State.FirstOpponent.Module is PlayerOpponentModule))
-                        pointsGained = (int)(Engine.State.SecondOpponentBoard.GetValue() * Engine.State.FirstOpponent.Difficulty);
+                if ((Engine.State.FirstOpponent.Module is PlayerOpponentModule) && (Engine.State.SecondOpponent.Module is not PlayerOpponentModule))
+                    pointsGained = (int)(Engine.State.FirstOpponentBoard.GetValue() * Engine.State.SecondOpponent.Difficulty);
+                if ((Engine.State.SecondOpponent.Module is PlayerOpponentModule) && (Engine.State.FirstOpponent.Module is PlayerOpponentModule))
+                    pointsGained = (int)(Engine.State.SecondOpponentBoard.GetValue() * Engine.State.FirstOpponent.Difficulty);
 
-                    window.User.AllTimeScore += pointsGained;
-                    window.User.Save();
-                }
+                Parent.User.AllTimeScore += pointsGained;
+                Parent.User.Save();
                 if (pointsGained > 0)
                     _pointsGainedLabel.Text = $"Gained {pointsGained} points.";
                 else

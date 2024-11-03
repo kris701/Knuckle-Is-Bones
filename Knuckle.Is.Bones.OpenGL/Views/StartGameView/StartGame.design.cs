@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
-    public partial class StartGame : BaseFadeView
+    public partial class StartGame : BaseKnuckleBoneFadeView
     {
         private readonly Random _rnd = new Random();
         private PageHandler<AnimatedButtonControl> _boardsPageHandler;
@@ -78,7 +78,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 save.State.FirstOpponent.Module.OpponentID = Guid.NewGuid();
                 save.State.SecondOpponent.Module.OpponentID = Guid.NewGuid();
 
-                save.State.CurrentDice.Value = _rnd.Next(1, save.State.CurrentDice.Sides + 1);
+                save.State.CurrentDice.RollValue();
                 save.State.Turn = save.State.FirstOpponent.Module.OpponentID;
 
                 save.Save();
