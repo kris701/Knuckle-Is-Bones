@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static MonoGame.OpenGL.Formatter.Controls.StackPanelControl;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 {
@@ -20,6 +21,25 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
             new Point(1920, 1080),
             new Point(1068, 600)
         };
+        private static List<float> _musicPresets = new List<float>()
+        {
+            1f,
+            0.8f,
+            0.6f,
+            0.4f,
+            0.2f,
+            0f
+        };
+        private static List<float> _effectsPresets = new List<float>()
+        {
+            1f,
+            0.8f,
+            0.6f,
+            0.4f,
+            0.2f,
+            0f
+        };
+        private static int _buttonWidth = 250;
 
         public override void Initialize()
         {
@@ -32,10 +52,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 
             AddControl(0, new StackPanelControl(new List<IControl>()
             {
-                CreateResolutionPanel(900)
+                CreateResolutionPanel(),
+                CreateOtherCanvas(),
+                CreateMusicPanel(),
+                CreateEffectsPanel(),
             })
             {
-                Width = 900,
+                Width = 1300,
                 Height = 800,
                 VerticalAlignment = VerticalAlignment.Middle,
                 HorizontalAlignment = HorizontalAlignment.Middle
@@ -83,19 +106,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
             base.Initialize();
         }
 
-        private CanvasPanelControl CreateResolutionPanel(int width)
+        private CanvasPanelControl CreateResolutionPanel()
         {
             var controls = new List<IControl>();
-            controls.Add(new LabelControl()
-            {
-                Text = "Resolution",
-                Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                FontColor = Color.White,
-                Height = 100,
-            });
             var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
             var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
-            int index = 0;
             foreach (var opt in _resolutionPresets)
             {
                 controls.Add(new AnimatedButtonControl(Parent, (x) =>
@@ -118,22 +133,198 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
                     FillClickedColor = BasicTextures.GetClickedTexture(),
                     FontColor = Color.White,
-                    Y = 100,
-                    X = index * 240,
-                    Width = 220,
-                    Height = 50,
+                    Width = _buttonWidth,
                     Text = $"{opt.X}x{opt.Y}",
                     Tag = opt
                 });
-                index++;
             }
 
-            return new CanvasPanelControl(controls) 
+            return new CanvasPanelControl(new List<IControl>()
+            {
+                new LabelControl()
+                {
+                    Text = "Resolution",
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                    FontColor = Color.White,
+                    Height = 100,
+                },
+                new StackPanelControl(controls)
+                {
+                    Height = 50,
+                    Y = 100,
+                    Gap = 10,
+                    Orientation = Orientations.Horizontal,
+                }
+            }) 
             {
                 Height = 150,
             };
         }
 
         private bool IsResolutionSelected(Point point) => _newSettings.ResolutionX == point.X && _newSettings.ResolutionY == point.Y;
+
+        private CanvasPanelControl CreateOtherCanvas()
+        {
+            var controls = new List<IControl>();
+            var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
+            var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+            controls.Add(new AnimatedButtonControl(Parent, (x) =>
+            {
+                if (x is AnimatedButtonControl button)
+                {
+                    _newSettings.IsFullscreen = !_newSettings.IsFullscreen;
+                    button.TileSet = _newSettings.IsFullscreen ? selectedTileset : normalTileset;
+                }
+            })
+            {
+                TileSet = _newSettings.IsFullscreen ? selectedTileset : normalTileset,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                FillClickedColor = BasicTextures.GetClickedTexture(),
+                FontColor = Color.White,
+                Width = _buttonWidth,
+                Text = $"Fullscreen",
+            });
+            controls.Add(new AnimatedButtonControl(Parent, (x) =>
+            {
+                if (x is AnimatedButtonControl button)
+                {
+                    _newSettings.IsVsync = !_newSettings.IsVsync;
+                    button.TileSet = _newSettings.IsVsync ? selectedTileset : normalTileset;
+                }
+            })
+            {
+                TileSet = _newSettings.IsVsync ? selectedTileset : normalTileset,
+                Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                FillClickedColor = BasicTextures.GetClickedTexture(),
+                FontColor = Color.White,
+                Width = _buttonWidth,
+                Text = $"VSync",
+            });
+
+            return new CanvasPanelControl(new List<IControl>()
+            {
+                new LabelControl()
+                {
+                    Text = "Other",
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                    FontColor = Color.White,
+                    Height = 100,
+                },
+                new StackPanelControl(controls)
+                {
+                    Height = 50,
+                    Y = 100,
+                    Gap = 10,
+                    Orientation = Orientations.Horizontal,
+                }
+            })
+            {
+                Height = 150,
+            };
+        }
+
+        private CanvasPanelControl CreateMusicPanel()
+        {
+            var controls = new List<IControl>();
+            var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
+            var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+            foreach (var opt in _musicPresets)
+            {
+                controls.Add(new AnimatedButtonControl(Parent, (x) =>
+                {
+                    foreach (var control in controls)
+                        if (control is AnimatedButtonControl other)
+                            other.TileSet = normalTileset;
+                    if (x is AnimatedButtonControl button)
+                    {
+                        button.TileSet = selectedTileset;
+                        if (x.Tag is float vol)
+                            _newSettings.MusicVolume = vol;
+                    }
+                })
+                {
+                    TileSet = _newSettings.MusicVolume == opt ? selectedTileset : normalTileset,
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                    FillClickedColor = BasicTextures.GetClickedTexture(),
+                    FontColor = Color.White,
+                    Width = _buttonWidth,
+                    Text = $"{Math.Round(opt * 100, 0)}%",
+                    Tag = opt
+                });
+            }
+
+            return new CanvasPanelControl(new List<IControl>()
+            {
+                new LabelControl()
+                {
+                    Text = "Music",
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                    FontColor = Color.White,
+                    Height = 100,
+                },
+                new StackPanelControl(controls)
+                {
+                    Height = 50,
+                    Y = 100,
+                    Gap = 10,
+                    Orientation = Orientations.Horizontal,
+                }
+            })
+            {
+                Height = 150,
+            };
+        }
+
+        private CanvasPanelControl CreateEffectsPanel()
+        {
+            var controls = new List<IControl>();
+            var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
+            var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+            foreach (var opt in _effectsPresets)
+            {
+                controls.Add(new AnimatedButtonControl(Parent, (x) =>
+                {
+                    foreach (var control in controls)
+                        if (control is AnimatedButtonControl other)
+                            other.TileSet = normalTileset;
+                    if (x is AnimatedButtonControl button)
+                    {
+                        button.TileSet = selectedTileset;
+                        if (x.Tag is float vol)
+                            _newSettings.EffectsVolume = vol;
+                    }
+                })
+                {
+                    TileSet = _newSettings.EffectsVolume == opt ? selectedTileset : normalTileset,
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+                    FillClickedColor = BasicTextures.GetClickedTexture(),
+                    FontColor = Color.White,
+                    Width = _buttonWidth,
+                    Text = $"{Math.Round(opt * 100, 0)}%",
+                    Tag = opt
+                });
+            }
+
+            return new CanvasPanelControl(new List<IControl>()
+            {
+                new LabelControl()
+                {
+                    Text = "Sound Effects",
+                    Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                    FontColor = Color.White,
+                    Height = 100,
+                },
+                new StackPanelControl(controls)
+                {
+                    Height = 50,
+                    Y = 100,
+                    Gap = 10,
+                    Orientation = Orientations.Horizontal,
+                }
+            })
+            {
+                Height = 150,
+            };
+        }
     }
 }

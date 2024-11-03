@@ -107,9 +107,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                 UpdateSecondOpponentBoard();
 
                 var pointsGained = 0;
-                if ((Engine.State.FirstOpponent.Module is PlayerOpponentModule) && (Engine.State.SecondOpponent.Module is not PlayerOpponentModule))
+                if ((Engine.State.FirstOpponent.Module is PlayerOpponentModule) && (Engine.State.SecondOpponent.Module is not PlayerOpponentModule) && Engine.State.Winner == Engine.State.FirstOpponent.Module.OpponentID)
                     pointsGained = (int)(Engine.State.FirstOpponentBoard.GetValue() * Engine.State.SecondOpponent.Difficulty);
-                if ((Engine.State.SecondOpponent.Module is PlayerOpponentModule) && (Engine.State.FirstOpponent.Module is PlayerOpponentModule))
+                if ((Engine.State.SecondOpponent.Module is PlayerOpponentModule) && (Engine.State.FirstOpponent.Module is PlayerOpponentModule) && Engine.State.Winner == Engine.State.SecondOpponent.Module.OpponentID)
                     pointsGained = (int)(Engine.State.SecondOpponentBoard.GetValue() * Engine.State.FirstOpponent.Difficulty);
 
                 Parent.User.AllTimeScore += pointsGained;
