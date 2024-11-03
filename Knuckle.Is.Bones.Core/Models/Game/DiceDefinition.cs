@@ -11,6 +11,8 @@ namespace Knuckle.Is.Bones.Core.Models.Game
         public int Value { get; set; } = 0;
         public int RequiredPoints { get; set; }
 
+        private readonly Random _rnd = new Random();
+
         [JsonConstructor]
         public DiceDefinition(Guid iD, string name, string description, int sides, int value, int requiredPoints)
         {
@@ -33,5 +35,10 @@ namespace Knuckle.Is.Bones.Core.Models.Game
         }
 
         public DiceDefinition Clone() => new DiceDefinition(this);
+
+        public void RollValue()
+        {
+            Value = _rnd.Next(1, Sides + 1);
+        }
     }
 }

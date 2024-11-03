@@ -88,6 +88,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
             {
                 Text = "Start",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+                FontColor = Color.Gray,
                 Y = 980,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 FillClickedColor = BasicTextures.GetClickedTexture(),
@@ -247,6 +248,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
             {
                 _startButton.IsEnabled = true;
                 _startButton.Alpha = 256;
+                _startButton.FontColor = Color.White;
             }
         }
 
