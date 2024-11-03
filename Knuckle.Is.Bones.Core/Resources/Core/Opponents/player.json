@@ -2,6 +2,7 @@
   "ID": "d6032478-b6ec-483e-8750-5976830d66b2",
   "Name": "Player",
   "Description": "A human player.",
+  "Difficulty": 0,
   "Module": {
     "OpponentModule": "Player"
   }

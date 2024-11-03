@@ -2,20 +2,22 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game
 {
-    public class BoardDefinition : IDefinition, IGenericClonable<BoardDefinition>
+    public class BoardDefinition : IUnlockable, IGenericClonable<BoardDefinition>
     {
         public Guid ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public List<ColumnDefinition> Columns { get; set; }
+        public int RequiredPoints { get; set; }
 
         [JsonConstructor]
-        public BoardDefinition(Guid iD, string name, string description, List<ColumnDefinition> columns)
+        public BoardDefinition(Guid iD, string name, string description, List<ColumnDefinition> columns, int requiredPoints)
         {
             ID = iD;
             Name = name;
             Description = description;
             Columns = columns;
+            RequiredPoints = requiredPoints;
         }
 
         public BoardDefinition(BoardDefinition other)
@@ -26,6 +28,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game
             Columns = new List<ColumnDefinition>(other.Columns.Count);
             foreach (var col in other.Columns)
                 Columns.Add(new ColumnDefinition(col));
+            RequiredPoints = other.RequiredPoints;
         }
 
         public int GetValue()

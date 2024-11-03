@@ -2,6 +2,7 @@
   "ID": "322dbaa5-c806-4b56-af9d-164b135a6d42",
   "Name": "Tall",
   "Description": "A tall 3x4 field.",
+  "RequiredPoints": 1000,
   "Columns": [
     {
       "Cells": [ 0, 0, 0, 0 ]

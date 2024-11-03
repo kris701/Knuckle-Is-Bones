@@ -2,6 +2,7 @@
   "ID": "09144a57-a719-47bd-a36c-1cfb287c295d",
   "Name": "Large",
   "Description": "A large 4x4 field.",
+  "RequiredPoints": 2000,
   "Columns": [
     {
       "Cells": [ 0, 0, 0, 0 ]

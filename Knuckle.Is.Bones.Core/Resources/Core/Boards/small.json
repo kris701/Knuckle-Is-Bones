@@ -2,6 +2,7 @@
   "ID": "9cbc4760-d71b-482c-ab06-f05fecedd741",
   "Name": "Low",
   "Description": "A lower 3x2 field.",
+  "RequiredPoints": 0,
   "Columns": [
     {
       "Cells": [ 0, 0 ]

@@ -2,22 +2,24 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game
 {
-    public class DiceDefinition : IDefinition, IGenericClonable<DiceDefinition>
+    public class DiceDefinition : IUnlockable, IGenericClonable<DiceDefinition>
     {
         public Guid ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Sides { get; set; }
         public int Value { get; set; } = 0;
+        public int RequiredPoints { get; set; }
 
         [JsonConstructor]
-        public DiceDefinition(Guid iD, string name, string description, int sides, int value)
+        public DiceDefinition(Guid iD, string name, string description, int sides, int value, int requiredPoints)
         {
             ID = iD;
             Name = name;
             Description = description;
             Sides = sides;
             Value = value;
+            RequiredPoints = requiredPoints;
         }
 
         public DiceDefinition(DiceDefinition other)
@@ -27,6 +29,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game
             Description = other.Description;
             Sides = other.Sides;
             Value = other.Value;
+            RequiredPoints = other.RequiredPoints;
         }
 
         public DiceDefinition Clone() => new DiceDefinition(this);
