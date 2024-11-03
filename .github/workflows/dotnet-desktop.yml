@@ -8,6 +8,8 @@ jobs:
   check-tag:
     name: Check build tag
     runs-on: ubuntu-latest
+    outputs: 
+        createRelease: ${{ steps.check-tag.outputs.exists }}
     steps:
       - uses: actions/checkout@v4
 
@@ -24,7 +26,8 @@ jobs:
 
   build:
     name: Build and Create Release
-    if: steps.check-tag.outputs.exists == 'true'
+    needs: check-tag
+    if: needs.check-tag.outputs.createRelease == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
