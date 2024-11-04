@@ -1,5 +1,6 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.OpponentModules;
+using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Knuckle.Is.Bones.OpenGL.Views.StartGameView;
@@ -79,7 +80,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
         private void SetupControlsView()
         {
-            AddControl(0, new AnimatedButtonControl(Parent, (b) => Escape())
+            AddControl(0, new AnimatedAudioButton(Parent, (b) => Escape())
             {
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
@@ -93,7 +94,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
             });
             if (Engine.State.FirstOpponent.Module is PlayerOpponentModule || Engine.State.SecondOpponent.Module is PlayerOpponentModule)
             {
-                AddControl(0, new AnimatedButtonControl(Parent, (b) => MoveLeft())
+                AddControl(0, new AnimatedAudioButton(Parent, (b) => MoveLeft())
                 {
                     X = 1500,
                     Y = 900,
@@ -105,7 +106,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                     TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5")),
                     FillClickedColor = BasicTextures.GetClickedTexture(),
                 });
-                AddControl(0, new AnimatedButtonControl(Parent, (b) => MoveRight())
+                AddControl(0, new AnimatedAudioButton(Parent, (b) => MoveRight())
                 {
                     X = 1700,
                     Y = 900,
@@ -117,7 +118,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                     TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5")),
                     FillClickedColor = BasicTextures.GetClickedTexture(),
                 });
-                AddControl(0, new AnimatedButtonControl(Parent, (b) => TakeTurn())
+                AddControl(0, new AnimatedAudioButton(Parent, (b) => TakeTurn())
                 {
                     X = 1300,
                     Y = 900,
@@ -224,7 +225,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                     },
                     _winnerLabel,
                     _pointsGainedLabel,
-                    new AnimatedButtonControl(Parent, (x) => SwitchView(new StartGame(Parent)))
+                    new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent)))
                     {
                         Width = 500,
                         Height = 110,
@@ -235,7 +236,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                         TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
                         FillClickedColor = BasicTextures.GetClickedTexture(),
                     },
-                    new AnimatedButtonControl(Parent, (x) => SwitchView(new MainMenu(Parent)))
+                    new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
                     {
                         Width = 500,
                         Height = 110,

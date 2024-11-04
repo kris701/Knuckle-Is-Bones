@@ -1,4 +1,5 @@
-﻿using Knuckle.Is.Bones.OpenGL.Helpers;
+﻿using Knuckle.Is.Bones.OpenGL.Controls;
+using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.HowToPlayView;
 using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView;
@@ -34,7 +35,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 
             AddControl(0, new StackPanelControl(new System.Collections.Generic.List<IControl>()
             {
-                new AnimatedButtonControl(Parent, (x) =>
+                new AnimatedAudioButton(Parent, (x) =>
                 {
                     SwitchView(new MainGame(Parent, new Core.Models.Saves.GameSaveDefinition("save.json")));
                 })
@@ -47,7 +48,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
                     IsVisible = File.Exists("save.json"),
                     Height = 100
                 },
-                new AnimatedButtonControl(Parent, (x) => SwitchView(new StartGame(Parent)))
+                new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent)))
                 {
                     Text = "New Game",
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
@@ -56,7 +57,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
                     TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
                     Height = 100
                 },
-                new AnimatedButtonControl(Parent, (x) => SwitchView(new HowToPlay(Parent)))
+                new AnimatedAudioButton(Parent, (x) => SwitchView(new HowToPlay(Parent)))
                 {
                     Text = "How to Play",
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
@@ -65,7 +66,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
                     TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
                     Height = 100
                 },
-                new AnimatedButtonControl(Parent, (x) => SwitchView(new SettingsMenu(Parent)))
+                new AnimatedAudioButton(Parent, (x) => SwitchView(new SettingsMenu(Parent)))
                 {
                     Text = "Settings",
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
@@ -74,7 +75,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
                     TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
                     Height = 100
                 },
-                new AnimatedButtonControl(Parent, (x) => (Parent as KnuckleBoneWindow).Exit())
+                new AnimatedAudioButton(Parent, (x) => (Parent as KnuckleBoneWindow).Exit())
                 {
                     Text = "Exit",
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx24),

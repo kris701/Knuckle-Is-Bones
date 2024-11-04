@@ -1,0 +1,14 @@
+# Move
+https://sfxr.me/#34T6Pkke5Pbph7tyC6MJgYDukDBm5GDQ8rQc7fdkuforEcQSykGCYLdEk2aH5tCnAPiLJrMMWGHBZNcCvPJoXDaFqbNDRWSJWSUZMtVW2ZGPUuLMNbfvkbh8j
+
+# Hurt
+https://sfxr.me/#34T6Pm1vxJnuZdLuFoqDiTvmhz271WrmqYdm6P4Wr3woGBN1ikrpWpTGaQ5G7jNyvu8UFd93gNVjf77ndsTrSPaMGGdpM7iqyFsErnaS6sT7fDf4ZSRQZ2zE3
+
+# Roll
+https://sfxr.me/#7BMHBGFvZYMV6qf92VcbG9DRCqnW4qUBFitNyoWHw2U7yL83S4QQDh51SCeHgyzwJK3bppq5x5cgdi1yaEJBYRiiSnNw45XBpGFXQRpsRuTNJTRntkrBpHyMh
+
+# Combo
+https://sfxr.me/#34T6PkzYiF8FXwBK7C7rsSMRojqPh4C6kU1zWSqWHYE4fDkovbTqftAbtzEabgwWDEEGH79pz56jZhgybR2MYEdK9y2Vcn4m9JxM8Q6YeVyzFrqgc5jbaGA7y
+
+# Place
+https://sfxr.me/#11111A9ywzqvoi6HV75D4Q4SueVtdeRiYUMRx66mnwqzoAfHG3SELtWXVmAFRh2QbBmyh6TmxjyfyDsrQpXyR8qEiZ5LPyGdsn7qsNaVsrZidbxWoxuw43tK

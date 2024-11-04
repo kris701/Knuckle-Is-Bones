@@ -2,6 +2,7 @@
 using Knuckle.Is.Bones.Core.Models;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
+using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
@@ -19,16 +20,16 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
     public partial class StartGame : BaseKnuckleBoneFadeView
     {
         private readonly Random _rnd = new Random();
-        private PageHandler<AnimatedButtonControl> _boardsPageHandler;
+        private PageHandler<AnimatedAudioButton> _boardsPageHandler;
         private AnimatedTextboxControl _boardsDescription;
-        private PageHandler<AnimatedButtonControl> _dicePageHandler;
+        private PageHandler<AnimatedAudioButton> _dicePageHandler;
         private AnimatedTextboxControl _diceDescription;
-        private PageHandler<AnimatedButtonControl> _firstOpponentsPageHandler;
+        private PageHandler<AnimatedAudioButton> _firstOpponentsPageHandler;
         private AnimatedTextboxControl _firstOpponentDescription;
-        private PageHandler<AnimatedButtonControl> _secondOpponentsPageHandler;
+        private PageHandler<AnimatedAudioButton> _secondOpponentsPageHandler;
         private AnimatedTextboxControl _secondOpponentDescription;
 
-        private AnimatedButtonControl _startButton;
+        private AnimatedAudioButton _startButton;
         private bool _boardSelected = false;
         private bool _diceSelected = false;
         private bool _opponentOneSelected = false;
@@ -55,7 +56,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 
             var textureSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce"));
 
-            _startButton = new AnimatedButtonControl(Parent, (x) =>
+            _startButton = new AnimatedAudioButton(Parent, (x) =>
             {
                 if (_selectedBoard == Guid.Empty)
                     return;
@@ -100,7 +101,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 Height = 100
             };
             AddControl(0, _startButton);
-            AddControl(0, new AnimatedButtonControl(Parent, (x) => SwitchView(new MainMenu(Parent)))
+            AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
             {
                 Text = "Back",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
@@ -252,7 +253,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
             }
         }
 
-        private void SetupPageControl(PageHandler<AnimatedButtonControl> pagehandler, float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IUnlockable> getMethod, Action<AnimatedButtonControl> clicked, Action onAnySelected)
+        private void SetupPageControl(PageHandler<AnimatedAudioButton> pagehandler, float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IUnlockable> getMethod, Action<AnimatedAudioButton> clicked, Action onAnySelected)
         {
             AddControl(1, new LabelControl()
             {
@@ -271,16 +272,16 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
             items = items.OrderBy(x => x.RequiredPoints).ToList();
 
             var textureSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
-            var controlList = new List<AnimatedButtonControl>();
+            var controlList = new List<AnimatedAudioButton>();
             foreach (var item in items)
             {
                 var isUnlocked = (Parent as KnuckleBoneWindow).User.AllTimeScore >= item.RequiredPoints;
                 var text = $"{item.Name}";
                 if (!isUnlocked)
                     text += $"({item.RequiredPoints}P)";
-                controlList.Add(new AnimatedButtonControl(Parent, (x) =>
+                controlList.Add(new AnimatedAudioButton(Parent, (x) =>
                 {
-                    clicked(x as AnimatedButtonControl);
+                    clicked(x as AnimatedAudioButton);
                     onAnySelected();
                 })
                 {
@@ -297,7 +298,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                     IsEnabled = isUnlocked
                 });
             }
-            pagehandler = new PageHandler<AnimatedButtonControl>(this, controlList)
+            pagehandler = new PageHandler<AnimatedAudioButton>(this, controlList)
             {
                 LeftButtonX = 10,
                 LeftButtonY = -50,

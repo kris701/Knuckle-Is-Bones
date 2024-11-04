@@ -134,6 +134,12 @@
 /processorParam:TextureFormat=Color
 /build:Shared/button_small_2.png
 
+#begin Shared/click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Shared/click.wav
+
 #begin Shared/square_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -230,6 +236,12 @@
 /processorParam:TextureFormat=Color
 /build:Views/MainGame/combo_3_2.png
 
+#begin Views/MainGame/combo.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Views/MainGame/combo.wav
+
 #begin Views/MainGame/gameover_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -253,6 +265,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Views/MainGame/gameover_2.png
+
+#begin Views/MainGame/hurt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Views/MainGame/hurt.wav
+
+#begin Views/MainGame/move.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Views/MainGame/move.wav
+
+#begin Views/MainGame/place.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Views/MainGame/place.wav
+
+#begin Views/MainGame/roll.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Views/MainGame/roll.wav
 
 #begin Views/MainMenu/title_1.png
 /importer:TextureImporter

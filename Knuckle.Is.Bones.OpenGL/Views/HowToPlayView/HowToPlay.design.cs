@@ -1,4 +1,5 @@
-﻿using Knuckle.Is.Bones.OpenGL.Helpers;
+﻿using Knuckle.Is.Bones.OpenGL.Controls;
+using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
@@ -68,7 +69,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 VerticalAlignment = VerticalAlignment.Middle,
             });
-            AddControl(0, new AnimatedButtonControl(Parent, (x) => SwitchView(new MainMenu(Parent)))
+            AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
             {
                 Text = "Back",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
