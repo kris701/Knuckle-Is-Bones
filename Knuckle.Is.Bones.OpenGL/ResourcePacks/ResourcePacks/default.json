@@ -118,5 +118,10 @@
     }
   ],
   "Songs": [],
-  "SoundEffects": []
+  "SoundEffects": [
+    {
+      "ID": "19f2fb41-6cd2-4c59-ad74-6a15773f4028",
+      "Content": "Shared/click"
+    }
+  ]
 }

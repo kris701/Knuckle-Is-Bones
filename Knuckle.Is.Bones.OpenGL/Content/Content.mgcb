@@ -134,6 +134,12 @@
 /processorParam:TextureFormat=Color
 /build:Shared/button_small_2.png
 
+#begin Shared/click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Shared/click.wav
+
 #begin Shared/square_1.png
 /importer:TextureImporter
 /processor:TextureProcessor

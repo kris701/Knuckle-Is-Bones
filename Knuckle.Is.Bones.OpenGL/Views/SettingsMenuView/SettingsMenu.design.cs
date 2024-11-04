@@ -1,4 +1,5 @@
-﻿using Knuckle.Is.Bones.OpenGL.Helpers;
+﻿using Knuckle.Is.Bones.OpenGL.Controls;
+using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
@@ -64,7 +65,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
                 HorizontalAlignment = HorizontalAlignment.Middle
             });
 
-            AddControl(0, new AnimatedButtonControl(Parent, (x) => SwitchView(new MainMenu(Parent)))
+            AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
             {
                 Text = "Cancel",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
@@ -76,7 +77,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
                 Height = 100
             });
 
-            AddControl(0, new AnimatedButtonControl(Parent, OnSaveAndApplySettings)
+            AddControl(0, new AnimatedAudioButton(Parent, OnSaveAndApplySettings)
             {
                 Text = "Apply",
                 Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
@@ -113,12 +114,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
             var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
             foreach (var opt in _resolutionPresets)
             {
-                controls.Add(new AnimatedButtonControl(Parent, (x) =>
+                controls.Add(new AnimatedAudioButton(Parent, (x) =>
                 {
                     foreach (var control in controls)
-                        if (control is AnimatedButtonControl other)
+                        if (control is AnimatedAudioButton other)
                             other.TileSet = normalTileset;
-                    if (x is AnimatedButtonControl button)
+                    if (x is AnimatedAudioButton button)
                     {
                         button.TileSet = selectedTileset;
                         if (x.Tag is Point res)
@@ -168,9 +169,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
             var controls = new List<IControl>();
             var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
             var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
-            controls.Add(new AnimatedButtonControl(Parent, (x) =>
+            controls.Add(new AnimatedAudioButton(Parent, (x) =>
             {
-                if (x is AnimatedButtonControl button)
+                if (x is AnimatedAudioButton button)
                 {
                     _newSettings.IsFullscreen = !_newSettings.IsFullscreen;
                     button.TileSet = _newSettings.IsFullscreen ? selectedTileset : normalTileset;
@@ -184,9 +185,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
                 Width = _buttonWidth,
                 Text = $"Fullscreen",
             });
-            controls.Add(new AnimatedButtonControl(Parent, (x) =>
+            controls.Add(new AnimatedAudioButton(Parent, (x) =>
             {
-                if (x is AnimatedButtonControl button)
+                if (x is AnimatedAudioButton button)
                 {
                     _newSettings.IsVsync = !_newSettings.IsVsync;
                     button.TileSet = _newSettings.IsVsync ? selectedTileset : normalTileset;
@@ -230,12 +231,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
             var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
             foreach (var opt in _musicPresets)
             {
-                controls.Add(new AnimatedButtonControl(Parent, (x) =>
+                controls.Add(new AnimatedAudioButton(Parent, (x) =>
                 {
                     foreach (var control in controls)
-                        if (control is AnimatedButtonControl other)
+                        if (control is AnimatedAudioButton other)
                             other.TileSet = normalTileset;
-                    if (x is AnimatedButtonControl button)
+                    if (x is AnimatedAudioButton button)
                     {
                         button.TileSet = selectedTileset;
                         if (x.Tag is float vol)
@@ -282,12 +283,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
             var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
             foreach (var opt in _effectsPresets)
             {
-                controls.Add(new AnimatedButtonControl(Parent, (x) =>
+                controls.Add(new AnimatedAudioButton(Parent, (x) =>
                 {
                     foreach (var control in controls)
-                        if (control is AnimatedButtonControl other)
+                        if (control is AnimatedAudioButton other)
                             other.TileSet = normalTileset;
-                    if (x is AnimatedButtonControl button)
+                    if (x is AnimatedAudioButton button)
                     {
                         button.TileSet = selectedTileset;
                         if (x.Tag is float vol)
