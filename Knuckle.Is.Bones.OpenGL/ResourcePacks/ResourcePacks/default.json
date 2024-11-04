@@ -122,6 +122,26 @@
     {
       "ID": "19f2fb41-6cd2-4c59-ad74-6a15773f4028",
       "Content": "Shared/click"
+    },
+    {
+      "ID": "19268829-42c3-411d-8357-91d55de0cef6",
+      "Content": "Views/MainGame/move"
+    },
+    {
+      "ID": "4e53cd32-7af6-47a1-a331-ec2096505c78",
+      "Content": "Views/MainGame/hurt"
+    },
+    {
+      "ID": "adb4826c-ae62-4785-b0f3-81dd4d692920",
+      "Content": "Views/MainGame/roll"
+    },
+    {
+      "ID": "74ea48c8-cb6f-4a22-8226-e5d6142b1f76",
+      "Content": "Views/MainGame/combo"
+    },
+    {
+      "ID": "23ac297f-3e68-461f-a869-a304e89e18c6",
+      "Content": "Views/MainGame/place"
     }
   ]
 }

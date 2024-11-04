@@ -8,6 +8,9 @@ namespace Knuckle.Is.Bones.Core.Engines
     public class KnuckleBonesEngine
     {
         public GameEventHandler? OnGameOver;
+        public GameEventHandler? OnOpponentDiceRemoved;
+        public GameEventHandler? OnCombo;
+        public GameEventHandler? OnTurn;
 
         public GameSaveDefinition Save { get; }
         public GameState State { get; }
@@ -52,6 +55,8 @@ namespace Knuckle.Is.Bones.Core.Engines
             if (GameOver)
                 return false;
 
+            OnTurn?.Invoke();
+
             OpponentDefinition opponent;
             BoardDefinition board;
 
@@ -86,6 +91,8 @@ namespace Knuckle.Is.Bones.Core.Engines
             if (column.Cells[column.Cells.Count - 1] != 0)
                 return false;
             var lowest = column.Cells.IndexOf(0);
+            if (column.Cells.Contains(State.CurrentDice.Value))
+                OnCombo?.Invoke();
             column.Cells[lowest] = State.CurrentDice.Value;
 
             RemoveOpposites(board, board2);
@@ -137,6 +144,8 @@ namespace Knuckle.Is.Bones.Core.Engines
                 // Collapse column
                 if (any)
                 {
+                    OnOpponentDiceRemoved?.Invoke();
+
                     var targetSize = opponentBoard.Columns[i].Cells.Count;
                     opponentBoard.Columns[i].Cells.RemoveAll(x => x == 0);
                     opponentBoard.Columns[i].Cells.AddRange(Enumerable.Repeat(0, targetSize - opponentBoard.Columns[i].Cells.Count));

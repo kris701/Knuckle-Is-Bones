@@ -33,11 +33,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
         private int _movePosition = 0;
         private int _rolledTimes = 0;
         private readonly Random _rnd = new Random();
+        private Guid _rollSoundEffect = Guid.Empty;
 
         public MainGame(KnuckleBoneWindow parent, GameSaveDefinition save) : base(parent, ID)
         {
             Save = save;
             Engine = new KnuckleBonesEngine(save);
+            Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(new Guid("4e53cd32-7af6-47a1-a331-ec2096505c78"));
+            Engine.OnCombo += () => Parent.Audio.PlaySoundEffectOnce(new Guid("74ea48c8-cb6f-4a22-8226-e5d6142b1f76"));
+            Engine.OnTurn += () => Parent.Audio.PlaySoundEffectOnce(new Guid("23ac297f-3e68-461f-a869-a304e89e18c6"));
 
             _leftKeyWatcher = new KeyWatcher(Keys.Left, MoveLeft);
             _rightKeyWatcher = new KeyWatcher(Keys.Right, MoveRight);
@@ -45,6 +49,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
             _escapeKeyWatcher = new KeyWatcher(Keys.Escape, Escape);
             _rollTimer = new GameTimer(TimeSpan.FromMilliseconds(50), (x) =>
             {
+                if (_rollSoundEffect == Guid.Empty)
+                {
+                    _rollSoundEffect = Parent.Audio.PlaySoundEffect(new Guid("adb4826c-ae62-4785-b0f3-81dd4d692920"));
+                }
                 _diceLabel.Text = $"{_rnd.Next(1, Engine.State.CurrentDice.Sides + 1)}";
                 _rolledTimes++;
                 if (_rolledTimes > 10)
@@ -52,6 +60,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
                     _rolledTimes = 0;
                     _rolling = false;
                     _rollWait = true;
+                    Parent.Audio.StopSoundEffect(_rollSoundEffect);
+                    _rollSoundEffect = Guid.Empty;
                     _diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
                 }
             });
@@ -140,6 +150,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
             if (_rolling || _rollWait || _selectWait)
                 return;
 
+            Parent.Audio.PlaySoundEffectOnce(new Guid("19268829-42c3-411d-8357-91d55de0cef6"));
+
             var opponent = Engine.GetCurrentOpponent();
             if (opponent.Module is PlayerOpponentModule player && Engine.State.Turn == player.OpponentID)
             {
@@ -161,6 +173,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
         {
             if (_rolling || _rollWait || _selectWait)
                 return;
+
+            Parent.Audio.PlaySoundEffectOnce(new Guid("19268829-42c3-411d-8357-91d55de0cef6"));
 
             var opponent = Engine.GetCurrentOpponent();
             if (opponent.Module is PlayerOpponentModule player && Engine.State.Turn == player.OpponentID)
