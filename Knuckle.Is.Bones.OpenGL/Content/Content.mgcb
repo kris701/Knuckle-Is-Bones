@@ -140,6 +140,12 @@
 /processorParam:Quality=Best
 /build:Shared/click.wav
 
+#begin Shared/mainMusic.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Shared/mainMusic.wav
+
 #begin Shared/square_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
