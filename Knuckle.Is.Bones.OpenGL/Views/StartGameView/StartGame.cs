@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Models;
+using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter;
@@ -52,14 +53,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 return;
             if (sender is AnimatedAudioButton button)
             {
-                if (button.Tag is IDefinition def)
+                if (button.Tag is OpponentDefinition def)
                 {
                     sender.TileSet = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
                     if (_selectedFirstOpponentButton != null)
                         _selectedFirstOpponentButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
                     _selectedFirstOpponentButton = sender;
                     _selectedFirstOpponent = def.ID;
-                    _firstOpponentDescription.Text = def.Description;
+                    _firstOpponentDescription.Text = def.Description + Environment.NewLine + " " + Environment.NewLine + $"Score Multiplier: {def.Difficulty}";
                 }
             }
         }
@@ -70,15 +71,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
                 return;
             if (sender is AnimatedAudioButton button)
             {
-                if (button.Tag is IDefinition def)
+                if (button.Tag is OpponentDefinition def)
                 {
                     sender.TileSet = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
                     if (_selectedSecondOpponentButton != null)
                         _selectedSecondOpponentButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
                     _selectedSecondOpponentButton = sender;
                     _selectedSecondOpponent = def.ID;
-                    _secondOpponentDescription.Text = def.Description;
-                }
+					_secondOpponentDescription.Text = def.Description + Environment.NewLine + " " + Environment.NewLine + $"Score Multiplier: {def.Difficulty}";
+				}
             }
         }
 
