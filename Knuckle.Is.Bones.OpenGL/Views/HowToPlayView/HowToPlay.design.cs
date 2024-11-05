@@ -24,8 +24,17 @@ namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
                 Height = 1080,
                 FillColor = BasicTextures.GetBasicRectange(Color.Black)
             });
-            // https://cult-of-the-lamb.fandom.com/wiki/Knucklebones
-            AddControl(0, new StackPanelControl(new List<IControl>()
+			AddControl(0, new LabelControl()
+			{
+				Y = 100,
+                Text = "How to Play",
+				HorizontalAlignment = HorizontalAlignment.Middle,
+				Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
+				FontColor = new Color(217, 68, 144)
+			});
+
+			// https://cult-of-the-lamb.fandom.com/wiki/Knucklebones
+			AddControl(0, new StackPanelControl(new List<IControl>()
             {
                 new TextboxControl()
                 {
@@ -57,12 +66,19 @@ namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
                 },
                 new TextboxControl()
                 {
-                    Text = $"* The game ends when either player completely fills up their 3x3 board. The player with the higher score wins.",
+                    Text = $"* The game ends when either player completely fills up their board. The player with the higher score wins.",
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
                     FontColor = Color.White,
                     Height = 100,
-                }
-            })
+                },
+				new TextboxControl()
+				{
+					Text = $"* You get points, if you win, based on the score of the player board. AI vs AI battles gives no points. Use points to unlock more dice and boards. Different AIs have different score multipliers, based on how difficult they are.",
+					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+					FontColor = Color.White,
+					Height = 150,
+				}
+			})
             {
                 Width = 1000,
                 Height = 700,
