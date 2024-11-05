@@ -19,9 +19,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
     {
         private static List<Point> _resolutionPresets = new List<Point>()
         {
-            new Point(1920, 1080),
-            new Point(1068, 600)
-        };
+			new Point(2560, 1440),
+			new Point(1920, 1080),
+            new Point(1600, 900),
+            new Point(1440, 810),
+            new Point(1280, 720),
+            new Point(800, 450),
+		};
         private static List<float> _musicPresets = new List<float>()
         {
             1f,
@@ -146,8 +150,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
                 {
                     Text = "Resolution",
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                    FontColor = Color.White,
-                    Height = 100,
+					FontColor = new Color(217, 68, 144),
+					Height = 100,
                 },
                 new StackPanelControl(controls)
                 {
@@ -208,8 +212,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
                 {
                     Text = "Other",
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                    FontColor = Color.White,
-                    Height = 100,
+					FontColor = new Color(217, 68, 144),
+					Height = 100,
                 },
                 new StackPanelControl(controls)
                 {
@@ -260,8 +264,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
                 {
                     Text = "Music",
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                    FontColor = Color.White,
-                    Height = 100,
+					FontColor = new Color(217, 68, 144),
+					Height = 100,
                 },
                 new StackPanelControl(controls)
                 {
@@ -312,8 +316,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
                 {
                     Text = "Sound Effects",
                     Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-                    FontColor = Color.White,
-                    Height = 100,
+					FontColor = new Color(217, 68, 144),
+					Height = 100,
                 },
                 new StackPanelControl(controls)
                 {

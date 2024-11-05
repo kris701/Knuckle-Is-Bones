@@ -30,7 +30,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
                 Text = "How to Play",
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
-				FontColor = new Color(217, 68, 144)
+				FontColor = new Color(217, 68, 144),
 			});
 
 			// https://cult-of-the-lamb.fandom.com/wiki/Knucklebones

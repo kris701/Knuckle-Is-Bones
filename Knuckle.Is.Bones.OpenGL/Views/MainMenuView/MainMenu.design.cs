@@ -89,7 +89,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
                 Y = 300,
                 HorizontalAlignment = HorizontalAlignment.Middle,
                 Width = 400,
-                Height = 500
+                Height = 500,
+                Gap = 25,
             });
 
             AddControl(0, new LabelControl()
