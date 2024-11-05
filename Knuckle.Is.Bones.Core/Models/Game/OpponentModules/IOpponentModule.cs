@@ -6,7 +6,8 @@ namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
     [JsonDerivedType(typeof(PlayerOpponentModule), typeDiscriminator: "Player")]
     [JsonDerivedType(typeof(RandomPositionOpponentModule), typeDiscriminator: "Random")]
     [JsonDerivedType(typeof(DefensiveOpponentModule), typeDiscriminator: "Defensive")]
-    public interface IOpponentModule : IGenericClonable<IOpponentModule>
+    [JsonDerivedType(typeof(ComboOpponentModule), typeDiscriminator: "Combo")]
+	public interface IOpponentModule : IGenericClonable<IOpponentModule>
     {
         public Guid OpponentID { get; set; }
 

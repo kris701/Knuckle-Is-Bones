@@ -2,7 +2,7 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
 {
-    public class DefensiveOpponentModule : IOpponentModule
+    public class ComboOpponentModule : IOpponentModule
     {
         public Guid OpponentID { get; set; } = Guid.NewGuid();
 
@@ -10,28 +10,29 @@ namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
         private int _targetColumn = 0;
 
         [JsonConstructor]
-        public DefensiveOpponentModule(Guid opponentID)
+        public ComboOpponentModule(Guid opponentID)
         {
             OpponentID = opponentID;
         }
 
         public void SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard)
         {
-            var orderedQueue = new PriorityQueue<int,int>();
-            var index = 0;
-            foreach(var column in opponentBoard.Columns)
-            {
-                if (column.Cells.Any(x => x == diceValue.Value) && !myBoard.Columns[index].IsFull())
-                    orderedQueue.Enqueue(index, column.Cells.Count - column.Cells.Count(x => x == diceValue.Value));
-                index++;
-            }
-            if (orderedQueue.Count > 0)
-            {
-                _targetColumn = orderedQueue.Dequeue();
-                return;
+			var orderedQueue = new PriorityQueue<int, int>();
+			var index = 0;
+			foreach (var column in myBoard.Columns)
+			{
+				if (column.Cells.Any(x => x == diceValue.Value) && !myBoard.Columns[index].IsFull())
+					orderedQueue.Enqueue(index, column.Cells.Count - column.Cells.Count(x => x == diceValue.Value));
+				index++;
+			}
+			if (orderedQueue.Count > 0)
+			{
+				_targetColumn = orderedQueue.Dequeue();
+				return;
 			}
 
-            int target = -1;
+
+			int target = -1;
             bool valid = false;
             while (!valid)
             {
@@ -44,6 +45,6 @@ namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
 
         public int GetTargetColumn() => _targetColumn;
 
-        public IOpponentModule Clone() => new DefensiveOpponentModule(OpponentID);
+        public IOpponentModule Clone() => new ComboOpponentModule(OpponentID);
     }
 }
