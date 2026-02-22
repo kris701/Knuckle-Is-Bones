@@ -1,7 +1,7 @@
 {
   "ID": "f2ab41c6-3519-4d86-ab0d-feec8fd0f18f",
-  "Name": "Small",
-  "Description": "A small 3 sided dice",
+  "Name": "D3",
+  "Description": "A small 3 sided dice (dont ask how thats even possible)",
   "Sides": 3,
   "Value": 0,
   "RequiredPoints": 0
