@@ -26,6 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Core\Boards\gigacombo.json" />
+    <EmbeddedResource Include="Resources\Core\Boards\giant.json" />
     <EmbeddedResource Include="Resources\Core\Boards\wave.json" />
     <EmbeddedResource Include="Resources\Core\Boards\large.json" />
     <EmbeddedResource Include="Resources\Core\Boards\tall.json" />
