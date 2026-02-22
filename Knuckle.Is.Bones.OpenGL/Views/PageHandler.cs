@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Controls.Elements;
+using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
 using System;
 using System.Collections.Generic;
@@ -54,9 +55,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				UpdatePages();
 			})
 			{
-				//FillColor = Parent.Parent.Textures.GetTexture(new Guid("d86347e3-3834-4161-9bbe-0d761d1d27ae")),
-				//FillClickedColor = Parent.Parent.Textures.GetTexture(new Guid("2c220d3f-5e7a-44ec-b4da-459f104c1e4a")),
-				//FillDisabledColor = Parent.Parent.Textures.GetTexture(new Guid("2c220d3f-5e7a-44ec-b4da-459f104c1e4a")),
+				FillClickedColor = BasicTextures.GetClickedTexture(),
+				FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
 				FontColor = Color.White,
 				Font = Parent.Parent.Fonts.GetFont(ButtonFontSize),
 				Text = $"<",
@@ -64,7 +64,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				Y = LeftButtonY,
 				Height = ButtonSize,
 				Width = ButtonSize,
-				IsEnabled = false,
 				IsVisible = false,
 			};
 			Children.Add(_leftButton);
@@ -78,9 +77,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				UpdatePages();
 			})
 			{
-				//FillColor = Parent.Parent.Textures.GetTexture(new Guid("d86347e3-3834-4161-9bbe-0d761d1d27ae")),
-				//FillClickedColor = Parent.Parent.Textures.GetTexture(new Guid("2c220d3f-5e7a-44ec-b4da-459f104c1e4a")),
-				//FillDisabledColor = Parent.Parent.Textures.GetTexture(new Guid("2c220d3f-5e7a-44ec-b4da-459f104c1e4a")),
+				FillClickedColor = BasicTextures.GetClickedTexture(),
+				FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
 				FontColor = Color.White,
 				Font = Parent.Parent.Fonts.GetFont(ButtonFontSize),
 				Text = $">",
@@ -183,16 +181,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 
 			if (MinItem - MaxItem != 0 && MaxPage - MinPage != 1)
 			{
-				_leftButton.IsVisible = true;
-				_rightButton.IsVisible = true;
-				if (PageIndex == MinPage)
-					_leftButton.IsEnabled = false;
-				else
-					_leftButton.IsEnabled = true;
-				if (PageIndex == MaxPage - 1)
-					_rightButton.IsEnabled = false;
-				else
-					_rightButton.IsEnabled = true;
+				if (PageIndex != MinPage)
+					_leftButton.IsVisible = true;
+				if (PageIndex != MaxPage - 1)
+					_rightButton.IsVisible = true;
 			}
 		}
 	}
