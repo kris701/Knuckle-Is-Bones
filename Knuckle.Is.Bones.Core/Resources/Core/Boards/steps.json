@@ -1,0 +1,23 @@
+{
+  "ID": "a501943e-e6be-47d8-9b2c-01ca54c01c36",
+  "Name": "Steps",
+  "Description": "A board that is shaped like steps",
+  "RequiredPoints": 350,
+  "Columns": [
+    {
+      "Cells": [ 0 ]
+    },
+    {
+      "Cells": [ 0, 0 ]
+    },
+    {
+      "Cells": [ 0, 0, 0 ]
+    },
+    {
+      "Cells": [ 0, 0, 0, 0 ]
+    },
+    {
+      "Cells": [ 0, 0, 0, 0, 0 ]
+    }
+  ]
+}

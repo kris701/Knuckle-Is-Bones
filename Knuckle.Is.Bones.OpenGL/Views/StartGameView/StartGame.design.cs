@@ -302,7 +302,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				LeftButtonY = -50,
 				RightButtonX = width - 80,
 				RightButtonY = -50,
-				ItemsPrPage = 12,
+				ItemsPrPage = 7,
 				X = x + 10,
 				Y = y + 70,
 				Width = width,
