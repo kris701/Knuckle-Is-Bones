@@ -14,8 +14,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 	public partial class MainGame : BaseKnuckleBoneFadeView
 	{
 		private LabelControl _diceLabel;
-		private BoardControl _board1;
-		private BoardControl _board2;
+		private BoardControl _firstOpponentBoard;
+		private AnimatedLabelControl _firstOpponentPoints;
+		private BoardControl _secondOpponentBoard;
+		private AnimatedLabelControl _secondOpponentPoints;
 		private CanvasPanelControl _gameOverPanel;
 		private LabelControl _winnerLabel;
 		private LabelControl _pointsGainedLabel;
@@ -29,29 +31,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				FillColor = BasicTextures.GetBasicRectange(Color.Black)
 			});
 
-			AddControl(0, new LabelControl()
-			{
-				Text = $"{Engine.State.FirstOpponent.Name}",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-				Width = 300,
-				Height = 100,
-				HorizontalAlignment = HorizontalAlignment.Right,
-				VerticalAlignment = VerticalAlignment.Top,
-			});
-			AddControl(0, new LabelControl()
-			{
-				Text = $"{Engine.State.SecondOpponent.Name}",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-				Width = 300,
-				Height = 100,
-				VerticalAlignment = VerticalAlignment.Bottom,
-				HorizontalAlignment = HorizontalAlignment.Left,
-			});
-
 			SetupControlsView();
 
-			UpdateFirstOpponentBoard();
-			UpdateSecondOpponentBoard();
+			CreateFirstOpponent();
+			CreateSeccondOpponent();
+
 			SetupDice();
 			SetupGameOverView();
 
@@ -71,9 +55,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 #endif
 
 			base.Initialize();
-
-			UpdateFirstOpponentBoard();
-			UpdateSecondOpponentBoard();
 		}
 
 		private void SetupControlsView()
@@ -131,39 +112,85 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			}
 		}
 
-		private void UpdateFirstOpponentBoard()
+		private void CreateFirstOpponent()
 		{
-			ClearLayer(10);
-			_board1 = new BoardControl(Parent, Engine.State.FirstOpponentBoard, 710, 10, 500, 500, true);
-			GeneratePointsBox(10, Engine.State.FirstOpponentBoard, 1390, 175);
-			if (!_rolling && Engine.State.Turn == Engine.State.FirstOpponent.Module.OpponentID)
-				_board1.HighlightColumn(Engine.State.FirstOpponent.Module.GetTargetColumn());
-			AddControl(10, _board1);
-		}
-
-		private void UpdateSecondOpponentBoard()
-		{
-			ClearLayer(20);
-			_board2 = new BoardControl(Parent, Engine.State.SecondOpponentBoard, 710, 570, 500, 500, false);
-			GeneratePointsBox(20, Engine.State.SecondOpponentBoard, 375, 735);
-			if (!_rolling && Engine.State.Turn == Engine.State.SecondOpponent.Module.OpponentID)
-				_board2.HighlightColumn(Engine.State.SecondOpponent.Module.GetTargetColumn());
-			AddControl(20, _board2);
-		}
-
-		private void GeneratePointsBox(int layer, BoardDefinition board, int x, int y)
-		{
-			AddControl(layer, new AnimatedLabelControl()
+			_firstOpponentPoints = new AnimatedLabelControl()
 			{
-				X = x,
-				Y = y,
+				X = 1390,
+				Y = 175,
 				Width = 150,
 				Height = 150,
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
 				FontColor = Color.Gold,
-				Text = $"{board.GetValue()}",
+				Text = $"{Engine.State.FirstOpponentBoard.GetValue()}",
 				TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
+			};
+			AddControl(10, _firstOpponentPoints);
+
+			AddControl(10, new LabelControl()
+			{
+				Text = $"{Engine.State.FirstOpponent.Name}",
+				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Width = 300,
+				Height = 100,
+				HorizontalAlignment = HorizontalAlignment.Right,
+				VerticalAlignment = VerticalAlignment.Top,
 			});
+
+			if (Parent.Textures.ContainsTextureSet(Engine.State.FirstOpponent.ID))
+			{
+				AddControl(10, new AnimatedTileControl()
+				{
+					Width = 300,
+					Height = 300,
+					X = 1600,
+					Y = 75,
+					TileSet = Parent.Textures.GetTextureSet(Engine.State.FirstOpponent.ID)
+				});
+			}
+
+			_firstOpponentBoard = new BoardControl(Parent, Engine.State.FirstOpponentBoard, 710, 10, 500, 500, true);
+			AddControl(10, _firstOpponentBoard);
+		}
+
+		private void CreateSeccondOpponent()
+		{
+			_secondOpponentPoints = new AnimatedLabelControl()
+			{
+				X = 375,
+				Y = 735,
+				Width = 150,
+				Height = 150,
+				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				FontColor = Color.Gold,
+				Text = $"{Engine.State.SecondOpponentBoard.GetValue()}",
+				TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
+			};
+			AddControl(20, _secondOpponentPoints);
+
+			AddControl(20, new LabelControl()
+			{
+				Text = $"{Engine.State.SecondOpponent.Name}",
+				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Width = 300,
+				Height = 100,
+				VerticalAlignment = VerticalAlignment.Bottom,
+				HorizontalAlignment = HorizontalAlignment.Left,
+			});
+
+			if (Parent.Textures.ContainsTextureSet(Engine.State.SecondOpponent.ID))
+			{
+				AddControl(20, new AnimatedTileControl()
+				{
+					Width = 300,
+					Height = 300,
+					Y = 725,
+					TileSet = Parent.Textures.GetTextureSet(Engine.State.SecondOpponent.ID)
+				});
+			}
+
+			_secondOpponentBoard = new BoardControl(Parent, Engine.State.SecondOpponentBoard, 710, 570, 500, 500, false);
+			AddControl(20, _secondOpponentBoard);
 		}
 
 		private void SetupDice()

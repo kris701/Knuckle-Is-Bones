@@ -51,7 +51,7 @@ namespace Knuckle.Is.Bones.OpenGL
 			MediaPlayer.IsRepeating = true;
 			SoundEffect.Initialize();
 			LoadMods();
-			ResourcePackController.LoadResourcePack(new Guid("4f686e3a-9bd8-41cd-854c-17cca5fce01b"));
+			ResourcePackController.LoadResourcePack(User.UIData.ResourcePackID);
 
 			CurrentScreen = _screenToLoad(this);
 			CurrentScreen.Initialize();
@@ -62,13 +62,6 @@ namespace Knuckle.Is.Bones.OpenGL
 			if (!Directory.Exists(_modsDir))
 				Directory.CreateDirectory(_modsDir);
 			ResourcePackController.LoadMods(_modsDir);
-		}
-
-		protected override void Update(GameTime tst)
-		{
-			if (IsActive)
-				Console.WriteLine("aaa");
-			base.Update(tst);
 		}
 
 		public void ApplySettings()

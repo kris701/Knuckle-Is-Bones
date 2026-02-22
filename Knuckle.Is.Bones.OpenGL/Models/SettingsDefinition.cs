@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Models;
+using System;
 
 namespace Knuckle.Is.Bones.OpenGL.Models
 {
@@ -10,6 +11,7 @@ namespace Knuckle.Is.Bones.OpenGL.Models
 		public bool IsVsync { get; set; } = true;
 		public float MusicVolume { get; set; } = 0.2f;
 		public float EffectsVolume { get; set; } = 0.2f;
+		public Guid ResourcePackID { get; set; } = new Guid("4f686e3a-9bd8-41cd-854c-17cca5fce01b");
 
 		public SettingsDefinition Clone() => new SettingsDefinition()
 		{
@@ -18,7 +20,8 @@ namespace Knuckle.Is.Bones.OpenGL.Models
 			IsFullscreen = IsFullscreen,
 			IsVsync = IsVsync,
 			MusicVolume = MusicVolume,
-			EffectsVolume = EffectsVolume
+			EffectsVolume = EffectsVolume,
+			ResourcePackID = ResourcePackID
 		};
 	}
 }

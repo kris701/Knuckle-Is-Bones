@@ -26,8 +26,6 @@
     <None Remove="Resources\Core\Dice\large.json" />
     <None Remove="Resources\Core\Dice\normal.json" />
     <None Remove="Resources\Core\Dice\small.json" />
-    <None Remove="Resources\Core\Opponents\combo.json" />
-    <None Remove="Resources\Core\Opponents\defensive.json" />
     <None Remove="Resources\Core\Opponents\player.json" />
   </ItemGroup>
 
@@ -41,14 +39,18 @@
     <EmbeddedResource Include="Resources\Core\Dice\large.json" />
     <EmbeddedResource Include="Resources\Core\Dice\small.json" />
     <EmbeddedResource Include="Resources\Core\Dice\normal.json" />
-    <EmbeddedResource Include="Resources\Core\Opponents\combo.json" />
-    <EmbeddedResource Include="Resources\Core\Opponents\defensive.json" />
-    <EmbeddedResource Include="Resources\Core\Opponents\random.json" />
+    <EmbeddedResource Include="Resources\Core\Opponents\john.json" />
+    <EmbeddedResource Include="Resources\Core\Opponents\frank.json" />
+    <EmbeddedResource Include="Resources\Core\Opponents\jerry.json" />
     <EmbeddedResource Include="Resources\Core\Opponents\player.json" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ToolsSharp" Version="1.1.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Campaign\" />
   </ItemGroup>
 
 </Project>
