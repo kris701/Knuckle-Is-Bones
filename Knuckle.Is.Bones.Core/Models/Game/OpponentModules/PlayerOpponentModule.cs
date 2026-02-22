@@ -2,24 +2,24 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
 {
-    public class PlayerOpponentModule : IOpponentModule
-    {
-        public Guid OpponentID { get; set; } = Guid.NewGuid();
+	public class PlayerOpponentModule : IOpponentModule
+	{
+		public Guid OpponentID { get; set; } = Guid.NewGuid();
 
-        private int _targetColumn = 0;
+		private int _targetColumn = 0;
 
-        [JsonConstructor]
-        public PlayerOpponentModule(Guid opponentID)
-        {
-            OpponentID = opponentID;
-        }
+		[JsonConstructor]
+		public PlayerOpponentModule(Guid opponentID)
+		{
+			OpponentID = opponentID;
+		}
 
-        public void SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard) => throw new NotImplementedException();
+		public void SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard) => throw new NotImplementedException();
 
-        public void SetTargetColumn(int targetColumn) => _targetColumn = targetColumn;
+		public void SetTargetColumn(int targetColumn) => _targetColumn = targetColumn;
 
-        public int GetTargetColumn() => _targetColumn;
+		public int GetTargetColumn() => _targetColumn;
 
-        public IOpponentModule Clone() => new PlayerOpponentModule(OpponentID);
-    }
+		public IOpponentModule Clone() => new PlayerOpponentModule(OpponentID);
+	}
 }
