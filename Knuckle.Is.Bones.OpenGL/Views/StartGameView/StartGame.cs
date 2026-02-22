@@ -2,6 +2,7 @@
 using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using System;
+using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
@@ -54,7 +55,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 						_selectedFirstOpponentButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
 					_selectedFirstOpponentButton = sender;
 					_selectedFirstOpponent = def.ID;
-					_firstOpponentDescription.Text = def.Description + Environment.NewLine + " " + Environment.NewLine + $"Score Multiplier: {def.Difficulty}";
+
+					var sb = new StringBuilder();
+					sb.AppendLine(def.Description);
+					if (def.Difficulty != 1)
+						sb.AppendLine($"Score Multiplier: {def.Difficulty}");
+					_firstOpponentDescription.Text = sb.ToString();
 				}
 			}
 		}
@@ -72,7 +78,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 						_selectedSecondOpponentButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
 					_selectedSecondOpponentButton = sender;
 					_selectedSecondOpponent = def.ID;
-					_secondOpponentDescription.Text = def.Description + Environment.NewLine + " " + Environment.NewLine + $"Score Multiplier: {def.Difficulty}";
+
+					var sb = new StringBuilder();
+					sb.AppendLine(def.Description);
+					if (def.Difficulty != 1)
+						sb.AppendLine($"Score Multiplier: {def.Difficulty}");
+					_secondOpponentDescription.Text = sb.ToString();
 				}
 			}
 		}

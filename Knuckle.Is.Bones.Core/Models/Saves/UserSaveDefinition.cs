@@ -5,11 +5,13 @@ namespace Knuckle.Is.Bones.Core.Models.Saves
 	public class UserSaveDefinition<T>
 	{
 		public int AllTimeScore { get; set; }
+		public List<Guid> CompletedItems { get; set; }
 		public T UIData { get; set; }
 
-		public UserSaveDefinition(int allTimeScore, T uIData)
+		public UserSaveDefinition(int allTimeScore, List<Guid> completedItems, T uIData)
 		{
 			AllTimeScore = allTimeScore;
+			CompletedItems = completedItems;
 			UIData = uIData;
 		}
 

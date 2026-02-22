@@ -277,6 +277,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				var text = $"{item.Name}";
 				if (!isUnlocked)
 					text += $"({item.RequiredPoints}P)";
+				var isCompleted = Parent.User.CompletedItems.Contains(item.ID);
 				controlList.Add(new AnimatedAudioButton(Parent, (x) =>
 				{
 					clicked(x as AnimatedAudioButton);
@@ -288,7 +289,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
 					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
 					Text = text,
-					FontColor = isUnlocked ? Color.White : Color.Gray,
+					FontColor = isUnlocked ? (isCompleted ? Color.LightGreen : Color.White) : Color.Gray,
 					Alpha = isUnlocked ? 256 : 100,
 					Height = 50,
 					Width = width - 20,

@@ -9,6 +9,7 @@ using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using ToolsSharp;
 
@@ -34,9 +35,9 @@ namespace Knuckle.Is.Bones.OpenGL
 			IsMouseVisible = true;
 
 			if (File.Exists("user.json"))
-				User = JsonSerializerHelpers.DeserializeOrDefault<UserSaveDefinition<SettingsDefinition>>(File.ReadAllText("user.json"), () => new UserSaveDefinition<SettingsDefinition>(0, new SettingsDefinition()));
+				User = JsonSerializerHelpers.DeserializeOrDefault<UserSaveDefinition<SettingsDefinition>>(File.ReadAllText("user.json"), () => new UserSaveDefinition<SettingsDefinition>(0, new List<Guid>(), new SettingsDefinition()));
 			else
-				User = new UserSaveDefinition<SettingsDefinition>(0, new SettingsDefinition());
+				User = new UserSaveDefinition<SettingsDefinition>(0, new List<Guid>(), new SettingsDefinition());
 
 			ApplySettings();
 		}
