@@ -58,24 +58,24 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 			{
 				Text = "Cancel",
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-				VerticalAlignment = VerticalAlignment.Bottom,
-				HorizontalAlignment = HorizontalAlignment.Left,
 				FillClickedColor = BasicTextures.GetClickedTexture(),
 				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
 				Width = 400,
-				Height = 100
+				Height = 100,
+				Y = 960,
+				X = 20,
 			});
 
 			AddControl(0, new AnimatedAudioButton(Parent, (e) => Accept())
 			{
 				Text = "Accept",
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-				VerticalAlignment = VerticalAlignment.Bottom,
-				HorizontalAlignment = HorizontalAlignment.Right,
 				FillClickedColor = BasicTextures.GetClickedTexture(),
 				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
 				Width = 400,
-				Height = 100
+				Height = 100,
+				Y = 960,
+				X = 1500,
 			});
 
 #if DEBUG

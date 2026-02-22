@@ -83,12 +83,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
 			{
 				Text = "Back",
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-				Y = 980,
-				HorizontalAlignment = HorizontalAlignment.Left,
 				FillClickedColor = BasicTextures.GetClickedTexture(),
 				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
 				Width = 400,
-				Height = 100
+				Height = 100,
+				Y = 960,
+				X = 20,
 			});
 
 #if DEBUG

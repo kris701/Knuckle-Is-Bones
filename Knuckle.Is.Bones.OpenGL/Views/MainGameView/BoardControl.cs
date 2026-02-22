@@ -5,6 +5,7 @@ using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Textures;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +18,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private readonly int _columns;
 		private float _cellWidth;
 		private float _cellHeight;
+		private float _minSize;
 		private readonly float _margin = 5;
 		private readonly bool _flip = false;
 		private TileControl _columnHighlight;
@@ -40,15 +42,18 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		{
 			_cellWidth = ((Width - _margin) / _columns) - _margin;
 			_cellHeight = ((Height - _margin) / _rows) - _margin;
+			_minSize = Math.Min(_cellWidth, _cellHeight);
+			var font = DeteminteFittingFontSize(_minSize);
 
 			_columnHighlight = new TileControl()
 			{
 				Height = Height,
-				Width = _cellWidth + _margin * 2,
+				Width = _minSize + _margin * 2,
 				X = X,
 				Y = Y,
 				FillColor = BasicTextures.GetBasicRectange(Color.Red),
-				IsVisible = false
+				IsVisible = false,
+				Alpha = 100
 			};
 			Children.Add(_columnHighlight);
 
@@ -66,11 +71,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 					Children.Add(new AnimatedLabelControl()
 					{
-						X = X + columnIndex * (_cellWidth + _margin) + _margin,
-						Y = Y + (cellOffset * (_cellHeight + _margin) + _margin),
-						Width = _cellWidth,
-						Height = _cellHeight,
-						Font = _parent.Fonts.GetFont(FontSizes.Ptx24),
+						X = X + columnIndex * (_cellWidth + _margin) + _margin + ((_cellWidth - _minSize) / 2),
+						Y = Y + (cellOffset * (_cellHeight + _margin) + _margin) + ((_cellHeight - _minSize) / 2),
+						Width = _minSize,
+						Height = _minSize,
+						Font = _parent.Fonts.GetFont(font),
 						FontColor = Color.White,
 						Text = text,
 						TileSet = GetBackgroundForCount(column.Cells, cell)
@@ -82,8 +87,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				}
 				columnIndex++;
 			}
+		}
 
-			//base.Initialize();
+		private Guid DeteminteFittingFontSize(float minSize)
+		{
+			if (minSize > 75)
+				return FontSizes.Ptx24;
+			if (minSize > 45)
+				return FontSizes.Ptx16;
+			return FontSizes.Ptx8;
 		}
 
 		private TextureSetDefinition GetBackgroundForCount(List<int> cells, int value)
@@ -96,14 +108,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				case 1: return _parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"));
 				case 2: return _parent.Textures.GetTextureSet(new System.Guid("936d00f9-2f70-40f6-9d1b-b13cec0fc54a"));
 				case 3: return _parent.Textures.GetTextureSet(new System.Guid("d02a3300-76fa-4965-9f41-18f4af4832a3"));
-				case 4: return _parent.Textures.GetTextureSet(new System.Guid("d02a3300-76fa-4965-9f41-18f4af4832a3"));
+				case >= 4: return _parent.Textures.GetTextureSet(new System.Guid("d02a3300-76fa-4965-9f41-18f4af4832a3"));
 			}
 			return _parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"));
 		}
 
 		public void HighlightColumn(int columnID)
 		{
-			_columnHighlight.X = X + (_cellWidth + _margin) * columnID;
+			_columnHighlight.X = X + (_cellWidth + _margin) * columnID + ((_cellWidth - _minSize) / 2);
 			_columnHighlight.IsVisible = true;
 		}
 

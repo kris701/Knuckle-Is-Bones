@@ -1,0 +1,17 @@
+{
+  "ID": "7d7a3947-eed2-4e79-b20d-f75235fb04e2",
+  "Name": "Giga Combo",
+  "Description": "A very tall tower, to make giant combos.",
+  "RequiredPoints": 1500,
+  "Columns": [
+    {
+      "Cells": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+    },
+    {
+      "Cells": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+    },
+    {
+      "Cells": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+    }
+  ]
+}
