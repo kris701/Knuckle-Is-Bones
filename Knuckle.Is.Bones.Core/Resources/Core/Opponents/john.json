@@ -1,7 +1,7 @@
 {
   "ID": "dde23f52-7a66-4dc6-bc47-eea2b493d9cd",
-  "Name": "Combo",
-  "Description": "An AI that always places dice if there is a combo possible..",
+  "Name": "John",
+  "Description": "John is smart. He always tries to create the biggest possible combos.",
   "Difficulty": 2.5,
   "RequiredPoints": 0,
   "Module": {

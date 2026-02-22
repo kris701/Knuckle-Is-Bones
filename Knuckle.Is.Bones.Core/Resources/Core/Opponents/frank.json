@@ -1,7 +1,7 @@
 {
   "ID": "9dd2041e-f8bc-4c44-8fcd-5424f9748ca6",
-  "Name": "Defensive",
-  "Description": "An AI that will always try to remove dice from the opponents board.",
+  "Name": "Frank",
+  "Description": "Frank is rather unconfrontational. He will play as defensively as possible.",
   "Difficulty": 2,
   "RequiredPoints": 0,
   "Module": {

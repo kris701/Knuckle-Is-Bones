@@ -15,10 +15,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private readonly BoardDefinition _board;
 		private readonly int _rows;
 		private readonly int _columns;
-		private readonly float _cellWidth;
-		private readonly float _cellHeight;
+		private float _cellWidth;
+		private float _cellHeight;
 		private readonly float _margin = 5;
-		private readonly TileControl _columnHighlight;
+		private readonly bool _flip = false;
+		private TileControl _columnHighlight;
 		private readonly IWindow _parent;
 
 		public BoardControl(IWindow parent, BoardDefinition board, float x, float y, float width, float height, bool flip = false)
@@ -32,26 +33,30 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			Height = height;
 			X = x;
 			Y = y;
+			_flip = flip;
+		}
 
-			_cellWidth = ((width - _margin) / _columns) - _margin;
-			_cellHeight = ((height - _margin) / _rows) - _margin;
+		public override void Initialize()
+		{
+			_cellWidth = ((Width - _margin) / _columns) - _margin;
+			_cellHeight = ((Height - _margin) / _rows) - _margin;
 
 			_columnHighlight = new TileControl()
 			{
-				Height = height,
+				Height = Height,
 				Width = _cellWidth + _margin * 2,
-				X = x,
-				Y = y,
+				X = X,
+				Y = Y,
 				FillColor = BasicTextures.GetBasicRectange(Color.Red),
 				IsVisible = false
 			};
 			Children.Add(_columnHighlight);
 
 			var columnIndex = 0;
-			foreach (var column in board.Columns)
+			foreach (var column in _board.Columns)
 			{
 				var cellOffset = 0;
-				if (flip)
+				if (_flip)
 					cellOffset = _rows - 1;
 				foreach (var cell in column.Cells)
 				{
@@ -61,22 +66,24 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 					Children.Add(new AnimatedLabelControl()
 					{
-						X = x + columnIndex * (_cellWidth + _margin) + _margin,
-						Y = y + (cellOffset * (_cellHeight + _margin) + _margin),
+						X = X + columnIndex * (_cellWidth + _margin) + _margin,
+						Y = Y + (cellOffset * (_cellHeight + _margin) + _margin),
 						Width = _cellWidth,
 						Height = _cellHeight,
-						Font = parent.Fonts.GetFont(FontSizes.Ptx24),
+						Font = _parent.Fonts.GetFont(FontSizes.Ptx24),
 						FontColor = Color.White,
 						Text = text,
 						TileSet = GetBackgroundForCount(column.Cells, cell)
 					});
-					if (flip)
+					if (_flip)
 						cellOffset--;
 					else
 						cellOffset++;
 				}
 				columnIndex++;
 			}
+
+			//base.Initialize();
 		}
 
 		private TextureSetDefinition GetBackgroundForCount(List<int> cells, int value)
@@ -98,6 +105,31 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		{
 			_columnHighlight.X = X + (_cellWidth + _margin) * columnID;
 			_columnHighlight.IsVisible = true;
+		}
+
+		public void HideHighlight()
+		{
+			_columnHighlight.IsVisible = false;
+		}
+
+		public void UpdateBoard()
+		{
+			var itemIndex = 1;
+			foreach (var column in _board.Columns)
+			{
+				foreach (var cell in column.Cells)
+				{
+					var child = Children[itemIndex++];
+					if (child is AnimatedLabelControl lab)
+					{
+						var text = "";
+						if (cell != 0)
+							text = $"{cell}";
+						lab.Text = text;
+						lab.TileSet = GetBackgroundForCount(column.Cells, cell);
+					}
+				}
+			}
 		}
 	}
 }
