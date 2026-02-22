@@ -43,6 +43,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_cellWidth = ((Width - _margin) / _columns) - _margin;
 			_cellHeight = ((Height - _margin) / _rows) - _margin;
 			_minSize = Math.Min(_cellWidth, _cellHeight);
+			var font = DeteminteFittingFontSize(_minSize);
 
 			_columnHighlight = new TileControl()
 			{
@@ -51,7 +52,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				X = X,
 				Y = Y,
 				FillColor = BasicTextures.GetBasicRectange(Color.Red),
-				IsVisible = false
+				IsVisible = false,
+				Alpha = 100
 			};
 			Children.Add(_columnHighlight);
 
@@ -73,7 +75,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 						Y = Y + (cellOffset * (_cellHeight + _margin) + _margin) + ((_cellHeight - _minSize) / 2),
 						Width = _minSize,
 						Height = _minSize,
-						Font = _parent.Fonts.GetFont(FontSizes.Ptx24),
+						Font = _parent.Fonts.GetFont(font),
 						FontColor = Color.White,
 						Text = text,
 						TileSet = GetBackgroundForCount(column.Cells, cell)
@@ -85,8 +87,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				}
 				columnIndex++;
 			}
+		}
 
-			//base.Initialize();
+		private Guid DeteminteFittingFontSize(float minSize)
+		{
+			if (minSize > 75)
+				return FontSizes.Ptx24;
+			if (minSize > 45)
+				return FontSizes.Ptx16;
+			return FontSizes.Ptx8;
 		}
 
 		private TextureSetDefinition GetBackgroundForCount(List<int> cells, int value)

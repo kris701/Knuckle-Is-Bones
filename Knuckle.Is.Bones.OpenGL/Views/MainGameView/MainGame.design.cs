@@ -61,8 +61,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		{
 			AddControl(0, new AnimatedAudioButton(Parent, (b) => Escape())
 			{
-				HorizontalAlignment = HorizontalAlignment.Left,
-				VerticalAlignment = VerticalAlignment.Top,
+				X = 50,
+				Y = 50,
 				Width = 150,
 				Height = 150,
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
