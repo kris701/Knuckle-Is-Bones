@@ -123,7 +123,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
 				FontColor = Color.Gold,
 				Text = $"{Engine.State.FirstOpponentBoard.GetValue()}",
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
+				TileSet = Parent.Textures.GetTextureSet(new System.Guid("4214d3a5-c6c6-4893-a366-30005537799b"))
 			};
 			AddControl(10, _firstOpponentPoints);
 
@@ -164,7 +164,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
 				FontColor = Color.Gold,
 				Text = $"{Engine.State.SecondOpponentBoard.GetValue()}",
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
+				TileSet = Parent.Textures.GetTextureSet(new System.Guid("4214d3a5-c6c6-4893-a366-30005537799b"))
 			};
 			AddControl(20, _secondOpponentPoints);
 

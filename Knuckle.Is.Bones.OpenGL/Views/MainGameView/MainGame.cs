@@ -28,7 +28,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private bool _selectWait = false;
 		private bool _rolling = true;
 		private bool _rollWait = false;
-		private int _movePosition = 0;
 		private int _rolledTimes = 0;
 		private readonly Random _rnd = new Random();
 		private Guid _rollSoundEffect = Guid.Empty;
@@ -72,7 +71,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				if (current.Module is not PlayerOpponentModule)
 				{
 					_selectWait = true;
-					_movePosition = current.Module.GetTargetColumn();
 					current.Module.SetTargetColumn(Engine.State.CurrentDice, Engine.GetCurrentOpponentBoard(), Engine.GetNextOpponentBoard());
 				}
 				UpdateColumnHighlight();
@@ -215,6 +213,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			if ((Engine.State.FirstOpponent.Module is PlayerOpponentModule) || (Engine.State.SecondOpponent.Module is PlayerOpponentModule))
 				if (_rolling || _rollWait || _selectWait)
 					return;
+			if (_rollSoundEffect != Guid.Empty)
+				Parent.Audio.StopSoundEffect(_rollSoundEffect);
 			SwitchView(new MainMenu(Parent));
 		}
 
