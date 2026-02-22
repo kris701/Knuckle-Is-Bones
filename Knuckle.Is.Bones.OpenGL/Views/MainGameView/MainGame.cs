@@ -121,9 +121,25 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			{
 				var pointsGained = 0;
 				if ((Engine.State.FirstOpponent.Module is PlayerOpponentModule) && (Engine.State.SecondOpponent.Module is not PlayerOpponentModule) && Engine.State.Winner == Engine.State.FirstOpponent.Module.OpponentID)
+				{
 					pointsGained = (int)(Engine.State.FirstOpponentBoard.GetValue() * Engine.State.SecondOpponent.Difficulty);
+					if (!Parent.User.CompletedItems.Contains(Engine.State.SecondOpponent.ID))
+						Parent.User.CompletedItems.Add(Engine.State.SecondOpponent.ID);
+					if (!Parent.User.CompletedItems.Contains(Engine.State.FirstOpponentBoard.ID))
+						Parent.User.CompletedItems.Add(Engine.State.FirstOpponentBoard.ID);
+					if (!Parent.User.CompletedItems.Contains(Engine.State.CurrentDice.ID))
+						Parent.User.CompletedItems.Add(Engine.State.CurrentDice.ID);
+				}
 				if ((Engine.State.SecondOpponent.Module is PlayerOpponentModule) && (Engine.State.FirstOpponent.Module is PlayerOpponentModule) && Engine.State.Winner == Engine.State.SecondOpponent.Module.OpponentID)
+				{
 					pointsGained = (int)(Engine.State.SecondOpponentBoard.GetValue() * Engine.State.FirstOpponent.Difficulty);
+					if (!Parent.User.CompletedItems.Contains(Engine.State.FirstOpponent.ID))
+						Parent.User.CompletedItems.Add(Engine.State.FirstOpponent.ID);
+					if (!Parent.User.CompletedItems.Contains(Engine.State.FirstOpponentBoard.ID))
+						Parent.User.CompletedItems.Add(Engine.State.FirstOpponentBoard.ID);
+					if (!Parent.User.CompletedItems.Contains(Engine.State.CurrentDice.ID))
+						Parent.User.CompletedItems.Add(Engine.State.CurrentDice.ID);
+				}
 
 				Parent.User.AllTimeScore += pointsGained;
 				Parent.User.Save();
