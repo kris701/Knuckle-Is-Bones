@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.OpenGL.Models;
+using Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Controls;
@@ -6,6 +7,7 @@ using MonoGame.OpenGL.Formatter.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,10 +27,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 
         private void OnSaveAndApplySettings(ButtonControl sender)
         {
-            Parent.User.UIData = _newSettings;
-            Parent.ApplySettings();
-            Parent.User.Save();
-            SwitchView(new MainMenu(Parent));
-        }
+			var oldSettings = Parent.User.UIData.Clone();
+			var newSettings = _newSettings.Clone();
+			Parent.User.UIData = newSettings;
+			Parent.ApplySettings();
+			SwitchView(new AcceptView(Parent, oldSettings, newSettings));
+		}
     }
 }

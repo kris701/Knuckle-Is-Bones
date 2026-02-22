@@ -2,11 +2,13 @@
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
+using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -45,29 +47,32 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
             0f
         };
         private static int _buttonWidth = 250;
+		private CanvasPanelControl _resolutionPanel;
 
-        public override void Initialize()
+		[MemberNotNull(nameof(_resolutionPanel))]
+		public override void Initialize()
         {
             AddControl(0, new TileControl()
             {
-                Width = 1920,
-                Height = 1080,
-                FillColor = BasicTextures.GetBasicRectange(Color.Black)
+				Width = IWindow.BaseScreenSize.X,
+				Height = IWindow.BaseScreenSize.Y,
+				FillColor = BasicTextures.GetBasicRectange(Color.Black)
             });
 
-            AddControl(0, new StackPanelControl(new List<IControl>()
-            {
-                CreateResolutionPanel(),
-                CreateOtherCanvas(),
-                CreateMusicPanel(),
-                CreateEffectsPanel(),
-            })
-            {
-                Width = 1300,
-                Height = 800,
-                VerticalAlignment = VerticalAlignment.Middle,
-                HorizontalAlignment = HorizontalAlignment.Middle
-            });
+            _resolutionPanel = CreateResolutionPanel();
+			AddControl(0, new StackPanelControl(new List<IControl>()
+			{
+				_resolutionPanel,
+				CreateOtherCanvas(),
+				CreateMusicPanel(),
+				CreateEffectsPanel(),
+			})
+			{
+				Width = 1300,
+				Height = 800,
+				VerticalAlignment = VerticalAlignment.Middle,
+				HorizontalAlignment = HorizontalAlignment.Middle
+			});
 
             AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
             {
@@ -141,7 +146,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
                     Width = _buttonWidth,
                     Text = $"{opt.X}x{opt.Y}",
                     Tag = opt
-                });
+				});
             }
 
             return new CanvasPanelControl(new List<IControl>()
@@ -163,6 +168,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
             }) 
             {
                 Height = 150,
+                IsVisible = !_newSettings.IsFullscreen
             };
         }
 
@@ -179,7 +185,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
                 {
                     _newSettings.IsFullscreen = !_newSettings.IsFullscreen;
                     button.TileSet = _newSettings.IsFullscreen ? selectedTileset : normalTileset;
-                }
+					_resolutionPanel.IsVisible = !_newSettings.IsFullscreen;
+				}
             })
             {
                 TileSet = _newSettings.IsFullscreen ? selectedTileset : normalTileset,
