@@ -195,6 +195,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		private void SetupDice()
 		{
+			var targetTileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"));
+			if (Parent.Textures.ContainsTextureSet(Engine.State.CurrentDice.ID))
+				targetTileSet = Parent.Textures.GetTextureSet(Engine.State.CurrentDice.ID);
+
 			_diceLabel = new AnimatedLabelControl()
 			{
 				X = 375,
@@ -204,7 +208,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
 				Text = "",
 				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"))
+				TileSet = targetTileSet
 			};
 			AddControl(1000, _diceLabel);
 		}

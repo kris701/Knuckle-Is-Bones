@@ -44,6 +44,7 @@
     <ProjectReference Include="..\Knuckle.Is.Bones.Core\Knuckle.Is.Bones.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Views\Dice\" />
     <Folder Include="Content\Views\Opponents\" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
