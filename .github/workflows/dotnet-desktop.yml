@@ -47,13 +47,13 @@ jobs:
       - name: Compress build files (WINDOWS)
         uses: vimtor/action-zip@v1.2
         with:
-          files: Output/net8.0/win-x64/publish/
+          files: Output/net10.0/win-x64/publish/
           dest: Output/windows.zip
 
       - name: Compress build files (LINUX)
         uses: vimtor/action-zip@v1.2
         with:
-          files: Output/net8.0/linux-x64/publish/
+          files: Output/net10.0/linux-x64/publish/
           dest: Output/linux.zip
 
       - name: Get Package version
