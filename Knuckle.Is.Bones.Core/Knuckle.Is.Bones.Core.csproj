@@ -7,7 +7,7 @@
 	  <Authors>Kristian Skov Johansen</Authors>
 	  <Copyright>Kristian Skov Johansen</Copyright>
 	  <Product>Knuckle.Is.Bones Core</Product>
-	  <Version>0.1.4</Version>
+	  <Version>0.1.5</Version>
 	  <SelfContained>true</SelfContained>
 	  <DebugType>embedded</DebugType>
 	  <PublishReadyToRun>false</PublishReadyToRun>
@@ -15,15 +15,6 @@
 	  <OutputPath>../Output/</OutputPath>
 	  <SignAssembly>True</SignAssembly>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Resources\Core\Boards\large.json" />
-    <None Remove="Resources\Core\Boards\normal.json" />
-    <None Remove="Resources\Core\Boards\small.json" />
-    <None Remove="Resources\Core\Boards\tall.json" />
-    <None Remove="Resources\Core\Boards\wave.json" />
-    <None Remove="Resources\Core\Opponents\player.json" />
-  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Core\Boards\gigacombo.json" />
