@@ -3,24 +3,25 @@ using System.Text.Json.Serialization;
 
 namespace Knuckle.Is.Bones.Core.Models.Game
 {
-	public class OpponentDefinition : IUnlockable, IGenericClonable<OpponentDefinition>
+	public class OpponentDefinition : IPurchasable, IGenericClonable<OpponentDefinition>
 	{
 		public Guid ID { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public IOpponentModule Module { get; set; }
 		public double Difficulty { get; set; }
-		public int RequiredPoints { get; set; }
+		public bool IsPurchasable { get; set; }
 
 		[JsonConstructor]
-		public OpponentDefinition(Guid iD, string name, string description, IOpponentModule module, double difficulty, int requiredPoints)
+		public OpponentDefinition(Guid iD, string name, string description, IOpponentModule module, double difficulty, bool isPurchasable)
 		{
 			ID = iD;
 			Name = name;
 			Description = description;
 			Module = module;
 			Difficulty = difficulty;
-			RequiredPoints = requiredPoints;
+			IsPurchasable = isPurchasable;
+
 		}
 
 		public OpponentDefinition(OpponentDefinition other)
@@ -33,7 +34,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 			else
 				throw new ArgumentException("Could not clone module!");
 			Difficulty = other.Difficulty;
-			RequiredPoints = other.RequiredPoints;
+			IsPurchasable = other.IsPurchasable;
 		}
 
 		public OpponentDefinition Clone() => new OpponentDefinition(this);

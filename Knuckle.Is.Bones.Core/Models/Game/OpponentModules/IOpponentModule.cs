@@ -2,11 +2,10 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
 {
-	[JsonPolymorphic(TypeDiscriminatorPropertyName = "OpponentModule")]
-	[JsonDerivedType(typeof(PlayerOpponentModule), typeDiscriminator: "Player")]
-	[JsonDerivedType(typeof(RandomPositionOpponentModule), typeDiscriminator: "Random")]
-	[JsonDerivedType(typeof(DefensiveOpponentModule), typeDiscriminator: "Defensive")]
-	[JsonDerivedType(typeof(ComboOpponentModule), typeDiscriminator: "Combo")]
+	[JsonDerivedType(typeof(PlayerOpponentModule), typeDiscriminator: nameof(PlayerOpponentModule))]
+	[JsonDerivedType(typeof(RandomPositionOpponentModule), typeDiscriminator: nameof(RandomPositionOpponentModule))]
+	[JsonDerivedType(typeof(DefensiveOpponentModule), typeDiscriminator: nameof(DefensiveOpponentModule))]
+	[JsonDerivedType(typeof(ComboOpponentModule), typeDiscriminator: nameof(ComboOpponentModule))]
 	public interface IOpponentModule : IGenericClonable<IOpponentModule>
 	{
 		public Guid OpponentID { get; set; }

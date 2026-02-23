@@ -4,5 +4,5 @@
   "Description": "A small 3 sided dice (dont ask how thats even possible)",
   "Sides": 3,
   "Value": 0,
-  "RequiredPoints": 0
+  "IsPurchasable": false
 }

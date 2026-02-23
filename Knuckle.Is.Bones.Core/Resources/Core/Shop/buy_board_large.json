@@ -1,0 +1,12 @@
+{
+  "ID": "d1649119-dd57-4c86-a952-2748387ef042",
+  "Name": "Large Board",
+  "Description": "A large 4x4 field.",
+  "Cost": 500,
+  "Effects": [
+    {
+      "$type": "UnlockBoardEffect",
+      "ID": "09144a57-a719-47bd-a36c-1cfb287c295d"
+    }
+  ] 
+}

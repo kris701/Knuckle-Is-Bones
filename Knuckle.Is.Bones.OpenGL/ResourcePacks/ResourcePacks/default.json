@@ -219,6 +219,30 @@
         "Views/StartGame/gold_1",
         "Views/StartGame/gold_2"
       ]
+    },
+    {
+      "ID": "ac42399b-fecf-4627-96e8-bb188369dc81",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/GameShop/shopitem_1",
+        "Views/GameShop/shopitem_2"
+      ]
+    },
+    {
+      "ID": "ba6403c6-4af5-4b17-b5ee-62052beb7732",
+      "FrameTime": 500,
+      "Contents": [
+        "Views/GameShop/shopitem_selected_1",
+        "Views/GameShop/shopitem_selected_2"
+      ]
+    },
+    {
+      "ID": "0c464e6e-8fcb-4ba9-838d-0b1e5edfca12",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/GameShop/shopdesc_1",
+        "Views/GameShop/shopdesc_2"
+      ]
     }
   ],
   "Songs": [
@@ -251,6 +275,10 @@
     {
       "ID": "23ac297f-3e68-461f-a869-a304e89e18c6",
       "Content": "Views/MainGame/place"
+    },
+    {
+      "ID": "83fe89c5-745e-4f76-aa87-02ed76b37b1b",
+      "Content": "Views/GameShop/purchase"
     }
   ]
 }

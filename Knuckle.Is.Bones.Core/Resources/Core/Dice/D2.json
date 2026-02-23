@@ -4,5 +4,5 @@
   "Description": "Well, more like a coin flip?",
   "Sides": 2,
   "Value": 0,
-  "RequiredPoints": 0
+  "IsPurchasable": false
 }

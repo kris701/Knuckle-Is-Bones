@@ -2,26 +2,27 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game
 {
-	public class DiceDefinition : IUnlockable, IGenericClonable<DiceDefinition>
+	public class DiceDefinition : IPurchasable, IGenericClonable<DiceDefinition>
 	{
 		public Guid ID { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public int Sides { get; set; }
 		public int Value { get; set; } = 0;
-		public int RequiredPoints { get; set; }
+		public bool IsPurchasable { get; set; }
 
 		private readonly Random _rnd = new Random();
 
 		[JsonConstructor]
-		public DiceDefinition(Guid iD, string name, string description, int sides, int value, int requiredPoints)
+		public DiceDefinition(Guid iD, string name, string description, int sides, int value, bool isPurchasable)
 		{
 			ID = iD;
 			Name = name;
 			Description = description;
 			Sides = sides;
 			Value = value;
-			RequiredPoints = requiredPoints;
+			IsPurchasable = isPurchasable;
+
 		}
 
 		public DiceDefinition(DiceDefinition other)
@@ -31,7 +32,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 			Description = other.Description;
 			Sides = other.Sides;
 			Value = other.Value;
-			RequiredPoints = other.RequiredPoints;
+			IsPurchasable = other.IsPurchasable;
 		}
 
 		public DiceDefinition Clone() => new DiceDefinition(this);

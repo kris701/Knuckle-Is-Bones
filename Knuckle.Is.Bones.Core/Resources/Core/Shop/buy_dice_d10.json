@@ -1,0 +1,12 @@
+{
+  "ID": "689fe502-8f98-462b-b887-713c8e8abb1f",
+  "Name": "A D10 dice",
+  "Description": "A larger 10 sides dice.",
+  "Cost": 1000,
+  "Effects": [
+    {
+      "$type": "UnlockDiceEffect",
+      "ID": "9c935082-05b7-4b7e-9064-d6beb077ea8c"
+    }
+  ]
+}

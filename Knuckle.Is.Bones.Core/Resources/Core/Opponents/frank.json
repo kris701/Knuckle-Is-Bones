@@ -3,8 +3,8 @@
   "Name": "Frank",
   "Description": "Frank is rather unconfrontational. He will play as defensively as possible.",
   "Difficulty": 2,
-  "RequiredPoints": 0,
+  "IsPurchasable": false,
   "Module": {
-    "OpponentModule": "Defensive"
+    "$type": "DefensiveOpponentModule"
   }
 }
