@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Media;
 using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
+using Steamworks;
 using System;
 using System.IO;
 using ToolsSharp;
@@ -51,6 +52,8 @@ namespace Knuckle.Is.Bones.OpenGL
 			SoundEffect.Initialize();
 			LoadMods();
 			ResourcePackController.LoadResourcePack(User.UIData.ResourcePackID);
+
+			SteamAPI.Init();
 
 			CurrentScreen = _screenToLoad(this);
 			CurrentScreen.Initialize();

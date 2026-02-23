@@ -6,6 +6,7 @@ using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,6 +99,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 			if (items.Count == 0)
 			{
+				SteamUserStats.SetAchievement("BuyAllShopItems");
 				AddControl(1, new LabelControl()
 				{
 					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
