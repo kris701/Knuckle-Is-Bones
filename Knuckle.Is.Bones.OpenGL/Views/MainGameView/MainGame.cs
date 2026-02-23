@@ -320,21 +320,43 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 			if (wonOver != null)
 			{
-				int wonTimes = 0;
-				if (Parent.User.CompletedItems.ContainsKey(wonOver.ID))
-					wonTimes = Parent.User.CompletedItems[wonOver.ID];
-				switch (wonOver.Name.ToUpper())
+				int wonOpponentTimes = Parent.User.GetCompletedTimes(wonOver.ID);
+				switch (wonOver.ID.ToString())
 				{
-					case "FRANK":
-						SteamUserStats.SetStat("FrankDefeated", wonTimes);
+					case "9dd2041e-f8bc-4c44-8fcd-5424f9748ca6":
+						SteamUserStats.SetStat("FrankDefeated", wonOpponentTimes);
 						SteamUserStats.StoreStats();
 						break;
-					case "JERRY":
-						SteamUserStats.SetStat("JerryDefeated", wonTimes);
+					case "42244cf9-6ad3-4729-8376-a0d323440a18":
+						SteamUserStats.SetStat("JerryDefeated", wonOpponentTimes);
 						SteamUserStats.StoreStats();
 						break;
-					case "JOHN":
-						SteamUserStats.SetStat("JohnDefeated", wonTimes);
+					case "dde23f52-7a66-4dc6-bc47-eea2b493d9cd":
+						SteamUserStats.SetStat("JohnDefeated", wonOpponentTimes);
+						SteamUserStats.StoreStats();
+						break;
+				}
+				int wonDiceTimes = Parent.User.GetCompletedTimes(Engine.State.CurrentDice.ID);
+				switch (Engine.State.CurrentDice.ID.ToString())
+				{
+					case "230b2d31-941f-4972-8d61-288b5c0b55ef":
+						SteamUserStats.SetStat("D2Wins", wonDiceTimes);
+						SteamUserStats.StoreStats();
+						break;
+					case "f2ab41c6-3519-4d86-ab0d-feec8fd0f18f":
+						SteamUserStats.SetStat("D3Wins", wonDiceTimes);
+						SteamUserStats.StoreStats();
+						break;
+					case "fb539a3a-9989-4623-88d1-bf216320f717":
+						SteamUserStats.SetStat("D6Wins", wonDiceTimes);
+						SteamUserStats.StoreStats();
+						break;
+					case "9c935082-05b7-4b7e-9064-d6beb077ea8c":
+						SteamUserStats.SetStat("D10Wins", wonDiceTimes);
+						SteamUserStats.StoreStats();
+						break;
+					case "a80ca420-879b-47b7-adbf-7ada87b5939c":
+						SteamUserStats.SetStat("D50Wins", wonDiceTimes);
 						SteamUserStats.StoreStats();
 						break;
 				}

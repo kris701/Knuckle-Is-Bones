@@ -23,5 +23,12 @@ namespace Knuckle.Is.Bones.Core.Models.Saves
 			else
 				CompletedItems.Add(id, 1);
 		}
+
+		public int GetCompletedTimes(Guid id)
+		{
+			if (!CompletedItems.ContainsKey(id))
+				CompletedItems.Add(id, 0);
+			return CompletedItems[id];
+		}
 	}
 }
