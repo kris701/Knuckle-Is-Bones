@@ -1,8 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Saves;
-using Knuckle.Is.Bones.Core.Models.Shop.ShopModules;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 
 namespace Knuckle.Is.Bones.Core.Models.Shop
 {
@@ -29,7 +26,7 @@ namespace Knuckle.Is.Bones.Core.Models.Shop
 			if (!CanPurchase(userData))
 				return false;
 			userData.Points -= Cost;
-			foreach(var effect in Effects)
+			foreach (var effect in Effects)
 				if (!userData.PurchasedShopItems.Contains(effect.ID))
 					userData.PurchasedShopItems.Add(effect.ID);
 			if (!userData.PurchasedShopItems.Contains(ID))

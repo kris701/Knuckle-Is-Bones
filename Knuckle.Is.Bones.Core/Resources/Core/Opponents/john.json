@@ -4,7 +4,7 @@
   "Description": "John is smart. He always tries to create the biggest possible combos.",
   "Difficulty": 2.5,
   "IsPurchasable": false,
-  "Module": {
-    "$type": "ComboOpponentModule"
+  "MoveModule": {
+    "$type": "ComboMoveModule"
   }
 }

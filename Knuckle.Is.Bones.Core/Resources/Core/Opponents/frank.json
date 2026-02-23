@@ -4,7 +4,7 @@
   "Description": "Frank is rather unconfrontational. He will play as defensively as possible.",
   "Difficulty": 2,
   "IsPurchasable": false,
-  "Module": {
-    "$type": "DefensiveOpponentModule"
+  "MoveModule": {
+    "$type": "DefensiveMoveModule"
   }
 }

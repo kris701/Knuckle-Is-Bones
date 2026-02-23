@@ -4,7 +4,7 @@
   "Description": "Jerry is not a very smart robot. He just chooses random position to place dice.",
   "Difficulty": 1.5,
   "IsPurchasable": false,
-  "Module": {
-    "$type": "RandomPositionOpponentModule"
+  "MoveModule": {
+    "$type": "RandomMoveModule"
   }
 }

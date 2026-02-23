@@ -1,9 +1,7 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Shop;
-using Knuckle.Is.Bones.Core.Models.Shop.ShopModules;
+using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.OpenGL.Controls;
-using MonoGame.OpenGL.Formatter.Controls;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
@@ -39,7 +37,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 		{
 			var sb = new StringBuilder();
 
-			foreach(var effect in item.Effects)
+			foreach (var effect in item.Effects)
 			{
 				switch (effect)
 				{

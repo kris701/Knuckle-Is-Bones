@@ -1,5 +1,4 @@
 ﻿using Knuckle.Is.Bones.Core.Engines;
-using Knuckle.Is.Bones.Core.Models;
 using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
@@ -74,11 +73,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					CurrentDice = ResourceManager.Dice.GetResource(_selectedDice).Clone(),
 				});
 
-				save.State.FirstOpponent.Module.OpponentID = Guid.NewGuid();
-				save.State.SecondOpponent.Module.OpponentID = Guid.NewGuid();
+				save.State.FirstOpponent.MoveModule.OpponentID = Guid.NewGuid();
+				save.State.SecondOpponent.MoveModule.OpponentID = Guid.NewGuid();
 
 				save.State.CurrentDice.RollValue();
-				save.State.Turn = save.State.FirstOpponent.Module.OpponentID;
+				save.State.Turn = save.State.FirstOpponent.MoveModule.OpponentID;
 
 				save.Save();
 
@@ -281,7 +280,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					{
 						case 1: tileSet = new Guid("855231a0-daf4-4a10-b163-8da4fd7ae408"); break;
 						case 2: tileSet = new Guid("2a2e927b-6691-4df8-8de1-f0a819cc37ca"); break;
-						case >=3: tileSet = new Guid("345434d1-ccfc-458f-90a4-3077094c8b8a"); break;
+						case >= 3: tileSet = new Guid("345434d1-ccfc-458f-90a4-3077094c8b8a"); break;
 					}
 				}
 				var stackControls = new List<IControl>() {

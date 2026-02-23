@@ -4,7 +4,7 @@
   "Description": "A human player.",
   "Difficulty": 1,
   "IsPurchasable": false,
-  "Module": {
-    "$type": "PlayerOpponentModule"
+  "MoveModule": {
+    "$type": "PlayerMoveModule"
   }
 }

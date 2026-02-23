@@ -1,5 +1,4 @@
-﻿using Knuckle.Is.Bones.Core.Models.Game;
-using Knuckle.Is.Bones.Core.Models.Shop;
+﻿using Knuckle.Is.Bones.Core.Models.Shop;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
@@ -10,7 +9,6 @@ using MonoGame.OpenGL.Formatter.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {

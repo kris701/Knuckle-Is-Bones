@@ -1,5 +1,4 @@
-﻿using Knuckle.Is.Bones.Core.Models.Game;
-using Knuckle.Is.Bones.Core.Models.Game.OpponentModules;
+﻿using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
@@ -71,7 +70,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5")),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
 			});
-			if (Engine.State.FirstOpponent.Module is PlayerOpponentModule || Engine.State.SecondOpponent.Module is PlayerOpponentModule)
+			if (Engine.State.FirstOpponent.MoveModule is PlayerMoveModule || Engine.State.SecondOpponent.MoveModule is PlayerMoveModule)
 			{
 				AddControl(0, new AnimatedAudioButton(Parent, (b) => MoveLeft())
 				{

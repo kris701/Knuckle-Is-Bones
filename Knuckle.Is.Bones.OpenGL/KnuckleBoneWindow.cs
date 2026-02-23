@@ -1,7 +1,6 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.ResourcePacks;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
@@ -9,7 +8,6 @@ using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Helpers;
 using MonoGame.OpenGL.Formatter.Views;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using ToolsSharp;
 

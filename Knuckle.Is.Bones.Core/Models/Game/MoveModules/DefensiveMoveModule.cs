@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
+namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 {
-	public class DefensiveOpponentModule : IOpponentModule
+	public class DefensiveMoveModule : IMoveModule
 	{
 		public Guid OpponentID { get; set; } = Guid.NewGuid();
 
@@ -10,7 +10,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
 		private int _targetColumn = 0;
 
 		[JsonConstructor]
-		public DefensiveOpponentModule(Guid opponentID)
+		public DefensiveMoveModule(Guid opponentID)
 		{
 			OpponentID = opponentID;
 		}
@@ -44,6 +44,6 @@ namespace Knuckle.Is.Bones.Core.Models.Game.OpponentModules
 
 		public int GetTargetColumn() => _targetColumn;
 
-		public IOpponentModule Clone() => new DefensiveOpponentModule(OpponentID);
+		public IMoveModule Clone() => new DefensiveMoveModule(OpponentID);
 	}
 }

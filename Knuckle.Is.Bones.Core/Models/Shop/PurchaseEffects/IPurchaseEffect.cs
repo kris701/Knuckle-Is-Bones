@@ -1,10 +1,6 @@
-﻿using Knuckle.Is.Bones.Core.Models.Saves;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace Knuckle.Is.Bones.Core.Models.Shop.ShopModules
+namespace Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects
 {
 	[JsonDerivedType(typeof(UnlockBoardEffect), typeDiscriminator: nameof(UnlockBoardEffect))]
 	[JsonDerivedType(typeof(UnlockDiceEffect), typeDiscriminator: nameof(UnlockDiceEffect))]

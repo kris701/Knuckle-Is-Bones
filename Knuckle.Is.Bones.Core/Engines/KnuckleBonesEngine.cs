@@ -24,28 +24,28 @@ namespace Knuckle.Is.Bones.Core.Engines
 
 		public OpponentDefinition GetCurrentOpponent()
 		{
-			if (State.Turn == State.FirstOpponent.Module.OpponentID)
+			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
 				return State.FirstOpponent;
 			return State.SecondOpponent;
 		}
 
 		public BoardDefinition GetCurrentOpponentBoard()
 		{
-			if (State.Turn == State.FirstOpponent.Module.OpponentID)
+			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
 				return State.FirstOpponentBoard;
 			return State.SecondOpponentBoard;
 		}
 
 		public OpponentDefinition GetNextOpponent()
 		{
-			if (State.Turn != State.FirstOpponent.Module.OpponentID)
+			if (State.Turn != State.FirstOpponent.MoveModule.OpponentID)
 				return State.FirstOpponent;
 			return State.SecondOpponent;
 		}
 
 		public BoardDefinition GetNextOpponentBoard()
 		{
-			if (State.Turn != State.FirstOpponent.Module.OpponentID)
+			if (State.Turn != State.FirstOpponent.MoveModule.OpponentID)
 				return State.FirstOpponentBoard;
 			return State.SecondOpponentBoard;
 		}
@@ -63,14 +63,14 @@ namespace Knuckle.Is.Bones.Core.Engines
 			OpponentDefinition opponent2;
 			BoardDefinition board2;
 
-			if (State.Turn == State.FirstOpponent.Module.OpponentID)
+			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
 			{
 				opponent = State.FirstOpponent;
 				board = State.FirstOpponentBoard;
 				opponent2 = State.SecondOpponent;
 				board2 = State.SecondOpponentBoard;
 			}
-			else if (State.Turn == State.SecondOpponent.Module.OpponentID)
+			else if (State.Turn == State.SecondOpponent.MoveModule.OpponentID)
 			{
 				opponent = State.SecondOpponent;
 				board = State.SecondOpponentBoard;
@@ -84,7 +84,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 				return false;
 			if (State.CurrentDice.Value == 0)
 				return false;
-			var columnID = opponent.Module.GetTargetColumn();
+			var columnID = opponent.MoveModule.GetTargetColumn();
 			if (columnID < 0 || columnID >= board.Columns.Count)
 				return false;
 			var column = board.Columns[columnID];
@@ -104,19 +104,19 @@ namespace Knuckle.Is.Bones.Core.Engines
 				var opponent1Value = State.FirstOpponentBoard.GetValue();
 				var opponent2Value = State.SecondOpponentBoard.GetValue();
 				if (opponent1Value > opponent2Value)
-					State.Winner = State.FirstOpponent.Module.OpponentID;
+					State.Winner = State.FirstOpponent.MoveModule.OpponentID;
 				else
-					State.Winner = State.SecondOpponent.Module.OpponentID;
+					State.Winner = State.SecondOpponent.MoveModule.OpponentID;
 				Save.Save();
 				return true;
 			}
 
 			State.CurrentDice.RollValue();
 
-			if (State.Turn == State.FirstOpponent.Module.OpponentID)
-				State.Turn = State.SecondOpponent.Module.OpponentID;
+			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
+				State.Turn = State.SecondOpponent.MoveModule.OpponentID;
 			else
-				State.Turn = State.FirstOpponent.Module.OpponentID;
+				State.Turn = State.FirstOpponent.MoveModule.OpponentID;
 
 			Save.Save();
 			return true;
