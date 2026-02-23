@@ -329,12 +329,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 					{
 						case "FRANK":
 							SteamUserStats.SetStat("FrankDefeated", wonTimes);
+							SteamUserStats.StoreStats();
 							break;
 						case "JERRY":
 							SteamUserStats.SetStat("JerryDefeated", wonTimes);
+							SteamUserStats.StoreStats();
 							break;
 						case "JOHN":
 							SteamUserStats.SetStat("JohnDefeated", wonTimes);
+							SteamUserStats.StoreStats();
 							break;
 					}
 				}
