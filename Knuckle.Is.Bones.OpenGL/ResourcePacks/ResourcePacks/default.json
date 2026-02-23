@@ -195,6 +195,30 @@
         "Views/MainGame/score_1",
         "Views/MainGame/score_2"
       ]
+    },
+    {
+      "ID": "855231a0-daf4-4a10-b163-8da4fd7ae408",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/StartGame/bronze_1",
+        "Views/StartGame/bronze_2"
+      ]
+    },
+    {
+      "ID": "2a2e927b-6691-4df8-8de1-f0a819cc37ca",
+      "FrameTime": 650,
+      "Contents": [
+        "Views/StartGame/silver_1",
+        "Views/StartGame/silver_2"
+      ]
+    },
+    {
+      "ID": "345434d1-ccfc-458f-90a4-3077094c8b8a",
+      "FrameTime": 550,
+      "Contents": [
+        "Views/StartGame/gold_1",
+        "Views/StartGame/gold_2"
+      ]
     }
   ],
   "Songs": [
