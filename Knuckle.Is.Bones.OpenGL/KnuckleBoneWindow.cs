@@ -72,6 +72,7 @@ namespace Knuckle.Is.Bones.OpenGL
 			Device.PreferredBackBufferHeight = User.UIData.ResolutionY;
 			Device.SynchronizeWithVerticalRetrace = User.UIData.IsVsync;
 			Device.HardwareModeSwitch = false;
+			Device.GraphicsProfile = GraphicsProfile.HiDef;
 			Device.IsFullScreen = User.UIData.IsFullscreen;
 			if (Device.IsFullScreen)
 			{
