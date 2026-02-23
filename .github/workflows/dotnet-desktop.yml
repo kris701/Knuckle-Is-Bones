@@ -68,8 +68,8 @@ jobs:
           configVdf: ${{ secrets.STEAM_CONFIG_VDF}}          
           appId: 4456210
           buildDescription: "v${{ steps.get-version.outputs.package-version }}"
-          depot1Path: Output/net10.0/win-x64/publish/
-          depot2Path: Output/net10.0/linux-x64/publish/
+          depot1Path: Output/net10.0/linux-x64/publish/
+          depot2Path: Output/net10.0/win-x64/publish/
           releaseBranch: default
           rootPath: ./
           
