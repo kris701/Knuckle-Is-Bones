@@ -340,23 +340,23 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				switch (Engine.State.CurrentDice.ID.ToString())
 				{
 					case "230b2d31-941f-4972-8d61-288b5c0b55ef":
-						SteamUserStats.SetStat("D2Wins", wonDiceTimes);
+						SteamUserStats.SetStat("WinD2", wonDiceTimes);
 						SteamUserStats.StoreStats();
 						break;
 					case "f2ab41c6-3519-4d86-ab0d-feec8fd0f18f":
-						SteamUserStats.SetStat("D3Wins", wonDiceTimes);
+						SteamUserStats.SetStat("WinD3", wonDiceTimes);
 						SteamUserStats.StoreStats();
 						break;
 					case "fb539a3a-9989-4623-88d1-bf216320f717":
-						SteamUserStats.SetStat("D6Wins", wonDiceTimes);
+						SteamUserStats.SetStat("WinD6", wonDiceTimes);
 						SteamUserStats.StoreStats();
 						break;
 					case "9c935082-05b7-4b7e-9064-d6beb077ea8c":
-						SteamUserStats.SetStat("D10Wins", wonDiceTimes);
+						SteamUserStats.SetStat("WinD10", wonDiceTimes);
 						SteamUserStats.StoreStats();
 						break;
 					case "a80ca420-879b-47b7-adbf-7ada87b5939c":
-						SteamUserStats.SetStat("D50Wins", wonDiceTimes);
+						SteamUserStats.SetStat("WinD50", wonDiceTimes);
 						SteamUserStats.StoreStats();
 						break;
 				}
