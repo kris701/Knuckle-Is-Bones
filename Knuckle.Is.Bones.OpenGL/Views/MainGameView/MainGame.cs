@@ -205,6 +205,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				if (File.Exists("save.json"))
 					File.Delete("save.json");
 
+				FinalAchivementCheck();
+
 				return;
 			}
 
@@ -291,7 +293,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			if (_rollSoundEffect != Guid.Empty)
 				Parent.Audio.StopSoundEffect(_rollSoundEffect);
 			ClearLayer(240);
-			FinalAchivementCheck();
 			SwitchView(new MainMenu(Parent));
 		}
 
