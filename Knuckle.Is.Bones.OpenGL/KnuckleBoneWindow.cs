@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Saves;
+using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.ResourcePacks;
 using Microsoft.Xna.Framework.Audio;
@@ -54,6 +55,8 @@ namespace Knuckle.Is.Bones.OpenGL
 			ResourcePackController.LoadResourcePack(User.UIData.ResourcePackID);
 
 			SteamAPI.Init();
+
+			AchievementHelper.UpdateAchievements(User);
 
 			CurrentScreen = _screenToLoad(this);
 			CurrentScreen.Initialize();
