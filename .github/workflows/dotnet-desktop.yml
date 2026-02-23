@@ -53,7 +53,6 @@ jobs:
           buildDescription: "v${{ steps.get-version.outputs.package-version }}"
           depot1Path: Output/net10.0/linux-x64/publish
           depot2Path: Output/net10.0/win-x64/publish
-          releaseBranch: release
           
       - name: Create Tag
         uses: jaywcjlove/create-tag-action@main
