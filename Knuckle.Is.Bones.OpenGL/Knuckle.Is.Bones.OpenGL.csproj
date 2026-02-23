@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="Content\Fonts\PressStart2P-vaV7.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
