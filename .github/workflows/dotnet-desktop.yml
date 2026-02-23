@@ -61,6 +61,17 @@ jobs:
         uses: kzrnm/get-net-sdk-project-versions-action@v1
         with:
           proj-path: .\Knuckle.Is.Bones.OpenGL\Knuckle.Is.Bones.OpenGL.csproj
+
+      - uses: game-ci/steam-deploy@v3
+        with:
+          username: ${{ secrets.STEAM_USERNAME }}          
+          configVdf: ${{ secrets.STEAM_CONFIG_VDF}}          
+          appId: 4456210
+          buildDescription: "v${{ steps.get-version.outputs.package-version }}"
+          depot1Path: Output/net10.0/win-x64/publish/
+          depot2Path: Output/net10.0/linux-x64/publish/
+          releaseBranch: default
+          rootPath: ./
           
       - name: Create Tag
         uses: jaywcjlove/create-tag-action@main

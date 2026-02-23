@@ -1,0 +1,15 @@
+"appbuild"
+{
+	"appid" "4456210"
+	"desc" "Build"
+	"buildoutput" "D:\tmp"
+	"contentroot" ""
+	"setlive" ""
+	"preview" "0"
+	"local"	""
+	"depots"
+	{
+		"4456211"	"C:\Users\kris7\OneDrive\Programming\_GitHub_\Knuckle.Is.Bones\Knuckle-Is-Bones\Scripts\depot_4456211.vdf"
+		"4456212"	"C:\Users\kris7\OneDrive\Programming\_GitHub_\Knuckle.Is.Bones\Knuckle-Is-Bones\Scripts\depot_4456212.vdf"
+	}
+}
