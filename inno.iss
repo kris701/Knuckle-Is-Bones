@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Knuckle Is Bones"
-#define MyAppVersion "0.1.6"
+#define MyAppVersion "0.1.7"
 #define MyAppPublisher "Kristian Skov Johansen"
 #define MyAppExeName "Knuckle.Is.Bones.OpenGL.exe"
 #define MyAppIcoName "Icon.ico"
