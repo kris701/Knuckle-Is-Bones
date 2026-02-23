@@ -184,7 +184,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 					Parent.User.AppendCompletedItem(Engine.State.CurrentDice.ID);
 				}
 
-				Parent.User.AllTimeScore += pointsGained;
+				Parent.User.Points += pointsGained;
 				Parent.User.Save();
 				if (pointsGained > 0)
 					_pointsGainedLabel.Text = $"Gained {pointsGained} points.";
@@ -279,6 +279,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			if ((Engine.State.FirstOpponent.Module is PlayerOpponentModule) || (Engine.State.SecondOpponent.Module is PlayerOpponentModule))
 				if (_rolling || _rollWait || _selectWait)
 					return;
+
 			if (_rollSoundEffect != Guid.Empty)
 				Parent.Audio.StopSoundEffect(_rollSoundEffect);
 			ClearLayer(240);

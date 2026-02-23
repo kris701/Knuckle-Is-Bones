@@ -45,7 +45,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 					FillClickedColor = BasicTextures.GetClickedTexture(),
 					TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
 					IsVisible = File.Exists("save.json"),
-					Height = 100
+					Height = File.Exists("save.json") ? 100 : 0
 				},
 				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent)))
 				{
@@ -94,7 +94,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 
 			AddControl(0, new LabelControl()
 			{
-				Text = $"Points: {(Parent as KnuckleBoneWindow).User.AllTimeScore}",
+				Text = $"Points: {(Parent as KnuckleBoneWindow).User.Points}",
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
 				HorizontalAlignment = HorizontalAlignment.Left,
 				VerticalAlignment = VerticalAlignment.Bottom,

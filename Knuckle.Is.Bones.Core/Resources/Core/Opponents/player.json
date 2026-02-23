@@ -3,8 +3,8 @@
   "Name": "Player",
   "Description": "A human player.",
   "Difficulty": 1,
-  "RequiredPoints": 0,
+  "IsPurchasable": false,
   "Module": {
-    "OpponentModule": "Player"
+    "$type": "Player"
   }
 }

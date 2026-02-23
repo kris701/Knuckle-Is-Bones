@@ -1,5 +1,6 @@
 ﻿using Knuckle.Is.Bones.Core.Engines;
 using Knuckle.Is.Bones.Core.Models;
+using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Controls;
@@ -44,7 +45,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 
 			AddControl(0, new LabelControl()
 			{
-				Text = $"Points: {(Parent as KnuckleBoneWindow).User.AllTimeScore}",
+				Text = $"Points: {(Parent as KnuckleBoneWindow).User.Points}",
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				VerticalAlignment = VerticalAlignment.Top,
@@ -251,7 +252,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			}
 		}
 
-		private void SetupPageControl(PageHandler<StackPanelControl> pagehandler, float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IUnlockable> getMethod, Action<AnimatedAudioButton> clicked, Action onAnySelected)
+		private void SetupPageControl(PageHandler<StackPanelControl> pagehandler, float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IPurchasable> getMethod, Action<AnimatedAudioButton> clicked, Action onAnySelected)
 		{
 			AddControl(1, new LabelControl()
 			{
@@ -264,20 +265,16 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				FontColor = new Color(217, 68, 144)
 			});
 
-			var items = new List<IUnlockable>();
+			var items = new List<IPurchasable>();
 			foreach (var id in ids)
 				items.Add(getMethod(id));
-			items = items.OrderBy(x => x.RequiredPoints).ToList();
+			items = items.OrderByDescending(x => !x.IsPurchasable || Parent.User.PurchasedShopItems.Contains(x.ID)).ToList();
 
 			var textureSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
 			var controlList = new List<StackPanelControl>();
 			foreach (var item in items)
 			{
-				var isUnlocked = (Parent as KnuckleBoneWindow).User.AllTimeScore >= item.RequiredPoints;
-				var text = $"{item.Name}";
-				if (!isUnlocked)
-					text += $"({item.RequiredPoints}P)";
-
+				var isUnlocked = !item.IsPurchasable || Parent.User.PurchasedShopItems.Contains(item.ID);
 				Guid? tileSet = null;
 				if (Parent.User.CompletedItems.ContainsKey(item.ID))
 				{
@@ -299,7 +296,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 						FillClickedColor = BasicTextures.GetClickedTexture(),
 						FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
 						Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-						Text = text,
+						Text = $"{item.Name}",
 						FontColor = isUnlocked ? Color.White : Color.Gray,
 						Alpha = isUnlocked ? 256 : 100,
 						Tag = item,

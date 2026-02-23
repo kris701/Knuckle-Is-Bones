@@ -3,8 +3,8 @@
   "Name": "Jerry",
   "Description": "Jerry is not a very smart robot. He just chooses random position to place dice.",
   "Difficulty": 1.5,
-  "RequiredPoints": 0,
+  "IsPurchasable": false,
   "Module": {
-    "OpponentModule": "Random"
+    "$type": "Random"
   }
 }

@@ -3,8 +3,8 @@
   "Name": "John",
   "Description": "John is smart. He always tries to create the biggest possible combos.",
   "Difficulty": 2.5,
-  "RequiredPoints": 0,
+  "IsPurchasable": false,
   "Module": {
-    "OpponentModule": "Combo"
+    "$type": "Combo"
   }
 }

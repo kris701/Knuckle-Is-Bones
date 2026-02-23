@@ -34,14 +34,11 @@
     <EmbeddedResource Include="Resources\Core\Opponents\frank.json" />
     <EmbeddedResource Include="Resources\Core\Opponents\jerry.json" />
     <EmbeddedResource Include="Resources\Core\Opponents\player.json" />
+    <EmbeddedResource Include="Resources\Core\Shop\buy_dice_d10.json" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ToolsSharp" Version="1.1.6" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Campaign\" />
   </ItemGroup>
 
 </Project>

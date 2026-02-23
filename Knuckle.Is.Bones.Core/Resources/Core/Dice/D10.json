@@ -4,5 +4,5 @@
   "Description": "A bigger 10 sided dice",
   "Sides": 10,
   "Value": 0,
-  "RequiredPoints": 1000
+  "IsPurchasable": true
 }

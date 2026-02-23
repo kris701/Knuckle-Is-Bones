@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.Core.Models.Shop;
 using System.Reflection;
 using System.Text.Json;
 
@@ -11,6 +12,7 @@ namespace Knuckle.Is.Bones.Core.Resources
 		public static BaseBuilder<BoardDefinition> Boards = new BaseBuilder<BoardDefinition>("Resources.Core.Boards", Assembly.GetExecutingAssembly());
 		public static BaseBuilder<OpponentDefinition> Opponents = new BaseBuilder<OpponentDefinition>("Resources.Core.Opponents", Assembly.GetExecutingAssembly());
 		public static BaseBuilder<DiceDefinition> Dice = new BaseBuilder<DiceDefinition>("Resources.Core.Dice", Assembly.GetExecutingAssembly());
+		public static BaseBuilder<ShopItemDefinition> Shop = new BaseBuilder<ShopItemDefinition>("Resources.Core.Shop", Assembly.GetExecutingAssembly());
 
 		public static List<ResourceDefinition> LoadedResources { get; internal set; } = new List<ResourceDefinition>() {
 			new ResourceDefinition(_coreID, "1.0.0", "Core", "Core Game Components")
@@ -42,6 +44,8 @@ namespace Knuckle.Is.Bones.Core.Resources
 					Opponents.LoadExternalResources(folder.GetFiles().ToList());
 				else if (folder.Name.ToUpper() == "DICE")
 					Dice.LoadExternalResources(folder.GetFiles().ToList());
+				else if (folder.Name.ToUpper() == "SHOP")
+					Shop.LoadExternalResources(folder.GetFiles().ToList());
 			}
 
 			if (!LoadedResources.Any(x => x.ID == resourceDefinition.ID))
@@ -53,6 +57,7 @@ namespace Knuckle.Is.Bones.Core.Resources
 			Boards.Reload();
 			Opponents.Reload();
 			Dice.Reload();
+			Shop.Reload();
 
 			LoadedResources.Clear();
 			LoadedResources = new List<ResourceDefinition>() {
@@ -65,6 +70,7 @@ namespace Knuckle.Is.Bones.Core.Resources
 			Boards.Reload();
 			Opponents.Reload();
 			Dice.Reload();
+			Shop.Reload();
 
 			foreach (var resource in LoadedResources)
 				if (resource.ID != _coreID)
