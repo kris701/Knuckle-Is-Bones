@@ -1,0 +1,12 @@
+{
+  "ID": "23949e0f-886a-4224-841d-77fe6f3f382a",
+  "Name": "Wave Board",
+  "Description": "A weird wavy board.",
+  "Cost": 250,
+  "Effects": [
+    {
+      "$type": "UnlockBoardEffect",
+      "ID": "0ac3da70-4cb8-4e97-9af9-4b9759499dd7"
+    }
+  ]
+}

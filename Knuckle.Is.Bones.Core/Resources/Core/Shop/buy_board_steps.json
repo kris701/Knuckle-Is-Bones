@@ -1,0 +1,12 @@
+{
+  "ID": "cfa265b3-64fb-4749-b35a-646fe253dafe",
+  "Name": "Steps Board",
+  "Description": "A board that is shaped like steps.",
+  "Cost": 350,
+  "Effects": [
+    {
+      "$type": "UnlockBoardEffect",
+      "ID": "a501943e-e6be-47d8-9b2c-01ca54c01c36"
+    }
+  ]
+}

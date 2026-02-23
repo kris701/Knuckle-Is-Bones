@@ -1,0 +1,12 @@
+{
+  "ID": "b49bb00b-c74a-4516-92e1-79bcc7c3120b",
+  "Name": "Tall Board",
+  "Description": "A tall 3x4 field.",
+  "Cost": 750,
+  "Effects": [
+    {
+      "$type": "UnlockBoardEffect",
+      "ID": "322dbaa5-c806-4b56-af9d-164b135a6d42"
+    }
+  ]
+}

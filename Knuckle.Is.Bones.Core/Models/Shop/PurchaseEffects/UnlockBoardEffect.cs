@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Knuckle.Is.Bones.Core.Models.Shop.ShopModules
 {
-	public class BuyBoardShopModule : IShopModule
+	public class UnlockBoardEffect : IPurchaseEffect
 	{
 		public Guid ID { get; set; }
 	}

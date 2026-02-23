@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace Knuckle.Is.Bones.Core.Models.Shop.ShopModules
 {
-	[JsonDerivedType(typeof(BuyBoardShopModule), typeDiscriminator: nameof(BuyBoardShopModule))]
-	[JsonDerivedType(typeof(BuyDiceShopModule), typeDiscriminator: nameof(BuyDiceShopModule))]
-	public interface IShopModule
+	[JsonDerivedType(typeof(UnlockBoardEffect), typeDiscriminator: nameof(UnlockBoardEffect))]
+	[JsonDerivedType(typeof(UnlockDiceEffect), typeDiscriminator: nameof(UnlockDiceEffect))]
+	public interface IPurchaseEffect
 	{
 		public Guid ID { get; set; }
 	}

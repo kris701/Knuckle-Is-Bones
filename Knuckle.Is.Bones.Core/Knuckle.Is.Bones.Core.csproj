@@ -34,6 +34,12 @@
     <EmbeddedResource Include="Resources\Core\Opponents\frank.json" />
     <EmbeddedResource Include="Resources\Core\Opponents\jerry.json" />
     <EmbeddedResource Include="Resources\Core\Opponents\player.json" />
+    <EmbeddedResource Include="Resources\Core\Shop\buy_board_wave.json" />
+    <EmbeddedResource Include="Resources\Core\Shop\buy_board_tall.json" />
+    <EmbeddedResource Include="Resources\Core\Shop\buy_board_steps.json" />
+    <EmbeddedResource Include="Resources\Core\Shop\buy_board_large.json" />
+    <EmbeddedResource Include="Resources\Core\Shop\buy_board_gigacombo.json" />
+    <EmbeddedResource Include="Resources\Core\Shop\buy_board_giant.json" />
     <EmbeddedResource Include="Resources\Core\Shop\buy_dice_d50.json" />
     <EmbeddedResource Include="Resources\Core\Shop\buy_dice_d10.json" />
   </ItemGroup>

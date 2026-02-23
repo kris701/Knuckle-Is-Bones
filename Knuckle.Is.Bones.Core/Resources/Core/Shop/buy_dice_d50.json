@@ -3,8 +3,10 @@
   "Name": "A D50 dice",
   "Description": "An insane 50 sided dice!",
   "Cost": 5000,
-  "Module": {
-    "$type": "BuyDiceShopModule",
-    "ID": "a80ca420-879b-47b7-adbf-7ada87b5939c"
-  }
+  "Effects": [
+    {
+      "$type": "UnlockDiceEffect",
+      "ID": "a80ca420-879b-47b7-adbf-7ada87b5939c"
+    }
+  ]
 }

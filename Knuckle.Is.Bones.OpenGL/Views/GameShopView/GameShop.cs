@@ -39,20 +39,23 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 		{
 			var sb = new StringBuilder();
 
-			switch (item.Module)
+			foreach(var effect in item.Effects)
 			{
-				case BuyDiceShopModule m:
-					sb.AppendLine("Type: New Dice");
-					sb.AppendLine("Cost: " + item.Cost);
-					sb.AppendLine(" ");
-					sb.AppendLine(item.Description);
-					break;
-				case BuyBoardShopModule m:
-					sb.AppendLine("Type: New Board");
-					sb.AppendLine("Cost: " + item.Cost);
-					sb.AppendLine(" ");
-					sb.AppendLine(item.Description);
-					break;
+				switch (effect)
+				{
+					case UnlockDiceEffect m:
+						sb.AppendLine("Type: New Dice");
+						sb.AppendLine("Cost: " + item.Cost);
+						sb.AppendLine(" ");
+						sb.AppendLine(item.Description);
+						break;
+					case UnlockBoardEffect m:
+						sb.AppendLine("Type: New Board");
+						sb.AppendLine("Cost: " + item.Cost);
+						sb.AppendLine(" ");
+						sb.AppendLine(item.Description);
+						break;
+				}
 			}
 
 			return sb.ToString();
