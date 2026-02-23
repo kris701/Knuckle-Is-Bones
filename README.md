@@ -2,11 +2,18 @@
 This is a simple fan game version of the minigame Knucklebones from Cult of the Lamb, with the somewhat visuals of Baba is You.
 It is still very work in progress, and will be extended as i go.
 
-![img5](https://github.com/user-attachments/assets/44d5eef0-b9c1-48ab-aefe-bab6155b48d0)
-![img4](https://github.com/user-attachments/assets/29ac47bd-9688-44e4-95f0-ed274d071815)
-![img3](https://github.com/user-attachments/assets/752d5b48-5633-48f9-a49e-d4a33795424a)
-![img2](https://github.com/user-attachments/assets/47ef490c-316d-4b77-925a-48e1337e4c23)
-![img1](https://github.com/user-attachments/assets/d5107b60-f3f4-4575-9e1c-efc38252bfcf)
+<img width="1920" height="1080" alt="img1" src="https://github.com/user-attachments/assets/f47ccab8-6b0f-4265-aa67-f1e2b0620429" />
+
+<img width="1920" height="1080" alt="img2" src="https://github.com/user-attachments/assets/d3c517d4-690a-4664-bd50-541dfd1ca754" />
+
+<img width="1920" height="1080" alt="img3" src="https://github.com/user-attachments/assets/50f6dea0-f94a-4bb5-857a-787273008857" />
+
+<img width="1920" height="1080" alt="img4" src="https://github.com/user-attachments/assets/43f42fd2-9e2f-4476-916b-7af502a6f982" />
+
+<img width="1920" height="1080" alt="img5" src="https://github.com/user-attachments/assets/c544bbe2-d650-4e84-8caf-19713ea66d6e" />
+
+<img width="1920" height="1080" alt="img6" src="https://github.com/user-attachments/assets/8082a332-dbb5-4c4d-b51a-ca590babcd1f" />
+
 
 ## Music
 https://www.beepbox.co
