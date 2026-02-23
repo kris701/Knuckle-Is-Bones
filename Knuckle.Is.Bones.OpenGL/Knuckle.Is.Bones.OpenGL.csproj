@@ -48,6 +48,11 @@
     <Folder Include="Content\Views\GameShop\" />
     <Folder Include="Content\Views\Opponents\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\Fonts\PressStart2P-vaV7.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />
