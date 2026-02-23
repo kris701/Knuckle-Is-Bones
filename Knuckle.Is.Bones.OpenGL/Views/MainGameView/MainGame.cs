@@ -1,5 +1,6 @@
 ﻿using Knuckle.Is.Bones.Core.Engines;
 using Knuckle.Is.Bones.Core.Helpers;
+using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.OpenGL.Helpers;
@@ -8,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Input;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,6 +34,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private bool _selectWait = false;
 		private bool _rolling = true;
 		private bool _rollWait = false;
+		private bool _exiting = false;
 		private int _rolledTimes = 0;
 		private readonly Random _rnd = new Random();
 		private Guid _rollSoundEffect = Guid.Empty;
@@ -124,6 +127,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		public override void OnUpdate(GameTime gameTime)
 		{
+			if (_exiting)
+				return;
+
 			var keyState = Keyboard.GetState();
 			_leftKeyWatcher.Update(keyState);
 			_rightKeyWatcher.Update(keyState);
@@ -280,9 +286,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				if (_rolling || _rollWait || _selectWait)
 					return;
 
+			_exiting = true;
+
 			if (_rollSoundEffect != Guid.Empty)
 				Parent.Audio.StopSoundEffect(_rollSoundEffect);
 			ClearLayer(240);
+			FinalAchivementCheck();
 			SwitchView(new MainMenu(Parent));
 		}
 
@@ -297,6 +306,37 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			{
 				_secondOpponentBoard.HighlightColumn(Engine.State.SecondOpponent.MoveModule.GetTargetColumn());
 				_firstOpponentBoard.HideHighlight();
+			}
+		}
+
+		private void FinalAchivementCheck()
+		{
+			if (Engine.GameOver)
+			{
+				OpponentDefinition? wonOver = null;
+				if ((Engine.State.FirstOpponent.MoveModule is PlayerMoveModule) && (Engine.State.SecondOpponent.MoveModule is not PlayerMoveModule) && Engine.State.Winner == Engine.State.FirstOpponent.MoveModule.OpponentID)
+					wonOver = Engine.State.SecondOpponent;
+				if ((Engine.State.SecondOpponent.MoveModule is PlayerMoveModule) && (Engine.State.FirstOpponent.MoveModule is PlayerMoveModule) && Engine.State.Winner == Engine.State.SecondOpponent.MoveModule.OpponentID)
+					wonOver = Engine.State.FirstOpponent;
+
+				if (wonOver != null)
+				{
+					uint wonTimes = 0;
+					if (Parent.User.CompletedItems.ContainsKey(wonOver.MoveModule.OpponentID))
+						wonTimes = (uint)Parent.User.CompletedItems[wonOver.MoveModule.OpponentID];
+					switch (wonOver.Name.ToString())
+					{
+						case "FRANK":
+							SteamUserStats.SetStat("FrankDefeated", wonTimes);
+							break;
+						case "JERRY":
+							SteamUserStats.SetStat("JerryDefeated", wonTimes);
+							break;
+						case "JOHN":
+							SteamUserStats.SetStat("JohnDefeated", wonTimes);
+							break;
+					}
+				}
 			}
 		}
 	}
