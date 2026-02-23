@@ -51,10 +51,10 @@ jobs:
           configVdf: ${{ secrets.STEAM_CONFIG_VDF}}          
           appId: 4456210
           buildDescription: "v${{ steps.get-version.outputs.package-version }}"
-          depot1Path: Output/net10.0/linux-x64/publish/
-          depot2Path: Output/net10.0/win-x64/publish/
+          depot1Path: Output/net10.0/linux-x64/publish
+          depot2Path: Output/net10.0/win-x64/publish
           releaseBranch: default
-          rootPath: ./
+          rootPath: /home/runner/work/Knuckle-Is-Bones/Knuckle-Is-Bones/
           
       - name: Create Tag
         uses: jaywcjlove/create-tag-action@main
@@ -65,7 +65,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           skipIfReleaseExists: true
-          artifacts: "Output/KnuckleIsBonesSetup.exe,Output/*.zip"
           tag: "v${{ steps.get-version.outputs.package-version }}"
           generateReleaseNotes: true
 
