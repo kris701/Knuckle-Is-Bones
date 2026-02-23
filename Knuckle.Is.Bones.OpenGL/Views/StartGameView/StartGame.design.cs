@@ -18,7 +18,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
 	public partial class StartGame : BaseKnuckleBoneFadeView
 	{
-		private readonly Random _rnd = new Random();
 		private readonly PageHandler<StackPanelControl> _boardsPageHandler;
 		private AnimatedTextboxControl _boardsDescription;
 		private readonly PageHandler<StackPanelControl> _dicePageHandler;

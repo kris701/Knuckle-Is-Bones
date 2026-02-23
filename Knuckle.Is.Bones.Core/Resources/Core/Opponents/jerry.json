@@ -5,6 +5,6 @@
   "Difficulty": 1.5,
   "IsPurchasable": false,
   "Module": {
-    "$type": "Random"
+    "$type": "RandomPositionOpponentModule"
   }
 }

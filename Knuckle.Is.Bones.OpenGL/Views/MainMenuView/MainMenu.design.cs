@@ -1,5 +1,6 @@
 ﻿using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Views.GameShopView;
 using Knuckle.Is.Bones.OpenGL.Views.HowToPlayView;
 using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView;
@@ -50,6 +51,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent)))
 				{
 					Text = "New Game",
+					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+					HorizontalAlignment = HorizontalAlignment.Middle,
+					FillClickedColor = BasicTextures.GetClickedTexture(),
+					TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+					Height = 100
+				},
+				new AnimatedAudioButton(Parent, (x) => SwitchView(new GameShop(Parent)))
+				{
+					Text = "Shop",
 					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
 					HorizontalAlignment = HorizontalAlignment.Middle,
 					FillClickedColor = BasicTextures.GetClickedTexture(),

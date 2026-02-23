@@ -5,6 +5,6 @@
   "Difficulty": 1,
   "IsPurchasable": false,
   "Module": {
-    "$type": "Player"
+    "$type": "PlayerOpponentModule"
   }
 }

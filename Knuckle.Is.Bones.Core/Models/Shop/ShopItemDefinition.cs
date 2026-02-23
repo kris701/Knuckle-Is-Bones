@@ -16,15 +16,24 @@ namespace Knuckle.Is.Bones.Core.Models.Shop
 
 		public bool HasPurchased<T>(UserSaveDefinition<T> userData) where T : new()
 		{
-			return userData.PurchasedShopItems.Contains(Module.ID);
+			return userData.PurchasedShopItems.Contains(ID) || userData.PurchasedShopItems.Contains(Module.ID);
+		}
+
+		public bool CanPurchase<T>(UserSaveDefinition<T> userData) where T : new()
+		{
+			return userData.Points >= Cost;
 		}
 
 		public bool Buy<T>(UserSaveDefinition<T> userData) where T : new()
 		{
-			if (userData.Points < Cost)
+			if (!CanPurchase(userData))
 				return false;
+			userData.Points -= Cost;
 			if (!userData.PurchasedShopItems.Contains(Module.ID))
 				userData.PurchasedShopItems.Add(Module.ID);
+			if (!userData.PurchasedShopItems.Contains(ID))
+				userData.PurchasedShopItems.Add(ID);
+			userData.Save();
 			return true;
 		}
 	}

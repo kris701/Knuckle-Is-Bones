@@ -5,6 +5,6 @@
   "Difficulty": 2,
   "IsPurchasable": false,
   "Module": {
-    "$type": "Defensive"
+    "$type": "DefensiveOpponentModule"
   }
 }
