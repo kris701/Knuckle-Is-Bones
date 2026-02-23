@@ -35,9 +35,9 @@ namespace Knuckle.Is.Bones.OpenGL
 			IsMouseVisible = true;
 
 			if (File.Exists("user.json"))
-				User = JsonSerializerHelpers.DeserializeOrDefault<UserSaveDefinition<SettingsDefinition>>(File.ReadAllText("user.json"), () => new UserSaveDefinition<SettingsDefinition>(0, new List<Guid>(), new SettingsDefinition()));
+				User = JsonSerializerHelpers.DeserializeOrDefault<UserSaveDefinition<SettingsDefinition>>(File.ReadAllText("user.json"), () => new UserSaveDefinition<SettingsDefinition>());
 			else
-				User = new UserSaveDefinition<SettingsDefinition>(0, new List<Guid>(), new SettingsDefinition());
+				User = new UserSaveDefinition<SettingsDefinition>();
 
 			ApplySettings();
 		}

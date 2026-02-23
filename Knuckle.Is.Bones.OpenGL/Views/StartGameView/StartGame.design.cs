@@ -18,13 +18,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 	public partial class StartGame : BaseKnuckleBoneFadeView
 	{
 		private readonly Random _rnd = new Random();
-		private readonly PageHandler<AnimatedAudioButton> _boardsPageHandler;
+		private readonly PageHandler<StackPanelControl> _boardsPageHandler;
 		private AnimatedTextboxControl _boardsDescription;
-		private readonly PageHandler<AnimatedAudioButton> _dicePageHandler;
+		private readonly PageHandler<StackPanelControl> _dicePageHandler;
 		private AnimatedTextboxControl _diceDescription;
-		private readonly PageHandler<AnimatedAudioButton> _firstOpponentsPageHandler;
+		private readonly PageHandler<StackPanelControl> _firstOpponentsPageHandler;
 		private AnimatedTextboxControl _firstOpponentDescription;
-		private readonly PageHandler<AnimatedAudioButton> _secondOpponentsPageHandler;
+		private readonly PageHandler<StackPanelControl> _secondOpponentsPageHandler;
 		private AnimatedTextboxControl _secondOpponentDescription;
 
 		private AnimatedAudioButton _startButton;
@@ -179,10 +179,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				ResourceManager.Opponents.GetResource,
 				SelectFirstOpponent_Click,
 				() =>
-					{
-						_opponentOneSelected = true;
-						CheckIfAllOptionsChecked();
-					});
+				{
+					_opponentOneSelected = true;
+					CheckIfAllOptionsChecked();
+				});
 			_firstOpponentDescription = new AnimatedTextboxControl()
 			{
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
@@ -251,7 +251,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			}
 		}
 
-		private void SetupPageControl(PageHandler<AnimatedAudioButton> pagehandler, float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IUnlockable> getMethod, Action<AnimatedAudioButton> clicked, Action onAnySelected)
+		private void SetupPageControl(PageHandler<StackPanelControl> pagehandler, float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IUnlockable> getMethod, Action<AnimatedAudioButton> clicked, Action onAnySelected)
 		{
 			AddControl(1, new LabelControl()
 			{
@@ -270,34 +270,58 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			items = items.OrderBy(x => x.RequiredPoints).ToList();
 
 			var textureSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
-			var controlList = new List<AnimatedAudioButton>();
+			var controlList = new List<StackPanelControl>();
 			foreach (var item in items)
 			{
 				var isUnlocked = (Parent as KnuckleBoneWindow).User.AllTimeScore >= item.RequiredPoints;
 				var text = $"{item.Name}";
 				if (!isUnlocked)
 					text += $"({item.RequiredPoints}P)";
-				var isCompleted = Parent.User.CompletedItems.Contains(item.ID);
-				controlList.Add(new AnimatedAudioButton(Parent, (x) =>
+
+				Guid? tileSet = null;
+				if (Parent.User.CompletedItems.ContainsKey(item.ID))
 				{
-					clicked(x as AnimatedAudioButton);
-					onAnySelected();
-				})
+					switch (Parent.User.CompletedItems[item.ID])
+					{
+						case 1: tileSet = new Guid("855231a0-daf4-4a10-b163-8da4fd7ae408"); break;
+						case 2: tileSet = new Guid("2a2e927b-6691-4df8-8de1-f0a819cc37ca"); break;
+						case >=3: tileSet = new Guid("345434d1-ccfc-458f-90a4-3077094c8b8a"); break;
+					}
+				}
+				var stackControls = new List<IControl>() {
+					new AnimatedAudioButton(Parent, (x) =>
+					{
+						clicked(x as AnimatedAudioButton);
+						onAnySelected();
+					})
+					{
+						TileSet = textureSet,
+						FillClickedColor = BasicTextures.GetClickedTexture(),
+						FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
+						Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+						Text = text,
+						FontColor = isUnlocked ? Color.White : Color.Gray,
+						Alpha = isUnlocked ? 256 : 100,
+						Tag = item,
+						IsEnabled = isUnlocked
+					}
+				};
+				if (tileSet != null)
+					stackControls.Add(new AnimatedTileControl()
+					{
+						Width = 50,
+						Height = 50,
+						TileSet = Parent.Textures.GetTextureSet((Guid)tileSet)
+					});
+
+				controlList.Add(new StackPanelControl(stackControls)
 				{
-					TileSet = textureSet,
-					FillClickedColor = BasicTextures.GetClickedTexture(),
-					FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-					Text = text,
-					FontColor = isUnlocked ? (isCompleted ? Color.LightGreen : Color.White) : Color.Gray,
-					Alpha = isUnlocked ? 256 : 100,
-					Height = 50,
 					Width = width - 20,
-					Tag = item,
-					IsEnabled = isUnlocked
+					Height = 50,
+					Orientation = StackPanelControl.Orientations.Horizontal
 				});
 			}
-			pagehandler = new PageHandler<AnimatedAudioButton>(this, controlList)
+			pagehandler = new PageHandler<StackPanelControl>(this, controlList)
 			{
 				LeftButtonX = 10,
 				LeftButtonY = -50,
