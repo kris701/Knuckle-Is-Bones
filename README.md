@@ -1,6 +1,15 @@
 # Knuckle Is Bones
 This is a simple fan game version of the minigame Knucklebones from Cult of the Lamb, with the somewhat visuals of Baba is You.
-It is still very work in progress, and will be extended as i go.
+The game is all about ***Dice***, and getting the biggest combos possible to beat your opponents!
+
+The game currenctly contains:
+* 3 opponents
+* 5 dice
+* 8 board
+
+The game has a shop system, where the the more points you gain by winning against opponents, the better dice er larger boards you get get!
+
+This game is still Work in Progress and i appreciate any input you can give :)
 
 <img width="1920" height="1080" alt="img1" src="https://github.com/user-attachments/assets/f47ccab8-6b0f-4265-aa67-f1e2b0620429" />
 
