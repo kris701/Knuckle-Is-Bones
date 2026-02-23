@@ -2,11 +2,14 @@
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game.OpponentModules;
 using Knuckle.Is.Bones.Core.Models.Saves;
+using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Input;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
@@ -25,12 +28,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private readonly GameTimer _rollTimer;
 		private readonly GameTimer _rollWaitTimer;
 		private readonly GameTimer _selectWaitTimer;
+		private readonly GameTimer _pointsGainedTimer;
 		private bool _selectWait = false;
 		private bool _rolling = true;
 		private bool _rollWait = false;
 		private int _rolledTimes = 0;
 		private readonly Random _rnd = new Random();
 		private Guid _rollSoundEffect = Guid.Empty;
+
+		private List<LabelControl> _pointsGainedControls = new List<LabelControl>();
 
 		public MainGame(KnuckleBoneWindow parent, GameSaveDefinition save) : base(parent, ID)
 		{
@@ -44,43 +50,76 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_rightKeyWatcher = new KeyWatcher(Keys.Right, MoveRight);
 			_enterKeyWatcher = new KeyWatcher(Keys.Enter, TakeTurn);
 			_escapeKeyWatcher = new KeyWatcher(Keys.Escape, Escape);
-			_rollTimer = new GameTimer(TimeSpan.FromMilliseconds(50), (x) =>
-			{
-				if (_rollSoundEffect == Guid.Empty)
-				{
-					_rollSoundEffect = Parent.Audio.PlaySoundEffect(new Guid("adb4826c-ae62-4785-b0f3-81dd4d692920"));
-				}
-				_diceLabel.Text = $"{_rnd.Next(1, Engine.State.CurrentDice.Sides + 1)}";
-				_rolledTimes++;
-				if (_rolledTimes > 10)
-				{
-					_rolledTimes = 0;
-					_rolling = false;
-					_rollWait = true;
-					Parent.Audio.StopSoundEffect(_rollSoundEffect);
-					_rollSoundEffect = Guid.Empty;
-					_diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
-				}
-			});
-			_rollWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(750), (x) =>
-			{
-				_rollWait = false;
-				_diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
-
-				var current = Engine.GetCurrentOpponent();
-				if (current.Module is not PlayerOpponentModule)
-				{
-					_selectWait = true;
-					current.Module.SetTargetColumn(Engine.State.CurrentDice, Engine.GetCurrentOpponentBoard(), Engine.GetNextOpponentBoard());
-				}
-				UpdateColumnHighlight();
-			});
-			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(750), (x) =>
-			{
-				_selectWait = false;
-				TakeTurn();
-			});
+			_rollTimer = new GameTimer(TimeSpan.FromMilliseconds(50), OnRollTimer);
+			_rollWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(750), OnRollWaitTimer);
+			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(750), OnSelectWaitTimer);
+			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(100), OnPointsGainedTimer);
 			Initialize();
+		}
+
+		private void OnRollTimer(TimeSpan span)
+		{
+			if (_rollSoundEffect == Guid.Empty)
+			{
+				_rollSoundEffect = Parent.Audio.PlaySoundEffect(new Guid("adb4826c-ae62-4785-b0f3-81dd4d692920"));
+			}
+			_diceLabel.Text = $"{_rnd.Next(1, Engine.State.CurrentDice.Sides + 1)}";
+			_rolledTimes++;
+			if (_rolledTimes > 10)
+			{
+				_rolledTimes = 0;
+				_rolling = false;
+				_rollWait = true;
+				Parent.Audio.StopSoundEffect(_rollSoundEffect);
+				_rollSoundEffect = Guid.Empty;
+				_diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
+			}
+		}
+
+		private void OnRollWaitTimer(TimeSpan span)
+		{
+			_rollWait = false;
+			_diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
+
+			var current = Engine.GetCurrentOpponent();
+			if (current.Module is not PlayerOpponentModule)
+			{
+				_selectWait = true;
+				current.Module.SetTargetColumn(Engine.State.CurrentDice, Engine.GetCurrentOpponentBoard(), Engine.GetNextOpponentBoard());
+			}
+			UpdateColumnHighlight();
+		}
+
+		private void OnSelectWaitTimer(TimeSpan span)
+		{
+			_selectWait = false;
+			TakeTurn();
+		}
+
+		private void OnPointsGainedTimer(TimeSpan span)
+		{
+			var toRemove = new List<LabelControl>();
+			foreach(var control in _pointsGainedControls)
+			{
+				if (control.Tag is bool direction)
+				{
+					if (direction)
+						control.Y -= 1;
+					else
+						control.Y += 1;
+					control.Alpha = control.Alpha - 10;
+					control.Initialize();
+					if (control.Alpha <= 0)
+						toRemove.Add(control);
+				}
+				else
+					toRemove.Add(control);
+			}
+			foreach(var remove in toRemove)
+			{
+				RemoveControl(240, remove);
+				_pointsGainedControls.Remove(remove);
+			}
 		}
 
 		public override void OnUpdate(GameTime gameTime)
@@ -96,6 +135,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				_rollWaitTimer.Update(gameTime.ElapsedGameTime);
 			if (_selectWait)
 				_selectWaitTimer.Update(gameTime.ElapsedGameTime);
+			_pointsGainedTimer.Update(gameTime.ElapsedGameTime);
 		}
 
 		private void TakeTurn()
@@ -103,14 +143,25 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			if (_rolling || _rollWait || _selectWait)
 				return;
 
+			var firstOpponentPoints = Engine.State.FirstOpponentBoard.GetValue();
+			var secondOpponentPoints = Engine.State.SecondOpponentBoard.GetValue();
+
 			if (!Engine.TakeTurn())
 				return;
+
+			var newFirstOpponentPoints = Engine.State.FirstOpponentBoard.GetValue();
+			var newSecondOpponentPoints = Engine.State.SecondOpponentBoard.GetValue();
 
 			_firstOpponentBoard.HideHighlight();
 			_secondOpponentBoard.HideHighlight();
 
 			_secondOpponentBoard.UpdateBoard();
 			_firstOpponentBoard.UpdateBoard();
+
+			if (firstOpponentPoints != newFirstOpponentPoints)
+				_pointsGainedControls.Add(CreatePointsGainedControl(firstOpponentPoints, newFirstOpponentPoints, _firstOpponentPoints.X, _firstOpponentPoints.Y));
+			if (secondOpponentPoints != newSecondOpponentPoints)
+				_pointsGainedControls.Add(CreatePointsGainedControl(secondOpponentPoints, newSecondOpponentPoints, _secondOpponentPoints.X, _secondOpponentPoints.Y));
 
 			_firstOpponentPoints.Text = $"{Engine.State.FirstOpponentBoard.GetValue()}";
 			_secondOpponentPoints.Text = $"{Engine.State.SecondOpponentBoard.GetValue()}";
@@ -152,6 +203,27 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			}
 
 			_rolling = true;
+		}
+
+		private LabelControl CreatePointsGainedControl(int previous, int now, float sourceX, float sourceY)
+		{
+			var direction = "";
+			if (now > previous)
+				direction = "+";
+
+			var control = new LabelControl()
+			{
+				Text = direction + $"{now - previous}",
+				Tag = now > previous,
+				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				FontColor = now > previous ? Color.LightGreen : Color.DarkRed,
+				X = sourceX + 75,
+				Y = sourceY
+			};
+			AddControl(240, control);
+			control.Initialize();
+
+			return control;
 		}
 
 		private void MoveLeft()
@@ -209,6 +281,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 					return;
 			if (_rollSoundEffect != Guid.Empty)
 				Parent.Audio.StopSoundEffect(_rollSoundEffect);
+			ClearLayer(240);
 			SwitchView(new MainMenu(Parent));
 		}
 
