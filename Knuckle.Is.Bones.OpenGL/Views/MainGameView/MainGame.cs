@@ -104,6 +104,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			var toRemove = new List<LabelControl>();
 			foreach (var control in _pointsGainedControls)
 			{
+				if (_exiting)
+					return;
 				if (control.Tag is bool direction)
 				{
 					if (direction)
@@ -120,6 +122,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			}
 			foreach (var remove in toRemove)
 			{
+				if (_exiting)
+					return;
 				RemoveControl(240, remove);
 				_pointsGainedControls.Remove(remove);
 			}
@@ -292,7 +296,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 			if (_rollSoundEffect != Guid.Empty)
 				Parent.Audio.StopSoundEffect(_rollSoundEffect);
-			ClearLayer(240);
 			SwitchView(new MainMenu(Parent));
 		}
 
