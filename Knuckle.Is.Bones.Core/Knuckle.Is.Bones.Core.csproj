@@ -16,6 +16,14 @@
 	  <SignAssembly>True</SignAssembly>
   </PropertyGroup>
 
+	<Choose>
+		<When Condition=" '$(Configuration)'=='Debug'">
+			<ItemGroup>
+				<EmbeddedResource Include="Resources\Core\Boards\test.json" />
+			</ItemGroup>
+		</When>
+	</Choose>
+	
   <ItemGroup>
     <EmbeddedResource Include="Resources\Core\Boards\gigacombo.json" />
     <EmbeddedResource Include="Resources\Core\Boards\giant.json" />

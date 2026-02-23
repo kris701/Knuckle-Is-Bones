@@ -312,34 +312,31 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		private void FinalAchivementCheck()
 		{
-			if (Engine.GameOver)
-			{
-				OpponentDefinition? wonOver = null;
-				if ((Engine.State.FirstOpponent.MoveModule is PlayerMoveModule) && (Engine.State.SecondOpponent.MoveModule is not PlayerMoveModule) && Engine.State.Winner == Engine.State.FirstOpponent.MoveModule.OpponentID)
-					wonOver = Engine.State.SecondOpponent;
-				if ((Engine.State.SecondOpponent.MoveModule is PlayerMoveModule) && (Engine.State.FirstOpponent.MoveModule is PlayerMoveModule) && Engine.State.Winner == Engine.State.SecondOpponent.MoveModule.OpponentID)
-					wonOver = Engine.State.FirstOpponent;
+			OpponentDefinition? wonOver = null;
+			if ((Engine.State.FirstOpponent.MoveModule is PlayerMoveModule) && (Engine.State.SecondOpponent.MoveModule is not PlayerMoveModule) && Engine.State.Winner == Engine.State.FirstOpponent.MoveModule.OpponentID)
+				wonOver = Engine.State.SecondOpponent;
+			if ((Engine.State.SecondOpponent.MoveModule is PlayerMoveModule) && (Engine.State.FirstOpponent.MoveModule is PlayerMoveModule) && Engine.State.Winner == Engine.State.SecondOpponent.MoveModule.OpponentID)
+				wonOver = Engine.State.FirstOpponent;
 
-				if (wonOver != null)
+			if (wonOver != null)
+			{
+				int wonTimes = 0;
+				if (Parent.User.CompletedItems.ContainsKey(wonOver.ID))
+					wonTimes = Parent.User.CompletedItems[wonOver.ID];
+				switch (wonOver.Name.ToUpper())
 				{
-					uint wonTimes = 0;
-					if (Parent.User.CompletedItems.ContainsKey(wonOver.MoveModule.OpponentID))
-						wonTimes = (uint)Parent.User.CompletedItems[wonOver.MoveModule.OpponentID];
-					switch (wonOver.Name.ToString())
-					{
-						case "FRANK":
-							SteamUserStats.SetStat("FrankDefeated", wonTimes);
-							SteamUserStats.StoreStats();
-							break;
-						case "JERRY":
-							SteamUserStats.SetStat("JerryDefeated", wonTimes);
-							SteamUserStats.StoreStats();
-							break;
-						case "JOHN":
-							SteamUserStats.SetStat("JohnDefeated", wonTimes);
-							SteamUserStats.StoreStats();
-							break;
-					}
+					case "FRANK":
+						SteamUserStats.SetStat("FrankDefeated", wonTimes);
+						SteamUserStats.StoreStats();
+						break;
+					case "JERRY":
+						SteamUserStats.SetStat("JerryDefeated", wonTimes);
+						SteamUserStats.StoreStats();
+						break;
+					case "JOHN":
+						SteamUserStats.SetStat("JohnDefeated", wonTimes);
+						SteamUserStats.StoreStats();
+						break;
 				}
 			}
 		}
