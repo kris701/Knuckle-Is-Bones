@@ -28,7 +28,7 @@ jobs:
     name: Build and Create Release
     needs: check-tag
     if: needs.check-tag.outputs.releaseExists == 'false'
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -38,31 +38,14 @@ jobs:
       - name: Compile project as publish files (LINUX)
         run: dotnet publish .\Knuckle.Is.Bones.OpenGL\Knuckle.Is.Bones.OpenGL.csproj --configuration Release /p:PublishProfile="linux.pubxml"
 
-      - name: Compile .ISS to .EXE Installer
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
-        with:
-          path: inno.iss
-          options: /O+
-
-      - name: Compress build files (WINDOWS)
-        uses: vimtor/action-zip@v1.2
-        with:
-          files: Output/net10.0/win-x64/publish/
-          dest: Output/windows.zip
-
-      - name: Compress build files (LINUX)
-        uses: vimtor/action-zip@v1.2
-        with:
-          files: Output/net10.0/linux-x64/publish/
-          dest: Output/linux.zip
-
       - name: Get Package version
         id: get-version
         uses: kzrnm/get-net-sdk-project-versions-action@v1
         with:
           proj-path: .\Knuckle.Is.Bones.OpenGL\Knuckle.Is.Bones.OpenGL.csproj
 
-      - uses: game-ci/steam-deploy@v3
+      - name: Create Steam Release
+        uses: game-ci/steam-deploy@v3
         with:
           username: ${{ secrets.STEAM_USERNAME }}          
           configVdf: ${{ secrets.STEAM_CONFIG_VDF}}          
