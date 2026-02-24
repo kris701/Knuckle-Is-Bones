@@ -24,7 +24,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SplashScreenView
 				TileSet = Parent.Textures.GetTextureSet(new Guid("af1a8619-0867-44ce-89ab-e2d42912ba44"))
 			});
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new SplashScreen(Parent)))
+			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new SplashScreen(Parent)))
 			{
 				X = 0,
 				Y = 0,

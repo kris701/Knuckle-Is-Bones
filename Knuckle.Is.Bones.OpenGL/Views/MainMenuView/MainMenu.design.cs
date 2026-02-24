@@ -130,7 +130,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 			});
 
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new MainMenu(Parent)))
+			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new MainMenu(Parent)))
 			{
 				X = 0,
 				Y = 0,

@@ -228,7 +228,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			AddControl(0, _secondOpponentDescription);
 
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new StartGame(Parent)))
+			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new StartGame(Parent)))
 			{
 				X = 0,
 				Y = 0,

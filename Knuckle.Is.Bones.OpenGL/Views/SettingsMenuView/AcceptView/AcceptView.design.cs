@@ -79,7 +79,7 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 			});
 
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new AcceptView(Parent, _oldSettings, _newSettings)))
+			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new AcceptView(Parent, _oldSettings, _newSettings)))
 			{
 				X = 0,
 				Y = 0,
