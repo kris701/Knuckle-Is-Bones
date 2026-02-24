@@ -8,7 +8,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 
 		public MainMenu(KnuckleBoneWindow parent) : base(parent, ID)
 		{
-			parent.Audio.PlaySong(new Guid("9b223250-88f1-4c3e-9d80-0c4087ab9369"));
 			Initialize();
 		}
 	}
