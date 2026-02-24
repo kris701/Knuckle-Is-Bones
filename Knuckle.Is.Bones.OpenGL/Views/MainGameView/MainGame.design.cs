@@ -12,7 +12,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
 	public partial class MainGame : BaseKnuckleBoneFadeView
 	{
-		private LabelControl _diceLabel;
+		private AnimatedLabelControl _diceLabel;
 		private BoardControl _firstOpponentBoard;
 		private AnimatedLabelControl _firstOpponentPoints;
 		private BoardControl _secondOpponentBoard;
@@ -201,7 +201,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_diceLabel = new AnimatedLabelControl()
 			{
 				X = 375,
-				VerticalAlignment = VerticalAlignment.Middle,
+				Y = 475,
 				Width = 150,
 				Height = 150,
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
