@@ -30,18 +30,5 @@ namespace Knuckle.Is.Bones.Core.Engines
 			CurrentDice = CurrentDice.Clone(),
 			User = User.Clone()
 		};
-
-		public void Save()
-		{
-			if (File.Exists("save.json"))
-				File.Delete("save.json");
-			File.WriteAllText("save.json", JsonSerializer.Serialize(this));
-		}
-
-		public void DeleteSave()
-		{
-			if (File.Exists("save.json"))
-				File.Delete("save.json");
-		}
 	}
 }

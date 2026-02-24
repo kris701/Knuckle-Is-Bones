@@ -1,4 +1,5 @@
-﻿using Knuckle.Is.Bones.Core.Models.Game;
+﻿using Knuckle.Is.Bones.Core.Helpers;
+using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
@@ -112,7 +113,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 					State.Winner = State.FirstOpponent.MoveModule.OpponentID;
 				else
 					State.Winner = State.SecondOpponent.MoveModule.OpponentID;
-				State.Save();
+				GameSaveHelpers.Save(State);
 				return true;
 			}
 
@@ -123,7 +124,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			else
 				State.Turn = State.FirstOpponent.MoveModule.OpponentID;
 
-			State.Save();
+			GameSaveHelpers.Save(State);
 			return true;
 		}
 

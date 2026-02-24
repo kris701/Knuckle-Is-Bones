@@ -1,4 +1,5 @@
-﻿using Knuckle.Is.Bones.Core.Models.Saves;
+﻿using Knuckle.Is.Bones.Core.Helpers;
+using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.ResourcePacks;
@@ -35,13 +36,14 @@ namespace Knuckle.Is.Bones.OpenGL
 			_screenToLoad = screen;
 			IsMouseVisible = true;
 
-			if (File.Exists("user.json"))
-				User = JsonSerializerHelpers.DeserializeOrDefault<UserSaveDefinition>(File.ReadAllText("user.json"), () => new UserSaveDefinition());
+			var user = UserSaveHelpers.LoadSaveFile();
+			if (user != null)
+				User = user;
 			else
 				User = new UserSaveDefinition();
-
-			if (File.Exists("settings.json"))
-				Settings = JsonSerializerHelpers.DeserializeOrDefault<SettingsDefinition>(File.ReadAllText("settings.json"), () => new SettingsDefinition());
+			var settings = SettingsSaveHelpers.LoadSaveFile();
+			if (settings != null)
+				Settings = settings;
 			else
 				Settings = new SettingsDefinition();
 

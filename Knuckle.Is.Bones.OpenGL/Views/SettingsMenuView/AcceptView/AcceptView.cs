@@ -1,4 +1,6 @@
-﻿using Knuckle.Is.Bones.OpenGL.Models;
+﻿using Knuckle.Is.Bones.Core.Helpers;
+using Knuckle.Is.Bones.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.Views;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
@@ -43,7 +45,7 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 		{
 			Parent.Settings = _newSettings;
 			Parent.ApplySettings();
-			Parent.User.Save();
+			SettingsSaveHelpers.Save(Parent.Settings);
 			SwitchView(new MainMenu(Parent));
 		}
 
@@ -51,7 +53,7 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 		{
 			Parent.Settings = _oldSettings;
 			Parent.ApplySettings();
-			Parent.User.Save();
+			SettingsSaveHelpers.Save(Parent.Settings);
 			SwitchView(new MainMenu(Parent));
 		}
 	}

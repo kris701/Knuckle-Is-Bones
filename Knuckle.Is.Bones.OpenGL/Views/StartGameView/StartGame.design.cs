@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Engines;
+using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
@@ -80,7 +81,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				state.CurrentDice.RollValue();
 				state.Turn = state.FirstOpponent.MoveModule.OpponentID;
 
-				state.Save();
+				GameSaveHelpers.Save(state);
 
 				SwitchView(new MainGame(Parent, state));
 			})
