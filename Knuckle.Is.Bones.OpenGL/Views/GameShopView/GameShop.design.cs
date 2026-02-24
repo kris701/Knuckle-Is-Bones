@@ -200,7 +200,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				double totalMult = 1;
 				foreach (var effect in allPointMult)
 					totalMult *= effect.Multiplier;
-				sb.AppendLine($"Overall point modifier: {Math.Round(totalMult,2)}x");
+				sb.AppendLine($"Overall point modifier: {Math.Round(totalMult, 2)}x");
 				sb.AppendLine(" ");
 			}
 
@@ -208,7 +208,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			if (allDiceMult.Count() > 0)
 			{
 				var groups = allDiceMult.GroupBy(x => x.Number, x => x.Multiplier, (key, g) => new { Key = key, Mults = g.ToList() });
-				foreach(var group in groups)
+				foreach (var group in groups)
 				{
 					double totalMult = 1;
 					foreach (var mult in group.Mults)

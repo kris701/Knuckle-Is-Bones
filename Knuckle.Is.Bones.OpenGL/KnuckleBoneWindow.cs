@@ -12,7 +12,6 @@ using MonoGame.OpenGL.Formatter.Views;
 using Steamworks;
 using System;
 using System.IO;
-using ToolsSharp;
 
 namespace Knuckle.Is.Bones.OpenGL
 {

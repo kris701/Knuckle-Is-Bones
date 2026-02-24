@@ -1,5 +1,4 @@
-﻿using Knuckle.Is.Bones.Core.Helpers;
-using Knuckle.Is.Bones.OpenGL.Helpers;
+﻿using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.Views;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;

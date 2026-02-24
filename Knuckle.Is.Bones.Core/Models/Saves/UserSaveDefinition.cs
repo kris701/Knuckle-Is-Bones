@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace Knuckle.Is.Bones.Core.Models.Saves
+﻿namespace Knuckle.Is.Bones.Core.Models.Saves
 {
 	public class UserSaveDefinition : IGenericClonable<UserSaveDefinition>
 	{

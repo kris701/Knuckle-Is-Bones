@@ -1,19 +1,14 @@
 ﻿using Knuckle.Is.Bones.Core.Engines;
 using Knuckle.Is.Bones.Core.Helpers;
-using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
-using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.OpenGL.Helpers;
-using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Input;
-using Steamworks;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
@@ -65,7 +60,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		{
 			if (_rollSoundEffect == Guid.Empty)
 				_rollSoundEffect = Parent.Audio.PlaySoundEffect(new Guid("adb4826c-ae62-4785-b0f3-81dd4d692920"));
-			_rolledTimes++;				
+			_rolledTimes++;
 			if (_rolledTimes > 10)
 			{
 				_rolledTimes = 0;
@@ -190,7 +185,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			{
 				var result = Engine.GetGameResult();
 
-				foreach(var completedItem in result.CompletedItems)
+				foreach (var completedItem in result.CompletedItems)
 					Parent.User.AppendCompletedItem(completedItem);
 				Parent.User.Points += result.PointsGained;
 				UserSaveHelpers.Save(Parent.User);

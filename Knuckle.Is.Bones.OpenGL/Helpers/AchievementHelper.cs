@@ -1,9 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Saves;
-using Knuckle.Is.Bones.OpenGL.Models;
 using Steamworks;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Helpers
 {
@@ -14,7 +10,7 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 			if (!SteamHelpers.IsInitialized)
 				return;
 
-			foreach(var key in user.CompletedItems.Keys)
+			foreach (var key in user.CompletedItems.Keys)
 			{
 				int value = user.GetCompletedTimes(key);
 				switch (key.ToString())

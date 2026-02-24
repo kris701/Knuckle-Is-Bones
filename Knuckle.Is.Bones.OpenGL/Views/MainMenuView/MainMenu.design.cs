@@ -1,5 +1,4 @@
-﻿using Knuckle.Is.Bones.Core.Engines;
-using Knuckle.Is.Bones.Core.Helpers;
+﻿using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.GameShopView;
@@ -11,8 +10,6 @@ using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using System;
-using System.IO;
-using System.Text.Json;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 {

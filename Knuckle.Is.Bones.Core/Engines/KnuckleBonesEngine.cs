@@ -1,7 +1,6 @@
 ﻿using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
-using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.Core.Resources;
 
@@ -18,8 +17,8 @@ namespace Knuckle.Is.Bones.Core.Engines
 
 		public GameState State { get; }
 		public bool GameOver { get; set; }
-		private Dictionary<int, double> _playerDiceValueMap;
-		private Dictionary<int, double> _blankDiceValueMap;
+		private readonly Dictionary<int, double> _playerDiceValueMap;
+		private readonly Dictionary<int, double> _blankDiceValueMap;
 
 		public KnuckleBonesEngine(GameState state)
 		{
@@ -196,7 +195,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 				winnerName = $"{State.SecondOpponent.Name}";
 
 			var result = new GameResult()
-			{ 
+			{
 				PlayerWon = playerWon,
 				HadPlayer = hadPlayer,
 				PointsGained = pointsGained,
@@ -211,10 +210,10 @@ namespace Knuckle.Is.Bones.Core.Engines
 			var value = (int)(boardValue * opponentDifficulty);
 
 			var allShopItems = ResourceManager.Shop.GetResources();
-			foreach(var purchaseId in State.User.PurchasedShopItems.Where(x => allShopItems.Contains(x)))
+			foreach (var purchaseId in State.User.PurchasedShopItems.Where(x => allShopItems.Contains(x)))
 			{
 				var item = ResourceManager.Shop.GetResource(purchaseId);
-				foreach(var effect in item.Effects)
+				foreach (var effect in item.Effects)
 					if (effect is PointsMultiplierEffect eff)
 						value = (int)(value * eff.Multiplier);
 			}
