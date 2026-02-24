@@ -1,5 +1,6 @@
 ﻿using Knuckle.Is.Bones.Core.Models;
 using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.Core.Models.Saves;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -16,6 +17,8 @@ namespace Knuckle.Is.Bones.Core.Engines
 
 		public DiceDefinition CurrentDice { get; set; }
 
+		public UserSaveDefinition User { get; set; }
+
 		public GameState Clone() => new GameState()
 		{
 			Winner = Winner,
@@ -24,7 +27,8 @@ namespace Knuckle.Is.Bones.Core.Engines
 			FirstOpponentBoard = FirstOpponentBoard.Clone(),
 			SecondOpponent = SecondOpponent.Clone(),
 			SecondOpponentBoard = SecondOpponentBoard.Clone(),
-			CurrentDice = CurrentDice.Clone()
+			CurrentDice = CurrentDice.Clone(),
+			User = User.Clone()
 		};
 
 		public void Save()

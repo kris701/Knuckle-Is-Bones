@@ -16,13 +16,15 @@ namespace Knuckle.Is.Bones.Core.Engines
 		public GameEventHandler? OnTurn;
 
 		public GameState State { get; }
-		public UserSaveDefinition User { get; }
 		public bool GameOver { get; set; }
+		private Dictionary<int, double> _playerDiceValueMap;
+		private Dictionary<int, double> _blankDiceValueMap;
 
-		public KnuckleBonesEngine(GameState state, UserSaveDefinition user)
+		public KnuckleBonesEngine(GameState state)
 		{
 			State = state;
-			User = user;
+			_blankDiceValueMap = BuildBlankDiceValueMultiplierMap();
+			_playerDiceValueMap = BuildPlayerDiceValueMultiplierMap();
 		}
 
 		public OpponentDefinition GetCurrentOpponent()
@@ -104,8 +106,8 @@ namespace Knuckle.Is.Bones.Core.Engines
 			{
 				OnGameOver?.Invoke();
 				GameOver = true;
-				var opponent1Value = State.FirstOpponentBoard.GetValue();
-				var opponent2Value = State.SecondOpponentBoard.GetValue();
+				var opponent1Value = GetFirstOpponentBoardValue();
+				var opponent2Value = GetSecondOpponentBoardValue();
 				if (opponent1Value > opponent2Value)
 					State.Winner = State.FirstOpponent.MoveModule.OpponentID;
 				else
@@ -169,7 +171,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			if ((State.FirstOpponent.MoveModule is PlayerMoveModule) && (State.SecondOpponent.MoveModule is not PlayerMoveModule) && State.Winner == State.FirstOpponent.MoveModule.OpponentID)
 			{
 				playerWon = true;
-				pointsGained = GetPointsGained(State.FirstOpponentBoard.GetValue(), State.SecondOpponent.Difficulty);
+				pointsGained = GetPointsGained(State.FirstOpponentBoard.GetValue(_playerDiceValueMap), State.SecondOpponent.Difficulty);
 				completedItems.Add(State.SecondOpponent.ID);
 				completedItems.Add(State.FirstOpponentBoard.ID);
 				completedItems.Add(State.CurrentDice.ID);
@@ -177,7 +179,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			if ((State.SecondOpponent.MoveModule is PlayerMoveModule) && (State.FirstOpponent.MoveModule is not PlayerMoveModule) && State.Winner == State.SecondOpponent.MoveModule.OpponentID)
 			{
 				playerWon = true;
-				pointsGained = GetPointsGained(State.SecondOpponentBoard.GetValue(), State.FirstOpponent.Difficulty);
+				pointsGained = GetPointsGained(State.SecondOpponentBoard.GetValue(_playerDiceValueMap), State.FirstOpponent.Difficulty);
 				completedItems.Add(State.FirstOpponent.ID);
 				completedItems.Add(State.FirstOpponentBoard.ID);
 				completedItems.Add(State.CurrentDice.ID);
@@ -208,7 +210,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			var value = (int)(boardValue * opponentDifficulty);
 
 			var allShopItems = ResourceManager.Shop.GetResources();
-			foreach(var purchaseId in User.PurchasedShopItems.Where(x => allShopItems.Contains(x)))
+			foreach(var purchaseId in State.User.PurchasedShopItems.Where(x => allShopItems.Contains(x)))
 			{
 				var item = ResourceManager.Shop.GetResource(purchaseId);
 				foreach(var effect in item.Effects)
@@ -217,6 +219,46 @@ namespace Knuckle.Is.Bones.Core.Engines
 			}
 
 			return value;
+		}
+
+		private Dictionary<int, double> BuildBlankDiceValueMultiplierMap()
+		{
+			var result = new Dictionary<int, double>();
+			for (int i = 1; i <= State.CurrentDice.Sides; i++)
+				result.Add(i, 1);
+
+			return result;
+		}
+
+		private Dictionary<int, double> BuildPlayerDiceValueMultiplierMap()
+		{
+			var result = BuildBlankDiceValueMultiplierMap();
+
+			var allShopItems = ResourceManager.Shop.GetResources();
+			foreach (var purchaseId in State.User.PurchasedShopItems.Where(x => allShopItems.Contains(x)))
+			{
+				var item = ResourceManager.Shop.GetResource(purchaseId);
+				foreach (var effect in item.Effects)
+					if (effect is DiceMultiplierEffect eff && result.ContainsKey(eff.Number))
+						result[eff.Number] = eff.Multiplier;
+			}
+
+			return result;
+		}
+
+		public int GetFirstOpponentBoardValue()
+		{
+			if (State.FirstOpponent.MoveModule is PlayerMoveModule)
+				return State.FirstOpponentBoard.GetValue(_playerDiceValueMap);
+			else
+				return State.FirstOpponentBoard.GetValue(_blankDiceValueMap);
+		}
+		public int GetSecondOpponentBoardValue()
+		{
+			if (State.SecondOpponent.MoveModule is PlayerMoveModule)
+				return State.SecondOpponentBoard.GetValue(_playerDiceValueMap);
+			else
+				return State.SecondOpponentBoard.GetValue(_blankDiceValueMap);
 		}
 	}
 }

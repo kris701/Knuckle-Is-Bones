@@ -1,0 +1,13 @@
+﻿{
+	"ID": "01173ea7-181e-407b-8539-d87b91023034",
+	"Name": "Make 6's worth 2x more",
+	"Description": "Permanently make all 6's you throw be worth 2x as much!",
+	"Cost": 6000,
+	"Effects": [
+		{
+			"$type": "DiceMultiplierEffect",
+			"Number": 6,
+			"Multiplier": 2
+		}
+	]
+}

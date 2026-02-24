@@ -25,6 +25,12 @@
 	</Choose>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_6.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_5.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_4.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_3.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_2.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_1.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_3.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_2.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_1.json" />
