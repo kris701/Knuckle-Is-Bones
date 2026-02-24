@@ -1,4 +1,4 @@
-﻿using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
+﻿using Knuckle.Is.Bones.OpenGL.Views.SplashScreenView;
 using System;
 
 namespace Knuckle.Is.Bones.OpenGL
@@ -8,7 +8,7 @@ namespace Knuckle.Is.Bones.OpenGL
 		[STAThread]
 		private static void Main()
 		{
-			using (var mainWindow = new KnuckleBoneWindow((g) => new MainMenu(g)))
+			using (var mainWindow = new KnuckleBoneWindow((g) => new SplashScreen(g)))
 				mainWindow.Run();
 		}
 	}
