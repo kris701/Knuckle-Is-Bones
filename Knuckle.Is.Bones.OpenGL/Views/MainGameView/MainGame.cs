@@ -179,31 +179,28 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 			if (Engine.GameOver)
 			{
-				var pointsGained = 0;
-				if ((Engine.State.FirstOpponent.MoveModule is PlayerMoveModule) && (Engine.State.SecondOpponent.MoveModule is not PlayerMoveModule) && Engine.State.Winner == Engine.State.FirstOpponent.MoveModule.OpponentID)
-				{
-					Parent.User.AppendCompletedItem(Engine.State.SecondOpponent.ID);
-					Parent.User.AppendCompletedItem(Engine.State.FirstOpponentBoard.ID);
-					Parent.User.AppendCompletedItem(Engine.State.CurrentDice.ID);
-				}
-				if ((Engine.State.SecondOpponent.MoveModule is PlayerMoveModule) && (Engine.State.FirstOpponent.MoveModule is PlayerMoveModule) && Engine.State.Winner == Engine.State.SecondOpponent.MoveModule.OpponentID)
-				{
-					Parent.User.AppendCompletedItem(Engine.State.FirstOpponent.ID);
-					Parent.User.AppendCompletedItem(Engine.State.FirstOpponentBoard.ID);
-					Parent.User.AppendCompletedItem(Engine.State.CurrentDice.ID);
-				}
+				var result = Engine.GetGameResult();
 
-				Parent.User.Points += pointsGained;
+				foreach(var completedItem in result.CompletedItems)
+					Parent.User.AppendCompletedItem(completedItem);
+				Parent.User.Points += result.PointsGained;
 				Parent.User.Save();
-				if (pointsGained > 0)
-					_pointsGainedLabel.Text = $"Gained {pointsGained} points.";
+
+				if (result.PointsGained > 0)
+					_pointsGainedLabel.Text = $"Gained {result.PointsGained} points.";
 				else
 					_pointsGainedLabel.Text = "No points awarded";
 
-				if (Engine.State.Winner == Engine.State.FirstOpponent.MoveModule.OpponentID)
-					_winnerLabel.Text = $"{Engine.State.FirstOpponent.Name} Won!";
+				if (result.HadPlayer)
+				{
+					if (result.PlayerWon)
+						_winnerLabel.Text = $"You Won!";
+					else
+						_winnerLabel.Text = $"You lost to {result.WinnerName}!";
+				}
 				else
-					_winnerLabel.Text = $"{Engine.State.SecondOpponent.Name} Won!";
+					_winnerLabel.Text = $"{result.WinnerName} Won!";
+
 				_gameOverPanel.IsVisible = true;
 				Engine.State.DeleteSave();
 
