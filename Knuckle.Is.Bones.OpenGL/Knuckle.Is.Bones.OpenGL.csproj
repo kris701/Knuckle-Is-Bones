@@ -9,7 +9,7 @@
 	  <Authors>Kristian Skov Johansen</Authors>
 	  <Copyright>Kristian Skov Johansen</Copyright>
 	  <Product>Knuckle.Is.Bones</Product>
-	  <Version>0.1.13</Version>
+	  <Version>0.1.14</Version>
 	  <PublishSingleFile>true</PublishSingleFile>
 	  <SelfContained>true</SelfContained>
 	  <DebugType>embedded</DebugType>
@@ -38,7 +38,7 @@
   <ItemGroup>
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.4.1" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.4.1" />
-    <PackageReference Include="MonoGame.OpenGL.Formatter" Version="1.2.12" />
+    <PackageReference Include="MonoGame.OpenGL.Formatter" Version="1.2.7" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Knuckle.Is.Bones.Core\Knuckle.Is.Bones.Core.csproj" />
