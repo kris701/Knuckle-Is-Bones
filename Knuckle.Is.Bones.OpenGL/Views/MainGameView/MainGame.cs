@@ -54,7 +54,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_rightKeyWatcher = new KeyWatcher(Keys.Right, MoveRight);
 			_enterKeyWatcher = new KeyWatcher(Keys.Enter, TakeTurn);
 			_escapeKeyWatcher = new KeyWatcher(Keys.Escape, Escape);
-			_rollTimer = new GameTimer(TimeSpan.FromMilliseconds(50), OnRollTimer);
+			_rollTimer = new GameTimer(TimeSpan.FromMilliseconds(150), OnRollTimer);
 			_rollWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(750), OnRollWaitTimer);
 			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(750), OnSelectWaitTimer);
 			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(100), OnPointsGainedTimer);
@@ -64,11 +64,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private void OnRollTimer(TimeSpan span)
 		{
 			if (_rollSoundEffect == Guid.Empty)
-			{
 				_rollSoundEffect = Parent.Audio.PlaySoundEffect(new Guid("adb4826c-ae62-4785-b0f3-81dd4d692920"));
-			}
-			_diceLabel.Text = $"{_rnd.Next(1, Engine.State.CurrentDice.Sides + 1)}";
-			_rolledTimes++;
+			_rolledTimes++;				
 			if (_rolledTimes > 10)
 			{
 				_rolledTimes = 0;
@@ -77,6 +74,18 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Parent.Audio.StopSoundEffect(_rollSoundEffect);
 				_rollSoundEffect = Guid.Empty;
 				_diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
+				_diceLabel.X = 375;
+				_diceLabel.Y = 475;
+				_diceLabel.Rotation = 0;
+				_diceLabel.Initialize();
+			}
+			else
+			{
+				_diceLabel.Text = $"{_rnd.Next(1, Engine.State.CurrentDice.Sides + 1)}";
+				_diceLabel.X = 375 + _rnd.Next(-50, 50);
+				_diceLabel.Y = 475 + _rnd.Next(-50, 50);
+				_diceLabel.Rotation = (float)(3.14 * _rnd.NextDouble());
+				_diceLabel.Initialize();
 			}
 		}
 
