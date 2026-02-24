@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Shop;
+using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
@@ -10,6 +11,7 @@ using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {
@@ -57,7 +59,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			});
 
 			var width = 600;
-			var height = 900;
+			var height = 800;
 			var shopIds = ResourceManager.Shop.GetResources();
 			var items = new List<ShopItemDefinition>();
 			foreach (var id in shopIds)
@@ -89,8 +91,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				LeftButtonY = -50,
 				RightButtonX = width - 80,
 				RightButtonY = -50,
-				ItemsPrPage = 14,
-				X = 360,
+				ItemsPrPage = 13,
+				X = 120,
 				Y = 200,
 				Width = width,
 				Height = height - 50
@@ -137,6 +139,18 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				IsVisible = false
 			};
 			AddControl(1, _buyItemControl);
+			AddControl(1, new AnimatedTextboxControl()
+			{
+				Font = Parent.Fonts.GetFont(FontSizes.Ptx8),
+				Margin = 50,
+				FontColor = Color.White,
+				Text = BuildUpgradeList(),
+				TileSet = Parent.Textures.GetTextureSet(new Guid("0c464e6e-8fcb-4ba9-838d-0b1e5edfca12")),
+				X = _descriptionControl.X + 10 + _descriptionControl.Width,
+				Y = 150,
+				Width = 500,
+				Height = height,
+			});
 
 			AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
 			{
@@ -166,6 +180,45 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 #endif
 
 			base.Initialize();
+		}
+
+		private string BuildUpgradeList()
+		{
+			var sb = new StringBuilder();
+
+			sb.AppendLine("Current Upgrades");
+			sb.AppendLine(" ");
+
+			var shopItemIds = ResourceManager.Shop.GetResources();
+			var effects = new List<IPurchaseEffect>();
+			foreach (var purcahesedId in Parent.User.PurchasedShopItems.Where(x => shopItemIds.Contains(x)))
+				effects.AddRange(ResourceManager.Shop.GetResource(purcahesedId).Effects);
+
+			var allPointMult = effects.Where(x => x is PointsMultiplierEffect).Cast<PointsMultiplierEffect>();
+			if (allPointMult.Count() > 0)
+			{
+				double totalMult = 1;
+				foreach (var effect in allPointMult)
+					totalMult *= effect.Multiplier;
+				sb.AppendLine($"Overall point modifier: {Math.Round(totalMult,2)}x");
+				sb.AppendLine(" ");
+			}
+
+			var allDiceMult = effects.Where(x => x is DiceMultiplierEffect).Cast<DiceMultiplierEffect>();
+			if (allDiceMult.Count() > 0)
+			{
+				var groups = allDiceMult.GroupBy(x => x.Number, x => x.Multiplier, (key, g) => new { Key = key, Mults = g.ToList() });
+				foreach(var group in groups)
+				{
+					double totalMult = 1;
+					foreach (var mult in group.Mults)
+						totalMult *= mult;
+					sb.AppendLine($"Dice modifier for {group.Key}'s: {Math.Round(totalMult, 2)}x");
+					sb.AppendLine(" ");
+				}
+			}
+
+			return sb.ToString();
 		}
 	}
 }
