@@ -11,27 +11,27 @@ namespace Knuckle.Is.Bones.Core.Models.Shop
 		public int Cost { get; set; }
 		public List<IPurchaseEffect> Effects { get; set; }
 
-		public bool HasPurchased<T>(UserSaveDefinition<T> userData) where T : new()
+		public bool HasPurchased(UserSaveDefinition user)
 		{
-			return userData.PurchasedShopItems.Contains(ID);
+			return user.PurchasedShopItems.Contains(ID);
 		}
 
-		public bool CanPurchase<T>(UserSaveDefinition<T> userData) where T : new()
+		public bool CanPurchase(UserSaveDefinition user)
 		{
-			return userData.Points >= Cost;
+			return user.Points >= Cost;
 		}
 
-		public bool Buy<T>(UserSaveDefinition<T> userData) where T : new()
+		public bool Buy(UserSaveDefinition user)
 		{
-			if (!CanPurchase(userData))
+			if (!CanPurchase(user))
 				return false;
-			userData.Points -= Cost;
+			user.Points -= Cost;
 			foreach (var effect in Effects)
-				if (!userData.PurchasedShopItems.Contains(effect.ID))
-					userData.PurchasedShopItems.Add(effect.ID);
-			if (!userData.PurchasedShopItems.Contains(ID))
-				userData.PurchasedShopItems.Add(ID);
-			userData.Save();
+				if (!user.PurchasedShopItems.Contains(effect.ID))
+					user.PurchasedShopItems.Add(effect.ID);
+			if (!user.PurchasedShopItems.Contains(ID))
+				user.PurchasedShopItems.Add(ID);
+			user.Save();
 			return true;
 		}
 	}

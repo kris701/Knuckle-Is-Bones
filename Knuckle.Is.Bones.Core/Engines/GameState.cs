@@ -1,5 +1,7 @@
 ﻿using Knuckle.Is.Bones.Core.Models;
 using Knuckle.Is.Bones.Core.Models.Game;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Knuckle.Is.Bones.Core.Engines
 {
@@ -24,5 +26,18 @@ namespace Knuckle.Is.Bones.Core.Engines
 			SecondOpponentBoard = SecondOpponentBoard.Clone(),
 			CurrentDice = CurrentDice.Clone()
 		};
+
+		public void Save()
+		{
+			if (File.Exists("save.json"))
+				File.Delete("save.json");
+			File.WriteAllText("save.json", JsonSerializer.Serialize(this));
+		}
+
+		public void DeleteSave()
+		{
+			if (File.Exists("save.json"))
+				File.Delete("save.json");
+		}
 	}
 }

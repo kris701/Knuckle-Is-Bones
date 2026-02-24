@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.Core.Models.Saves;
 
 namespace Knuckle.Is.Bones.Core.Engines
@@ -12,14 +13,12 @@ namespace Knuckle.Is.Bones.Core.Engines
 		public GameEventHandler? OnCombo;
 		public GameEventHandler? OnTurn;
 
-		public GameSaveDefinition Save { get; }
 		public GameState State { get; }
 		public bool GameOver { get; set; }
 
-		public KnuckleBonesEngine(GameSaveDefinition save)
+		public KnuckleBonesEngine(GameState state)
 		{
-			Save = save;
-			State = save.State;
+			State = state;
 		}
 
 		public OpponentDefinition GetCurrentOpponent()
@@ -107,7 +106,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 					State.Winner = State.FirstOpponent.MoveModule.OpponentID;
 				else
 					State.Winner = State.SecondOpponent.MoveModule.OpponentID;
-				Save.Save();
+				State.Save();
 				return true;
 			}
 
@@ -118,7 +117,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			else
 				State.Turn = State.FirstOpponent.MoveModule.OpponentID;
 
-			Save.Save();
+			State.Save();
 			return true;
 		}
 

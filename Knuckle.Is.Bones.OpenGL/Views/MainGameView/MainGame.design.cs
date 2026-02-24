@@ -39,7 +39,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			SetupGameOverView();
 
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new MainGame(Parent, Save)))
+			AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new MainGame(Parent, State)))
 			{
 				X = 0,
 				Y = 0,
