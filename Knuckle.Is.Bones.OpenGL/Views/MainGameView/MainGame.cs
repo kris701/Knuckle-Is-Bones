@@ -45,7 +45,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, ID)
 		{
 			State = state;
-			Engine = new KnuckleBonesEngine(state, Parent.User);
+			Engine = new KnuckleBonesEngine(state);
 			Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(new Guid("4e53cd32-7af6-47a1-a331-ec2096505c78"));
 			Engine.OnCombo += () => Parent.Audio.PlaySoundEffectOnce(new Guid("74ea48c8-cb6f-4a22-8226-e5d6142b1f76"));
 			Engine.OnTurn += () => Parent.Audio.PlaySoundEffectOnce(new Guid("23ac297f-3e68-461f-a869-a304e89e18c6"));
@@ -154,14 +154,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			if (_rolling || _rollWait || _selectWait)
 				return;
 
-			var firstOpponentPoints = Engine.State.FirstOpponentBoard.GetValue();
-			var secondOpponentPoints = Engine.State.SecondOpponentBoard.GetValue();
+			var firstOpponentPoints = Engine.GetFirstOpponentBoardValue();
+			var secondOpponentPoints = Engine.GetSecondOpponentBoardValue();
 
 			if (!Engine.TakeTurn())
 				return;
 
-			var newFirstOpponentPoints = Engine.State.FirstOpponentBoard.GetValue();
-			var newSecondOpponentPoints = Engine.State.SecondOpponentBoard.GetValue();
+			var newFirstOpponentPoints = Engine.GetFirstOpponentBoardValue();
+			var newSecondOpponentPoints = Engine.GetSecondOpponentBoardValue();
 
 			_firstOpponentBoard.HideHighlight();
 			_secondOpponentBoard.HideHighlight();
@@ -174,8 +174,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			if (secondOpponentPoints != newSecondOpponentPoints)
 				_pointsGainedControls.Add(CreatePointsGainedControl(secondOpponentPoints, newSecondOpponentPoints, _secondOpponentPoints.X, _secondOpponentPoints.Y));
 
-			_firstOpponentPoints.Text = $"{Engine.State.FirstOpponentBoard.GetValue()}";
-			_secondOpponentPoints.Text = $"{Engine.State.SecondOpponentBoard.GetValue()}";
+			_firstOpponentPoints.Text = $"{newFirstOpponentPoints}";
+			_secondOpponentPoints.Text = $"{newSecondOpponentPoints}";
 
 			if (Engine.GameOver)
 			{

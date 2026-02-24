@@ -2,7 +2,7 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Saves
 {
-	public class UserSaveDefinition
+	public class UserSaveDefinition : IGenericClonable<UserSaveDefinition>
 	{
 		public int Points { get; set; } = 0;
 		public Dictionary<Guid, int> CompletedItems { get; set; } = new Dictionary<Guid, int>();
@@ -28,6 +28,16 @@ namespace Knuckle.Is.Bones.Core.Models.Saves
 			if (!CompletedItems.ContainsKey(id))
 				CompletedItems.Add(id, 0);
 			return CompletedItems[id];
+		}
+
+		public UserSaveDefinition Clone()
+		{
+			return new UserSaveDefinition()
+			{
+				Points = Points,
+				CompletedItems = CompletedItems,
+				PurchasedShopItems = PurchasedShopItems
+			};
 		}
 	}
 }

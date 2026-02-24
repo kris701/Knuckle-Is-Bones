@@ -71,6 +71,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					SecondOpponent = ResourceManager.Opponents.GetResource(_selectedSecondOpponent).Clone(),
 					SecondOpponentBoard = ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
 					CurrentDice = ResourceManager.Dice.GetResource(_selectedDice).Clone(),
+					User = Parent.User.Clone()
 				};
 
 				state.FirstOpponent.MoveModule.OpponentID = Guid.NewGuid();

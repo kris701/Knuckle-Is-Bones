@@ -32,15 +32,15 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 			IsPurchasable = other.IsPurchasable;
 		}
 
-		public int GetValue()
+		internal int GetValue(Dictionary<int, double> multipliers)
 		{
 			int value = 0;
 			foreach (var column in Columns)
-				value += column.GetValue();
+				value += column.GetValue(multipliers);
 			return value;
 		}
 
-		public bool IsFull()
+		internal bool IsFull()
 		{
 			foreach (var column in Columns)
 				if (!column.IsFull())

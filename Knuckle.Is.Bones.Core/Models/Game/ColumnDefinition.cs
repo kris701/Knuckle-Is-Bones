@@ -19,15 +19,16 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 				Cells.Add(cell);
 		}
 
-		public int GetValue()
+		internal int GetValue(Dictionary<int, double> multipliers)
 		{
 			int value = 0;
 			for (int i = 0; i < Cells.Count; i++)
-				value += Cells[i] * Cells.Count(x => x == Cells[i]);
+				if (Cells[i] != 0)
+					value += (int)((Cells[i] * Cells.Count(x => x == Cells[i])) * multipliers[Cells[i]]);
 			return value;
 		}
 
-		public bool IsFull()
+		internal bool IsFull()
 		{
 			foreach (var cell in Cells)
 				if (cell == 0)
