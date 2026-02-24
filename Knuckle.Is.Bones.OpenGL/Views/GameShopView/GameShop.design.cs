@@ -101,12 +101,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 			if (items.Count == 0)
 			{
-				SteamUserStats.SetAchievement("BuyAllShopItems");
+				AchievementHelper.UnlockAchievement("BuyAllShopItems");
 				AddControl(1, new LabelControl()
 				{
 					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
 					Text = "All items purchased!",
-					X = 600,
+					X = 400,
 					Y = 550,
 					Height = 50,
 					FontColor = new Color(217, 68, 144)

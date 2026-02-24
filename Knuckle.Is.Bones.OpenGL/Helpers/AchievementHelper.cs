@@ -72,5 +72,12 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 			}
 			SteamUserStats.StoreStats();
 		}
+
+		public static void UnlockAchievement(string name)
+		{
+			if (!SteamHelpers.IsInitialized)
+				return;
+			SteamUserStats.SetAchievement(name);
+		}
 	}
 }
