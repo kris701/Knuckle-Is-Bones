@@ -1,0 +1,12 @@
+﻿{
+	"ID": "8d91db02-4532-495c-be1c-be8bb9cadc6c",
+	"Name": "15% point multiplier",
+	"Description": "Permanently get 15% more points when winning a match! (Do note, this also stacks with other point multiplier upgrades!)",
+	"Cost": 2500,
+	"Effects": [
+		{
+			"$type": "PointsMultiplierEffect",
+			"Multiplier": 1.15
+		}
+	]
+}

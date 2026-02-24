@@ -27,8 +27,9 @@ namespace Knuckle.Is.Bones.Core.Models.Shop
 				return false;
 			user.Points -= Cost;
 			foreach (var effect in Effects)
-				if (!user.PurchasedShopItems.Contains(effect.ID))
-					user.PurchasedShopItems.Add(effect.ID);
+				foreach(var id in effect.GetReferenceIDs())
+					if (!user.PurchasedShopItems.Contains(id))
+						user.PurchasedShopItems.Add(id);
 			if (!user.PurchasedShopItems.Contains(ID))
 				user.PurchasedShopItems.Add(ID);
 			user.Save();
