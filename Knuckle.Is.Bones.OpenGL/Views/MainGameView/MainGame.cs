@@ -184,7 +184,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				foreach(var completedItem in result.CompletedItems)
 					Parent.User.AppendCompletedItem(completedItem);
 				Parent.User.Points += result.PointsGained;
-				Parent.User.Save();
+				UserSaveHelpers.Save(Parent.User);
 
 				if (result.PointsGained > 0)
 					_pointsGainedLabel.Text = $"Gained {result.PointsGained} points.";
@@ -201,11 +201,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				else
 					_winnerLabel.Text = $"{result.WinnerName} Won!";
 
-				_gameOverPanel.IsVisible = true;
-				Engine.State.DeleteSave();
+				GameSaveHelpers.DeleteSave();
 
 				AchievementHelper.UpdateAchievements(Parent.User);
 
+				_gameOverPanel.IsVisible = true;
 				return;
 			}
 

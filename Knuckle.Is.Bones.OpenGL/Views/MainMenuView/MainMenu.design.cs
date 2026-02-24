@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Engines;
+using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.GameShopView;
@@ -39,10 +40,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 			{
 				new AnimatedAudioButton(Parent, (x) =>
 				{
-					var state = JsonSerializer.Deserialize<GameState>(File.ReadAllText("save.json"));
+					var state = GameSaveHelpers.LoadSaveFile();
 					if (state == null || state.FirstOpponent == null)
 					{
-						File.Delete("save.json");
+						GameSaveHelpers.DeleteSave();
 						SwitchView(new MainMenu(Parent));
 					}
 					else
@@ -54,8 +55,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 					HorizontalAlignment = HorizontalAlignment.Middle,
 					FillClickedColor = BasicTextures.GetClickedTexture(),
 					TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
-					IsVisible = File.Exists("save.json"),
-					Height = File.Exists("save.json") ? 100 : 0
+					IsVisible = GameSaveHelpers.DoesSaveExist(),
+					Height = GameSaveHelpers.DoesSaveExist() ? 100 : 0
 				},
 				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent)))
 				{

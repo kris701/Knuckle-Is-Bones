@@ -1,4 +1,5 @@
-﻿using Knuckle.Is.Bones.Core.Models.Saves;
+﻿using Knuckle.Is.Bones.Core.Helpers;
+using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 
 namespace Knuckle.Is.Bones.Core.Models.Shop
@@ -32,7 +33,7 @@ namespace Knuckle.Is.Bones.Core.Models.Shop
 						user.PurchasedShopItems.Add(id);
 			if (!user.PurchasedShopItems.Contains(ID))
 				user.PurchasedShopItems.Add(ID);
-			user.Save();
+			UserSaveHelpers.Save(user);
 			return true;
 		}
 	}
