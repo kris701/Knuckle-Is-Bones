@@ -54,7 +54,7 @@ namespace Knuckle.Is.Bones.OpenGL
 			LoadMods();
 			ResourcePackController.LoadResourcePack(User.UIData.ResourcePackID);
 
-			SteamAPI.Init();
+			SteamHelpers.IsInitialized = SteamAPI.Init();
 
 			AchievementHelper.UpdateAchievements(User);
 

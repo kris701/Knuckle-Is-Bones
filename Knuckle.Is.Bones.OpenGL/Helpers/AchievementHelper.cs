@@ -11,6 +11,9 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 	{
 		public static void UpdateAchievements(UserSaveDefinition<SettingsDefinition> save)
 		{
+			if (!SteamHelpers.IsInitialized)
+				return;
+
 			foreach(var key in save.CompletedItems.Keys)
 			{
 				int value = save.GetCompletedTimes(key);
