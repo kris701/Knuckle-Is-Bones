@@ -243,6 +243,38 @@
         "Views/GameShop/shopdesc_1",
         "Views/GameShop/shopdesc_2"
       ]
+    },
+    {
+      "ID": "fbf34095-55e4-4b14-876e-ce7a2e0756ec",
+      "FrameTime": 25,
+      "Contents": [
+        "Transitions/transition_1",
+        "Transitions/transition_2",
+        "Transitions/transition_3",
+        "Transitions/transition_4",
+        "Transitions/transition_5",
+        "Transitions/transition_6",
+        "Transitions/transition_7",
+        "Transitions/transition_8",
+        "Transitions/transition_9",
+        "Transitions/transition_10"
+      ]
+    },
+    {
+      "ID": "6c17df32-bb0e-47a6-bb90-57c593416782",
+      "FrameTime": 25,
+      "Contents": [
+        "Transitions/transition_10",
+        "Transitions/transition_9",
+        "Transitions/transition_8",
+        "Transitions/transition_7",
+        "Transitions/transition_6",
+        "Transitions/transition_5",
+        "Transitions/transition_4",
+        "Transitions/transition_3",
+        "Transitions/transition_2",
+        "Transitions/transition_1"
+      ]
     }
   ],
   "Songs": [
