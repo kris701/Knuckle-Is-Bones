@@ -7,7 +7,7 @@ namespace Knuckle.Is.Bones.OpenGL.Models
 	{
 		public int ResolutionX { get; set; } = 1920;
 		public int ResolutionY { get; set; } = 1080;
-		public bool IsFullscreen { get; set; } = false;
+		public bool IsFullscreen { get; set; } = true;
 		public bool IsVsync { get; set; } = true;
 		public float MusicVolume { get; set; } = 0.2f;
 		public float EffectsVolume { get; set; } = 0.2f;
@@ -23,5 +23,22 @@ namespace Knuckle.Is.Bones.OpenGL.Models
 			EffectsVolume = EffectsVolume,
 			ResourcePackID = ResourcePackID
 		};
+
+		public override bool Equals(object? obj)
+		{
+			return obj is SettingsDefinition definition &&
+				   ResolutionX == definition.ResolutionX &&
+				   ResolutionY == definition.ResolutionY &&
+				   IsFullscreen == definition.IsFullscreen &&
+				   IsVsync == definition.IsVsync &&
+				   MusicVolume == definition.MusicVolume &&
+				   EffectsVolume == definition.EffectsVolume &&
+				   ResourcePackID.Equals(definition.ResourcePackID);
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(ResolutionX, ResolutionY, IsFullscreen, IsVsync, MusicVolume, EffectsVolume, ResourcePackID);
+		}
 	}
 }

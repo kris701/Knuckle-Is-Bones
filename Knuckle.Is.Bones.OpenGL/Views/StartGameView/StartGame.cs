@@ -1,6 +1,10 @@
 ﻿using Knuckle.Is.Bones.Core.Models;
 using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.OpenGL.Controls;
+using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using MonoGame.OpenGL.Formatter.Input;
 using System;
 using System.Text;
 
@@ -18,9 +22,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private AnimatedAudioButton? _selectedSecondOpponentButton;
 		private Guid _selectedDice = Guid.Empty;
 		private AnimatedAudioButton? _selectedDiceButton;
+		private readonly KeyWatcher _escapeKeyWatcher;
 
 		public StartGame(KnuckleBoneWindow parent) : base(parent, ID)
 		{
+			_escapeKeyWatcher = new KeyWatcher(Keys.Escape, () => SwitchView(new MainMenu(parent)));
 			Initialize();
 		}
 
@@ -104,6 +110,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					_diceDescription.Text = def.Description;
 				}
 			}
+		}
+
+		public override void OnUpdate(GameTime gameTime)
+		{
+			var keyState = Keyboard.GetState();
+			_escapeKeyWatcher.Update(keyState);
 		}
 	}
 }
