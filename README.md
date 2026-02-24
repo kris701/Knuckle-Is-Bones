@@ -6,8 +6,11 @@ The game currenctly contains:
 * 3 opponents
 * 5 dice
 * 8 board
+* 17 shop items
 
 The game has a shop system, where the the more points you gain by winning against opponents, the better dice er larger boards you get get!
+
+This game is also fully moddable! You can add boards, dice, opponents, shop items, change textures and much more.
 
 This game is still Work in Progress and i appreciate any input you can give :)
 
@@ -23,9 +26,8 @@ This game is still Work in Progress and i appreciate any input you can give :)
 
 <img width="1920" height="1080" alt="img6" src="https://github.com/user-attachments/assets/8082a332-dbb5-4c4d-b51a-ca590babcd1f" />
 
-
 ## Music
-https://www.beepbox.co
+I made the music using this website: https://www.beepbox.co
 
 ## Sound effects
-https://sfxr.me/
+I made the sound effects using this website: https://sfxr.me/
