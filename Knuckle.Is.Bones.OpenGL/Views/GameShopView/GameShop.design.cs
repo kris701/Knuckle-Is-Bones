@@ -89,11 +89,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				LeftButtonY = -50,
 				RightButtonX = width - 80,
 				RightButtonY = -50,
-				ItemsPrPage = 7,
+				ItemsPrPage = 14,
 				X = 360,
-				Y = 150,
+				Y = 200,
 				Width = width,
-				Height = height
+				Height = height - 50
 			};
 			AddControl(1, pagehandler);
 

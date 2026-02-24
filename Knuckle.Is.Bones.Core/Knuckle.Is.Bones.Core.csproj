@@ -23,6 +23,12 @@
 			</ItemGroup>
 		</When>
 	</Choose>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_3.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_2.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_1.json" />
+	</ItemGroup>
 	
   <ItemGroup>
     <EmbeddedResource Include="Resources\Core\Boards\gigacombo.json" />

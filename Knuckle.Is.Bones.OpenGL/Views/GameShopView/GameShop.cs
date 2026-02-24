@@ -53,6 +53,18 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 						sb.AppendLine(" ");
 						sb.AppendLine(item.Description);
 						break;
+					case PointsMultiplierEffect m:
+						sb.AppendLine("Type: Point Multiplier");
+						sb.AppendLine("Cost: " + item.Cost);
+						sb.AppendLine(" ");
+						sb.AppendLine(item.Description);
+						break;
+					default:
+						sb.AppendLine("Type: Unknown");
+						sb.AppendLine("Cost: " + item.Cost);
+						sb.AppendLine(" ");
+						sb.AppendLine(item.Description);
+						break;
 				}
 			}
 

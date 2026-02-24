@@ -1,6 +1,8 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.Core.Models.Saves;
+using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
+using Knuckle.Is.Bones.Core.Resources;
 
 namespace Knuckle.Is.Bones.Core.Engines
 {
@@ -14,11 +16,13 @@ namespace Knuckle.Is.Bones.Core.Engines
 		public GameEventHandler? OnTurn;
 
 		public GameState State { get; }
+		public UserSaveDefinition User { get; }
 		public bool GameOver { get; set; }
 
-		public KnuckleBonesEngine(GameState state)
+		public KnuckleBonesEngine(GameState state, UserSaveDefinition user)
 		{
 			State = state;
+			User = user;
 		}
 
 		public OpponentDefinition GetCurrentOpponent()
@@ -165,7 +169,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			if ((State.FirstOpponent.MoveModule is PlayerMoveModule) && (State.SecondOpponent.MoveModule is not PlayerMoveModule) && State.Winner == State.FirstOpponent.MoveModule.OpponentID)
 			{
 				playerWon = true;
-				pointsGained = (int)(State.FirstOpponentBoard.GetValue() * State.SecondOpponent.Difficulty);
+				pointsGained = GetPointsGained(State.FirstOpponentBoard.GetValue(), State.SecondOpponent.Difficulty);
 				completedItems.Add(State.SecondOpponent.ID);
 				completedItems.Add(State.FirstOpponentBoard.ID);
 				completedItems.Add(State.CurrentDice.ID);
@@ -173,7 +177,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			if ((State.SecondOpponent.MoveModule is PlayerMoveModule) && (State.FirstOpponent.MoveModule is not PlayerMoveModule) && State.Winner == State.SecondOpponent.MoveModule.OpponentID)
 			{
 				playerWon = true;
-				pointsGained = (int)(State.SecondOpponentBoard.GetValue() * State.FirstOpponent.Difficulty);
+				pointsGained = GetPointsGained(State.SecondOpponentBoard.GetValue(), State.FirstOpponent.Difficulty);
 				completedItems.Add(State.FirstOpponent.ID);
 				completedItems.Add(State.FirstOpponentBoard.ID);
 				completedItems.Add(State.CurrentDice.ID);
@@ -197,6 +201,22 @@ namespace Knuckle.Is.Bones.Core.Engines
 				WinnerName = winnerName
 			};
 			return result;
+		}
+
+		private int GetPointsGained(int boardValue, double opponentDifficulty)
+		{
+			var value = (int)(boardValue * opponentDifficulty);
+
+			var allShopItems = ResourceManager.Shop.GetResources();
+			foreach(var purchaseId in User.PurchasedShopItems.Where(x => allShopItems.Contains(x)))
+			{
+				var item = ResourceManager.Shop.GetResource(purchaseId);
+				foreach(var effect in item.Effects)
+					if (effect is PointsMultiplierEffect eff)
+						value = (int)(value * eff.Multiplier);
+			}
+
+			return value;
 		}
 	}
 }
