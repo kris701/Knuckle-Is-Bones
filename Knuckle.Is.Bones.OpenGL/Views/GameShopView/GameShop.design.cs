@@ -7,7 +7,6 @@ using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -167,7 +166,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			});
 
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new GameShop(Parent)))
+			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new GameShop(Parent)))
 			{
 				X = 0,
 				Y = 0,

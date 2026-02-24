@@ -45,7 +45,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				foreach (var item in page)
 					Parent.RemoveControl(2, item);
 
-			_leftButton = new ButtonControl(Parent.Parent, clicked: (s) =>
+			_leftButton = new ButtonControl(Parent.Parent, (s) =>
 			{
 				PageIndex--;
 				if (PageIndex >= MaxPage)
@@ -67,7 +67,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				IsVisible = false,
 			};
 			Children.Add(_leftButton);
-			_rightButton = new ButtonControl(Parent.Parent, clicked: (s) =>
+			_rightButton = new ButtonControl(Parent.Parent, (s) =>
 			{
 				PageIndex++;
 				if (PageIndex >= MaxPage)

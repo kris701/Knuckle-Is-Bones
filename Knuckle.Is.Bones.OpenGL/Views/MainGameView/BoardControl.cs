@@ -13,6 +13,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
 	public class BoardControl : CollectionControl
 	{
+		public bool CanSelect { get; set; } = false;
+
 		private readonly BoardDefinition _board;
 		private readonly int _rows;
 		private readonly int _columns;
@@ -21,10 +23,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private float _minSize;
 		private readonly float _margin = 5;
 		private readonly bool _flip = false;
-		private TileControl _columnHighlight;
 		private readonly IWindow _parent;
 
-		public BoardControl(IWindow parent, BoardDefinition board, float x, float y, float width, float height, bool flip = false)
+		private readonly List<ButtonControl> _columnHighlights = new List<ButtonControl>();
+		private readonly Action<int> _columnSelectAction;
+
+		public BoardControl(IWindow parent, BoardDefinition board, float x, float y, float width, float height, Action<int> columnSelectAction, bool flip = false)
 		{
 			_parent = parent;
 			_board = board;
@@ -36,6 +40,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			X = x;
 			Y = y;
 			_flip = flip;
+			_columnSelectAction = columnSelectAction;
 		}
 
 		public override void Initialize()
@@ -45,17 +50,34 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_minSize = Math.Min(_cellWidth, _cellHeight);
 			var font = DeteminteFittingFontSize(_minSize);
 
-			_columnHighlight = new TileControl()
+			for (int i = 0; i < _board.Columns.Count; i++)
 			{
-				Height = Height,
-				Width = _minSize + _margin * 2,
-				X = X,
-				Y = Y,
-				FillColor = BasicTextures.GetBasicRectange(Color.Red),
-				IsVisible = false,
-				Alpha = 100
-			};
-			Children.Add(_columnHighlight);
+				var newItem = new ButtonControl(
+					_parent,
+					(s) => _columnSelectAction.Invoke((int)s.Tag),
+					(s) =>
+					{
+						if (CanSelect)
+							s.IsVisible = true;
+					},
+					(s) =>
+					{
+						if (CanSelect)
+							s.IsVisible = false;
+					}
+				)
+				{
+					Height = Height,
+					Width = _minSize + _margin * 2,
+					X = (_cellWidth + _margin) * i + ((_cellWidth - _minSize) / 2),
+					FillColor = BasicTextures.GetBasicRectange(Color.Red),
+					IsVisible = false,
+					Alpha = 100,
+					Tag = i
+				};
+				_columnHighlights.Add(newItem);
+				Children.Add(newItem);
+			}
 
 			var columnIndex = 0;
 			foreach (var column in _board.Columns)
@@ -71,8 +93,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 					Children.Add(new AnimatedLabelControl()
 					{
-						X = X + columnIndex * (_cellWidth + _margin) + _margin + ((_cellWidth - _minSize) / 2),
-						Y = Y + (cellOffset * (_cellHeight + _margin) + _margin) + ((_cellHeight - _minSize) / 2),
+						X = columnIndex * (_cellWidth + _margin) + _margin + ((_cellWidth - _minSize) / 2),
+						Y = (cellOffset * (_cellHeight + _margin) + _margin) + ((_cellHeight - _minSize) / 2),
 						Width = _minSize,
 						Height = _minSize,
 						Font = _parent.Fonts.GetFont(font),
@@ -87,6 +109,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				}
 				columnIndex++;
 			}
+
+			base.Initialize();
 		}
 
 		private Guid DeteminteFittingFontSize(float minSize)
@@ -115,18 +139,20 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		public void HighlightColumn(int columnID)
 		{
-			_columnHighlight.X = X + (_cellWidth + _margin) * columnID + ((_cellWidth - _minSize) / 2);
-			_columnHighlight.IsVisible = true;
+			foreach (var item in _columnHighlights)
+				item.IsVisible = false;
+			_columnHighlights[columnID].IsVisible = true;
 		}
 
 		public void HideHighlight()
 		{
-			_columnHighlight.IsVisible = false;
+			foreach (var item in _columnHighlights)
+				item.IsVisible = false;
 		}
 
 		public void UpdateBoard()
 		{
-			var itemIndex = 1;
+			var itemIndex = _board.Columns.Count;
 			foreach (var column in _board.Columns)
 			{
 				foreach (var cell in column.Cells)

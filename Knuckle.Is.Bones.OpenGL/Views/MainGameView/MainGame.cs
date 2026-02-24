@@ -4,9 +4,7 @@ using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Input;
 using System;
 using System.Collections.Generic;
 
@@ -17,12 +15,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		public static Guid ID = new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361");
 
 		public KnuckleBonesEngine Engine { get; set; }
-		public GameState State { get; set; }
 
-		private readonly KeyWatcher _leftKeyWatcher;
-		private readonly KeyWatcher _rightKeyWatcher;
-		private readonly KeyWatcher _enterKeyWatcher;
-		private readonly KeyWatcher _escapeKeyWatcher;
 		private readonly GameTimer _rollTimer;
 		private readonly GameTimer _rollWaitTimer;
 		private readonly GameTimer _selectWaitTimer;
@@ -39,18 +32,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, ID)
 		{
-			State = state;
 			Engine = new KnuckleBonesEngine(state);
 			Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(new Guid("4e53cd32-7af6-47a1-a331-ec2096505c78"));
 			Engine.OnCombo += () => Parent.Audio.PlaySoundEffectOnce(new Guid("74ea48c8-cb6f-4a22-8226-e5d6142b1f76"));
 			Engine.OnTurn += () => Parent.Audio.PlaySoundEffectOnce(new Guid("23ac297f-3e68-461f-a869-a304e89e18c6"));
 
-			_leftKeyWatcher = new KeyWatcher(Keys.Left, MoveLeft);
-			_rightKeyWatcher = new KeyWatcher(Keys.Right, MoveRight);
-			_enterKeyWatcher = new KeyWatcher(Keys.Enter, TakeTurn);
-			_escapeKeyWatcher = new KeyWatcher(Keys.Escape, Escape);
 			_rollTimer = new GameTimer(TimeSpan.FromMilliseconds(150), OnRollTimer);
-			_rollWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(750), OnRollWaitTimer);
+			_rollWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(500), OnRollWaitTimer);
 			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(750), OnSelectWaitTimer);
 			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(100), OnPointsGainedTimer);
 			Initialize();
@@ -92,14 +80,25 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			var current = Engine.GetCurrentOpponent();
 			if (current.MoveModule is not PlayerMoveModule)
 			{
+				_firstOpponentBoard.HideHighlight();
+				_secondOpponentBoard.HideHighlight();
 				_selectWait = true;
 				current.MoveModule.SetTargetColumn(Engine.State.CurrentDice, Engine.GetCurrentOpponentBoard(), Engine.GetNextOpponentBoard());
+				UpdateColumnHighlight();
 			}
-			UpdateColumnHighlight();
+			else
+			{
+				if (Engine.State.Turn == Engine.State.FirstOpponent.MoveModule.OpponentID && Engine.State.FirstOpponent.MoveModule is PlayerMoveModule)
+					_firstOpponentBoard.CanSelect = true;
+				if (Engine.State.Turn == Engine.State.SecondOpponent.MoveModule.OpponentID && Engine.State.SecondOpponent.MoveModule is PlayerMoveModule)
+					_secondOpponentBoard.CanSelect = true;
+			}
 		}
 
 		private void OnSelectWaitTimer(TimeSpan span)
 		{
+			_firstOpponentBoard.HideHighlight();
+			_secondOpponentBoard.HideHighlight();
 			_selectWait = false;
 			TakeTurn();
 		}
@@ -109,6 +108,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			var toRemove = new List<LabelControl>();
 			foreach (var control in _pointsGainedControls)
 			{
+				if (!control.IsInitialized)
+				{
+					AddControl(240, control);
+					control.Initialize();
+				}
 				if (_exiting)
 					return;
 				if (control.Tag is bool direction)
@@ -139,11 +143,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			if (_exiting)
 				return;
 
-			var keyState = Keyboard.GetState();
-			_leftKeyWatcher.Update(keyState);
-			_rightKeyWatcher.Update(keyState);
-			_enterKeyWatcher.Update(keyState);
-			_escapeKeyWatcher.Update(keyState);
 			if (_rolling)
 				_rollTimer.Update(gameTime.ElapsedGameTime);
 			if (_rollWait)
@@ -166,9 +165,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 			var newFirstOpponentPoints = Engine.GetFirstOpponentBoardValue();
 			var newSecondOpponentPoints = Engine.GetSecondOpponentBoardValue();
-
-			_firstOpponentBoard.HideHighlight();
-			_secondOpponentBoard.HideHighlight();
 
 			_secondOpponentBoard.UpdateBoard();
 			_firstOpponentBoard.UpdateBoard();
@@ -231,13 +227,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				X = sourceX + 75,
 				Y = sourceY
 			};
-			AddControl(240, control);
-			control.Initialize();
 
 			return control;
 		}
 
-		private void MoveLeft()
+		private void MoveSet(int to)
 		{
 			if (_rolling || _rollWait || _selectWait)
 				return;
@@ -247,42 +241,19 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			var opponent = Engine.GetCurrentOpponent();
 			if (opponent.MoveModule is PlayerMoveModule player && Engine.State.Turn == player.OpponentID)
 			{
-				var board = Engine.GetCurrentOpponentBoard();
-				var current = player.GetTargetColumn();
-				current--;
-				if (current < 0)
-					current = 0;
-				player.SetTargetColumn(current);
+				if (to < 0)
+					to = 0;
+				if (to >= Engine.State.FirstOpponentBoard.Columns.Count)
+					to = Engine.State.FirstOpponentBoard.Columns.Count - 1;
+				player.SetTargetColumn(to);
 			}
 
-			if (Engine.State.Turn == Engine.State.FirstOpponent.MoveModule.OpponentID)
-				_firstOpponentBoard.HighlightColumn(Engine.State.FirstOpponent.MoveModule.GetTargetColumn());
-			if (Engine.State.Turn == Engine.State.SecondOpponent.MoveModule.OpponentID)
-				_secondOpponentBoard.HighlightColumn(Engine.State.SecondOpponent.MoveModule.GetTargetColumn());
-		}
+			_firstOpponentBoard.CanSelect = false;
+			_secondOpponentBoard.CanSelect = false;
+			_firstOpponentBoard.HideHighlight();
+			_secondOpponentBoard.HideHighlight();
 
-		private void MoveRight()
-		{
-			if (_rolling || _rollWait || _selectWait)
-				return;
-
-			Parent.Audio.PlaySoundEffectOnce(new Guid("19268829-42c3-411d-8357-91d55de0cef6"));
-
-			var opponent = Engine.GetCurrentOpponent();
-			if (opponent.MoveModule is PlayerMoveModule player && Engine.State.Turn == player.OpponentID)
-			{
-				var board = Engine.GetCurrentOpponentBoard();
-				var current = player.GetTargetColumn();
-				current++;
-				if (current >= board.Columns.Count)
-					current = board.Columns.Count - 1;
-				player.SetTargetColumn(current);
-			}
-
-			if (Engine.State.Turn == Engine.State.FirstOpponent.MoveModule.OpponentID)
-				_firstOpponentBoard.HighlightColumn(Engine.State.FirstOpponent.MoveModule.GetTargetColumn());
-			if (Engine.State.Turn == Engine.State.SecondOpponent.MoveModule.OpponentID)
-				_secondOpponentBoard.HighlightColumn(Engine.State.SecondOpponent.MoveModule.GetTargetColumn());
+			TakeTurn();
 		}
 
 		private void Escape()

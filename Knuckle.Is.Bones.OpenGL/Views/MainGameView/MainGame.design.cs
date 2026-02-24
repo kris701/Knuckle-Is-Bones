@@ -1,5 +1,4 @@
-﻿using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
-using Knuckle.Is.Bones.OpenGL.Controls;
+﻿using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Knuckle.Is.Bones.OpenGL.Views.StartGameView;
@@ -39,7 +38,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			SetupGameOverView();
 
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, clicked: (x) => SwitchView(new MainGame(Parent, State)))
+			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new MainGame(Parent, Engine.State)))
 			{
 				X = 0,
 				Y = 0,
@@ -62,53 +61,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			{
 				X = 50,
 				Y = 50,
-				Width = 150,
-				Height = 150,
+				Height = 100,
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
 				FontColor = Color.White,
-				Text = $"Esc",
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5")),
+				Text = $"Back",
+				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
 			});
-			if (Engine.State.FirstOpponent.MoveModule is PlayerMoveModule || Engine.State.SecondOpponent.MoveModule is PlayerMoveModule)
-			{
-				AddControl(0, new AnimatedAudioButton(Parent, (b) => MoveLeft())
-				{
-					X = 1500,
-					Y = 900,
-					Width = 150,
-					Height = 150,
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
-					FontColor = Color.White,
-					Text = $"<",
-					TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5")),
-					FillClickedColor = BasicTextures.GetClickedTexture(),
-				});
-				AddControl(0, new AnimatedAudioButton(Parent, (b) => MoveRight())
-				{
-					X = 1700,
-					Y = 900,
-					Width = 150,
-					Height = 150,
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
-					FontColor = Color.White,
-					Text = $">",
-					TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5")),
-					FillClickedColor = BasicTextures.GetClickedTexture(),
-				});
-				AddControl(0, new AnimatedAudioButton(Parent, (b) => TakeTurn())
-				{
-					X = 1300,
-					Y = 900,
-					Width = 150,
-					Height = 150,
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-					FontColor = Color.White,
-					Text = $"Enter",
-					TileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5")),
-					FillClickedColor = BasicTextures.GetClickedTexture(),
-				});
-			}
 		}
 
 		private void CreateFirstOpponent()
@@ -148,7 +107,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				});
 			}
 
-			_firstOpponentBoard = new BoardControl(Parent, Engine.State.FirstOpponentBoard, 710, 10, 500, 500, true);
+			_firstOpponentBoard = new BoardControl(Parent, Engine.State.FirstOpponentBoard, 710, 10, 500, 500, MoveSet, true);
 			AddControl(10, _firstOpponentBoard);
 		}
 
@@ -188,7 +147,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				});
 			}
 
-			_secondOpponentBoard = new BoardControl(Parent, Engine.State.SecondOpponentBoard, 710, 570, 500, 500, false);
+			_secondOpponentBoard = new BoardControl(Parent, Engine.State.SecondOpponentBoard, 710, 570, 500, 500, MoveSet, false);
 			AddControl(20, _secondOpponentBoard);
 		}
 
