@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.Core.Models.Saves;
 
 namespace Knuckle.Is.Bones.Core.Engines
@@ -12,14 +13,12 @@ namespace Knuckle.Is.Bones.Core.Engines
 		public GameEventHandler? OnCombo;
 		public GameEventHandler? OnTurn;
 
-		public GameSaveDefinition Save { get; }
 		public GameState State { get; }
 		public bool GameOver { get; set; }
 
-		public KnuckleBonesEngine(GameSaveDefinition save)
+		public KnuckleBonesEngine(GameState state)
 		{
-			Save = save;
-			State = save.State;
+			State = state;
 		}
 
 		public OpponentDefinition GetCurrentOpponent()
@@ -107,7 +106,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 					State.Winner = State.FirstOpponent.MoveModule.OpponentID;
 				else
 					State.Winner = State.SecondOpponent.MoveModule.OpponentID;
-				Save.Save();
+				State.Save();
 				return true;
 			}
 
@@ -118,7 +117,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			else
 				State.Turn = State.FirstOpponent.MoveModule.OpponentID;
 
-			Save.Save();
+			State.Save();
 			return true;
 		}
 
@@ -151,6 +150,53 @@ namespace Knuckle.Is.Bones.Core.Engines
 					opponentBoard.Columns[i].Cells.AddRange(Enumerable.Repeat(0, targetSize - opponentBoard.Columns[i].Cells.Count));
 				}
 			}
+		}
+
+		public GameResult GetGameResult()
+		{
+			if (!GameOver)
+				throw new Exception("Game is not over yet!");
+
+			var playerWon = false;
+			var hadPlayer = false;
+			var pointsGained = 0;
+			var completedItems = new HashSet<Guid>();
+			var winnerName = "";
+			if ((State.FirstOpponent.MoveModule is PlayerMoveModule) && (State.SecondOpponent.MoveModule is not PlayerMoveModule) && State.Winner == State.FirstOpponent.MoveModule.OpponentID)
+			{
+				playerWon = true;
+				pointsGained = (int)(State.FirstOpponentBoard.GetValue() * State.SecondOpponent.Difficulty);
+				completedItems.Add(State.SecondOpponent.ID);
+				completedItems.Add(State.FirstOpponentBoard.ID);
+				completedItems.Add(State.CurrentDice.ID);
+			}
+			if ((State.SecondOpponent.MoveModule is PlayerMoveModule) && (State.FirstOpponent.MoveModule is not PlayerMoveModule) && State.Winner == State.SecondOpponent.MoveModule.OpponentID)
+			{
+				playerWon = true;
+				pointsGained = (int)(State.SecondOpponentBoard.GetValue() * State.FirstOpponent.Difficulty);
+				completedItems.Add(State.FirstOpponent.ID);
+				completedItems.Add(State.FirstOpponentBoard.ID);
+				completedItems.Add(State.CurrentDice.ID);
+			}
+			if ((State.FirstOpponent.MoveModule is PlayerMoveModule) && (State.SecondOpponent.MoveModule is not PlayerMoveModule))
+				hadPlayer = true;
+			if ((State.SecondOpponent.MoveModule is PlayerMoveModule) && (State.FirstOpponent.MoveModule is not PlayerMoveModule))
+				hadPlayer = true;
+
+			if (State.Winner == State.FirstOpponent.MoveModule.OpponentID)
+				winnerName = $"{State.FirstOpponent.Name}";
+			else
+				winnerName = $"{State.SecondOpponent.Name}";
+
+			var result = new GameResult()
+			{ 
+				PlayerWon = playerWon,
+				HadPlayer = hadPlayer,
+				PointsGained = pointsGained,
+				CompletedItems = completedItems,
+				WinnerName = winnerName
+			};
+			return result;
 		}
 	}
 }

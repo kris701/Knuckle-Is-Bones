@@ -13,15 +13,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 
 		public SettingsMenu(KnuckleBoneWindow parent) : base(parent, ID)
 		{
-			_newSettings = Parent.User.UIData.Clone();
+			_newSettings = Parent.Settings.Clone();
 			Initialize();
 		}
 
 		private void OnSaveAndApplySettings(ButtonControl sender)
 		{
-			var oldSettings = Parent.User.UIData.Clone();
+			var oldSettings = Parent.Settings.Clone();
 			var newSettings = _newSettings.Clone();
-			Parent.User.UIData = newSettings;
+			Parent.Settings = newSettings;
 			Parent.ApplySettings();
 			SwitchView(new AcceptView(Parent, oldSettings, newSettings));
 		}

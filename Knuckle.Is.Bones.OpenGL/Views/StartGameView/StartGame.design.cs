@@ -64,24 +64,24 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				if (_selectedDice == Guid.Empty)
 					return;
 
-				var save = new GameSaveDefinition(new GameState()
+				var state = new GameState()
 				{
 					FirstOpponent = ResourceManager.Opponents.GetResource(_selectedFirstOpponent).Clone(),
 					FirstOpponentBoard = ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
 					SecondOpponent = ResourceManager.Opponents.GetResource(_selectedSecondOpponent).Clone(),
 					SecondOpponentBoard = ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
 					CurrentDice = ResourceManager.Dice.GetResource(_selectedDice).Clone(),
-				});
+				};
 
-				save.State.FirstOpponent.MoveModule.OpponentID = Guid.NewGuid();
-				save.State.SecondOpponent.MoveModule.OpponentID = Guid.NewGuid();
+				state.FirstOpponent.MoveModule.OpponentID = Guid.NewGuid();
+				state.SecondOpponent.MoveModule.OpponentID = Guid.NewGuid();
 
-				save.State.CurrentDice.RollValue();
-				save.State.Turn = save.State.FirstOpponent.MoveModule.OpponentID;
+				state.CurrentDice.RollValue();
+				state.Turn = state.FirstOpponent.MoveModule.OpponentID;
 
-				save.Save();
+				state.Save();
 
-				SwitchView(new MainGame(Parent, save));
+				SwitchView(new MainGame(Parent, state));
 			})
 			{
 				Text = "Start",

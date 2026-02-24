@@ -21,7 +21,8 @@ namespace Knuckle.Is.Bones.OpenGL
 		private static readonly string _modsDir = "Mods";
 
 		public ResourcePackController ResourcePackController { get; private set; }
-		public UserSaveDefinition<SettingsDefinition> User { get; private set; }
+		public UserSaveDefinition User { get; private set; }
+		public SettingsDefinition Settings { get; set; }
 
 		private readonly Func<KnuckleBoneWindow, IView> _screenToLoad;
 
@@ -35,9 +36,14 @@ namespace Knuckle.Is.Bones.OpenGL
 			IsMouseVisible = true;
 
 			if (File.Exists("user.json"))
-				User = JsonSerializerHelpers.DeserializeOrDefault<UserSaveDefinition<SettingsDefinition>>(File.ReadAllText("user.json"), () => new UserSaveDefinition<SettingsDefinition>());
+				User = JsonSerializerHelpers.DeserializeOrDefault<UserSaveDefinition>(File.ReadAllText("user.json"), () => new UserSaveDefinition());
 			else
-				User = new UserSaveDefinition<SettingsDefinition>();
+				User = new UserSaveDefinition();
+
+			if (File.Exists("settings.json"))
+				Settings = JsonSerializerHelpers.DeserializeOrDefault<SettingsDefinition>(File.ReadAllText("settings.json"), () => new SettingsDefinition());
+			else
+				Settings = new SettingsDefinition();
 
 			ApplySettings();
 		}
@@ -52,7 +58,7 @@ namespace Knuckle.Is.Bones.OpenGL
 			MediaPlayer.IsRepeating = true;
 			SoundEffect.Initialize();
 			LoadMods();
-			ResourcePackController.LoadResourcePack(User.UIData.ResourcePackID);
+			ResourcePackController.LoadResourcePack(Settings.ResourcePackID);
 
 			SteamHelpers.IsInitialized = SteamAPI.Init();
 
@@ -71,19 +77,19 @@ namespace Knuckle.Is.Bones.OpenGL
 
 		public void ApplySettings()
 		{
-			Device.PreferredBackBufferWidth = User.UIData.ResolutionX;
-			Device.PreferredBackBufferHeight = User.UIData.ResolutionY;
-			Device.SynchronizeWithVerticalRetrace = User.UIData.IsVsync;
+			Device.PreferredBackBufferWidth = Settings.ResolutionX;
+			Device.PreferredBackBufferHeight = Settings.ResolutionY;
+			Device.SynchronizeWithVerticalRetrace = Settings.IsVsync;
 			Device.HardwareModeSwitch = false;
 			Device.GraphicsProfile = GraphicsProfile.HiDef;
-			Device.IsFullScreen = User.UIData.IsFullscreen;
+			Device.IsFullScreen = Settings.IsFullscreen;
 			if (Device.IsFullScreen)
 			{
 				Device.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 				Device.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
 			}
-			MediaPlayer.Volume = User.UIData.MusicVolume;
-			SoundEffect.MasterVolume = User.UIData.EffectsVolume;
+			MediaPlayer.Volume = Settings.MusicVolume;
+			SoundEffect.MasterVolume = Settings.EffectsVolume;
 			Device.ApplyChanges();
 			UpdateScale();
 		}

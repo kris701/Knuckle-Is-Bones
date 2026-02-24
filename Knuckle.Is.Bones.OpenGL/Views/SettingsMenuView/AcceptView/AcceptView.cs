@@ -41,7 +41,7 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 
 		private void Accept()
 		{
-			Parent.User.UIData = _newSettings;
+			Parent.Settings = _newSettings;
 			Parent.ApplySettings();
 			Parent.User.Save();
 			SwitchView(new MainMenu(Parent));
@@ -49,7 +49,7 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 
 		private void Cancel()
 		{
-			Parent.User.UIData = _oldSettings;
+			Parent.Settings = _oldSettings;
 			Parent.ApplySettings();
 			Parent.User.Save();
 			SwitchView(new MainMenu(Parent));

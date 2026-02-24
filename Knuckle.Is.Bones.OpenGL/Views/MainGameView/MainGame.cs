@@ -4,6 +4,7 @@ using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -21,7 +22,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		public static Guid ID = new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361");
 
 		public KnuckleBonesEngine Engine { get; set; }
-		public GameSaveDefinition Save { get; set; }
+		public GameState State { get; set; }
 
 		private readonly KeyWatcher _leftKeyWatcher;
 		private readonly KeyWatcher _rightKeyWatcher;
@@ -41,10 +42,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		private readonly List<LabelControl> _pointsGainedControls = new List<LabelControl>();
 
-		public MainGame(KnuckleBoneWindow parent, GameSaveDefinition save) : base(parent, ID)
+		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, ID)
 		{
-			Save = save;
-			Engine = new KnuckleBonesEngine(save);
+			State = state;
+			Engine = new KnuckleBonesEngine(state);
 			Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(new Guid("4e53cd32-7af6-47a1-a331-ec2096505c78"));
 			Engine.OnCombo += () => Parent.Audio.PlaySoundEffectOnce(new Guid("74ea48c8-cb6f-4a22-8226-e5d6142b1f76"));
 			Engine.OnTurn += () => Parent.Audio.PlaySoundEffectOnce(new Guid("23ac297f-3e68-461f-a869-a304e89e18c6"));
@@ -178,36 +179,30 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 			if (Engine.GameOver)
 			{
-				var pointsGained = 0;
-				if ((Engine.State.FirstOpponent.MoveModule is PlayerMoveModule) && (Engine.State.SecondOpponent.MoveModule is not PlayerMoveModule) && Engine.State.Winner == Engine.State.FirstOpponent.MoveModule.OpponentID)
-				{
-					pointsGained = (int)(Engine.State.FirstOpponentBoard.GetValue() * Engine.State.SecondOpponent.Difficulty);
-					Parent.User.AppendCompletedItem(Engine.State.SecondOpponent.ID);
-					Parent.User.AppendCompletedItem(Engine.State.FirstOpponentBoard.ID);
-					Parent.User.AppendCompletedItem(Engine.State.CurrentDice.ID);
-				}
-				if ((Engine.State.SecondOpponent.MoveModule is PlayerMoveModule) && (Engine.State.FirstOpponent.MoveModule is PlayerMoveModule) && Engine.State.Winner == Engine.State.SecondOpponent.MoveModule.OpponentID)
-				{
-					pointsGained = (int)(Engine.State.SecondOpponentBoard.GetValue() * Engine.State.FirstOpponent.Difficulty);
-					Parent.User.AppendCompletedItem(Engine.State.FirstOpponent.ID);
-					Parent.User.AppendCompletedItem(Engine.State.FirstOpponentBoard.ID);
-					Parent.User.AppendCompletedItem(Engine.State.CurrentDice.ID);
-				}
+				var result = Engine.GetGameResult();
 
-				Parent.User.Points += pointsGained;
+				foreach(var completedItem in result.CompletedItems)
+					Parent.User.AppendCompletedItem(completedItem);
+				Parent.User.Points += result.PointsGained;
 				Parent.User.Save();
-				if (pointsGained > 0)
-					_pointsGainedLabel.Text = $"Gained {pointsGained} points.";
+
+				if (result.PointsGained > 0)
+					_pointsGainedLabel.Text = $"Gained {result.PointsGained} points.";
 				else
 					_pointsGainedLabel.Text = "No points awarded";
 
-				if (Engine.State.Winner == Engine.State.FirstOpponent.MoveModule.OpponentID)
-					_winnerLabel.Text = $"{Engine.State.FirstOpponent.Name} Won!";
+				if (result.HadPlayer)
+				{
+					if (result.PlayerWon)
+						_winnerLabel.Text = $"You Won!";
+					else
+						_winnerLabel.Text = $"You lost to {result.WinnerName}!";
+				}
 				else
-					_winnerLabel.Text = $"{Engine.State.SecondOpponent.Name} Won!";
+					_winnerLabel.Text = $"{result.WinnerName} Won!";
+
 				_gameOverPanel.IsVisible = true;
-				if (File.Exists("save.json"))
-					File.Delete("save.json");
+				Engine.State.DeleteSave();
 
 				AchievementHelper.UpdateAchievements(Parent.User);
 

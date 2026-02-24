@@ -9,14 +9,14 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 {
 	public static class AchievementHelper
 	{
-		public static void UpdateAchievements(UserSaveDefinition<SettingsDefinition> save)
+		public static void UpdateAchievements(UserSaveDefinition user)
 		{
 			if (!SteamHelpers.IsInitialized)
 				return;
 
-			foreach(var key in save.CompletedItems.Keys)
+			foreach(var key in user.CompletedItems.Keys)
 			{
-				int value = save.GetCompletedTimes(key);
+				int value = user.GetCompletedTimes(key);
 				switch (key.ToString())
 				{
 					// Opponents

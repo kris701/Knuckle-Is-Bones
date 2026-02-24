@@ -2,12 +2,11 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Saves
 {
-	public class UserSaveDefinition<T> where T : new()
+	public class UserSaveDefinition
 	{
 		public int Points { get; set; } = 0;
 		public Dictionary<Guid, int> CompletedItems { get; set; } = new Dictionary<Guid, int>();
 		public List<Guid> PurchasedShopItems { get; set; } = new List<Guid>();
-		public T UIData { get; set; } = new T();
 
 		public void Save()
 		{

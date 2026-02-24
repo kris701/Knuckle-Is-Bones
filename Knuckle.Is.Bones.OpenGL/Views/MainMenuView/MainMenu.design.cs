@@ -1,4 +1,5 @@
-﻿using Knuckle.Is.Bones.OpenGL.Controls;
+﻿using Knuckle.Is.Bones.Core.Engines;
+using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.GameShopView;
 using Knuckle.Is.Bones.OpenGL.Views.HowToPlayView;
@@ -10,6 +11,7 @@ using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using System;
 using System.IO;
+using System.Text.Json;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 {
@@ -37,7 +39,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 			{
 				new AnimatedAudioButton(Parent, (x) =>
 				{
-					SwitchView(new MainGame(Parent, new Core.Models.Saves.GameSaveDefinition("save.json")));
+					var state = JsonSerializer.Deserialize<GameState>(File.ReadAllText("save.json"));
+					if (state == null || state.FirstOpponent == null)
+					{
+						File.Delete("save.json");
+						SwitchView(new MainMenu(Parent));
+					}
+					else
+						SwitchView(new MainGame(Parent, state));
 				})
 				{
 					Text = "Continue",
