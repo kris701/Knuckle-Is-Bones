@@ -83,7 +83,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			}
 			else
 			{
-				_diceLabel.Text = $"{_rnd.Next(1, Engine.State.CurrentDice.Sides + 1)}";
+				_diceLabel.Text = $"{Engine.State.CurrentDice.RollValueIndependent()}";
 				_diceLabel.X = 375 + _rnd.Next(-50, 50);
 				_diceLabel.Y = 475 + _rnd.Next(-50, 50);
 				_diceLabel.Rotation = (float)(3.14 * _rnd.NextDouble());

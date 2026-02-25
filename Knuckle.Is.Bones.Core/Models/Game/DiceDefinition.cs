@@ -7,19 +7,19 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 		public Guid ID { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public int Sides { get; set; }
+		public List<int> Options { get; set; }
 		public int Value { get; set; } = 0;
 		public bool IsPurchasable { get; set; }
 
 		private readonly Random _rnd = new Random();
 
 		[JsonConstructor]
-		public DiceDefinition(Guid iD, string name, string description, int sides, int value, bool isPurchasable)
+		public DiceDefinition(Guid iD, string name, string description, List<int> options, int value, bool isPurchasable)
 		{
 			ID = iD;
 			Name = name;
 			Description = description;
-			Sides = sides;
+			Options = options;
 			Value = value;
 			IsPurchasable = isPurchasable;
 
@@ -30,7 +30,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 			ID = other.ID;
 			Name = other.Name;
 			Description = other.Description;
-			Sides = other.Sides;
+			Options = other.Options;
 			Value = other.Value;
 			IsPurchasable = other.IsPurchasable;
 		}
@@ -39,12 +39,12 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 
 		public void RollValue()
 		{
-			Value = _rnd.Next(1, Sides + 1);
+			Value = Options[_rnd.Next(0, Options.Count)];
 		}
 
 		public int RollValueIndependent()
 		{
-			return _rnd.Next(1, Sides + 1);
+			return Options[_rnd.Next(0, Options.Count)];
 		}
 	}
 }

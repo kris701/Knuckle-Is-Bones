@@ -25,6 +25,7 @@
 	</Choose>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Core\Dice\DSqare.json" />
 	  <EmbeddedResource Include="Resources\Core\Opponents\charlie.json" />
 	  <EmbeddedResource Include="Resources\Core\Opponents\chuck.json" />
 	  <EmbeddedResource Include="Resources\Core\Opponents\spicyjerry.json" />
@@ -34,6 +35,7 @@
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_3.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_2.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_1.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_dice_dsqare.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_3.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_2.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_1.json" />

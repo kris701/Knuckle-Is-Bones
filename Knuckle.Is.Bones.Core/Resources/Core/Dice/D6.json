@@ -2,7 +2,7 @@
   "ID": "fb539a3a-9989-4623-88d1-bf216320f717",
   "Name": "D6",
   "Description": "A normal 6 sided dice",
-  "Sides": 6,
+  "Options": [ 1, 2, 3, 4, 5, 6 ],
   "Value": 0,
   "IsPurchasable": false
 }

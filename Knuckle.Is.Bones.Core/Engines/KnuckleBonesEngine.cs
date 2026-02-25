@@ -226,8 +226,8 @@ namespace Knuckle.Is.Bones.Core.Engines
 		private Dictionary<int, double> BuildBlankDiceValueMultiplierMap()
 		{
 			var result = new Dictionary<int, double>();
-			for (int i = 1; i <= State.CurrentDice.Sides; i++)
-				result.Add(i, 1);
+			foreach(var value in State.CurrentDice.Options)
+				result.Add(value, 1);
 
 			return result;
 		}

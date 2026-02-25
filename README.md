@@ -4,7 +4,7 @@ The game is all about ***Dice***, and getting the biggest combos possible to bea
 
 The game currenctly contains:
 * 6 opponents
-* 5 dice
+* 6 dice
 * 8 board
 * 17 shop items
 
