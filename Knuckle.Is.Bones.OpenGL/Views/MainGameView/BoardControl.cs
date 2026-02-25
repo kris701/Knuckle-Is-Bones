@@ -27,6 +27,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		private readonly List<ButtonControl> _columnHighlights = new List<ButtonControl>();
 		private readonly Action<int> _columnSelectAction;
+		private readonly List<AnimatedLabelControl> _tiles = new List<AnimatedLabelControl>();
+		private AnimatedTileControl _modifyingTile = new AnimatedTileControl();
 
 		public BoardControl(IWindow parent, BoardDefinition board, float x, float y, float width, float height, Action<int> columnSelectAction, bool flip = false)
 		{
@@ -68,8 +70,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				)
 				{
 					Height = Height,
-					Width = _minSize + _margin * 2,
-					X = (_cellWidth + _margin) * i + ((_cellWidth - _minSize) / 2),
+					Width = _minSize - _margin * 2,
+					X = (_cellWidth + _margin) * i + ((_cellWidth - _minSize) / 2) + _margin,
 					FillColor = BasicTextures.GetBasicRectange(Color.Red),
 					IsVisible = false,
 					Alpha = 100,
@@ -91,17 +93,20 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 					if (cell != 0)
 						text = $"{cell}";
 
-					Children.Add(new AnimatedLabelControl()
+					var newTile = new AnimatedLabelControl()
 					{
-						X = columnIndex * (_cellWidth + _margin) + _margin + ((_cellWidth - _minSize) / 2),
-						Y = (cellOffset * (_cellHeight + _margin) + _margin) + ((_cellHeight - _minSize) / 2),
+						X = columnIndex * (_cellWidth + _margin) + ((_cellWidth - _minSize) / 2),
+						Y = (cellOffset * (_cellHeight + _margin)) + ((_cellHeight - _minSize) / 2),
 						Width = _minSize,
 						Height = _minSize,
 						Font = _parent.Fonts.GetFont(font),
 						FontColor = Color.White,
+						Alpha = 100,
 						Text = text,
 						TileSet = GetBackgroundForCount(column.Cells, cell)
-					});
+					};
+					Children.Add(newTile);
+					_tiles.Add(newTile);
 					if (_flip)
 						cellOffset--;
 					else
@@ -109,6 +114,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				}
 				columnIndex++;
 			}
+
+			_modifyingTile = new AnimatedTileControl()
+			{
+				Width = Width,
+				Height = Height,
+				Alpha = 0,
+				TileSet = _parent.Textures.GetTextureSet(new Guid("6399f667-05f1-4a60-8f2e-dac4b3dbd809"))
+			};
+			Children.Add(_modifyingTile);
 
 			base.Initialize();
 		}
@@ -150,24 +164,44 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				item.IsVisible = false;
 		}
 
+		public override void Update(GameTime gameTime)
+		{
+			foreach (var tile in _tiles)
+				if (tile.Alpha > 100)
+					tile.Alpha -= 2;
+			if (_modifyingTile.Alpha > 0)
+				_modifyingTile.Alpha -= 6;
+			base.Update(gameTime);
+		}
+
 		public void UpdateBoard()
 		{
-			var itemIndex = _board.Columns.Count;
+			var itemIndex = 0;
 			foreach (var column in _board.Columns)
 			{
 				foreach (var cell in column.Cells)
 				{
-					var child = Children[itemIndex++];
+					var child = _tiles[itemIndex++];
 					if (child is AnimatedLabelControl lab)
 					{
 						var text = "";
 						if (cell != 0)
 							text = $"{cell}";
-						lab.Text = text;
-						lab.TileSet = GetBackgroundForCount(column.Cells, cell);
+						var newTileSet = GetBackgroundForCount(column.Cells, cell);
+						if ((lab.Text != text || lab.TileSet.ID != newTileSet.ID) && lab.Alpha == 100)
+						{
+							lab.Text = text;
+							lab.TileSet = newTileSet;
+							lab.Alpha = 256;
+						}
 					}
 				}
 			}
+		}
+
+		public void ShowModifying()
+		{
+			_modifyingTile.Alpha = 150;
 		}
 	}
 }

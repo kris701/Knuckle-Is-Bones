@@ -48,6 +48,14 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 			return true;
 		}
 
+		internal bool IsEmpty()
+		{
+			foreach (var column in Columns)
+				if (!column.IsEmpty())
+					return false;
+			return true;
+		}
+
 		public BoardDefinition Clone() => new BoardDefinition(this);
 	}
 }

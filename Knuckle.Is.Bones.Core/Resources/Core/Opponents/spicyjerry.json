@@ -1,0 +1,10 @@
+{
+  "ID": "40dbaa27-de51-46ba-bce4-5d45ab7a44f3",
+  "Name": "Spicy Jerry",
+  "Description": "Jerry found some hot sauce that made him play even more randomly. He will sometimes just change dice values on your board.",
+  "Difficulty": 2,
+  "IsPurchasable": false,
+  "MoveModule": {
+    "$type": "TurboRandomMoveModule"
+  }
+}

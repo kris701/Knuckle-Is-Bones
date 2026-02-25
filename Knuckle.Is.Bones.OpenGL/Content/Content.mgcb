@@ -596,6 +596,42 @@
 /processorParam:Quality=Best
 /build:Views/MainGame/hurt.wav
 
+#begin Views/MainGame/modified.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Views/MainGame/modified.wav
+
+#begin Views/MainGame/modifying_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Views/MainGame/modifying_1.png
+
+#begin Views/MainGame/modifying_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Views/MainGame/modifying_2.png
+
+#begin Views/MainGame/modifying.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Views/MainGame/modifying.wav
+
 #begin Views/MainGame/move.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -757,6 +793,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Views/Opponents/player_2.png
+
+#begin Views/Opponents/spicyjerry_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Views/Opponents/spicyjerry_1.png
+
+#begin Views/Opponents/spicyjerry_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Views/Opponents/spicyjerry_2.png
 
 #begin Views/StartGame/bronze_1.png
 /importer:TextureImporter

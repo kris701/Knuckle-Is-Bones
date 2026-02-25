@@ -8,6 +8,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 	{
 		public Guid Winner { get; set; }
 		public Guid Turn { get; set; }
+		public int TurnIndex { get; set; }
 		public OpponentDefinition FirstOpponent { get; set; }
 		public BoardDefinition FirstOpponentBoard { get; set; }
 		public OpponentDefinition SecondOpponent { get; set; }
@@ -21,6 +22,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 		{
 			Winner = Winner,
 			Turn = Turn,
+			TurnIndex = TurnIndex,
 			FirstOpponent = FirstOpponent.Clone(),
 			FirstOpponentBoard = FirstOpponentBoard.Clone(),
 			SecondOpponent = SecondOpponent.Clone(),

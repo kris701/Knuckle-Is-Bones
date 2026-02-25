@@ -88,7 +88,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			AddControl(10, new LabelControl()
 			{
 				Text = $"{Engine.State.FirstOpponent.Name}",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
 				Width = 300,
 				Height = 100,
 				HorizontalAlignment = HorizontalAlignment.Right,
@@ -129,7 +129,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			AddControl(20, new LabelControl()
 			{
 				Text = $"{Engine.State.SecondOpponent.Name}",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
 				Width = 300,
 				Height = 100,
 				VerticalAlignment = VerticalAlignment.Bottom,
