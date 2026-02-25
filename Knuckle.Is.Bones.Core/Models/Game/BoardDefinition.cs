@@ -56,6 +56,22 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 			return true;
 		}
 
+		internal int TotalCount()
+		{
+			var count = 0;
+			foreach (var column in Columns)
+				count += column.Cells.Count;
+			return count;
+		}
+
+		internal int EmptyCount()
+		{
+			var count = 0;
+			foreach (var column in Columns)
+				count += column.EmptyCount();
+			return count;
+		}
+
 		public BoardDefinition Clone() => new BoardDefinition(this);
 	}
 }

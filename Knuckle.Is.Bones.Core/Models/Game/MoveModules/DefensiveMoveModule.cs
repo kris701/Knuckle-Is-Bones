@@ -6,7 +6,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 	{
 		public Guid OpponentID { get; set; } = Guid.NewGuid();
 
-		private readonly Random _rnd = new Random();
+		internal readonly Random _rnd = new Random();
 		private int _targetColumn = 0;
 
 		[JsonConstructor]
@@ -44,6 +44,6 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 
 		public int GetTargetColumn() => _targetColumn;
 
-		public IMoveModule Clone() => new DefensiveMoveModule(OpponentID);
+		public virtual IMoveModule Clone() => new DefensiveMoveModule(OpponentID);
 	}
 }
