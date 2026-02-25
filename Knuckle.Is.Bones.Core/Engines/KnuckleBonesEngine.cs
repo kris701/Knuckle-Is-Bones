@@ -47,6 +47,8 @@ namespace Knuckle.Is.Bones.Core.Engines
 		{
 			if (GameOver)
 				return false;
+			if (CheckGameOverState())
+				return true;
 
 			OnTurn?.Invoke();
 
@@ -92,7 +94,26 @@ namespace Knuckle.Is.Bones.Core.Engines
 
 			RemoveOpposites(board, board2);
 
-			if (board.IsFull())
+			if (CheckGameOverState())
+				return true;
+
+			State.CurrentDice.RollValue();
+
+			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
+				State.Turn = State.SecondOpponent.MoveModule.OpponentID;
+			else
+				State.Turn = State.FirstOpponent.MoveModule.OpponentID;
+
+			GameSaveHelpers.Save(State);
+			return true;
+		}
+
+		private bool CheckGameOverState()
+		{
+			var board1 = GetCurrentOpponentBoard();
+			var board2 = GetNextOpponentBoard();
+			RemoveOpposites(board1, board2);
+			if (board1.IsFull() || board2.IsFull())
 			{
 				OnGameOver?.Invoke();
 				GameOver = true;
@@ -105,16 +126,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 				GameSaveHelpers.Save(State);
 				return true;
 			}
-
-			State.CurrentDice.RollValue();
-
-			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
-				State.Turn = State.SecondOpponent.MoveModule.OpponentID;
-			else
-				State.Turn = State.FirstOpponent.MoveModule.OpponentID;
-
-			GameSaveHelpers.Save(State);
-			return true;
+			return false;
 		}
 
 		private void RemoveOpposites(BoardDefinition newBoard, BoardDefinition opponentBoard)
@@ -259,23 +271,22 @@ namespace Knuckle.Is.Bones.Core.Engines
 			var otherBoard = GetNextOpponentBoard();
 			if (current.MoveModule is IBoardModifier board)
 			{
-				if ((currentBoard.TotalCount() - currentBoard.EmptyCount() > 1) &&
-					(otherBoard.TotalCount() - otherBoard.EmptyCount() > 1))
+				var modifications = board.ModifyBoards(State.CurrentDice, currentBoard, otherBoard, State.TurnIndex);
+				foreach (var modification in modifications)
 				{
-					var modifications = board.ModifyBoards(State.CurrentDice, currentBoard, otherBoard, State.TurnIndex);
-					foreach (var modification in modifications)
+					switch (modification)
 					{
-						switch (modification)
-						{
-							case ModifyerType.Mine:
-								OnBoardModified?.Invoke(current.MoveModule.OpponentID);
-								break;
-							case ModifyerType.Opponent:
-								OnBoardModified?.Invoke(other.MoveModule.OpponentID);
-								break;
-						}
+						case ModifyerType.Mine:
+							OnBoardModified?.Invoke(current.MoveModule.OpponentID);
+							break;
+						case ModifyerType.Opponent:
+							OnBoardModified?.Invoke(other.MoveModule.OpponentID);
+							break;
 					}
 				}
+				if (modifications.Count > 0)
+					if (CheckGameOverState())
+						return;
 			}
 			if (current.MoveModule is ICPUMove cpu)
 				cpu.SetTargetColumn(State.CurrentDice, currentBoard, otherBoard, State.TurnIndex);

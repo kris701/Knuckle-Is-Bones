@@ -1,0 +1,10 @@
+{
+  "ID": "7c96956b-f250-4a25-93e9-5942f66f117e",
+  "Name": "Charlie",
+  "Description": "Charlie is Chucks brother. He is a lot smarter and better at the game (but he is also a vivid cheater)",
+  "Difficulty": 5,
+  "IsPurchasable": false,
+  "MoveModule": {
+    "$type": "ComboCheaterMoveModule"
+  }
+}
