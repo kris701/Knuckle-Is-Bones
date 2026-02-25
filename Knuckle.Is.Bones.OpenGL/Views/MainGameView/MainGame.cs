@@ -97,6 +97,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
 
 			var current = Engine.GetCurrentOpponent();
+
+			if (current.MoveModule.OpponentID == Engine.State.FirstOpponent.MoveModule.OpponentID)
+				_firstOpponentTurnControl.IsVisible = true;
+			else
+				_secondOpponentTurnControl.IsVisible = true;
+
 			if (current.MoveModule is not PlayerMoveModule)
 			{
 				_firstOpponentBoard.HideHighlight();
@@ -192,6 +198,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		{
 			if (_rolling || _rollWait || _selectWait)
 				return;
+
+			_firstOpponentTurnControl.IsVisible = false;
+			_secondOpponentTurnControl.IsVisible = false;
 
 			if (!Engine.TakeTurn())
 				return;

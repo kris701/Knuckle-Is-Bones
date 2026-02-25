@@ -3,7 +3,7 @@ This is a simple fan game version of the minigame Knucklebones from Cult of the 
 The game is all about ***Dice***, and getting the biggest combos possible to beat your opponents!
 
 The game currenctly contains:
-* 4 opponents
+* 5 opponents
 * 5 dice
 * 8 board
 * 17 shop items

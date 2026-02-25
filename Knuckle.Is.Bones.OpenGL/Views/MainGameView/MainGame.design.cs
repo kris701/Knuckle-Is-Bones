@@ -3,6 +3,7 @@ using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Knuckle.Is.Bones.OpenGL.Views.StartGameView;
 using Microsoft.Xna.Framework;
+using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using System.Collections.Generic;
@@ -12,8 +13,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 	public partial class MainGame : BaseKnuckleBoneFadeView
 	{
 		private AnimatedLabelControl _diceLabel;
+		private TileControl _firstOpponentTurnControl;
 		private BoardControl _firstOpponentBoard;
 		private AnimatedLabelControl _firstOpponentPoints;
+		private TileControl _secondOpponentTurnControl;
 		private BoardControl _secondOpponentBoard;
 		private AnimatedLabelControl _secondOpponentPoints;
 		private CanvasPanelControl _gameOverPanel;
@@ -72,6 +75,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		private void CreateFirstOpponent()
 		{
+			_firstOpponentTurnControl = new TileControl()
+			{
+				IsVisible = false,
+				Width = IWindow.BaseScreenSize.X,
+				Height = 5,
+				FillColor = BasicTextures.GetBasicRectange(new Color(217, 68, 144))
+			};
+			AddControl(10, _firstOpponentTurnControl);
 			_firstOpponentPoints = new AnimatedLabelControl()
 			{
 				X = 1390,
@@ -113,6 +124,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		private void CreateSeccondOpponent()
 		{
+			_secondOpponentTurnControl = new TileControl()
+			{
+				IsVisible = false,
+				VerticalAlignment = VerticalAlignment.Bottom,
+				Width = IWindow.BaseScreenSize.X,
+				Height = 5,
+				FillColor = BasicTextures.GetBasicRectange(new Color(217, 68, 144))
+			};
+			AddControl(20, _secondOpponentTurnControl);
 			_secondOpponentPoints = new AnimatedLabelControl()
 			{
 				X = 375,
