@@ -109,6 +109,14 @@
       ]
     },
     {
+      "ID": "6399f667-05f1-4a60-8f2e-dac4b3dbd809",
+      "FrameTime": 50,
+      "Contents": [
+        "Views/MainGame/modifying_1",
+        "Views/MainGame/modifying_2"
+      ]
+    },
+    {
       "ID": "29744523-5a1b-43cd-abd8-ecb79006d148",
       "FrameTime": 750,
       "Contents": [
@@ -130,6 +138,14 @@
       "Contents": [
         "Views/Opponents/jerry_1",
         "Views/Opponents/jerry_2"
+      ]
+    },
+    {
+      "ID": "40dbaa27-de51-46ba-bce4-5d45ab7a44f3",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/Opponents/spicyjerry_1",
+        "Views/Opponents/spicyjerry_2"
       ]
     },
     {
@@ -307,6 +323,14 @@
     {
       "ID": "23ac297f-3e68-461f-a869-a304e89e18c6",
       "Content": "Views/MainGame/place"
+    },
+    {
+      "ID": "15b3fa6e-a5a3-4f9b-8808-11d01c4e01cd",
+      "Content": "Views/MainGame/modified"
+    },
+    {
+      "ID": "97b1fabe-d7c8-44fc-86bf-94592a91edf8",
+      "Content": "Views/MainGame/modifying"
     },
     {
       "ID": "83fe89c5-745e-4f76-aa87-02ed76b37b1b",

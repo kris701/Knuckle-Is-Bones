@@ -2,7 +2,7 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 {
-	public class ComboMoveModule : IMoveModule
+	public class ComboMoveModule : IMoveModule, ICPUMove
 	{
 		public Guid OpponentID { get; set; } = Guid.NewGuid();
 
@@ -15,7 +15,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 			OpponentID = opponentID;
 		}
 
-		public void SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard)
+		void ICPUMove.SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
 		{
 			var orderedQueue = new PriorityQueue<int, int>();
 			var index = 0;

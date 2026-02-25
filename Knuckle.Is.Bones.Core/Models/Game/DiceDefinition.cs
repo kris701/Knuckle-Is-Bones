@@ -41,5 +41,10 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 		{
 			Value = _rnd.Next(1, Sides + 1);
 		}
+
+		public int RollValueIndependent()
+		{
+			return _rnd.Next(1, Sides + 1);
+		}
 	}
 }

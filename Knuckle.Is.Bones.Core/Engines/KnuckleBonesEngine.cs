@@ -14,6 +14,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 		public GameEventHandler? OnOpponentDiceRemoved;
 		public GameEventHandler? OnCombo;
 		public GameEventHandler? OnTurn;
+		public GameEventHandler? OnBoardModified;
 
 		public GameState State { get; }
 		public bool GameOver { get; set; }
@@ -32,27 +33,6 @@ namespace Knuckle.Is.Bones.Core.Engines
 			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
 				return State.FirstOpponent;
 			return State.SecondOpponent;
-		}
-
-		public BoardDefinition GetCurrentOpponentBoard()
-		{
-			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
-				return State.FirstOpponentBoard;
-			return State.SecondOpponentBoard;
-		}
-
-		public OpponentDefinition GetNextOpponent()
-		{
-			if (State.Turn != State.FirstOpponent.MoveModule.OpponentID)
-				return State.FirstOpponent;
-			return State.SecondOpponent;
-		}
-
-		public BoardDefinition GetNextOpponentBoard()
-		{
-			if (State.Turn != State.FirstOpponent.MoveModule.OpponentID)
-				return State.FirstOpponentBoard;
-			return State.SecondOpponentBoard;
 		}
 
 		public bool TakeTurn()
@@ -99,6 +79,8 @@ namespace Knuckle.Is.Bones.Core.Engines
 			if (column.Cells.Contains(State.CurrentDice.Value))
 				OnCombo?.Invoke();
 			column.Cells[lowest] = State.CurrentDice.Value;
+
+			State.TurnIndex++;
 
 			RemoveOpposites(board, board2);
 
@@ -259,6 +241,33 @@ namespace Knuckle.Is.Bones.Core.Engines
 				return State.SecondOpponentBoard.GetValue(_playerDiceValueMap);
 			else
 				return State.SecondOpponentBoard.GetValue(_blankDiceValueMap);
+		}
+
+		public void SetCPUOpponentsMove()
+		{
+			var current = GetCurrentOpponent();
+			if (current.MoveModule is IBoardModifier board)
+			{
+				var wasModified = board.ModifyBoards(State.CurrentDice, GetCurrentOpponentBoard(), GetNextOpponentBoard(), State.TurnIndex);
+				if (wasModified)
+					OnBoardModified?.Invoke();
+			}
+			if (current.MoveModule is ICPUMove cpu)
+				cpu.SetTargetColumn(State.CurrentDice, GetCurrentOpponentBoard(), GetNextOpponentBoard(), State.TurnIndex);
+		}
+
+		private BoardDefinition GetCurrentOpponentBoard()
+		{
+			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
+				return State.FirstOpponentBoard;
+			return State.SecondOpponentBoard;
+		}
+
+		private BoardDefinition GetNextOpponentBoard()
+		{
+			if (State.Turn != State.FirstOpponent.MoveModule.OpponentID)
+				return State.FirstOpponentBoard;
+			return State.SecondOpponentBoard;
 		}
 	}
 }
