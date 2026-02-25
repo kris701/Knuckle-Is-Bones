@@ -9,7 +9,7 @@
 	  <Authors>Kristian Skov Johansen</Authors>
 	  <Copyright>Kristian Skov Johansen</Copyright>
 	  <Product>Knuckle.Is.Bones</Product>
-	  <Version>0.2.1</Version>
+	  <Version>0.2.2</Version>
 	  <PublishSingleFile>true</PublishSingleFile>
 	  <SelfContained>true</SelfContained>
 	  <DebugType>embedded</DebugType>
@@ -24,6 +24,12 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <UserSecretsId>b9b96688-dfaa-4614-8045-fa2ac9c44105</UserSecretsId>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;IL2026</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;IL2026</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Icon.ico" />
