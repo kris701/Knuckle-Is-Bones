@@ -42,15 +42,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(new Guid("4e53cd32-7af6-47a1-a331-ec2096505c78"));
 			Engine.OnCombo += () => Parent.Audio.PlaySoundEffectOnce(new Guid("74ea48c8-cb6f-4a22-8226-e5d6142b1f76"));
 			Engine.OnTurn += () => Parent.Audio.PlaySoundEffectOnce(new Guid("23ac297f-3e68-461f-a869-a304e89e18c6"));
-			Engine.OnBoardModified += () =>
+			Engine.OnBoardModified += (o) =>
 			{
 				_secondOpponentBoard!.UpdateBoard();
 				_firstOpponentBoard!.UpdateBoard();
-				if (Engine.State.Turn == Engine.State.FirstOpponent.MoveModule.OpponentID)
-					_secondOpponentBoard.ShowModifying();
+				if (o == Engine.State.FirstOpponent.MoveModule.OpponentID)
+					_firstOpponentBoard.ShowModifying(); 
 				else
-					_firstOpponentBoard.ShowModifying();
-				
+					_secondOpponentBoard.ShowModifying();
+
 				_shouldModifyWait = true;
 				Parent.Audio.PlaySoundEffectOnce(new Guid("97b1fabe-d7c8-44fc-86bf-94592a91edf8"));
 			};

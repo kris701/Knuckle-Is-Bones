@@ -1,0 +1,10 @@
+{
+  "ID": "adeb7a62-e54e-43e2-bfe9-7e602bdd6887",
+  "Name": "Chuck",
+  "Description": "Chuck has a bad rep. Probably because he keeps cheating. He will occasionally add to a random combo dice on his own board.",
+  "Difficulty": 4,
+  "IsPurchasable": false,
+  "MoveModule": {
+    "$type": "CheaterMoveModule"
+  }
+}

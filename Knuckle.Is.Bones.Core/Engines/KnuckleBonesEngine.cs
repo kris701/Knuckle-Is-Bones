@@ -7,6 +7,7 @@ using Knuckle.Is.Bones.Core.Resources;
 namespace Knuckle.Is.Bones.Core.Engines
 {
 	public delegate void GameEventHandler();
+	public delegate void GameBoardModifiedEventHandler(Guid opponentId);
 
 	public class KnuckleBonesEngine
 	{
@@ -14,7 +15,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 		public GameEventHandler? OnOpponentDiceRemoved;
 		public GameEventHandler? OnCombo;
 		public GameEventHandler? OnTurn;
-		public GameEventHandler? OnBoardModified;
+		public GameBoardModifiedEventHandler? OnBoardModified;
 
 		public GameState State { get; }
 		public bool GameOver { get; set; }
@@ -31,6 +32,13 @@ namespace Knuckle.Is.Bones.Core.Engines
 		public OpponentDefinition GetCurrentOpponent()
 		{
 			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
+				return State.FirstOpponent;
+			return State.SecondOpponent;
+		}
+
+		public OpponentDefinition GetNextCurrentOpponent()
+		{
+			if (State.Turn != State.FirstOpponent.MoveModule.OpponentID)
 				return State.FirstOpponent;
 			return State.SecondOpponent;
 		}
@@ -246,14 +254,31 @@ namespace Knuckle.Is.Bones.Core.Engines
 		public void SetCPUOpponentsMove()
 		{
 			var current = GetCurrentOpponent();
+			var other = GetNextCurrentOpponent();
+			var currentBoard = GetCurrentOpponentBoard();
+			var otherBoard = GetNextOpponentBoard();
 			if (current.MoveModule is IBoardModifier board)
 			{
-				var wasModified = board.ModifyBoards(State.CurrentDice, GetCurrentOpponentBoard(), GetNextOpponentBoard(), State.TurnIndex);
-				if (wasModified)
-					OnBoardModified?.Invoke();
+				if ((currentBoard.TotalCount() - currentBoard.EmptyCount() > 1) &&
+					(otherBoard.TotalCount() - otherBoard.EmptyCount() > 1))
+				{
+					var modifications = board.ModifyBoards(State.CurrentDice, currentBoard, otherBoard, State.TurnIndex);
+					foreach (var modification in modifications)
+					{
+						switch (modification)
+						{
+							case ModifyerType.Mine:
+								OnBoardModified?.Invoke(current.MoveModule.OpponentID);
+								break;
+							case ModifyerType.Opponent:
+								OnBoardModified?.Invoke(other.MoveModule.OpponentID);
+								break;
+						}
+					}
+				}
 			}
 			if (current.MoveModule is ICPUMove cpu)
-				cpu.SetTargetColumn(State.CurrentDice, GetCurrentOpponentBoard(), GetNextOpponentBoard(), State.TurnIndex);
+				cpu.SetTargetColumn(State.CurrentDice, currentBoard, otherBoard, State.TurnIndex);
 		}
 
 		private BoardDefinition GetCurrentOpponentBoard()

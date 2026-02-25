@@ -11,14 +11,14 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 		{
 		}
 
-		bool IBoardModifier.ModifyBoards(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
+		List<ModifyerType> IBoardModifier.ModifyBoards(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
 		{
 			if (turnIndex >= _nextTargetTurn)
 			{
 				if (opponentBoard.IsEmpty())
-					return false;
+					return new List<ModifyerType>();
 				if (diceValue.Sides <= 1)
-					return false;
+					return new List<ModifyerType>();
 
 				_nextTargetTurn = _rnd.Next(turnIndex + 1, turnIndex + 7);
 				int targetCol = -1;
@@ -36,9 +36,9 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 				while(targetValue == opponentBoard.Columns[targetCol].Cells[targetRow])
 					targetValue = diceValue.RollValueIndependent();
 				opponentBoard.Columns[targetCol].Cells[targetRow] = targetValue;
-				return true;
+				return new List<ModifyerType>() { ModifyerType.Opponent };
 			}
-			return false;
+			return new List<ModifyerType>();
 		}
 
 		public override IMoveModule Clone() => new TurboRandomMoveModule(OpponentID);

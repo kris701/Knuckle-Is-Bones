@@ -6,6 +6,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 	[JsonDerivedType(typeof(RandomMoveModule), typeDiscriminator: nameof(RandomMoveModule))]
 	[JsonDerivedType(typeof(TurboRandomMoveModule), typeDiscriminator: nameof(TurboRandomMoveModule))]
 	[JsonDerivedType(typeof(DefensiveMoveModule), typeDiscriminator: nameof(DefensiveMoveModule))]
+	[JsonDerivedType(typeof(CheaterMoveModule), typeDiscriminator: nameof(CheaterMoveModule))]
 	[JsonDerivedType(typeof(ComboMoveModule), typeDiscriminator: nameof(ComboMoveModule))]
 	public interface IMoveModule : IGenericClonable<IMoveModule>
 	{
