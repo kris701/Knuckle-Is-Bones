@@ -11,19 +11,16 @@ using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
 	public partial class StartGame : BaseKnuckleBoneFadeView
 	{
-		private readonly PageHandler<StackPanelControl> _boardsPageHandler;
 		private AnimatedTextboxControl _boardsDescription;
-		private readonly PageHandler<StackPanelControl> _dicePageHandler;
 		private AnimatedTextboxControl _diceDescription;
-		private readonly PageHandler<StackPanelControl> _firstOpponentsPageHandler;
 		private AnimatedTextboxControl _firstOpponentDescription;
-		private readonly PageHandler<StackPanelControl> _secondOpponentsPageHandler;
 		private AnimatedTextboxControl _secondOpponentDescription;
 
 		private AnimatedAudioButton _startButton;
@@ -32,6 +29,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private bool _opponentOneSelected = false;
 		private bool _opponentTwoSelected = false;
 
+		[MemberNotNull(nameof(_boardsDescription), nameof(_diceDescription), nameof(_firstOpponentDescription), nameof(_secondOpponentDescription), nameof(_startButton))]
 		public override void Initialize()
 		{
 			AddControl(0, new TileControl()
@@ -64,15 +62,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				if (_selectedDice == Guid.Empty)
 					return;
 
-				var state = new GameState()
-				{
-					FirstOpponent = ResourceManager.Opponents.GetResource(_selectedFirstOpponent).Clone(),
-					FirstOpponentBoard = ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
-					SecondOpponent = ResourceManager.Opponents.GetResource(_selectedSecondOpponent).Clone(),
-					SecondOpponentBoard = ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
-					CurrentDice = ResourceManager.Dice.GetResource(_selectedDice).Clone(),
-					User = Parent.User.Clone()
-				};
+				var state = new GameState(
+					ResourceManager.Opponents.GetResource(_selectedFirstOpponent).Clone(),
+					ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
+					ResourceManager.Opponents.GetResource(_selectedSecondOpponent).Clone(),
+					ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
+					ResourceManager.Dice.GetResource(_selectedDice).Clone(),
+					Parent.User.Clone()
+					);
 
 				state.FirstOpponent.MoveModule.OpponentID = Guid.NewGuid();
 				state.SecondOpponent.MoveModule.OpponentID = Guid.NewGuid();
@@ -115,7 +112,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			var width = (1920 - margin * 2) / 4 - margin;
 
 			SetupPageControl(
-				_boardsPageHandler,
 				margin + (width + margin) * 0,
 				100,
 				width,
@@ -143,7 +139,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			};
 			AddControl(0, _boardsDescription);
 			SetupPageControl(
-				_dicePageHandler,
 				margin + (width + margin) * 1,
 				100,
 				width,
@@ -171,7 +166,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			};
 			AddControl(0, _diceDescription);
 			SetupPageControl(
-				_firstOpponentsPageHandler,
 				margin + (width + margin) * 2,
 				100,
 				width,
@@ -199,7 +193,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			};
 			AddControl(0, _firstOpponentDescription);
 			SetupPageControl(
-				_secondOpponentsPageHandler,
 				margin + (width + margin) * 3,
 				100,
 				width,
@@ -255,7 +248,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			}
 		}
 
-		private void SetupPageControl(PageHandler<StackPanelControl> pagehandler, float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IPurchasable> getMethod, Action<AnimatedAudioButton> clicked, Action onAnySelected)
+		private void SetupPageControl(float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IPurchasable> getMethod, Action<AnimatedAudioButton> clicked, Action onAnySelected)
 		{
 			AddControl(1, new LabelControl()
 			{
@@ -291,8 +284,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				var stackControls = new List<IControl>() {
 					new AnimatedAudioButton(Parent, (x) =>
 					{
-						clicked(x as AnimatedAudioButton);
-						onAnySelected();
+						if (x is AnimatedAudioButton b)
+						{
+							clicked(b);
+							onAnySelected();
+						}
 					})
 					{
 						TileSet = textureSet,
@@ -321,7 +317,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					Orientation = StackPanelControl.Orientations.Horizontal
 				});
 			}
-			pagehandler = new PageHandler<StackPanelControl>(this, controlList)
+			var pagehandler = new PageHandler<StackPanelControl>(this, controlList)
 			{
 				LeftButtonX = 10,
 				LeftButtonY = -50,

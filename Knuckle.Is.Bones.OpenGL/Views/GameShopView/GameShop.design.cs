@@ -9,6 +9,7 @@ using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
@@ -20,6 +21,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 		private AnimatedButtonControl _buyItemControl;
 		private AnimatedAudioButton? _currentSelectedItem;
 
+		[MemberNotNull(
+			nameof(_descriptionControl),
+			nameof(_buyItemControl)
+			)]
 		public override void Initialize()
 		{
 			AddControl(0, new TileControl()

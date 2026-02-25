@@ -12,6 +12,15 @@ namespace Knuckle.Is.Bones.Core.Models.Shop
 		public int Cost { get; set; }
 		public List<IPurchaseEffect> Effects { get; set; }
 
+		public ShopItemDefinition(Guid iD, string name, string description, int cost, List<IPurchaseEffect> effects)
+		{
+			ID = iD;
+			Name = name;
+			Description = description;
+			Cost = cost;
+			Effects = effects;
+		}
+
 		public bool HasPurchased(UserSaveDefinition user)
 		{
 			return user.PurchasedShopItems.Contains(ID);

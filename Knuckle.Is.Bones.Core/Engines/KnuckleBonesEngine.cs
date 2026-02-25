@@ -196,15 +196,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			else
 				winnerName = $"{State.SecondOpponent.Name}";
 
-			var result = new GameResult()
-			{
-				PlayerWon = playerWon,
-				HadPlayer = hadPlayer,
-				PointsGained = pointsGained,
-				CompletedItems = completedItems,
-				WinnerName = winnerName
-			};
-			return result;
+			return new GameResult(playerWon, hadPlayer, pointsGained, winnerName, completedItems);
 		}
 
 		private int GetPointsGained(int boardValue, double opponentDifficulty)
@@ -226,7 +218,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 		private Dictionary<int, double> BuildBlankDiceValueMultiplierMap()
 		{
 			var result = new Dictionary<int, double>();
-			foreach(var value in State.CurrentDice.Options)
+			foreach (var value in State.CurrentDice.Options)
 				result.Add(value, 1);
 
 			return result;

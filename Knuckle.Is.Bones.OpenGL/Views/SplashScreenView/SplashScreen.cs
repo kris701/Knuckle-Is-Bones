@@ -8,12 +8,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SplashScreenView
 {
 	public partial class SplashScreen : BaseKnuckleBoneFadeView
 	{
-		public static Guid ID = new Guid("20aed282-f7e1-4595-9f53-85d95c0efe6f");
-
 		private readonly MouseWatcher _mouseWatcher;
 		private readonly GameTimer _splashTimer;
 
-		public SplashScreen(KnuckleBoneWindow parent) : base(parent, ID)
+		public SplashScreen(KnuckleBoneWindow parent) : base(parent, new Guid("20aed282-f7e1-4595-9f53-85d95c0efe6f"))
 		{
 			parent.Audio.PlaySong(new Guid("9b223250-88f1-4c3e-9d80-0c4087ab9369"));
 			_mouseWatcher = new MouseWatcher(SwitchToMainMenu);

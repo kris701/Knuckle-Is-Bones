@@ -12,8 +12,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
 	public partial class StartGame : BaseKnuckleBoneFadeView
 	{
-		public static Guid ID = new Guid("9ba30a3d-f77c-4aa4-b390-8c8789dba4c0");
-
 		private Guid _selectedBoard = Guid.Empty;
 		private AnimatedAudioButton? _selectedBoardButton;
 		private Guid _selectedFirstOpponent = Guid.Empty;
@@ -24,7 +22,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private AnimatedAudioButton? _selectedDiceButton;
 		private readonly KeyWatcher _escapeKeyWatcher;
 
-		public StartGame(KnuckleBoneWindow parent) : base(parent, ID)
+		public StartGame(KnuckleBoneWindow parent) : base(parent, new Guid("9ba30a3d-f77c-4aa4-b390-8c8789dba4c0"))
 		{
 			_escapeKeyWatcher = new KeyWatcher(Keys.Escape, () => SwitchView(new MainMenu(parent)));
 			Initialize();

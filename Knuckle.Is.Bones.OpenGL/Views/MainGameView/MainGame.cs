@@ -12,8 +12,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
 	public partial class MainGame : BaseKnuckleBoneFadeView
 	{
-		public static Guid ID = new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361");
-
 		public KnuckleBonesEngine Engine { get; set; }
 
 		private readonly GameTimer _rollTimer;
@@ -36,7 +34,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		private readonly List<LabelControl> _pointsGainedControls = new List<LabelControl>();
 
-		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, ID)
+		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361"))
 		{
 			Engine = new KnuckleBonesEngine(state);
 			Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(new Guid("4e53cd32-7af6-47a1-a331-ec2096505c78"));
@@ -47,7 +45,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				_secondOpponentBoard!.UpdateBoard();
 				_firstOpponentBoard!.UpdateBoard();
 				if (o == Engine.State.FirstOpponent.MoveModule.OpponentID)
-					_firstOpponentBoard.ShowModifying(); 
+					_firstOpponentBoard.ShowModifying();
 				else
 					_secondOpponentBoard.ShowModifying();
 

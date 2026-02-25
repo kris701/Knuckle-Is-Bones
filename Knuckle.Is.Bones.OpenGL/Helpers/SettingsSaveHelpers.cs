@@ -7,6 +7,7 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 	public static class SettingsSaveHelpers
 	{
 		public static string SaveFileName { get; } = "settings.json";
+
 		public static void Save(SettingsDefinition settings)
 		{
 			if (File.Exists(SaveFileName))

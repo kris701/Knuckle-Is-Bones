@@ -11,12 +11,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 {
 	public partial class SettingsMenu : BaseKnuckleBoneFadeView
 	{
-		public static Guid ID = new Guid("356b5d18-1aaf-4c98-aa73-2b27fe82ed1f");
-
 		private readonly SettingsDefinition _newSettings;
 		private readonly KeyWatcher _escapeKeyWatcher;
 
-		public SettingsMenu(KnuckleBoneWindow parent) : base(parent, ID)
+		public SettingsMenu(KnuckleBoneWindow parent) : base(parent, new Guid("356b5d18-1aaf-4c98-aa73-2b27fe82ed1f"))
 		{
 			_newSettings = Parent.Settings.Clone();
 			_escapeKeyWatcher = new KeyWatcher(Keys.Escape, Escape);

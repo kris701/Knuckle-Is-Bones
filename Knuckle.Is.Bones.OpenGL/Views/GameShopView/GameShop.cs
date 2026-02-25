@@ -12,12 +12,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {
 	public partial class GameShop : BaseKnuckleBoneFadeView
 	{
-		public static Guid ID = new Guid("169e9e54-b45f-41d4-9845-f8519d256033");
-
 		private readonly KeyWatcher _escapeKeyWatcher;
 		private ShopItemDefinition? _currentShopItem;
 
-		public GameShop(KnuckleBoneWindow parent) : base(parent, ID)
+		public GameShop(KnuckleBoneWindow parent) : base(parent, new Guid("169e9e54-b45f-41d4-9845-f8519d256033"))
 		{
 			_escapeKeyWatcher = new KeyWatcher(Keys.Escape, () => SwitchView(new MainMenu(parent)));
 			Initialize();

@@ -1,6 +1,7 @@
 ﻿using Knuckle.Is.Bones.Core.Models;
 using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Saves;
+using System.Text.Json.Serialization;
 
 namespace Knuckle.Is.Bones.Core.Engines
 {
@@ -18,17 +19,33 @@ namespace Knuckle.Is.Bones.Core.Engines
 
 		public UserSaveDefinition User { get; set; }
 
-		public GameState Clone() => new GameState()
+		[JsonConstructor]
+		public GameState(Guid winner, Guid turn, int turnIndex, OpponentDefinition firstOpponent, BoardDefinition firstOpponentBoard, OpponentDefinition secondOpponent, BoardDefinition secondOpponentBoard, DiceDefinition currentDice, UserSaveDefinition user)
 		{
-			Winner = Winner,
-			Turn = Turn,
-			TurnIndex = TurnIndex,
-			FirstOpponent = FirstOpponent.Clone(),
-			FirstOpponentBoard = FirstOpponentBoard.Clone(),
-			SecondOpponent = SecondOpponent.Clone(),
-			SecondOpponentBoard = SecondOpponentBoard.Clone(),
-			CurrentDice = CurrentDice.Clone(),
-			User = User.Clone()
-		};
+			Winner = winner;
+			Turn = turn;
+			TurnIndex = turnIndex;
+			FirstOpponent = firstOpponent;
+			FirstOpponentBoard = firstOpponentBoard;
+			SecondOpponent = secondOpponent;
+			SecondOpponentBoard = secondOpponentBoard;
+			CurrentDice = currentDice;
+			User = user;
+		}
+
+		public GameState(OpponentDefinition firstOpponent, BoardDefinition firstOpponentBoard, OpponentDefinition secondOpponent, BoardDefinition secondOpponentBoard, DiceDefinition currentDice, UserSaveDefinition user)
+		{
+			Winner = Guid.Empty;
+			Turn = Guid.Empty;
+			TurnIndex = 0;
+			FirstOpponent = firstOpponent;
+			FirstOpponentBoard = firstOpponentBoard;
+			SecondOpponent = secondOpponent;
+			SecondOpponentBoard = secondOpponentBoard;
+			CurrentDice = currentDice;
+			User = user;
+		}
+
+		public GameState Clone() => new GameState(Winner, Turn, TurnIndex, FirstOpponent, FirstOpponentBoard, SecondOpponent, SecondOpponentBoard, CurrentDice, User);
 	}
 }

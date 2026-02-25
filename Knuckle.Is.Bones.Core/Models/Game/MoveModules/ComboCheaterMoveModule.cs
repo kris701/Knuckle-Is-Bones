@@ -29,15 +29,15 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 				if (checkOrder.Count == 0)
 					return new List<ModifyerType>();
 				checkOrder = checkOrder.Shuffle().ToList();
-				
-				foreach(var col in checkOrder)
+
+				foreach (var col in checkOrder)
 				{
 					foreach (var dice in diceValue.Options)
 					{
 						var count = myBoard.Columns[col].Cells.Count(x => x == dice);
 						if (count >= 1)
 						{
-							for(int row = 0; row < myBoard.Columns[col].Cells.Count; row++)
+							for (int row = 0; row < myBoard.Columns[col].Cells.Count; row++)
 							{
 								if (myBoard.Columns[col].Cells[row] == 0)
 								{

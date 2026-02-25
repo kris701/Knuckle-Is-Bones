@@ -33,7 +33,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 				}
 
 				var targetValue = diceValue.RollValueIndependent();
-				while(targetValue == opponentBoard.Columns[targetCol].Cells[targetRow])
+				while (targetValue == opponentBoard.Columns[targetCol].Cells[targetRow])
 					targetValue = diceValue.RollValueIndependent();
 				opponentBoard.Columns[targetCol].Cells[targetRow] = targetValue;
 				return new List<ModifyerType>() { ModifyerType.Opponent };

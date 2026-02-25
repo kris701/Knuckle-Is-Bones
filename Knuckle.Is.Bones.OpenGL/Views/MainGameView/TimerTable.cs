@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
+﻿namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
 	public static class TimerTable
 	{

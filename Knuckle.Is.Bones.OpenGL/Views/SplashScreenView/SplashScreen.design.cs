@@ -1,5 +1,4 @@
-﻿using Knuckle.Is.Bones.OpenGL.Helpers;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using System;

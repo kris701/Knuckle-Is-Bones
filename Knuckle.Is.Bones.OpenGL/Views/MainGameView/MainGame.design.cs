@@ -7,6 +7,7 @@ using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Controls;
 using MonoGame.OpenGL.Formatter.Helpers;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
@@ -23,6 +24,18 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private LabelControl _winnerLabel;
 		private LabelControl _pointsGainedLabel;
 
+		[MemberNotNull(
+			nameof(_diceLabel),
+			nameof(_firstOpponentTurnControl),
+			nameof(_firstOpponentBoard),
+			nameof(_firstOpponentPoints),
+			nameof(_secondOpponentTurnControl),
+			nameof(_secondOpponentBoard),
+			nameof(_secondOpponentPoints),
+			nameof(_gameOverPanel),
+			nameof(_winnerLabel),
+			nameof(_pointsGainedLabel)
+			)]
 		public override void Initialize()
 		{
 			AddControl(0, new TileControl()
@@ -73,6 +86,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			});
 		}
 
+		[MemberNotNull(
+			nameof(_firstOpponentTurnControl),
+			nameof(_firstOpponentBoard),
+			nameof(_firstOpponentPoints)
+			)]
 		private void CreateFirstOpponent()
 		{
 			_firstOpponentTurnControl = new TileControl()
@@ -123,6 +141,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			AddControl(10, _firstOpponentBoard);
 		}
 
+		[MemberNotNull(
+			nameof(_secondOpponentTurnControl),
+			nameof(_secondOpponentBoard),
+			nameof(_secondOpponentPoints)
+			)]
 		private void CreateSeccondOpponent()
 		{
 			_secondOpponentTurnControl = new TileControl()
@@ -173,6 +196,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			AddControl(20, _secondOpponentBoard);
 		}
 
+		[MemberNotNull(
+			nameof(_diceLabel)
+			)]
 		private void SetupDice()
 		{
 			var targetTileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"));
@@ -193,6 +219,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			AddControl(1000, _diceLabel);
 		}
 
+		[MemberNotNull(
+			nameof(_gameOverPanel),
+			nameof(_winnerLabel),
+			nameof(_pointsGainedLabel)
+			)]
 		private void SetupGameOverView()
 		{
 			_winnerLabel = new LabelControl()

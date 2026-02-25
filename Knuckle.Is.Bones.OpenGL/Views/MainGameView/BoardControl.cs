@@ -56,7 +56,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			{
 				var newItem = new ButtonControl(
 					_parent,
-					(s) => _columnSelectAction.Invoke((int)s.Tag),
+					(s) =>
+					{
+						if (s.Tag is int sint)
+							_columnSelectAction.Invoke(sint);
+					},
 					(s) =>
 					{
 						if (CanSelect)
