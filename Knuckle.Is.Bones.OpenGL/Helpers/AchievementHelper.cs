@@ -51,6 +51,9 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 					case "a80ca420-879b-47b7-adbf-7ada87b5939c":
 						SteamUserStats.SetStat("D50Wins", value);
 						break;
+					case "67497ccb-eca6-4abf-8227-c71c7f4d7190":
+						SteamUserStats.SetStat("DSquareWins", value);
+						break;
 
 					// Boards
 					case "9cbc4760-d71b-482c-ab06-f05fecedd741":

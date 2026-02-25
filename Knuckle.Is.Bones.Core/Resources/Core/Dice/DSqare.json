@@ -1,0 +1,8 @@
+{
+  "ID": "67497ccb-eca6-4abf-8227-c71c7f4d7190",
+  "Name": "D^2",
+  "Description": "A dice with the values 2, 4, 16, 32 and 64",
+  "Options": [ 2, 4, 16, 32, 64 ],
+  "Value": 0,
+  "IsPurchasable": true
+}

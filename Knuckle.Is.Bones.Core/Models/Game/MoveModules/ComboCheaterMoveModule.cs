@@ -17,7 +17,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 			{
 				if (opponentBoard.IsEmpty())
 					return new List<ModifyerType>();
-				if (diceValue.Sides <= 1)
+				if (diceValue.Options.Count <= 1)
 					return new List<ModifyerType>();
 
 				_nextTargetTurn = _rnd.Next(turnIndex + 4, turnIndex + 7);
@@ -32,7 +32,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 				
 				foreach(var col in checkOrder)
 				{
-					for(int dice = 1; dice <= diceValue.Sides; dice++)
+					foreach (var dice in diceValue.Options)
 					{
 						var count = myBoard.Columns[col].Cells.Count(x => x == dice);
 						if (count >= 1)

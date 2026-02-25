@@ -17,7 +17,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 			{
 				if (opponentBoard.IsEmpty())
 					return new List<ModifyerType>();
-				if (diceValue.Sides <= 1)
+				if (diceValue.Options.Count <= 1)
 					return new List<ModifyerType>();
 
 				_nextTargetTurn = _rnd.Next(turnIndex + 1, turnIndex + 7);

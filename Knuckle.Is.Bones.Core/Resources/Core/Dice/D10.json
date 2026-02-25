@@ -2,7 +2,7 @@
   "ID": "9c935082-05b7-4b7e-9064-d6beb077ea8c",
   "Name": "D10",
   "Description": "A bigger 10 sided dice",
-  "Sides": 10,
+  "Options": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
   "Value": 0,
   "IsPurchasable": true
 }
