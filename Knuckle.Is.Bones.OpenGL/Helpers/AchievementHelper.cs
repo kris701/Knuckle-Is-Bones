@@ -25,6 +25,15 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 					case "dde23f52-7a66-4dc6-bc47-eea2b493d9cd":
 						SteamUserStats.SetStat("JohnWins", value);
 						break;
+					case "40dbaa27-de51-46ba-bce4-5d45ab7a44f3":
+						SteamUserStats.SetStat("SpicyJerryWins", value);
+						break;
+					case "adeb7a62-e54e-43e2-bfe9-7e602bdd6887":
+						SteamUserStats.SetStat("ChuckWins", value);
+						break;
+					case "7c96956b-f250-4a25-93e9-5942f66f117e":
+						SteamUserStats.SetStat("CharlieWins", value);
+						break;
 
 					// Dice
 					case "230b2d31-941f-4972-8d61-288b5c0b55ef":

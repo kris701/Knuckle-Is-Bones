@@ -55,11 +55,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Parent.Audio.PlaySoundEffectOnce(new Guid("97b1fabe-d7c8-44fc-86bf-94592a91edf8"));
 			};
 
-			_rollTimer = new GameTimer(TimeSpan.FromMilliseconds(150), OnRollTimer);
-			_rollWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(500), OnRollWaitTimer);
-			_modifyWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(1000), OnModifyWaitTimer);
-			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(1000), OnSelectWaitTimer);
-			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(100), OnPointsGainedTimer);
+			_rollTimer = new GameTimer(TimeSpan.FromMilliseconds(TimerTable.RollTimer), OnRollTimer);
+			_rollWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(TimerTable.RollWaitTimer), OnRollWaitTimer);
+			_modifyWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(TimerTable.ModifyWaitTimer), OnModifyWaitTimer);
+			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(TimerTable.SelectWaitTimer), OnSelectWaitTimer);
+			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(TimerTable.PointsGainedTimer), OnPointsGainedTimer);
 			Initialize();
 		}
 
@@ -202,8 +202,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_firstOpponentTurnControl.IsVisible = false;
 			_secondOpponentTurnControl.IsVisible = false;
 
-			if (!Engine.TakeTurn())
-				return;
+			Engine.TakeTurn();
 
 			var newFirstOpponentPoints = Engine.GetFirstOpponentBoardValue();
 			var newSecondOpponentPoints = Engine.GetSecondOpponentBoardValue();

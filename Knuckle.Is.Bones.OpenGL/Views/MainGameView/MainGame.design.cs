@@ -80,6 +80,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				IsVisible = false,
 				Width = IWindow.BaseScreenSize.X,
 				Height = 5,
+				Alpha = 150,
 				FillColor = BasicTextures.GetBasicRectange(new Color(217, 68, 144))
 			};
 			AddControl(10, _firstOpponentTurnControl);
@@ -130,6 +131,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				VerticalAlignment = VerticalAlignment.Bottom,
 				Width = IWindow.BaseScreenSize.X,
 				Height = 5,
+				Alpha = 150,
 				FillColor = BasicTextures.GetBasicRectange(new Color(217, 68, 144))
 			};
 			AddControl(20, _secondOpponentTurnControl);

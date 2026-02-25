@@ -7,7 +7,7 @@
 	  <Authors>Kristian Skov Johansen</Authors>
 	  <Copyright>Kristian Skov Johansen</Copyright>
 	  <Product>Knuckle.Is.Bones Core</Product>
-	  <Version>0.1.13</Version>
+	  <Version>0.2.0</Version>
 	  <SelfContained>true</SelfContained>
 	  <DebugType>embedded</DebugType>
 	  <PublishReadyToRun>false</PublishReadyToRun>
@@ -25,6 +25,7 @@
 	</Choose>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Core\Opponents\charlie.json" />
 	  <EmbeddedResource Include="Resources\Core\Opponents\chuck.json" />
 	  <EmbeddedResource Include="Resources\Core\Opponents\spicyjerry.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_6.json" />
