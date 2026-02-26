@@ -1,10 +1,10 @@
-﻿using Knuckle.Is.Bones.Core.Models.Game;
-using Knuckle.Is.Bones.OpenGL.Helpers;
-using Microsoft.Xna.Framework;
-using FormMatter.OpenGL;
+﻿using FormMatter.OpenGL;
 using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
 using FormMatter.OpenGL.Textures;
+using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.OpenGL.Helpers;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;

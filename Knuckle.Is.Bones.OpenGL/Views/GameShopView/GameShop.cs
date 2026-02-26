@@ -1,10 +1,7 @@
-﻿using FormMatter.OpenGL.Input;
-using Knuckle.Is.Bones.Core.Models.Shop;
+﻿using Knuckle.Is.Bones.Core.Models.Shop;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;

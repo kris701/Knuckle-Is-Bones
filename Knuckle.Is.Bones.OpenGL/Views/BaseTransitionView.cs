@@ -1,10 +1,6 @@
-﻿using FormMatter.OpenGL.Input;
-using FormMatter.OpenGL.Views;
+﻿using FormMatter.OpenGL.Views;
 using Knuckle.Is.Bones.OpenGL.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views
 {

@@ -3,7 +3,7 @@ using System;
 
 namespace Knuckle.Is.Bones.OpenGL.Models
 {
-	public enum GameSpeedTypes { Turtle, Slow, Normal, Fast, Speedy}
+	public enum GameSpeedTypes { Turtle, Slow, Normal, Fast, Speedy }
 
 	public class SettingsDefinition : IGenericClonable<SettingsDefinition>
 	{

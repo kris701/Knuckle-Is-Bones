@@ -3,8 +3,6 @@ using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.Views;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using FormMatter.OpenGL.Input;
 using System;
 using System.Collections.Generic;
 

@@ -27,7 +27,8 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 						PointsGainedTimer = 10
 					};
 				case GameSpeedTypes.Normal:
-					return new GameSpeeds() {
+					return new GameSpeeds()
+					{
 						RollTimer = 150,
 						RollWaitTimer = 500,
 						ModifyWaitTimer = 1000,

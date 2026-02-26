@@ -38,7 +38,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 		internal List<IControl> _keyboardControls;
 		internal List<IControl> _gamepadControls;
 
-		public BaseNavigatableView(KnuckleBoneWindow parent, Guid id, List<int> navigationLayers, Action? backAction = null, Action? acceptAction = null) : base(parent,id)
+		public BaseNavigatableView(KnuckleBoneWindow parent, Guid id, List<int> navigationLayers, Action? backAction = null, Action? acceptAction = null) : base(parent, id)
 		{
 			BackAction = backAction;
 			AcceptAction = acceptAction;
@@ -49,7 +49,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				UpdateControlsVisual();
 			});
 
-			_keyboardBackKeyWatcher = new KeyWatcher(Keys.Escape, () => { 
+			_keyboardBackKeyWatcher = new KeyWatcher(Keys.Escape, () =>
+			{
 				if (BackAction != null)
 				{
 					BackAction.Invoke();
@@ -58,7 +59,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				InputType = InputTypes.Keyboard;
 				UpdateControlsVisual();
 			});
-			_gamepadBackKeyWatcher = new GamepadWatcher(Buttons.B, () => {
+			_gamepadBackKeyWatcher = new GamepadWatcher(Buttons.B, () =>
+			{
 				if (BackAction != null)
 				{
 					BackAction.Invoke();
@@ -68,7 +70,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				UpdateControlsVisual();
 			});
 
-			_keyboardAcceptKeyWatcher = new KeyWatcher(Keys.Enter, () => {
+			_keyboardAcceptKeyWatcher = new KeyWatcher(Keys.Enter, () =>
+			{
 				if (AcceptAction != null)
 				{
 					AcceptAction.Invoke();
@@ -77,7 +80,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				InputType = InputTypes.Keyboard;
 				UpdateControlsVisual();
 			});
-			_gamepadAcceptKeyWatcher = new GamepadWatcher(Buttons.Start, () => {
+			_gamepadAcceptKeyWatcher = new GamepadWatcher(Buttons.Start, () =>
+			{
 				if (AcceptAction != null)
 				{
 					AcceptAction.Invoke();
@@ -88,7 +92,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			});
 
 			_keyboardNavigator = CreateKeyboardNavigator(this, navigationLayers);
-			_keyboardNavigator.OnAnyKeyDown += () => {
+			_keyboardNavigator.OnAnyKeyDown += () =>
+			{
 				if (_gamepadNavigator!.Selector.IsVisible)
 				{
 					_keyboardNavigator.Selector.X = _gamepadNavigator.Selector.X;
@@ -101,7 +106,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				UpdateControlsVisual();
 			};
 			_gamepadNavigator = CreateGamepadNavigator(this, navigationLayers, parent.Settings.GamepadIndex);
-			_gamepadNavigator.OnAnyKeyDown += () => {
+			_gamepadNavigator.OnAnyKeyDown += () =>
+			{
 				if (_keyboardNavigator.Selector.IsVisible)
 				{
 					_gamepadNavigator.Selector.X = _keyboardNavigator.Selector.X;

@@ -1,12 +1,11 @@
-﻿using Knuckle.Is.Bones.Core.Models.Shop;
+﻿using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
+using Knuckle.Is.Bones.Core.Models.Shop;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
-using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using FormMatter.OpenGL.Controls;
-using FormMatter.OpenGL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

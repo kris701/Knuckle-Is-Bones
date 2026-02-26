@@ -1,9 +1,7 @@
-﻿using Knuckle.Is.Bones.OpenGL.Controls;
-using Knuckle.Is.Bones.OpenGL.Helpers;
-using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
-using Microsoft.Xna.Framework;
-using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Helpers;
+using Microsoft.Xna.Framework;
 using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView

@@ -1,11 +1,11 @@
-﻿using Knuckle.Is.Bones.Core.Engines;
+﻿using FormMatter.OpenGL.Controls;
+using Knuckle.Is.Bones.Core.Engines;
 using Knuckle.Is.Bones.Core.Engines.Actions;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using FormMatter.OpenGL.Controls;
 using System;
 using System.Collections.Generic;
 

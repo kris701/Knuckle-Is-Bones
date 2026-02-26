@@ -1,8 +1,7 @@
-﻿using Knuckle.Is.Bones.OpenGL.Helpers;
-using Microsoft.Xna.Framework;
-using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
-using System;
+using Knuckle.Is.Bones.OpenGL.Helpers;
+using Microsoft.Xna.Framework;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.SplashScreenView
 {
