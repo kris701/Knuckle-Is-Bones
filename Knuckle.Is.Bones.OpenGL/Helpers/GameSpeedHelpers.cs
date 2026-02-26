@@ -1,4 +1,6 @@
-﻿namespace Knuckle.Is.Bones.OpenGL.Models
+﻿using Knuckle.Is.Bones.OpenGL.Models;
+
+namespace Knuckle.Is.Bones.OpenGL.Helpers
 {
 	public static class GameSpeedHelpers
 	{

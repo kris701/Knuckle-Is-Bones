@@ -62,9 +62,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 			AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
 			{
 				Text = "Cancel",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 				Width = 400,
 				Height = 100,
 				Y = 960,
@@ -74,9 +74,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 			AddControl(0, new AnimatedAudioButton(Parent, OnSaveAndApplySettings)
 			{
 				Text = "Apply",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 				Width = 400,
 				Height = 100,
 				Y = 960,
@@ -91,7 +91,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				Width = 50,
 				Height = 25,
 				Text = "Reload",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx10),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx10),
 				FillColor = BasicTextures.GetBasicRectange(Color.White),
 				FontColor = Color.Black,
 				FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray)
@@ -124,8 +124,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 		private CanvasPanelControl CreateResolutionPanel()
 		{
 			var controls = new List<IControl>();
-			var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
-			var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+			var selectedTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
+			var normalTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 			foreach (var opt in _resolutionPresets)
 			{
 				controls.Add(new AnimatedAudioButton(Parent, (x) =>
@@ -145,7 +145,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				})
 				{
 					TileSet = IsResolutionSelected(opt) ? selectedTileset : normalTileset,
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 					FillClickedColor = BasicTextures.GetClickedTexture(),
 					FontColor = Color.White,
 					Width = _buttonWidth,
@@ -159,8 +159,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				new LabelControl()
 				{
 					Text = "Resolution",
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-					FontColor = new Color(217, 68, 144),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
+					FontColor = FontHelpers.SecondaryColor,
 					Height = 100,
 				},
 				new StackPanelControl(controls)
@@ -182,8 +182,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 		private CanvasPanelControl CreateGeneralPanel()
 		{
 			var controls = new List<IControl>();
-			var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
-			var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+			var selectedTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
+			var normalTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 			controls.Add(new AnimatedAudioButton(Parent, (x) =>
 			{
 				if (x is AnimatedAudioButton button)
@@ -196,7 +196,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 			})
 			{
 				TileSet = _newSettings.IsFullscreen ? selectedTileset : normalTileset,
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
 				FontColor = Color.White,
 				Width = _buttonWidth,
@@ -212,7 +212,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 			})
 			{
 				TileSet = _newSettings.IsVsync ? selectedTileset : normalTileset,
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
 				FontColor = Color.White,
 				Width = _buttonWidth,
@@ -224,8 +224,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				new LabelControl()
 				{
 					Text = "General",
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-					FontColor = new Color(217, 68, 144),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
+					FontColor = FontHelpers.SecondaryColor,
 					Height = 100,
 				},
 				new StackPanelControl(controls)
@@ -244,8 +244,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 		private CanvasPanelControl CreateMusicPanel()
 		{
 			var controls = new List<IControl>();
-			var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
-			var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+			var selectedTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
+			var normalTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 			foreach (var opt in _musicPresets)
 			{
 				controls.Add(new AnimatedAudioButton(Parent, (x) =>
@@ -262,7 +262,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				})
 				{
 					TileSet = _newSettings.MusicVolume == opt ? selectedTileset : normalTileset,
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 					FillClickedColor = BasicTextures.GetClickedTexture(),
 					FontColor = Color.White,
 					Width = _buttonWidth,
@@ -276,8 +276,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				new LabelControl()
 				{
 					Text = "Music",
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-					FontColor = new Color(217, 68, 144),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
+					FontColor = FontHelpers.SecondaryColor,
 					Height = 100,
 				},
 				new StackPanelControl(controls)
@@ -296,8 +296,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 		private CanvasPanelControl CreateEffectsPanel()
 		{
 			var controls = new List<IControl>();
-			var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
-			var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+			var selectedTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
+			var normalTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 			foreach (var opt in _effectsPresets)
 			{
 				controls.Add(new AnimatedAudioButton(Parent, (x) =>
@@ -314,7 +314,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				})
 				{
 					TileSet = _newSettings.EffectsVolume == opt ? selectedTileset : normalTileset,
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 					FillClickedColor = BasicTextures.GetClickedTexture(),
 					FontColor = Color.White,
 					Width = _buttonWidth,
@@ -328,8 +328,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				new LabelControl()
 				{
 					Text = "Sound Effects",
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-					FontColor = new Color(217, 68, 144),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
+					FontColor = FontHelpers.SecondaryColor,
 					Height = 100,
 				},
 				new StackPanelControl(controls)
@@ -348,8 +348,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 		private CanvasPanelControl CreateGameSpeedPanel()
 		{
 			var controls = new List<IControl>();
-			var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
-			var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+			var selectedTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
+			var normalTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 			foreach (var opt in Enum.GetValues<GameSpeedTypes>())
 			{
 				controls.Add(new AnimatedAudioButton(Parent, (x) =>
@@ -366,7 +366,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				})
 				{
 					TileSet = _newSettings.GameSpeed == opt ? selectedTileset : normalTileset,
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 					FillClickedColor = BasicTextures.GetClickedTexture(),
 					FontColor = Color.White,
 					Width = _buttonWidth,
@@ -380,8 +380,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				new LabelControl()
 				{
 					Text = "Game Speed",
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
-					FontColor = new Color(217, 68, 144),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
+					FontColor = FontHelpers.SecondaryColor,
 					Height = 100,
 				},
 				new StackPanelControl(controls)

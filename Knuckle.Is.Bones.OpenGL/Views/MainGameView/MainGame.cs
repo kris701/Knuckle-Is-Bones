@@ -3,7 +3,6 @@ using Knuckle.Is.Bones.Core.Engines.Actions;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.OpenGL.Helpers;
-using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
@@ -270,7 +269,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			{
 				Text = direction + $"{now - previous}",
 				Tag = now > previous,
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				FontColor = now > previous ? Color.LightGreen : Color.DarkRed,
 				X = sourceX + 75,
 				Y = sourceY

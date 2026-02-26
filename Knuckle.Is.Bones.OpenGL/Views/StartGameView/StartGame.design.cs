@@ -42,14 +42,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			AddControl(0, new LabelControl()
 			{
 				Text = $"Points: {(Parent as KnuckleBoneWindow).User.Points}",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				VerticalAlignment = VerticalAlignment.Top,
 				Width = 500,
 				Height = 100
 			});
 
-			var textureSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce"));
+			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 
 			_startButton = new AnimatedAudioButton(Parent, (x) =>
 			{
@@ -77,7 +77,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			})
 			{
 				Text = "Start",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				FontColor = Color.Gray,
 				Y = 960,
 				X = 1500,
@@ -93,7 +93,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
 			{
 				Text = "Back",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				Y = 960,
 				X = 20,
 				FillClickedColor = BasicTextures.GetClickedTexture(),
@@ -121,10 +121,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					});
 			_boardsDescription = new AnimatedTextboxControl()
 			{
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Margin = 25,
 				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(new Guid("29744523-5a1b-43cd-abd8-ecb79006d148")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.StartGameDescription),
 				X = margin + (width + margin) * 0,
 				WordWrap = TextboxControl.WordWrapTypes.Word,
 				Y = 600,
@@ -148,10 +148,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					});
 			_diceDescription = new AnimatedTextboxControl()
 			{
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Margin = 25,
 				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(new Guid("29744523-5a1b-43cd-abd8-ecb79006d148")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.StartGameDescription),
 				X = margin + (width + margin) * 1,
 				WordWrap = TextboxControl.WordWrapTypes.Word,
 				Y = 600,
@@ -175,10 +175,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				});
 			_firstOpponentDescription = new AnimatedTextboxControl()
 			{
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Margin = 25,
 				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(new Guid("29744523-5a1b-43cd-abd8-ecb79006d148")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.StartGameDescription),
 				X = margin + (width + margin) * 2,
 				WordWrap = TextboxControl.WordWrapTypes.Word,
 				Y = 600,
@@ -202,10 +202,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					});
 			_secondOpponentDescription = new AnimatedTextboxControl()
 			{
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Margin = 25,
 				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(new Guid("29744523-5a1b-43cd-abd8-ecb79006d148")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.StartGameDescription),
 				X = margin + (width + margin) * 3,
 				WordWrap = TextboxControl.WordWrapTypes.Word,
 				Y = 600,
@@ -222,7 +222,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Width = 50,
 				Height = 25,
 				Text = "Reload",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx10),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx10),
 				FillColor = BasicTextures.GetBasicRectange(Color.White),
 				FontColor = Color.Black,
 				FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray)
@@ -246,7 +246,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		{
 			AddControl(1, new LabelControl()
 			{
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				Text = title,
 				X = x,
 				Y = y + 10,
@@ -260,7 +260,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				items.Add(getMethod(id));
 			items = items.OrderByDescending(x => !x.IsPurchasable || Parent.User.PurchasedShopItems.Contains(x.ID)).ToList();
 
-			var textureSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 			var controlList = new List<StackPanelControl>();
 			foreach (var item in items)
 			{
@@ -270,9 +270,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				{
 					switch (Parent.User.CompletedItems[item.ID])
 					{
-						case 1: tileSet = new Guid("855231a0-daf4-4a10-b163-8da4fd7ae408"); break;
-						case 2: tileSet = new Guid("2a2e927b-6691-4df8-8de1-f0a819cc37ca"); break;
-						case >= 3: tileSet = new Guid("345434d1-ccfc-458f-90a4-3077094c8b8a"); break;
+						case 1: tileSet = TextureHelpers.CompletionBronze; break;
+						case 2: tileSet = TextureHelpers.CompletionSilver; break;
+						case >= 3: tileSet = TextureHelpers.CompletionGold; break;
 					}
 				}
 				var stackControls = new List<IControl>() {
@@ -288,7 +288,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 						TileSet = textureSet,
 						FillClickedColor = BasicTextures.GetClickedTexture(),
 						FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
-						Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+						Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 						Text = $"{item.Name}",
 						FontColor = isUnlocked ? Color.White : Color.Gray,
 						Alpha = isUnlocked ? 256 : 100,

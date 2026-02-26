@@ -63,7 +63,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Width = 50,
 				Height = 25,
 				Text = "Reload",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx10),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx10),
 				FillColor = BasicTextures.GetBasicRectange(Color.White),
 				FontColor = Color.Black,
 				FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray)
@@ -80,7 +80,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				X = 50,
 				Y = 50,
 				Height = 100,
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				FontColor = Color.White,
 				Text = $"Back",
 				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
@@ -110,7 +110,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Y = 175,
 				Width = 150,
 				Height = 150,
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				FontColor = Color.Gold,
 				Text = $"{Engine.State.GetFirstOpponentBoardValue()}",
 				TileSet = Parent.Textures.GetTextureSet(new System.Guid("4214d3a5-c6c6-4893-a366-30005537799b"))
@@ -120,7 +120,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			AddControl(10, new LabelControl()
 			{
 				Text = $"{Engine.State.FirstOpponent.Name}",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Width = 300,
 				Height = 100,
 				HorizontalAlignment = HorizontalAlignment.Right,
@@ -166,7 +166,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Y = 735,
 				Width = 150,
 				Height = 150,
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				FontColor = Color.Gold,
 				Text = $"{Engine.State.GetSecondOpponentBoardValue()}",
 				TileSet = Parent.Textures.GetTextureSet(new System.Guid("4214d3a5-c6c6-4893-a366-30005537799b"))
@@ -176,7 +176,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			AddControl(20, new LabelControl()
 			{
 				Text = $"{Engine.State.SecondOpponent.Name}",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Width = 300,
 				Height = 100,
 				VerticalAlignment = VerticalAlignment.Bottom,
@@ -213,7 +213,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Y = 475,
 				Width = 150,
 				Height = 150,
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				Text = "",
 				FontColor = Color.White,
 				TileSet = targetTileSet
@@ -233,7 +233,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Width = 500,
 				Height = 75,
 				HorizontalAlignment = HorizontalAlignment.Middle,
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Text = "",
 				FontColor = Color.White,
 			};
@@ -242,7 +242,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Width = 500,
 				Height = 75,
 				HorizontalAlignment = HorizontalAlignment.Middle,
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Text = "",
 				FontColor = Color.White,
 			};
@@ -261,7 +261,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 						Width = 500,
 						Height = 100,
 						HorizontalAlignment = HorizontalAlignment.Middle,
-						Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+						Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 						Text = $"Game Over!",
 						FontColor = Color.White,
 					},
@@ -286,7 +286,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 						Width = 500,
 						Height = 110,
 						HorizontalAlignment = HorizontalAlignment.Middle,
-						Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+						Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 						Text = "Try Again",
 						FontColor = Color.White,
 						TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
@@ -297,7 +297,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 						Width = 500,
 						Height = 110,
 						HorizontalAlignment = HorizontalAlignment.Middle,
-						Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+						Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 						Text = "Main Menu",
 						FontColor = Color.White,
 						TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),

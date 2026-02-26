@@ -1,6 +1,7 @@
 ﻿using Knuckle.Is.Bones.Core.Models;
 using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.OpenGL.Controls;
+using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -36,9 +37,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			{
 				if (button.Tag is IDefinition def)
 				{
-					sender.TileSet = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
+					sender.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
 					if (_selectedBoardButton != null)
-						_selectedBoardButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+						_selectedBoardButton.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 					_selectedBoardButton = sender;
 					_selectedBoard = def.ID;
 					_boardsDescription.Text = def.Description;
@@ -54,9 +55,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			{
 				if (button.Tag is OpponentDefinition def)
 				{
-					sender.TileSet = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
+					sender.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
 					if (_selectedFirstOpponentButton != null)
-						_selectedFirstOpponentButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+						_selectedFirstOpponentButton.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 					_selectedFirstOpponentButton = sender;
 					_selectedFirstOpponent = def.ID;
 
@@ -77,9 +78,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			{
 				if (button.Tag is OpponentDefinition def)
 				{
-					sender.TileSet = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
+					sender.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
 					if (_selectedSecondOpponentButton != null)
-						_selectedSecondOpponentButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+						_selectedSecondOpponentButton.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 					_selectedSecondOpponentButton = sender;
 					_selectedSecondOpponent = def.ID;
 
@@ -100,9 +101,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			{
 				if (button.Tag is IDefinition def)
 				{
-					sender.TileSet = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
+					sender.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
 					if (_selectedDiceButton != null)
-						_selectedDiceButton.TileSet = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+						_selectedDiceButton.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 					_selectedDiceButton = sender;
 					_selectedDice = def.ID;
 					_diceDescription.Text = def.Description;

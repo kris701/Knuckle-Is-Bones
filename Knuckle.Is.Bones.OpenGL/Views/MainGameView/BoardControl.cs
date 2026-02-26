@@ -134,10 +134,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private Guid DeteminteFittingFontSize(float minSize)
 		{
 			if (minSize > 75)
-				return FontSizes.Ptx24;
+				return FontHelpers.Ptx24;
 			if (minSize > 45)
-				return FontSizes.Ptx16;
-			return FontSizes.Ptx8;
+				return FontHelpers.Ptx16;
+			return FontHelpers.Ptx8;
 		}
 
 		private TextureSetDefinition GetBackgroundForCount(List<int> cells, int value)

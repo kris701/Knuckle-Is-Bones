@@ -36,16 +36,16 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 			AddControl(1, new LabelControl()
 			{
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				Text = "Shop",
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				Y = 10,
 				Height = 50,
-				FontColor = new Color(217, 68, 144)
+				FontColor = FontHelpers.SecondaryColor
 			});
 			AddControl(1, new LabelControl()
 			{
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Text = "Purchase new items and upgrades to the game here!",
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				Y = 50,
@@ -54,7 +54,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			});
 			AddControl(1, new LabelControl()
 			{
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx12),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
 				Text = $"You have {Parent.User.Points} points",
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				Y = 100,
@@ -71,7 +71,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			items.RemoveAll(x => x.HasPurchased(Parent.User));
 			items = items.OrderBy(x => x.Cost).ToList();
 
-			var textureSet = Parent.Textures.GetTextureSet(new System.Guid("ac42399b-fecf-4627-96e8-bb188369dc81"));
+			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopItem);
 			var controlList = new List<AnimatedAudioButton>();
 			foreach (var item in items)
 			{
@@ -81,7 +81,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 					TileSet = textureSet,
 					FillClickedColor = BasicTextures.GetClickedTexture(),
 					FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx12),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
 					Text = $"{item.Name} [{item.Cost}]",
 					FontColor = canBuy ? Color.White : Color.Gray,
 					Alpha = canBuy ? 256 : 100,
@@ -108,21 +108,21 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				AchievementHelper.UnlockAchievement("BuyAllShopItems");
 				AddControl(1, new LabelControl()
 				{
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 					Text = "All items purchased!",
 					X = 400,
 					Y = 550,
 					Height = 50,
-					FontColor = new Color(217, 68, 144)
+					FontColor = FontHelpers.SecondaryColor
 				});
 			}
 
 			_descriptionControl = new AnimatedTextboxControl()
 			{
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx8),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
 				Margin = 50,
 				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(new Guid("0c464e6e-8fcb-4ba9-838d-0b1e5edfca12")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopDescription),
 				X = pagehandler.X + 10 + width,
 				WordWrap = TextboxControl.WordWrapTypes.Word,
 				Y = 150,
@@ -132,11 +132,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			AddControl(1, _descriptionControl);
 			_buyItemControl = new AnimatedButtonControl(Parent, (x) => PurchaseItem())
 			{
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx12),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
 				FontColor = Color.Gold,
 				Text = "Buy",
 				ClickSound = new Guid("83fe89c5-745e-4f76-aa87-02ed76b37b1b"),
-				TileSet = Parent.Textures.GetTextureSet(new Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 				X = pagehandler.X + 10 + width + 50,
 				Y = height + 50,
 				Width = 400,
@@ -146,11 +146,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			AddControl(1, _buyItemControl);
 			AddControl(1, new AnimatedTextboxControl()
 			{
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx8),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
 				Margin = 50,
 				FontColor = Color.White,
 				Text = BuildUpgradeList(),
-				TileSet = Parent.Textures.GetTextureSet(new Guid("0c464e6e-8fcb-4ba9-838d-0b1e5edfca12")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopDescription),
 				X = _descriptionControl.X + 10 + _descriptionControl.Width,
 				WordWrap = TextboxControl.WordWrapTypes.Word,
 				Y = 150,
@@ -161,11 +161,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
 			{
 				Text = "Back",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				Y = 960,
 				X = 20,
 				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 				Width = 400,
 				Height = 100
 			});
@@ -178,7 +178,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Width = 50,
 				Height = 25,
 				Text = "Reload",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx10),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx10),
 				FillColor = BasicTextures.GetBasicRectange(Color.White),
 				FontColor = Color.Black,
 				FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray)

@@ -30,7 +30,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				Width = 800,
 				Height = 264,
-				TileSet = Parent.Textures.GetTextureSet(new Guid("af1a8619-0867-44ce-89ab-e2d42912ba44"))
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Title)
 			});
 
 			AddControl(0, new StackPanelControl(new System.Collections.Generic.List<IControl>()
@@ -48,56 +48,56 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 				})
 				{
 					Text = "Continue",
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 					HorizontalAlignment = HorizontalAlignment.Middle,
 					FillClickedColor = BasicTextures.GetClickedTexture(),
-					TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 					IsVisible = GameSaveHelpers.DoesSaveExist(),
 					Height = GameSaveHelpers.DoesSaveExist() ? 100 : 0
 				},
 				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent)))
 				{
 					Text = "New Game",
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 					HorizontalAlignment = HorizontalAlignment.Middle,
 					FillClickedColor = BasicTextures.GetClickedTexture(),
-					TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 					Height = 100
 				},
 				new AnimatedAudioButton(Parent, (x) => SwitchView(new GameShop(Parent)))
 				{
 					Text = "Shop",
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 					HorizontalAlignment = HorizontalAlignment.Middle,
 					FillClickedColor = BasicTextures.GetClickedTexture(),
-					TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 					Height = 100
 				},
 				new AnimatedAudioButton(Parent, (x) => SwitchView(new HowToPlay(Parent)))
 				{
 					Text = "How to Play",
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 					HorizontalAlignment = HorizontalAlignment.Middle,
 					FillClickedColor = BasicTextures.GetClickedTexture(),
-					TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 					Height = 100
 				},
 				new AnimatedAudioButton(Parent, (x) => SwitchView(new SettingsMenu(Parent)))
 				{
 					Text = "Settings",
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 					HorizontalAlignment = HorizontalAlignment.Middle,
 					FillClickedColor = BasicTextures.GetClickedTexture(),
-					TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 					Height = 100
 				},
 				new AnimatedAudioButton(Parent, (x) => (Parent as KnuckleBoneWindow).Exit())
 				{
 					Text = "Exit",
-					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 					HorizontalAlignment = HorizontalAlignment.Middle,
 					FillClickedColor = BasicTextures.GetClickedTexture(),
-					TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 					Height = 100
 				}
 			})
@@ -112,7 +112,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 			AddControl(0, new LabelControl()
 			{
 				Text = $"Points: {(Parent as KnuckleBoneWindow).User.Points}",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				HorizontalAlignment = HorizontalAlignment.Left,
 				VerticalAlignment = VerticalAlignment.Bottom,
 				Width = 500,
@@ -122,7 +122,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 			AddControl(0, new LabelControl()
 			{
 				Text = "Made by Kristian Skov",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				HorizontalAlignment = HorizontalAlignment.Right,
 				VerticalAlignment = VerticalAlignment.Bottom,
 				Width = 500,
@@ -137,7 +137,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 				Width = 50,
 				Height = 25,
 				Text = "Reload",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx10),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx10),
 				FillColor = BasicTextures.GetBasicRectange(Color.White),
 				FontColor = Color.Black,
 				FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray)

@@ -18,7 +18,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 		public IView Parent { get; set; }
 
 		public float ButtonSize { get; set; } = 50;
-		public Guid ButtonFontSize { get; set; } = FontSizes.Ptx16;
+		public Guid ButtonFontSize { get; set; } = FontHelpers.Ptx16;
 		public float LeftButtonX { get; set; } = 0;
 		public float LeftButtonY { get; set; } = 0;
 		public float RightButtonX { get; set; } = 0;

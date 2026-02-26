@@ -11,13 +11,12 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 {
 	public partial class AcceptView : BaseKnuckleBoneFadeView
 	{
-		private static readonly Guid _id = new Guid("937b4268-87fc-4f72-a180-e53ebd47a18d");
 		private readonly SettingsDefinition _newSettings;
 		private readonly SettingsDefinition _oldSettings;
 		private readonly KeyWatcher _escapeKeyWatcher;
 		private TimeSpan _waitFor = TimeSpan.FromSeconds(10);
 		private int _secsLeft = 10;
-		public AcceptView(KnuckleBoneWindow parent, SettingsDefinition oldSettings, SettingsDefinition newSettings) : base(parent, _id)
+		public AcceptView(KnuckleBoneWindow parent, SettingsDefinition oldSettings, SettingsDefinition newSettings) : base(parent, new Guid("937b4268-87fc-4f72-a180-e53ebd47a18d"))
 		{
 			_oldSettings = oldSettings;
 			_newSettings = newSettings;
