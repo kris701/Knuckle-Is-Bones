@@ -15,6 +15,6 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 
 		public int TargetColumn { get; }
 
-		public void ClearTarget();
+		internal void Reset();
 	}
 }

@@ -2,8 +2,9 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 {
-	public class TurboRandomMoveModule : RandomMoveModule, IBoardModifier, IInternalBoardModifier
+	public class TurboRandomMoveModule : RandomMoveModule, IBoardModifier
 	{
+		public bool HasModified { get; private set; }
 		private int _nextTargetTurn = 3;
 
 		[JsonConstructor]
@@ -11,8 +12,10 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 		{
 		}
 
-		List<ModifyerType> IInternalBoardModifier.ModifyBoards(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
+		List<ModifyerType> IBoardModifier.ModifyBoards(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
 		{
+			if (HasModified)
+				return new List<ModifyerType>();
 			if (turnIndex >= _nextTargetTurn)
 			{
 				if (opponentBoard.IsEmpty())
@@ -36,10 +39,12 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 				while (targetValue == opponentBoard.Columns[targetCol].Cells[targetRow])
 					targetValue = diceValue.RollValueIndependent();
 				opponentBoard.Columns[targetCol].Cells[targetRow] = targetValue;
+				HasModified = true;
 				return new List<ModifyerType>() { ModifyerType.Opponent };
 			}
 			return new List<ModifyerType>();
 		}
+		void IBoardModifier.Reset() => HasModified = false;
 
 		public override IMoveModule Clone() => new TurboRandomMoveModule(OpponentID);
 	}

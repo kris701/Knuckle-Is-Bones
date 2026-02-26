@@ -110,8 +110,12 @@ namespace Knuckle.Is.Bones.Core.Engines
 
 			RemoveOpposites(board, board2);
 
-			opponent.MoveModule.ClearTarget();
-			opponent2.MoveModule.ClearTarget();
+			opponent.MoveModule.Reset();
+			if (opponent.MoveModule is IBoardModifier oppMod1)
+				oppMod1.Reset();
+			opponent2.MoveModule.Reset();
+			if (opponent2.MoveModule is IBoardModifier oppMod2)
+				oppMod2.Reset();
 
 			if (CheckGameOverState())
 				return true;
@@ -165,6 +169,8 @@ namespace Knuckle.Is.Bones.Core.Engines
 				return false;
 			if (State.GameOver || CheckGameOverState())
 				return false;
+			if (current.MoveModule.TargetColumn != -1)
+				return false;
 
 			if (current.MoveModule is PlayerMoveModule player)
 			{
@@ -181,8 +187,10 @@ namespace Knuckle.Is.Bones.Core.Engines
 				return false;
 			if (State.GameOver || CheckGameOverState())
 				return false;
+			if (current.MoveModule.TargetColumn != -1)
+				return false;
 
-			if (current.MoveModule is IInternalCPUMove cpu)
+			if (current.MoveModule is ICPUMove cpu)
 			{
 				var currentBoard = State.GetCurrentOpponentBoard();
 				var otherBoard = State.GetNextOpponentBoard();
@@ -200,7 +208,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			if (State.GameOver || CheckGameOverState())
 				return false;
 
-			if (current.MoveModule is IInternalBoardModifier board)
+			if (current.MoveModule is IBoardModifier board)
 			{
 				var other = State.GetNextCurrentOpponent();
 				var currentBoard = State.GetCurrentOpponentBoard();

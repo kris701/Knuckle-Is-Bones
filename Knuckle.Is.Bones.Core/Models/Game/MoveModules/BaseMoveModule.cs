@@ -15,6 +15,6 @@
 
 		public abstract IMoveModule Clone();
 
-		public void ClearTarget() => TargetColumn = -1;
+		void IMoveModule.Reset() => TargetColumn = -1;
 	}
 }
