@@ -1,4 +1,5 @@
-﻿using Knuckle.Is.Bones.Core.Helpers;
+﻿using Knuckle.Is.Bones.Core.Engines.Actions;
+using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
@@ -6,52 +7,68 @@ using Knuckle.Is.Bones.Core.Resources;
 
 namespace Knuckle.Is.Bones.Core.Engines
 {
-	public delegate void GameEventHandler();
-	public delegate void GameBoardModifiedEventHandler(Guid opponentId);
-
-	public class KnuckleBonesEngine
+	public class KnuckleBonesEngine : IKnuckleBonesEngine
 	{
-		public GameEventHandler? OnGameOver;
-		public GameEventHandler? OnOpponentDiceRemoved;
-		public GameEventHandler? OnCombo;
-		public GameEventHandler? OnTurn;
-		public GameBoardModifiedEventHandler? OnBoardModified;
+		public GameEventHandler? OnGameOver { get; set; }
+		public GameEventHandler? OnOpponentDiceRemoved { get; set; }
+		public GameEventHandler? OnCombo { get; set; }
+		public GameEventHandler? OnTurn { get; set; }
+		public GameBoardModifiedEventHandler? OnBoardModified { get; set; }
 
 		public GameState State { get; }
-		public bool GameOver { get; set; }
-		private readonly Dictionary<int, double> _playerDiceValueMap;
-		private readonly Dictionary<int, double> _blankDiceValueMap;
 
 		public KnuckleBonesEngine(GameState state)
 		{
 			State = state;
-			_blankDiceValueMap = BuildBlankDiceValueMultiplierMap();
-			_playerDiceValueMap = BuildPlayerDiceValueMultiplierMap();
 		}
 
-		public OpponentDefinition GetCurrentOpponent()
+		public bool Execute(IEngineAction action)
 		{
-			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
-				return State.FirstOpponent;
-			return State.SecondOpponent;
-		}
-
-		public OpponentDefinition GetNextCurrentOpponent()
-		{
-			if (State.Turn != State.FirstOpponent.MoveModule.OpponentID)
-				return State.FirstOpponent;
-			return State.SecondOpponent;
-		}
-
-		public bool TakeTurn()
-		{
-			if (GameOver)
+			if (State.GameOver)
 				return false;
 			if (CheckGameOverState())
+				return false;
+
+			switch (action)
+			{
+				case SetCPUMoveAction act:
+					return SetCPUMove();
+				case SetCPUBoardModificationAction act:
+					return SetCPUBoardModification();
+				case SetPlayerMoveAction act:
+					return SetPlayerMove(act.TargetColumn);
+				case TurnAction act:
+					return TakeTurn();
+				case CheckGameStateAction act:
+					return false;
+				default:
+					throw new Exception("Unknown action!");
+			}
+		}
+
+		private bool CheckGameOverState()
+		{
+			var board1 = State.GetCurrentOpponentBoard();
+			var board2 = State.GetNextOpponentBoard();
+			RemoveOpposites(board1, board2);
+			if (board1.IsFull() || board2.IsFull())
+			{
+				OnGameOver?.Invoke();
+				State.GameOver = true;
+				var opponent1Value = State.GetFirstOpponentBoardValue();
+				var opponent2Value = State.GetSecondOpponentBoardValue();
+				if (opponent1Value > opponent2Value)
+					State.Winner = State.FirstOpponent.MoveModule.OpponentID;
+				else
+					State.Winner = State.SecondOpponent.MoveModule.OpponentID;
+				GameSaveHelpers.Save(State);
 				return true;
+			}
+			return false;
+		}
 
-			OnTurn?.Invoke();
-
+		private bool TakeTurn()
+		{
 			OpponentDefinition opponent;
 			BoardDefinition board;
 
@@ -79,7 +96,9 @@ namespace Knuckle.Is.Bones.Core.Engines
 				return false;
 			if (State.CurrentDice.Value == 0)
 				return false;
-			var columnID = opponent.MoveModule.GetTargetColumn();
+			if (opponent.MoveModule.TargetColumn == -1)
+				return false;
+			var columnID = opponent.MoveModule.TargetColumn;
 			if (columnID < 0 || columnID >= board.Columns.Count)
 				return false;
 			var column = board.Columns[columnID];
@@ -91,8 +110,12 @@ namespace Knuckle.Is.Bones.Core.Engines
 			column.Cells[lowest] = State.CurrentDice.Value;
 
 			State.TurnIndex++;
+			OnTurn?.Invoke();
 
 			RemoveOpposites(board, board2);
+
+			opponent.MoveModule.ClearTarget();
+			opponent2.MoveModule.ClearTarget();
 
 			if (CheckGameOverState())
 				return true;
@@ -106,27 +129,6 @@ namespace Knuckle.Is.Bones.Core.Engines
 
 			GameSaveHelpers.Save(State);
 			return true;
-		}
-
-		private bool CheckGameOverState()
-		{
-			var board1 = GetCurrentOpponentBoard();
-			var board2 = GetNextOpponentBoard();
-			RemoveOpposites(board1, board2);
-			if (board1.IsFull() || board2.IsFull())
-			{
-				OnGameOver?.Invoke();
-				GameOver = true;
-				var opponent1Value = GetFirstOpponentBoardValue();
-				var opponent2Value = GetSecondOpponentBoardValue();
-				if (opponent1Value > opponent2Value)
-					State.Winner = State.FirstOpponent.MoveModule.OpponentID;
-				else
-					State.Winner = State.SecondOpponent.MoveModule.OpponentID;
-				GameSaveHelpers.Save(State);
-				return true;
-			}
-			return false;
 		}
 
 		private void RemoveOpposites(BoardDefinition newBoard, BoardDefinition opponentBoard)
@@ -160,108 +162,37 @@ namespace Knuckle.Is.Bones.Core.Engines
 			}
 		}
 
-		public GameResult GetGameResult()
+		private bool SetPlayerMove(int target)
 		{
-			if (!GameOver)
-				throw new Exception("Game is not over yet!");
-
-			var playerWon = false;
-			var hadPlayer = false;
-			var pointsGained = 0;
-			var completedItems = new HashSet<Guid>();
-			var winnerName = "";
-			if ((State.FirstOpponent.MoveModule is PlayerMoveModule) && (State.SecondOpponent.MoveModule is not PlayerMoveModule) && State.Winner == State.FirstOpponent.MoveModule.OpponentID)
+			var current = State.GetCurrentOpponent();
+			if (current.MoveModule is PlayerMoveModule player)
 			{
-				playerWon = true;
-				pointsGained = GetPointsGained(State.FirstOpponentBoard.GetValue(_playerDiceValueMap), State.SecondOpponent.Difficulty);
-				completedItems.Add(State.SecondOpponent.ID);
-				completedItems.Add(State.FirstOpponentBoard.ID);
-				completedItems.Add(State.CurrentDice.ID);
+				player.SetTargetColumn(target);
+				return true;
 			}
-			if ((State.SecondOpponent.MoveModule is PlayerMoveModule) && (State.FirstOpponent.MoveModule is not PlayerMoveModule) && State.Winner == State.SecondOpponent.MoveModule.OpponentID)
+			return false;
+		}
+
+		private bool SetCPUMove()
+		{
+			var current = State.GetCurrentOpponent();
+			if (current.MoveModule is IInternalCPUMove cpu)
 			{
-				playerWon = true;
-				pointsGained = GetPointsGained(State.SecondOpponentBoard.GetValue(_playerDiceValueMap), State.FirstOpponent.Difficulty);
-				completedItems.Add(State.FirstOpponent.ID);
-				completedItems.Add(State.FirstOpponentBoard.ID);
-				completedItems.Add(State.CurrentDice.ID);
+				var currentBoard = State.GetCurrentOpponentBoard();
+				var otherBoard = State.GetNextOpponentBoard();
+				cpu.SetTargetColumn(State.CurrentDice, currentBoard, otherBoard, State.TurnIndex);
+				return true;
 			}
-			if ((State.FirstOpponent.MoveModule is PlayerMoveModule) && (State.SecondOpponent.MoveModule is not PlayerMoveModule))
-				hadPlayer = true;
-			if ((State.SecondOpponent.MoveModule is PlayerMoveModule) && (State.FirstOpponent.MoveModule is not PlayerMoveModule))
-				hadPlayer = true;
-
-			if (State.Winner == State.FirstOpponent.MoveModule.OpponentID)
-				winnerName = $"{State.FirstOpponent.Name}";
-			else
-				winnerName = $"{State.SecondOpponent.Name}";
-
-			return new GameResult(playerWon, hadPlayer, pointsGained, winnerName, completedItems);
+			return false;
 		}
 
-		private int GetPointsGained(int boardValue, double opponentDifficulty)
+		private bool SetCPUBoardModification()
 		{
-			var value = (int)(boardValue * opponentDifficulty);
-
-			var allShopItems = ResourceManager.Shop.GetResources();
-			foreach (var purchaseId in State.User.PurchasedShopItems.Where(x => allShopItems.Contains(x)))
-			{
-				var item = ResourceManager.Shop.GetResource(purchaseId);
-				foreach (var effect in item.Effects)
-					if (effect is PointsMultiplierEffect eff)
-						value = (int)(value * eff.Multiplier);
-			}
-
-			return value;
-		}
-
-		private Dictionary<int, double> BuildBlankDiceValueMultiplierMap()
-		{
-			var result = new Dictionary<int, double>();
-			foreach (var value in State.CurrentDice.Options)
-				result.Add(value, 1);
-
-			return result;
-		}
-
-		private Dictionary<int, double> BuildPlayerDiceValueMultiplierMap()
-		{
-			var result = BuildBlankDiceValueMultiplierMap();
-
-			var allShopItems = ResourceManager.Shop.GetResources();
-			foreach (var purchaseId in State.User.PurchasedShopItems.Where(x => allShopItems.Contains(x)))
-			{
-				var item = ResourceManager.Shop.GetResource(purchaseId);
-				foreach (var effect in item.Effects)
-					if (effect is DiceMultiplierEffect eff && result.ContainsKey(eff.Number))
-						result[eff.Number] = eff.Multiplier;
-			}
-
-			return result;
-		}
-
-		public int GetFirstOpponentBoardValue()
-		{
-			if (State.FirstOpponent.MoveModule is PlayerMoveModule)
-				return State.FirstOpponentBoard.GetValue(_playerDiceValueMap);
-			else
-				return State.FirstOpponentBoard.GetValue(_blankDiceValueMap);
-		}
-		public int GetSecondOpponentBoardValue()
-		{
-			if (State.SecondOpponent.MoveModule is PlayerMoveModule)
-				return State.SecondOpponentBoard.GetValue(_playerDiceValueMap);
-			else
-				return State.SecondOpponentBoard.GetValue(_blankDiceValueMap);
-		}
-
-		public void SetCPUOpponentsMove()
-		{
-			var current = GetCurrentOpponent();
-			var other = GetNextCurrentOpponent();
-			var currentBoard = GetCurrentOpponentBoard();
-			var otherBoard = GetNextOpponentBoard();
-			if (current.MoveModule is IBoardModifier board)
+			var current = State.GetCurrentOpponent();
+			var other = State.GetNextCurrentOpponent();
+			var currentBoard = State.GetCurrentOpponentBoard();
+			var otherBoard = State.GetNextOpponentBoard();
+			if (current.MoveModule is IInternalBoardModifier board)
 			{
 				var modifications = board.ModifyBoards(State.CurrentDice, currentBoard, otherBoard, State.TurnIndex);
 				foreach (var modification in modifications)
@@ -277,25 +208,9 @@ namespace Knuckle.Is.Bones.Core.Engines
 					}
 				}
 				if (modifications.Count > 0)
-					if (CheckGameOverState())
-						return;
+					return true;
 			}
-			if (current.MoveModule is ICPUMove cpu)
-				cpu.SetTargetColumn(State.CurrentDice, currentBoard, otherBoard, State.TurnIndex);
-		}
-
-		private BoardDefinition GetCurrentOpponentBoard()
-		{
-			if (State.Turn == State.FirstOpponent.MoveModule.OpponentID)
-				return State.FirstOpponentBoard;
-			return State.SecondOpponentBoard;
-		}
-
-		private BoardDefinition GetNextOpponentBoard()
-		{
-			if (State.Turn != State.FirstOpponent.MoveModule.OpponentID)
-				return State.FirstOpponentBoard;
-			return State.SecondOpponentBoard;
+			return false;
 		}
 	}
 }

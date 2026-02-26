@@ -2,20 +2,16 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 {
-	public class DefensiveMoveModule : IMoveModule, ICPUMove
+	public class DefensiveMoveModule : BaseMoveModule, ICPUMove, IInternalCPUMove
 	{
-		public Guid OpponentID { get; set; } = Guid.NewGuid();
-
 		internal readonly Random _rnd = new Random();
-		private int _targetColumn = 0;
 
 		[JsonConstructor]
-		public DefensiveMoveModule(Guid opponentID)
+		public DefensiveMoveModule(Guid opponentID) : base(opponentID)
 		{
-			OpponentID = opponentID;
 		}
 
-		void ICPUMove.SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
+		void IInternalCPUMove.SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
 		{
 			var orderedQueue = new PriorityQueue<int, int>();
 			var index = 0;
@@ -27,7 +23,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 			}
 			if (orderedQueue.Count > 0)
 			{
-				_targetColumn = orderedQueue.Dequeue();
+				TargetColumn = orderedQueue.Dequeue();
 				return;
 			}
 
@@ -39,11 +35,9 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 				if (!myBoard.Columns[target].IsFull())
 					valid = true;
 			}
-			_targetColumn = target;
+			TargetColumn = target;
 		}
 
-		public int GetTargetColumn() => _targetColumn;
-
-		public virtual IMoveModule Clone() => new DefensiveMoveModule(OpponentID);
+		public override IMoveModule Clone() => new DefensiveMoveModule(OpponentID);
 	}
 }

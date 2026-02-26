@@ -2,22 +2,15 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 {
-	public class PlayerMoveModule : IMoveModule
+	public class PlayerMoveModule : BaseMoveModule
 	{
-		public Guid OpponentID { get; set; } = Guid.NewGuid();
-
-		private int _targetColumn = 0;
-
 		[JsonConstructor]
-		public PlayerMoveModule(Guid opponentID)
+		public PlayerMoveModule(Guid opponentID) : base(opponentID)
 		{
-			OpponentID = opponentID;
 		}
 
-		public void SetTargetColumn(int targetColumn) => _targetColumn = targetColumn;
+		internal void SetTargetColumn(int targetColumn) => TargetColumn = targetColumn;
 
-		public int GetTargetColumn() => _targetColumn;
-
-		public IMoveModule Clone() => new PlayerMoveModule(OpponentID);
+		public override IMoveModule Clone() => new PlayerMoveModule(OpponentID);
 	}
 }

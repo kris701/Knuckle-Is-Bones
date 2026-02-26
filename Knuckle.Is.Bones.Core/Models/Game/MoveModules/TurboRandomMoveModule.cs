@@ -2,7 +2,7 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 {
-	public class TurboRandomMoveModule : RandomMoveModule, IBoardModifier
+	public class TurboRandomMoveModule : RandomMoveModule, IBoardModifier, IInternalBoardModifier
 	{
 		private int _nextTargetTurn = 3;
 
@@ -11,7 +11,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 		{
 		}
 
-		List<ModifyerType> IBoardModifier.ModifyBoards(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
+		List<ModifyerType> IInternalBoardModifier.ModifyBoards(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
 		{
 			if (turnIndex >= _nextTargetTurn)
 			{

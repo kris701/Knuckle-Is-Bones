@@ -110,7 +110,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Height = 150,
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
 				FontColor = Color.Gold,
-				Text = $"{Engine.GetFirstOpponentBoardValue()}",
+				Text = $"{Engine.State.GetFirstOpponentBoardValue()}",
 				TileSet = Parent.Textures.GetTextureSet(new System.Guid("4214d3a5-c6c6-4893-a366-30005537799b"))
 			};
 			AddControl(10, _firstOpponentPoints);
@@ -166,7 +166,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Height = 150,
 				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
 				FontColor = Color.Gold,
-				Text = $"{Engine.GetSecondOpponentBoardValue()}",
+				Text = $"{Engine.State.GetSecondOpponentBoardValue()}",
 				TileSet = Parent.Textures.GetTextureSet(new System.Guid("4214d3a5-c6c6-4893-a366-30005537799b"))
 			};
 			AddControl(20, _secondOpponentPoints);
@@ -265,13 +265,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 					},
 					_winnerLabel,
 					_pointsGainedLabel,
-					new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent)))
+					new AnimatedAudioButton(Parent, (x) => SwitchView(new MainGame(Parent, _initialState)))
 					{
 						Width = 500,
 						Height = 110,
 						HorizontalAlignment = HorizontalAlignment.Middle,
 						Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-						Text = "Play Again",
+						Text = "Try Again",
 						FontColor = Color.White,
 						TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
 						FillClickedColor = BasicTextures.GetClickedTexture(),

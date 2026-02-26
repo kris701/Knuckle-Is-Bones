@@ -1,4 +1,5 @@
 ﻿using Knuckle.Is.Bones.Core.Engines;
+using Knuckle.Is.Bones.Core.Engines.Actions;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.OpenGL.Helpers;
@@ -12,8 +13,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
 	public partial class MainGame : BaseKnuckleBoneFadeView
 	{
-		public KnuckleBonesEngine Engine { get; set; }
+		public IKnuckleBonesEngine Engine { get; set; }
 
+		private readonly GameState _initialState;
 		private readonly GameTimer _rollTimer;
 		private readonly GameTimer _rollWaitTimer;
 		private readonly GameTimer _selectWaitTimer;
@@ -36,20 +38,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361"))
 		{
+			_initialState = state.Clone();
 			Engine = new KnuckleBonesEngine(state);
 			Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(new Guid("4e53cd32-7af6-47a1-a331-ec2096505c78"));
 			Engine.OnCombo += () => Parent.Audio.PlaySoundEffectOnce(new Guid("74ea48c8-cb6f-4a22-8226-e5d6142b1f76"));
 			Engine.OnTurn += () => Parent.Audio.PlaySoundEffectOnce(new Guid("23ac297f-3e68-461f-a869-a304e89e18c6"));
 			Engine.OnBoardModified += (o) =>
 			{
-				_secondOpponentBoard!.UpdateBoard();
-				_firstOpponentBoard!.UpdateBoard();
-				if (o == Engine.State.FirstOpponent.MoveModule.OpponentID)
-					_firstOpponentBoard.ShowModifying();
-				else
-					_secondOpponentBoard.ShowModifying();
-
-				_shouldModifyWait = true;
 				Parent.Audio.PlaySoundEffectOnce(new Guid("97b1fabe-d7c8-44fc-86bf-94592a91edf8"));
 			};
 
@@ -94,7 +89,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_rollWait = false;
 			_diceLabel.Text = $"{Engine.State.CurrentDice.Value}";
 
-			var current = Engine.GetCurrentOpponent();
+			var current = Engine.State.GetCurrentOpponent();
 
 			if (current.MoveModule.OpponentID == Engine.State.FirstOpponent.MoveModule.OpponentID)
 				_firstOpponentTurnControl.IsVisible = true;
@@ -108,9 +103,20 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				_shouldModifyWait = false;
 				_modifyWait = false;
 				_selectWait = false;
-				Engine.SetCPUOpponentsMove();
+				if (current.MoveModule is IBoardModifier)
+					_shouldModifyWait = Engine.Execute(new SetCPUBoardModificationAction());
+				if (!Engine.Execute(new CheckGameStateAction()))
+					Engine.Execute(new SetCPUMoveAction());
 				if (_shouldModifyWait)
+				{
+					_secondOpponentBoard!.UpdateBoard();
+					_firstOpponentBoard!.UpdateBoard();
+					if (current.MoveModule.OpponentID == Engine.State.FirstOpponent.MoveModule.OpponentID)
+						_firstOpponentBoard.ShowModifying();
+					else
+						_secondOpponentBoard.ShowModifying();
 					_modifyWait = true;
+				}
 				else
 				{
 					UpdateColumnHighlight();
@@ -200,10 +206,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_firstOpponentTurnControl.IsVisible = false;
 			_secondOpponentTurnControl.IsVisible = false;
 
-			Engine.TakeTurn();
+			Engine.Execute(new TurnAction());
 
-			var newFirstOpponentPoints = Engine.GetFirstOpponentBoardValue();
-			var newSecondOpponentPoints = Engine.GetSecondOpponentBoardValue();
+			var newFirstOpponentPoints = Engine.State.GetFirstOpponentBoardValue();
+			var newSecondOpponentPoints = Engine.State.GetSecondOpponentBoardValue();
 
 			_secondOpponentBoard.UpdateBoard();
 			_firstOpponentBoard.UpdateBoard();
@@ -219,9 +225,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_firstOpponentPoints.Text = $"{newFirstOpponentPoints}";
 			_secondOpponentPoints.Text = $"{newSecondOpponentPoints}";
 
-			if (Engine.GameOver)
+			if (Engine.State.GameOver)
 			{
-				var result = Engine.GetGameResult();
+				var result = Engine.State.GetGameResult();
 
 				foreach (var completedItem in result.CompletedItems)
 					Parent.User.AppendCompletedItem(completedItem);
@@ -280,14 +286,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 			Parent.Audio.PlaySoundEffectOnce(new Guid("19268829-42c3-411d-8357-91d55de0cef6"));
 
-			var opponent = Engine.GetCurrentOpponent();
+			var opponent = Engine.State.GetCurrentOpponent();
 			if (opponent.MoveModule is PlayerMoveModule player && Engine.State.Turn == player.OpponentID)
 			{
 				if (to < 0)
 					to = 0;
 				if (to >= Engine.State.FirstOpponentBoard.Columns.Count)
 					to = Engine.State.FirstOpponentBoard.Columns.Count - 1;
-				player.SetTargetColumn(to);
+				Engine.Execute(new SetPlayerMoveAction(to));
 			}
 
 			_firstOpponentBoard.CanSelect = false;
@@ -315,12 +321,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		{
 			if (Engine.State.Turn == Engine.State.FirstOpponent.MoveModule.OpponentID)
 			{
-				_firstOpponentBoard.HighlightColumn(Engine.State.FirstOpponent.MoveModule.GetTargetColumn());
+				if (Engine.State.FirstOpponent.MoveModule.TargetColumn != -1)
+					_firstOpponentBoard.HighlightColumn(Engine.State.FirstOpponent.MoveModule.TargetColumn);
 				_secondOpponentBoard.HideHighlight();
 			}
 			else if (Engine.State.Turn == Engine.State.SecondOpponent.MoveModule.OpponentID)
 			{
-				_secondOpponentBoard.HighlightColumn(Engine.State.SecondOpponent.MoveModule.GetTargetColumn());
+				if (Engine.State.SecondOpponent.MoveModule.TargetColumn != -1)
+					_secondOpponentBoard.HighlightColumn(Engine.State.SecondOpponent.MoveModule.TargetColumn);
 				_firstOpponentBoard.HideHighlight();
 			}
 		}

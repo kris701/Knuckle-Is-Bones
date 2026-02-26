@@ -2,20 +2,16 @@
 
 namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 {
-	public class RandomMoveModule : IMoveModule, ICPUMove
+	public class RandomMoveModule : BaseMoveModule, ICPUMove, IInternalCPUMove
 	{
-		public Guid OpponentID { get; set; } = Guid.NewGuid();
-
 		internal readonly Random _rnd = new Random();
-		private int _targetColumn = 0;
 
 		[JsonConstructor]
-		public RandomMoveModule(Guid opponentID)
+		public RandomMoveModule(Guid opponentID) : base(opponentID)
 		{
-			OpponentID = opponentID;
 		}
 
-		void ICPUMove.SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
+		void IInternalCPUMove.SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
 		{
 			int target = -1;
 			bool valid = false;
@@ -26,11 +22,9 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 					valid = true;
 			}
 
-			_targetColumn = target;
+			TargetColumn = target;
 		}
 
-		public int GetTargetColumn() => _targetColumn;
-
-		public virtual IMoveModule Clone() => new RandomMoveModule(OpponentID);
+		public override IMoveModule Clone() => new RandomMoveModule(OpponentID);
 	}
 }
