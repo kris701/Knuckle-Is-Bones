@@ -1,4 +1,5 @@
 ﻿using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Input;
 using Knuckle.Is.Bones.Core.Engines;
 using Knuckle.Is.Bones.Core.Engines.Actions;
 using Knuckle.Is.Bones.Core.Helpers;
@@ -6,12 +7,13 @@ using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
-	public partial class MainGame : BaseTransitionView
+	public partial class MainGame : BaseNavigatableView
 	{
 		public IKnuckleBonesEngine Engine { get; set; }
 
@@ -35,7 +37,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		private readonly List<LabelControl> _pointsGainedControls = new List<LabelControl>();
 
-		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361"))
+		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361"), new List<int>() { 10, 20, 1001 })
 		{
 			Engine = new KnuckleBonesEngine(state);
 			Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnDiceRemove);
@@ -49,6 +51,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_modifyWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.ModifyWaitTimer), OnModifyWaitTimer);
 			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.SelectWaitTimer), OnSelectWaitTimer);
 			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.PointsGainedTimer), OnPointsGainedTimer);
+
+			BackAction = () => Escape();
 
 			Initialize();
 		}
@@ -126,6 +130,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 					_firstOpponentBoard.CanSelect = true;
 				if (Engine.State.Turn == Engine.State.SecondOpponent.MoveModule.OpponentID && Engine.State.SecondOpponent.MoveModule is PlayerMoveModule)
 					_secondOpponentBoard.CanSelect = true;
+				
+				if (InputType == InputTypes.Keyboard)
+				{
+					_keyboardNavigator.Selector.IsVisible = true;
+				}
+				if (InputType == InputTypes.Gamepad)
+				{
+					_gamepadNavigator.Selector.IsVisible = true;
+				}
 			}
 		}
 
@@ -225,6 +238,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 			if (Engine.State.GameOver)
 			{
+				_keyboardNavigator.SelectorLocation = NavigatorSelectorLocations.Left;
+				_gamepadNavigator.SelectorLocation = NavigatorSelectorLocations.Left;
+
 				var result = Engine.State.GetGameResult();
 
 				foreach (var completedItem in result.CompletedItems)
@@ -254,6 +270,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				_gameOverPanel.IsVisible = true;
 				return;
 			}
+
+			UpdateForMove();
 
 			_rolling = true;
 		}
@@ -294,11 +312,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Engine.Execute(new SetPlayerMoveAction(to));
 			}
 
+			_keyboardNavigator.Selector.IsVisible = false;
+			_gamepadNavigator.Selector.IsVisible = false;
+
 			_firstOpponentBoard.CanSelect = false;
 			_secondOpponentBoard.CanSelect = false;
 			_firstOpponentBoard.HideHighlight();
 			_secondOpponentBoard.HideHighlight();
-
 			TakeTurn();
 		}
 
@@ -328,6 +348,24 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				if (Engine.State.SecondOpponent.MoveModule.TargetColumn != -1)
 					_secondOpponentBoard.HighlightColumn(Engine.State.SecondOpponent.MoveModule.TargetColumn);
 				_firstOpponentBoard.HideHighlight();
+			}
+		}
+
+		private void UpdateForMove()
+		{
+			if (Engine.State.Turn == Engine.State.FirstOpponent.MoveModule.OpponentID)
+			{
+				_secondOpponentBoard.DisableAll();
+				_keyboardNavigator.SelectorLocation = FormMatter.OpenGL.Input.NavigatorSelectorLocations.Bottom;
+				_gamepadNavigator.SelectorLocation = FormMatter.OpenGL.Input.NavigatorSelectorLocations.Bottom;
+				_firstOpponentBoard.EnableAll();
+			}
+			else if (Engine.State.Turn == Engine.State.SecondOpponent.MoveModule.OpponentID)
+			{
+				_firstOpponentBoard.DisableAll();
+				_keyboardNavigator.SelectorLocation = FormMatter.OpenGL.Input.NavigatorSelectorLocations.Top;
+				_gamepadNavigator.SelectorLocation = FormMatter.OpenGL.Input.NavigatorSelectorLocations.Top;
+				_secondOpponentBoard.EnableAll();
 			}
 		}
 	}

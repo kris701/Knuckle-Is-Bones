@@ -51,6 +51,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Parent.User.Clone()
 				);
 
+			state.FirstOpponent.MoveModule.OpponentID = Guid.NewGuid();
+			state.SecondOpponent.MoveModule.OpponentID = Guid.NewGuid();
+			state.SetRandomStartingPlayer();
+
 			GameSaveHelpers.Save(state);
 
 			SwitchView(new MainGame(Parent, state));

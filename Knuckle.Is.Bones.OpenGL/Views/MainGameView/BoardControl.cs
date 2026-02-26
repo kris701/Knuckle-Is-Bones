@@ -64,12 +64,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 					(s) =>
 					{
 						if (CanSelect)
-							s.IsVisible = true;
+							s.Alpha = 100;
 					},
 					(s) =>
 					{
 						if (CanSelect)
-							s.IsVisible = false;
+							s.Alpha = 0;
 					}
 				)
 				{
@@ -77,8 +77,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 					Width = _minSize - _margin * 2,
 					X = (_cellWidth + _margin) * i + ((_cellWidth - _minSize) / 2) + _margin,
 					FillColor = BasicTextures.GetBasicRectange(Color.Red),
-					IsVisible = false,
-					Alpha = 100,
+					Alpha = 0,
+					IsEnabled = !_board.Columns[i].IsFull(),
 					Tag = i
 				};
 				_columnHighlights.Add(newItem);
@@ -156,14 +156,37 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		public void HighlightColumn(int columnID)
 		{
 			foreach (var item in _columnHighlights)
-				item.IsVisible = false;
-			_columnHighlights[columnID].IsVisible = true;
+			{
+				item.IsEnabled = false;
+				item.Alpha = 0;
+			}
+			_columnHighlights[columnID].IsEnabled = true;
+			_columnHighlights[columnID].Alpha = 100;
+		}
+
+		public void EnableAll()
+		{
+			var index = 0;
+			foreach (var item in _columnHighlights)
+			{
+				if (!_board.Columns[index].IsFull())
+					item.IsEnabled = true;
+				index++;
+			}
+		}
+		public void DisableAll()
+		{
+			foreach (var item in _columnHighlights)
+				item.IsEnabled = false;
 		}
 
 		public void HideHighlight()
 		{
 			foreach (var item in _columnHighlights)
-				item.IsVisible = false;
+			{
+				item.IsEnabled = false;
+				item.Alpha = 0;
+			}
 		}
 
 		public override void Update(GameTime gameTime)

@@ -12,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
-	public partial class MainGame : BaseTransitionView
+	public partial class MainGame : BaseNavigatableView
 	{
 		private AnimatedLabelControl _diceLabel;
 		private LabelControl _firstOpponentTurnControl;
@@ -46,8 +46,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				FillColor = BasicTextures.GetBasicRectange(Color.Black)
 			});
 
-			SetupControlsView();
-
 			CreateFirstOpponent();
 			CreateSeccondOpponent();
 
@@ -70,21 +68,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 #endif
 
 			base.Initialize();
-		}
 
-		private void SetupControlsView()
-		{
-			AddControl(0, new AnimatedAudioButton(Parent, (b) => Escape())
-			{
-				X = 50,
-				Y = 50,
-				Height = 100,
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				FontColor = Color.White,
-				Text = $"Back",
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-			});
+			UpdateForMove();
 		}
 
 		[MemberNotNull(
