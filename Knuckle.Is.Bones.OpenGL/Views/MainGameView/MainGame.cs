@@ -15,7 +15,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 	{
 		public IKnuckleBonesEngine Engine { get; set; }
 
-		private readonly GameState _initialState;
 		private readonly GameTimer _rollTimer;
 		private readonly GameTimer _rollWaitTimer;
 		private readonly GameTimer _selectWaitTimer;
@@ -38,7 +37,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361"))
 		{
-			_initialState = state.Clone();
 			Engine = new KnuckleBonesEngine(state);
 			Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(new Guid("4e53cd32-7af6-47a1-a331-ec2096505c78"));
 			Engine.OnCombo += () => Parent.Audio.PlaySoundEffectOnce(new Guid("74ea48c8-cb6f-4a22-8226-e5d6142b1f76"));

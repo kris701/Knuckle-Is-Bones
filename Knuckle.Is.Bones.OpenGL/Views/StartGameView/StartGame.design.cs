@@ -71,12 +71,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					Parent.User.Clone()
 					);
 
-				state.FirstOpponent.MoveModule.OpponentID = Guid.NewGuid();
-				state.SecondOpponent.MoveModule.OpponentID = Guid.NewGuid();
-
-				state.CurrentDice.RollValue();
-				state.Turn = state.FirstOpponent.MoveModule.OpponentID;
-
 				GameSaveHelpers.Save(state);
 
 				SwitchView(new MainGame(Parent, state));

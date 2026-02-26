@@ -10,18 +10,18 @@ namespace Knuckle.Is.Bones.Core.Engines
 {
 	public class GameState : IGenericClonable<GameState>
 	{
-		public bool GameOver { get; set; }
-		public Guid Winner { get; set; }
-		public Guid Turn { get; set; }
-		public int TurnIndex { get; set; }
-		public OpponentDefinition FirstOpponent { get; set; }
-		public BoardDefinition FirstOpponentBoard { get; set; }
-		public OpponentDefinition SecondOpponent { get; set; }
-		public BoardDefinition SecondOpponentBoard { get; set; }
+		public bool GameOver { get; internal set; }
+		public Guid Winner { get; internal set; }
+		public Guid Turn { get; internal set; }
+		public int TurnIndex { get; internal set; }
+		public OpponentDefinition FirstOpponent { get; internal set; }
+		public BoardDefinition FirstOpponentBoard { get; internal set; }
+		public OpponentDefinition SecondOpponent { get; internal set; }
+		public BoardDefinition SecondOpponentBoard { get; internal set; }
 
-		public DiceDefinition CurrentDice { get; set; }
+		public DiceDefinition CurrentDice { get; internal set; }
 
-		public UserSaveDefinition User { get; set; }
+		public UserSaveDefinition User { get; internal set; }
 
 		private readonly Dictionary<int, double> _playerDiceValueMap;
 		private readonly Dictionary<int, double> _blankDiceValueMap;
@@ -48,7 +48,6 @@ namespace Knuckle.Is.Bones.Core.Engines
 		{
 			GameOver = false;
 			Winner = Guid.Empty;
-			Turn = Guid.Empty;
 			TurnIndex = 0;
 			FirstOpponent = firstOpponent;
 			FirstOpponentBoard = firstOpponentBoard;
@@ -57,8 +56,23 @@ namespace Knuckle.Is.Bones.Core.Engines
 			CurrentDice = currentDice;
 			User = user;
 
+			Turn = SetRandomStartingPlayer();
+
+			CurrentDice.RollValue();
+
 			_blankDiceValueMap = BuildBlankDiceValueMultiplierMap();
 			_playerDiceValueMap = BuildPlayerDiceValueMultiplierMap();
+		}
+
+		public Guid SetRandomStartingPlayer()
+		{
+			var rnd = new Random();
+			var targetOpponent = rnd.Next(0, 2);
+			if (targetOpponent == 1)
+				Turn = FirstOpponent.MoveModule.OpponentID;
+			else
+				Turn = SecondOpponent.MoveModule.OpponentID;
+			return Turn;
 		}
 
 		private Dictionary<int, double> BuildBlankDiceValueMultiplierMap()

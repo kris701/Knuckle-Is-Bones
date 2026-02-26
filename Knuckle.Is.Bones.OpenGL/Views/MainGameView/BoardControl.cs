@@ -192,7 +192,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 						if (cell != 0)
 							text = $"{cell}";
 						var newTileSet = GetBackgroundForCount(column.Cells, cell);
-						if ((lab.Text != text || lab.TileSet.ID != newTileSet.ID) && lab.Alpha == 100)
+						if (lab.Text != text || lab.TileSet.ID != newTileSet.ID)
 						{
 							lab.Text = text;
 							lab.TileSet = newTileSet;

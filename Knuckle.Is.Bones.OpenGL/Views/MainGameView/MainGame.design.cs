@@ -1,4 +1,7 @@
-﻿using Knuckle.Is.Bones.OpenGL.Controls;
+﻿using Knuckle.Is.Bones.Core.Engines;
+using Knuckle.Is.Bones.Core.Helpers;
+using Knuckle.Is.Bones.Core.Resources;
+using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
@@ -264,7 +267,21 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 					},
 					_winnerLabel,
 					_pointsGainedLabel,
-					new AnimatedAudioButton(Parent, (x) => SwitchView(new MainGame(Parent, _initialState)))
+					new AnimatedAudioButton(Parent, (x) =>
+					{
+						var state = new GameState(
+							ResourceManager.Opponents.GetResource(Engine.State.FirstOpponent.ID).Clone(),
+							ResourceManager.Boards.GetResource(Engine.State.FirstOpponentBoard.ID).Clone(),
+							ResourceManager.Opponents.GetResource(Engine.State.SecondOpponent.ID).Clone(),
+							ResourceManager.Boards.GetResource(Engine.State.FirstOpponentBoard.ID).Clone(),
+							ResourceManager.Dice.GetResource(Engine.State.CurrentDice.ID).Clone(),
+							Engine.State.User.Clone()
+							);
+
+						GameSaveHelpers.Save(state);
+
+						SwitchView(new MainGame(Parent, state));
+					})
 					{
 						Width = 500,
 						Height = 110,
