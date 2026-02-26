@@ -3,6 +3,7 @@ using Knuckle.Is.Bones.Core.Engines.Actions;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter.Controls;
@@ -46,11 +47,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Parent.Audio.PlaySoundEffectOnce(new Guid("97b1fabe-d7c8-44fc-86bf-94592a91edf8"));
 			};
 
-			_rollTimer = new GameTimer(TimeSpan.FromMilliseconds(TimerTable.RollTimer), OnRollTimer);
-			_rollWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(TimerTable.RollWaitTimer), OnRollWaitTimer);
-			_modifyWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(TimerTable.ModifyWaitTimer), OnModifyWaitTimer);
-			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(TimerTable.SelectWaitTimer), OnSelectWaitTimer);
-			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(TimerTable.PointsGainedTimer), OnPointsGainedTimer);
+			var speeds = GameSpeedHelpers.GetGameSpeed(Parent.Settings.GameSpeed);
+			_rollTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.RollTimer), OnRollTimer);
+			_rollWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.RollWaitTimer), OnRollWaitTimer);
+			_modifyWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.ModifyWaitTimer), OnModifyWaitTimer);
+			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.SelectWaitTimer), OnSelectWaitTimer);
+			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.PointsGainedTimer), OnPointsGainedTimer);
 			Initialize();
 		}
 
