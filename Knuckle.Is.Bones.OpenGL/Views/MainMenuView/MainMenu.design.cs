@@ -113,8 +113,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 			{
 				Text = $"Points: {(Parent as KnuckleBoneWindow).User.Points}",
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				HorizontalAlignment = HorizontalAlignment.Left,
-				VerticalAlignment = VerticalAlignment.Bottom,
+				HorizontalAlignment = HorizontalAlignment.Right,
+				VerticalAlignment = VerticalAlignment.Top,
 				Width = 500,
 				Height = 100
 			});

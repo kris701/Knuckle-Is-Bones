@@ -1,14 +1,18 @@
-﻿using Knuckle.Is.Bones.Core.Models;
+﻿using FormMatter.OpenGL.Input;
+using Knuckle.Is.Bones.Core.Engines;
+using Knuckle.Is.Bones.Core.Helpers;
+using Knuckle.Is.Bones.Core.Models;
 using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using FormMatter.OpenGL.Input;
 using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
@@ -26,7 +30,33 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		public StartGame(KnuckleBoneWindow parent) : base(parent, new Guid("9ba30a3d-f77c-4aa4-b390-8c8789dba4c0"), new List<int>() { 0, 1 })
 		{
 			BackAction = () => SwitchView(new MainMenu(Parent));
+			AcceptAction = () => Start();
 			Initialize();
+		}
+
+		private void Start()
+		{
+			if (_selectedBoard == Guid.Empty)
+				return;
+			if (_selectedFirstOpponent == Guid.Empty)
+				return;
+			if (_selectedSecondOpponent == Guid.Empty)
+				return;
+			if (_selectedDice == Guid.Empty)
+				return;
+
+			var state = new GameState(
+				ResourceManager.Opponents.GetResource(_selectedFirstOpponent).Clone(),
+				ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
+				ResourceManager.Opponents.GetResource(_selectedSecondOpponent).Clone(),
+				ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
+				ResourceManager.Dice.GetResource(_selectedDice).Clone(),
+				Parent.User.Clone()
+				);
+
+			GameSaveHelpers.Save(state);
+
+			SwitchView(new MainGame(Parent, state));
 		}
 
 		private void SelectBoard_Click(AnimatedAudioButton sender)

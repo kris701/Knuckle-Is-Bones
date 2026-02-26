@@ -67,31 +67,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 
 			_resolutionPanel = CreateResolutionPanel();
 			CreateMainSettingsPanel();
-
-			AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
-			{
-				Text = "Cancel",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				Width = 400,
-				Height = 100,
-				Y = 960,
-				X = 20,
-			});
-
-			AddControl(0, new AnimatedAudioButton(Parent, OnSaveAndApplySettings)
-			{
-				Text = "Apply",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				Width = 400,
-				Height = 100,
-				Y = 960,
-				X = 1500,
-			});
-
 #if DEBUG
 			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new SettingsMenu(Parent)))
 			{

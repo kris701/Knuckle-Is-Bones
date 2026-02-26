@@ -23,13 +23,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private AnimatedTextboxControl _firstOpponentDescription;
 		private AnimatedTextboxControl _secondOpponentDescription;
 
-		private AnimatedAudioButton _startButton;
 		private bool _boardSelected = false;
 		private bool _diceSelected = false;
 		private bool _opponentOneSelected = false;
 		private bool _opponentTwoSelected = false;
 
-		[MemberNotNull(nameof(_boardsDescription), nameof(_diceDescription), nameof(_firstOpponentDescription), nameof(_secondOpponentDescription), nameof(_startButton))]
+		[MemberNotNull(nameof(_boardsDescription), nameof(_diceDescription), nameof(_firstOpponentDescription), nameof(_secondOpponentDescription))]
 		public override void Initialize()
 		{
 			AddControl(0, new TileControl()
@@ -50,57 +49,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			});
 
 			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.Button);
-
-			_startButton = new AnimatedAudioButton(Parent, (x) =>
-			{
-				if (_selectedBoard == Guid.Empty)
-					return;
-				if (_selectedFirstOpponent == Guid.Empty)
-					return;
-				if (_selectedSecondOpponent == Guid.Empty)
-					return;
-				if (_selectedDice == Guid.Empty)
-					return;
-
-				var state = new GameState(
-					ResourceManager.Opponents.GetResource(_selectedFirstOpponent).Clone(),
-					ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
-					ResourceManager.Opponents.GetResource(_selectedSecondOpponent).Clone(),
-					ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
-					ResourceManager.Dice.GetResource(_selectedDice).Clone(),
-					Parent.User.Clone()
-					);
-
-				GameSaveHelpers.Save(state);
-
-				SwitchView(new MainGame(Parent, state));
-			})
-			{
-				Text = "Start",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				FontColor = Color.Gray,
-				Y = 960,
-				X = 1500,
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = textureSet,
-				FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
-				IsEnabled = false,
-				Alpha = 100,
-				Width = 400,
-				Height = 100
-			};
-			AddControl(0, _startButton);
-			AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
-			{
-				Text = "Back",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				Y = 960,
-				X = 20,
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = textureSet,
-				Width = 400,
-				Height = 100
-			});
 
 			var margin = 50;
 			var width = (1920 - margin * 2) / 4 - margin;
@@ -228,17 +176,19 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray)
 			});
 #endif
-
 			base.Initialize();
+			MouseAcceptButton.IsEnabled = false;
+			MouseAcceptButton.Alpha = 100;
+			MouseAcceptButton.FontColor = Color.Gray;
 		}
 
 		private void CheckIfAllOptionsChecked()
 		{
 			if (_boardSelected && _diceSelected && _opponentOneSelected && _opponentTwoSelected)
 			{
-				_startButton.IsEnabled = true;
-				_startButton.Alpha = 256;
-				_startButton.FontColor = Color.White;
+				MouseAcceptButton.IsEnabled = true;
+				MouseAcceptButton.Alpha = 256;
+				MouseAcceptButton.FontColor = Color.White;
 			}
 		}
 

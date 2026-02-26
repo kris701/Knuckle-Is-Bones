@@ -21,6 +21,8 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 			_oldSettings = oldSettings;
 			_newSettings = newSettings;
 			BackAction = () => Cancel();
+			AcceptAction = () => Accept();
+			ShowGeneralControls = false;
 			Initialize();
 		}
 

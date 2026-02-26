@@ -158,18 +158,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Height = height,
 			});
 
-			AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
-			{
-				Text = "Back",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				Y = 960,
-				X = 20,
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				Width = 400,
-				Height = 100
-			});
-
 #if DEBUG
 			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new GameShop(Parent)))
 			{

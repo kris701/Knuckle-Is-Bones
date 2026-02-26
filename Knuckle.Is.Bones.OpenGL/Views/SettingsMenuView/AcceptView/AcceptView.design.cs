@@ -53,31 +53,6 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 			};
 			AddControl(0, _timeLeftLabel);
 
-
-			AddControl(0, new AnimatedAudioButton(Parent, (e) => Cancel())
-			{
-				Text = "Cancel",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				Width = 400,
-				Height = 100,
-				Y = 960,
-				X = 20,
-			});
-
-			AddControl(0, new AnimatedAudioButton(Parent, (e) => Accept())
-			{
-				Text = "Accept",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				Width = 400,
-				Height = 100,
-				Y = 960,
-				X = 1500,
-			});
-
 #if DEBUG
 			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new AcceptView(Parent, _oldSettings, _newSettings)))
 			{
