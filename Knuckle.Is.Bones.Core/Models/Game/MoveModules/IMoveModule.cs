@@ -13,6 +13,8 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 	{
 		public Guid OpponentID { get; set; }
 
-		public int GetTargetColumn();
+		public int TargetColumn { get; }
+
+		internal void Reset();
 	}
 }

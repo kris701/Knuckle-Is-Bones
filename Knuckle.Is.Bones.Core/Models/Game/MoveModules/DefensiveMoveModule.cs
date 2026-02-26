@@ -1,18 +1,15 @@
-﻿using System.Text.Json.Serialization;
+﻿using Knuckle.Is.Bones.Core.Helpers;
+using System.Text.Json.Serialization;
 
 namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 {
-	public class DefensiveMoveModule : IMoveModule, ICPUMove
+	public class DefensiveMoveModule : BaseMoveModule, ICPUMove
 	{
-		public Guid OpponentID { get; set; } = Guid.NewGuid();
-
 		internal readonly Random _rnd = new Random();
-		private int _targetColumn = 0;
 
 		[JsonConstructor]
-		public DefensiveMoveModule(Guid opponentID)
+		public DefensiveMoveModule(Guid opponentID) : base(opponentID)
 		{
-			OpponentID = opponentID;
 		}
 
 		void ICPUMove.SetTargetColumn(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
@@ -27,23 +24,15 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 			}
 			if (orderedQueue.Count > 0)
 			{
-				_targetColumn = orderedQueue.Dequeue();
+				TargetColumn = orderedQueue.Dequeue();
 				return;
 			}
 
-			int target = -1;
-			bool valid = false;
-			while (!valid)
-			{
-				target = _rnd.Next(0, myBoard.Columns.Count);
-				if (!myBoard.Columns[target].IsFull())
-					valid = true;
-			}
-			_targetColumn = target;
+			var target = MoveHelpers.GetRandomFreeColumn(myBoard);
+			if (target is int targetAct)
+				TargetColumn = targetAct;
 		}
 
-		public int GetTargetColumn() => _targetColumn;
-
-		public virtual IMoveModule Clone() => new DefensiveMoveModule(OpponentID);
+		public override IMoveModule Clone() => new DefensiveMoveModule(OpponentID);
 	}
 }

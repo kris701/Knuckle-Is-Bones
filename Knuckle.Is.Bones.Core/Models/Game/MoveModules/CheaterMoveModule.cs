@@ -1,9 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Knuckle.Is.Bones.Core.Helpers;
+using System.Text.Json.Serialization;
 
 namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 {
 	public class CheaterMoveModule : DefensiveMoveModule, IBoardModifier
 	{
+		public bool HasModified { get; private set; }
 		private int _nextTargetTurn = 5;
 
 		[JsonConstructor]
@@ -13,6 +15,8 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 
 		List<ModifyerType> IBoardModifier.ModifyBoards(DiceDefinition diceValue, BoardDefinition myBoard, BoardDefinition opponentBoard, int turnIndex)
 		{
+			if (HasModified)
+				return new List<ModifyerType>();
 			if (turnIndex >= _nextTargetTurn)
 			{
 				if (opponentBoard.IsEmpty())
@@ -22,16 +26,11 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 
 				_nextTargetTurn = _rnd.Next(turnIndex + 4, turnIndex + 7);
 
-				var checkOrder = new List<int>();
-				for (int col = 0; col < myBoard.Columns.Count; col++)
-					if (!myBoard.Columns[col].IsFull())
-						checkOrder.Add(col);
-				if (checkOrder.Count == 0)
-					return new List<ModifyerType>();
-				checkOrder = checkOrder.Shuffle().ToList();
-
+				var checkOrder = MoveHelpers.GetRandomColumnOrder(myBoard);
 				foreach (var col in checkOrder)
 				{
+					if (myBoard.Columns[col].IsFull())
+						continue;
 					foreach (var dice in diceValue.Options)
 					{
 						var count = myBoard.Columns[col].Cells.Count(x => x == dice);
@@ -49,10 +48,12 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 						}
 					}
 				}
+				HasModified = true;
 				return new List<ModifyerType>();
 			}
 			return new List<ModifyerType>();
 		}
+		void IBoardModifier.Reset() => HasModified = false;
 
 		public override IMoveModule Clone() => new CheaterMoveModule(OpponentID);
 	}
