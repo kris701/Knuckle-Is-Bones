@@ -1,5 +1,5 @@
-﻿using MonoGame.OpenGL.Formatter;
-using MonoGame.OpenGL.Formatter.Controls;
+﻿using FormMatter.OpenGL;
+using FormMatter.OpenGL.Controls;
 using System;
 
 namespace Knuckle.Is.Bones.OpenGL.Controls

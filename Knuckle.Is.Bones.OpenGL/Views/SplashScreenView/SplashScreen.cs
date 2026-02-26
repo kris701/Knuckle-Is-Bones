@@ -1,7 +1,8 @@
 ﻿using Knuckle.Is.Bones.Core.Helpers;
+using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter.Input;
+using FormMatter.OpenGL.Input;
 using System;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.SplashScreenView
@@ -13,7 +14,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SplashScreenView
 
 		public SplashScreen(KnuckleBoneWindow parent) : base(parent, new Guid("20aed282-f7e1-4595-9f53-85d95c0efe6f"))
 		{
-			parent.Audio.PlaySong(new Guid("9b223250-88f1-4c3e-9d80-0c4087ab9369"));
+			parent.Audio.PlaySong(SongHelpers.MainMusic);
 			_mouseWatcher = new MouseWatcher(SwitchToMainMenu);
 			_splashTimer = new GameTimer(TimeSpan.FromSeconds(3), (t) => SwitchView(new MainMenu(parent)));
 			Initialize();

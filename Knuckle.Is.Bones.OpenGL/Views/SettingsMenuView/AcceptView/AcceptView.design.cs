@@ -2,9 +2,9 @@
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Helpers;
+using FormMatter.OpenGL;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
@@ -30,8 +30,8 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 				Height = 75,
 				Width = 800,
 				Text = "Accept Changes?",
-				FontColor = new Color(217, 68, 144),
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx48)
+				FontColor = FontHelpers.SecondaryColor,
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx48)
 			});
 			AddControl(0, new LabelControl()
 			{
@@ -40,16 +40,16 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 				Height = 35,
 				Width = 700,
 				Text = $"Settings will reset in 10 seconds otherwise.",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
-				FontColor = Color.White
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
+				FontColor = FontHelpers.PrimaryColor
 			});
 			_timeLeftLabel = new LabelControl()
 			{
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				Y = 500,
 				Text = "10 seconds left",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
-				FontColor = Color.Red
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx48),
+				FontColor = FontHelpers.ErrorColor
 			};
 			AddControl(0, _timeLeftLabel);
 
@@ -57,9 +57,9 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 			AddControl(0, new AnimatedAudioButton(Parent, (e) => Cancel())
 			{
 				Text = "Cancel",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 				Width = 400,
 				Height = 100,
 				Y = 960,
@@ -69,9 +69,9 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 			AddControl(0, new AnimatedAudioButton(Parent, (e) => Accept())
 			{
 				Text = "Accept",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 				Width = 400,
 				Height = 100,
 				Y = 960,
@@ -86,7 +86,7 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 				Width = 50,
 				Height = 25,
 				Text = "Reload",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx10),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx10),
 				FillColor = BasicTextures.GetBasicRectange(Color.White),
 				FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray)
 			});

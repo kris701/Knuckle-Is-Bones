@@ -1,7 +1,7 @@
 ﻿using Knuckle.Is.Bones.OpenGL.Helpers;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Helpers;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using System;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.SplashScreenView
@@ -21,7 +21,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SplashScreenView
 			{
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				VerticalAlignment = VerticalAlignment.Middle,
-				TileSet = Parent.Textures.GetTextureSet(new Guid("af1a8619-0867-44ce-89ab-e2d42912ba44"))
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Title)
 			});
 #if DEBUG
 			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new SplashScreen(Parent)))
@@ -31,7 +31,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SplashScreenView
 				Width = 50,
 				Height = 25,
 				Text = "Reload",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx10),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx10),
 				FillColor = BasicTextures.GetBasicRectange(Color.White),
 				FontColor = Color.Black,
 				FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray)

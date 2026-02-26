@@ -1,9 +1,9 @@
 ﻿using Knuckle.Is.Bones.OpenGL.Helpers;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Controls.Elements;
-using MonoGame.OpenGL.Formatter.Helpers;
-using MonoGame.OpenGL.Formatter.Views;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Controls.Elements;
+using FormMatter.OpenGL.Helpers;
+using FormMatter.OpenGL.Views;
 using System;
 using System.Collections.Generic;
 
@@ -18,7 +18,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 		public IView Parent { get; set; }
 
 		public float ButtonSize { get; set; } = 50;
-		public Guid ButtonFontSize { get; set; } = FontSizes.Ptx16;
+		public Guid ButtonFontSize { get; set; } = FontHelpers.Ptx16;
 		public float LeftButtonX { get; set; } = 0;
 		public float LeftButtonY { get; set; } = 0;
 		public float RightButtonX { get; set; } = 0;

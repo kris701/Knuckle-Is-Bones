@@ -2,8 +2,8 @@
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Helpers;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
@@ -23,8 +23,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
 				Y = 100,
 				Text = "How to Play",
 				HorizontalAlignment = HorizontalAlignment.Middle,
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx48),
-				FontColor = new Color(217, 68, 144),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx48),
+				FontColor = FontHelpers.SecondaryColor,
 			});
 
 			// https://cult-of-the-lamb.fandom.com/wiki/Knucklebones
@@ -50,14 +50,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
 				FontColor = Color.White,
 				WordWrap = TextboxControl.WordWrapTypes.Word,
 				Text = sb.ToString(),
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 			});
 			AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
 			{
 				Text = "Back",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 				Width = 400,
 				Height = 100,
 				Y = 960,
@@ -72,7 +72,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
 				Width = 50,
 				Height = 25,
 				Text = "Reload",
-				Font = Parent.Fonts.GetFont(FontSizes.Ptx10),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx10),
 				FillColor = BasicTextures.GetBasicRectange(Color.White),
 				FontColor = Color.Black,
 				FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray)

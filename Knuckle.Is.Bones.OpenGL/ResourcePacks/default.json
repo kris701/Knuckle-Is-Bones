@@ -83,29 +83,28 @@
         "Shared/square_2"
       ]
     },
-
     {
       "ID": "3365fe57-9c47-44ec-b3d2-457fa0fdf3c4",
       "FrameTime": 750,
-      "Contents": [
-        "Views/MainGame/combo_1_1",
-        "Views/MainGame/combo_1_2"
-      ]
-    },
-    {
-      "ID": "936d00f9-2f70-40f6-9d1b-b13cec0fc54a",
-      "FrameTime": 650,
       "Contents": [
         "Views/MainGame/combo_2_1",
         "Views/MainGame/combo_2_2"
       ]
     },
     {
-      "ID": "d02a3300-76fa-4965-9f41-18f4af4832a3",
-      "FrameTime": 500,
+      "ID": "936d00f9-2f70-40f6-9d1b-b13cec0fc54a",
+      "FrameTime": 650,
       "Contents": [
         "Views/MainGame/combo_3_1",
         "Views/MainGame/combo_3_2"
+      ]
+    },
+    {
+      "ID": "d02a3300-76fa-4965-9f41-18f4af4832a3",
+      "FrameTime": 500,
+      "Contents": [
+        "Views/MainGame/combo_4_1",
+        "Views/MainGame/combo_4_2"
       ]
     },
     {

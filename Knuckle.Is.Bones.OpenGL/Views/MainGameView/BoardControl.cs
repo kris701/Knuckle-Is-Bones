@@ -1,10 +1,10 @@
 ﻿using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Helpers;
-using MonoGame.OpenGL.Formatter.Textures;
+using FormMatter.OpenGL;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
+using FormMatter.OpenGL.Textures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,7 +124,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Width = Width,
 				Height = Height,
 				Alpha = 0,
-				TileSet = _parent.Textures.GetTextureSet(new Guid("6399f667-05f1-4a60-8f2e-dac4b3dbd809"))
+				TileSet = _parent.Textures.GetTextureSet(TextureHelpers.GameBoardModifying)
 			};
 			Children.Add(_modifyingTile);
 
@@ -134,25 +134,23 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private Guid DeteminteFittingFontSize(float minSize)
 		{
 			if (minSize > 75)
-				return FontSizes.Ptx24;
+				return FontHelpers.Ptx24;
 			if (minSize > 45)
-				return FontSizes.Ptx16;
-			return FontSizes.Ptx8;
+				return FontHelpers.Ptx16;
+			return FontHelpers.Ptx8;
 		}
 
 		private TextureSetDefinition GetBackgroundForCount(List<int> cells, int value)
 		{
 			if (value == 0)
-				return _parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"));
+				return _parent.Textures.GetTextureSet(TextureHelpers.GameSquare);
 			switch (cells.Count(x => x == value))
 			{
-				case 0:
-				case 1: return _parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"));
-				case 2: return _parent.Textures.GetTextureSet(new System.Guid("936d00f9-2f70-40f6-9d1b-b13cec0fc54a"));
-				case 3: return _parent.Textures.GetTextureSet(new System.Guid("d02a3300-76fa-4965-9f41-18f4af4832a3"));
-				case >= 4: return _parent.Textures.GetTextureSet(new System.Guid("d02a3300-76fa-4965-9f41-18f4af4832a3"));
+				case 2: return _parent.Textures.GetTextureSet(TextureHelpers.GameCombo2);
+				case 3: return _parent.Textures.GetTextureSet(TextureHelpers.GameCombo3);
+				case >= 4: return _parent.Textures.GetTextureSet(TextureHelpers.GameCombo4);
 			}
-			return _parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"));
+			return _parent.Textures.GetTextureSet(TextureHelpers.GameSquare);
 		}
 
 		public void HighlightColumn(int columnID)
