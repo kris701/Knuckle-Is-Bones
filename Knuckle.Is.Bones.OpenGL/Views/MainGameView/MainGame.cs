@@ -5,7 +5,7 @@ using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter.Controls;
+using FormMatter.OpenGL.Controls;
 using System;
 using System.Collections.Generic;
 
@@ -38,13 +38,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361"))
 		{
 			Engine = new KnuckleBonesEngine(state);
-			Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(new Guid("4e53cd32-7af6-47a1-a331-ec2096505c78"));
-			Engine.OnCombo += () => Parent.Audio.PlaySoundEffectOnce(new Guid("74ea48c8-cb6f-4a22-8226-e5d6142b1f76"));
-			Engine.OnTurn += () => Parent.Audio.PlaySoundEffectOnce(new Guid("23ac297f-3e68-461f-a869-a304e89e18c6"));
-			Engine.OnBoardModified += (o) =>
-			{
-				Parent.Audio.PlaySoundEffectOnce(new Guid("97b1fabe-d7c8-44fc-86bf-94592a91edf8"));
-			};
+			Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnDiceRemove);
+			Engine.OnCombo += () => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnCombo);
+			Engine.OnTurn += () => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnTurn);
+			Engine.OnBoardModified += (o) => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnBoardModified);
 
 			var speeds = GameSpeedHelpers.GetGameSpeed(Parent.Settings.GameSpeed);
 			_rollTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.RollTimer), OnRollTimer);
@@ -58,7 +55,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private void OnRollTimer(TimeSpan span)
 		{
 			if (_rollSoundEffect == Guid.Empty)
-				_rollSoundEffect = Parent.Audio.PlaySoundEffect(new Guid("adb4826c-ae62-4785-b0f3-81dd4d692920"));
+				_rollSoundEffect = Parent.Audio.PlaySoundEffect(SoundEffectHelpers.GameOnDiceRoll);
 			_rolledTimes++;
 			if (_rolledTimes > 10)
 			{
@@ -91,9 +88,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			var current = Engine.State.GetCurrentOpponent();
 
 			if (current.MoveModule.OpponentID == Engine.State.FirstOpponent.MoveModule.OpponentID)
-				_firstOpponentTurnControl.IsVisible = true;
+				_firstOpponentTurnControl.FontColor = FontHelpers.SecondaryColor;
 			else
-				_secondOpponentTurnControl.IsVisible = true;
+				_secondOpponentTurnControl.FontColor = FontHelpers.SecondaryColor;
 
 			if (current.MoveModule is not PlayerMoveModule)
 			{
@@ -202,8 +199,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			if (_rolling || _rollWait || _selectWait)
 				return;
 
-			_firstOpponentTurnControl.IsVisible = false;
-			_secondOpponentTurnControl.IsVisible = false;
+			_firstOpponentTurnControl.FontColor = FontHelpers.PrimaryColor;
+			_secondOpponentTurnControl.FontColor = FontHelpers.PrimaryColor;
 
 			Engine.Execute(new TurnAction());
 
@@ -283,7 +280,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			if (_rolling || _rollWait || _selectWait)
 				return;
 
-			Parent.Audio.PlaySoundEffectOnce(new Guid("19268829-42c3-411d-8357-91d55de0cef6"));
+			Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnMove);
 
 			var opponent = Engine.State.GetCurrentOpponent();
 			if (opponent.MoveModule is PlayerMoveModule player && Engine.State.Turn == player.OpponentID)

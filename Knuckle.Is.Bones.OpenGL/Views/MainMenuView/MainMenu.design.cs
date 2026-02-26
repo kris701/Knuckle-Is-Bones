@@ -7,8 +7,8 @@ using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView;
 using Knuckle.Is.Bones.OpenGL.Views.StartGameView;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Helpers;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using System;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView

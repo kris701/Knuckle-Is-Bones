@@ -1,4 +1,6 @@
-﻿namespace Knuckle.Is.Bones.Core.Models
+﻿using FormMatter.Builders;
+
+namespace Knuckle.Is.Bones.Core.Models
 {
 	public interface IDefinition : IIdentifiable
 	{

@@ -5,9 +5,9 @@ using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Helpers;
+using FormMatter.OpenGL;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -16,10 +16,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 	public partial class MainGame : BaseKnuckleBoneFadeView
 	{
 		private AnimatedLabelControl _diceLabel;
-		private TileControl _firstOpponentTurnControl;
+		private LabelControl _firstOpponentTurnControl;
 		private BoardControl _firstOpponentBoard;
 		private AnimatedLabelControl _firstOpponentPoints;
-		private TileControl _secondOpponentTurnControl;
+		private LabelControl _secondOpponentTurnControl;
 		private BoardControl _secondOpponentBoard;
 		private AnimatedLabelControl _secondOpponentPoints;
 		private CanvasPanelControl _gameOverPanel;
@@ -83,7 +83,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				FontColor = Color.White,
 				Text = $"Back",
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
 			});
 		}
@@ -95,13 +95,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			)]
 		private void CreateFirstOpponent()
 		{
-			_firstOpponentTurnControl = new TileControl()
+			_firstOpponentTurnControl = new LabelControl()
 			{
-				IsVisible = false,
-				Width = IWindow.BaseScreenSize.X,
-				Height = 5,
-				Alpha = 150,
-				FillColor = BasicTextures.GetBasicRectange(new Color(217, 68, 144))
+				Text = $"{Engine.State.FirstOpponent.Name}",
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
+				Width = 300,
+				Height = 100,
+				HorizontalAlignment = HorizontalAlignment.Right,
+				VerticalAlignment = VerticalAlignment.Top,
 			};
 			AddControl(10, _firstOpponentTurnControl);
 			_firstOpponentPoints = new AnimatedLabelControl()
@@ -113,19 +114,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				FontColor = Color.Gold,
 				Text = $"{Engine.State.GetFirstOpponentBoardValue()}",
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("4214d3a5-c6c6-4893-a366-30005537799b"))
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.GamePoints)
 			};
 			AddControl(10, _firstOpponentPoints);
-
-			AddControl(10, new LabelControl()
-			{
-				Text = $"{Engine.State.FirstOpponent.Name}",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				Width = 300,
-				Height = 100,
-				HorizontalAlignment = HorizontalAlignment.Right,
-				VerticalAlignment = VerticalAlignment.Top,
-			});
 
 			if (Parent.Textures.ContainsTextureSet(Engine.State.FirstOpponent.ID))
 			{
@@ -150,14 +141,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			)]
 		private void CreateSeccondOpponent()
 		{
-			_secondOpponentTurnControl = new TileControl()
+			_secondOpponentTurnControl = new LabelControl()
 			{
-				IsVisible = false,
+				Text = $"{Engine.State.SecondOpponent.Name}",
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
+				Width = 300,
+				Height = 100,
 				VerticalAlignment = VerticalAlignment.Bottom,
-				Width = IWindow.BaseScreenSize.X,
-				Height = 5,
-				Alpha = 150,
-				FillColor = BasicTextures.GetBasicRectange(new Color(217, 68, 144))
+				HorizontalAlignment = HorizontalAlignment.Left,
 			};
 			AddControl(20, _secondOpponentTurnControl);
 			_secondOpponentPoints = new AnimatedLabelControl()
@@ -169,19 +160,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				FontColor = Color.Gold,
 				Text = $"{Engine.State.GetSecondOpponentBoardValue()}",
-				TileSet = Parent.Textures.GetTextureSet(new System.Guid("4214d3a5-c6c6-4893-a366-30005537799b"))
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.GamePoints)
 			};
 			AddControl(20, _secondOpponentPoints);
-
-			AddControl(20, new LabelControl()
-			{
-				Text = $"{Engine.State.SecondOpponent.Name}",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				Width = 300,
-				Height = 100,
-				VerticalAlignment = VerticalAlignment.Bottom,
-				HorizontalAlignment = HorizontalAlignment.Left,
-			});
 
 			if (Parent.Textures.ContainsTextureSet(Engine.State.SecondOpponent.ID))
 			{
@@ -203,7 +184,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			)]
 		private void SetupDice()
 		{
-			var targetTileSet = Parent.Textures.GetTextureSet(new System.Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5"));
+			var targetTileSet = Parent.Textures.GetTextureSet(TextureHelpers.GameSquare);
 			if (Parent.Textures.ContainsTextureSet(Engine.State.CurrentDice.ID))
 				targetTileSet = Parent.Textures.GetTextureSet(Engine.State.CurrentDice.ID);
 
@@ -252,7 +233,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				{
 					Width = 600,
 					Height = 500,
-					TileSet = Parent.Textures.GetTextureSet(new System.Guid("d7ae88e1-8b8e-4ea9-9c99-e78e2d91943a"))
+					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.GameGameOver)
 				},
 				new StackPanelControl(new List<IControl>()
 				{
@@ -289,7 +270,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 						Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 						Text = "Try Again",
 						FontColor = Color.White,
-						TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+						TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 						FillClickedColor = BasicTextures.GetClickedTexture(),
 					},
 					new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
@@ -300,7 +281,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 						Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 						Text = "Main Menu",
 						FontColor = Color.White,
-						TileSet = Parent.Textures.GetTextureSet(new System.Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce")),
+						TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 						FillClickedColor = BasicTextures.GetClickedTexture(),
 					}
 				})

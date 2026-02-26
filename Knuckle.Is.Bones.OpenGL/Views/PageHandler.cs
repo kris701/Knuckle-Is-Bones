@@ -1,9 +1,9 @@
 ﻿using Knuckle.Is.Bones.OpenGL.Helpers;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Controls.Elements;
-using MonoGame.OpenGL.Formatter.Helpers;
-using MonoGame.OpenGL.Formatter.Views;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Controls.Elements;
+using FormMatter.OpenGL.Helpers;
+using FormMatter.OpenGL.Views;
 using System;
 using System.Collections.Generic;
 

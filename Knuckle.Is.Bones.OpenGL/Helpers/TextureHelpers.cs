@@ -37,6 +37,18 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 
 		#endregion
 
+		#region MainGame
+
+		public static Guid GameBoardModifying => new Guid("6399f667-05f1-4a60-8f2e-dac4b3dbd809");
+		public static Guid GameSquare => new Guid("a05f00b0-fcdd-41a8-a350-90bf0956c3b5");
+		public static Guid GameCombo2 => new Guid("3365fe57-9c47-44ec-b3d2-457fa0fdf3c4");
+		public static Guid GameCombo3 => new Guid("936d00f9-2f70-40f6-9d1b-b13cec0fc54a");
+		public static Guid GameCombo4 => new Guid("d02a3300-76fa-4965-9f41-18f4af4832a3");
+		public static Guid GamePoints => new Guid("4214d3a5-c6c6-4893-a366-30005537799b");
+		public static Guid GameGameOver => new Guid("d7ae88e1-8b8e-4ea9-9c99-e78e2d91943a");
+
+		#endregion
+
 		public static Guid Title => new Guid("af1a8619-0867-44ce-89ab-e2d42912ba44");
 
 	}

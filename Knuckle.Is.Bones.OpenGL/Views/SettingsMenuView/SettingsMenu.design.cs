@@ -3,13 +3,13 @@ using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Helpers;
+using FormMatter.OpenGL;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using static MonoGame.OpenGL.Formatter.Controls.StackPanelControl;
+using static FormMatter.OpenGL.Controls.StackPanelControl;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 {

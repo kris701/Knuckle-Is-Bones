@@ -1,4 +1,5 @@
-﻿using Knuckle.Is.Bones.Core.Models.Game;
+﻿using FormMatter.Builders;
+using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Shop;
 using System.Reflection;
 using System.Text.Json;
@@ -9,10 +10,10 @@ namespace Knuckle.Is.Bones.Core.Resources
 	{
 		private static readonly Guid _coreID = new Guid("f06a2262-4c0b-4bca-bd1d-d13504e572bc");
 
-		public static BaseBuilder<BoardDefinition> Boards = new BaseBuilder<BoardDefinition>("Resources.Core.Boards", Assembly.GetExecutingAssembly());
-		public static BaseBuilder<OpponentDefinition> Opponents = new BaseBuilder<OpponentDefinition>("Resources.Core.Opponents", Assembly.GetExecutingAssembly());
-		public static BaseBuilder<DiceDefinition> Dice = new BaseBuilder<DiceDefinition>("Resources.Core.Dice", Assembly.GetExecutingAssembly());
-		public static BaseBuilder<ShopItemDefinition> Shop = new BaseBuilder<ShopItemDefinition>("Resources.Core.Shop", Assembly.GetExecutingAssembly());
+		public static ResourceBuilder<BoardDefinition> Boards = new ResourceBuilder<BoardDefinition>("Resources.Core.Boards", Assembly.GetExecutingAssembly());
+		public static ResourceBuilder<OpponentDefinition> Opponents = new ResourceBuilder<OpponentDefinition>("Resources.Core.Opponents", Assembly.GetExecutingAssembly());
+		public static ResourceBuilder<DiceDefinition> Dice = new ResourceBuilder<DiceDefinition>("Resources.Core.Dice", Assembly.GetExecutingAssembly());
+		public static ResourceBuilder<ShopItemDefinition> Shop = new ResourceBuilder<ShopItemDefinition>("Resources.Core.Shop", Assembly.GetExecutingAssembly());
 
 		public static List<ResourceDefinition> LoadedResources { get; internal set; } = new List<ResourceDefinition>() {
 			new ResourceDefinition(_coreID, "1.0.0", "Core", "Core Game Components")

@@ -2,9 +2,9 @@
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Helpers;
+using FormMatter.OpenGL;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView

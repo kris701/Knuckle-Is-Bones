@@ -5,8 +5,8 @@ using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Helpers;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -135,7 +135,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
 				FontColor = Color.Gold,
 				Text = "Buy",
-				ClickSound = new Guid("83fe89c5-745e-4f76-aa87-02ed76b37b1b"),
+				ClickSound = SoundEffectHelpers.ShopBuySound,
 				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 				X = pagehandler.X + 10 + width + 50,
 				Y = height + 50,

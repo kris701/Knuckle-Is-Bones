@@ -2,16 +2,16 @@
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Models;
-using Knuckle.Is.Bones.OpenGL.ResourcePacks;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
-using MonoGame.OpenGL.Formatter;
-using MonoGame.OpenGL.Formatter.Helpers;
-using MonoGame.OpenGL.Formatter.Views;
+using FormMatter.OpenGL;
+using FormMatter.OpenGL.Helpers;
+using FormMatter.OpenGL.Views;
 using Steamworks;
 using System;
 using System.IO;
+using Knuckle.Is.Bones.Core.Resources;
 
 namespace Knuckle.Is.Bones.OpenGL
 {
@@ -20,7 +20,6 @@ namespace Knuckle.Is.Bones.OpenGL
 		private static readonly string _contentDir = "Content";
 		private static readonly string _modsDir = "Mods";
 
-		public ResourcePackController ResourcePackController { get; private set; }
 		public UserSaveDefinition User { get; private set; }
 		public SettingsDefinition Settings { get; set; }
 
@@ -53,13 +52,12 @@ namespace Knuckle.Is.Bones.OpenGL
 		{
 			base.Initialize();
 
-			ResourcePackController = new ResourcePackController(this);
-
 			BasicTextures.Initialize(Device.GraphicsDevice);
 			MediaPlayer.IsRepeating = true;
 			SoundEffect.Initialize();
+			ResourcePacks.OnLoadMod += (f) => ResourceManager.ReloadResources();
 			LoadMods();
-			ResourcePackController.LoadResourcePack(Settings.ResourcePackID);
+			ResourcePacks.LoadResourcePack(Settings.ResourcePackID);
 
 			SteamHelpers.IsInitialized = SteamAPI.Init();
 
@@ -73,7 +71,7 @@ namespace Knuckle.Is.Bones.OpenGL
 		{
 			if (!Directory.Exists(_modsDir))
 				Directory.CreateDirectory(_modsDir);
-			ResourcePackController.LoadMods(_modsDir);
+			ResourcePacks.LoadMods(_modsDir);
 		}
 
 		public void ApplySettings()

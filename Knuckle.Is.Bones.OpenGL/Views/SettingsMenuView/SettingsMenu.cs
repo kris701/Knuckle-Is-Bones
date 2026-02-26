@@ -3,8 +3,8 @@ using Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Input;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Input;
 using System;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView

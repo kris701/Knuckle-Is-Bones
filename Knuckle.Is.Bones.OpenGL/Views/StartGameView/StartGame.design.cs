@@ -7,8 +7,8 @@ using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Helpers;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -252,7 +252,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Y = y + 10,
 				Height = 50,
 				Width = width,
-				FontColor = new Color(217, 68, 144)
+				FontColor = FontHelpers.SecondaryColor
 			});
 
 			var items = new List<IPurchasable>();

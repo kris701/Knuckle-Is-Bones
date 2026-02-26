@@ -2,8 +2,8 @@
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using MonoGame.OpenGL.Formatter.Controls;
-using MonoGame.OpenGL.Formatter.Helpers;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
