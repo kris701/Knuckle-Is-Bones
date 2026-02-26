@@ -1,7 +1,6 @@
 ﻿using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
-using Knuckle.Is.Bones.OpenGL.Views.StartGameView;
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter;
 using MonoGame.OpenGL.Formatter.Controls;

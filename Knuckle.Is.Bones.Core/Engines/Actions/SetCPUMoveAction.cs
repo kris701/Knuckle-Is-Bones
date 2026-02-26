@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Knuckle.Is.Bones.Core.Engines.Actions
+﻿namespace Knuckle.Is.Bones.Core.Engines.Actions
 {
 	public class SetCPUMoveAction : IEngineAction
 	{

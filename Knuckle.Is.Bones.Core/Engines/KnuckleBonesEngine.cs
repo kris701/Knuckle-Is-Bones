@@ -2,8 +2,6 @@
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
-using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
-using Knuckle.Is.Bones.Core.Resources;
 
 namespace Knuckle.Is.Bones.Core.Engines
 {
@@ -26,8 +24,6 @@ namespace Knuckle.Is.Bones.Core.Engines
 		{
 			if (State.GameOver)
 				return false;
-			if (CheckGameOverState())
-				return false;
 
 			switch (action)
 			{
@@ -40,7 +36,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 				case TurnAction act:
 					return TakeTurn();
 				case CheckGameStateAction act:
-					return false;
+					return CheckGameOverState();
 				default:
 					throw new Exception("Unknown action!");
 			}
@@ -165,6 +161,11 @@ namespace Knuckle.Is.Bones.Core.Engines
 		private bool SetPlayerMove(int target)
 		{
 			var current = State.GetCurrentOpponent();
+			if (State.Turn != current.MoveModule.OpponentID)
+				return false;
+			if (State.GameOver || CheckGameOverState())
+				return false;
+
 			if (current.MoveModule is PlayerMoveModule player)
 			{
 				player.SetTargetColumn(target);
@@ -176,6 +177,11 @@ namespace Knuckle.Is.Bones.Core.Engines
 		private bool SetCPUMove()
 		{
 			var current = State.GetCurrentOpponent();
+			if (State.Turn != current.MoveModule.OpponentID)
+				return false;
+			if (State.GameOver || CheckGameOverState())
+				return false;
+
 			if (current.MoveModule is IInternalCPUMove cpu)
 			{
 				var currentBoard = State.GetCurrentOpponentBoard();
@@ -189,11 +195,17 @@ namespace Knuckle.Is.Bones.Core.Engines
 		private bool SetCPUBoardModification()
 		{
 			var current = State.GetCurrentOpponent();
-			var other = State.GetNextCurrentOpponent();
-			var currentBoard = State.GetCurrentOpponentBoard();
-			var otherBoard = State.GetNextOpponentBoard();
+			if (State.Turn != current.MoveModule.OpponentID)
+				return false;
+			if (State.GameOver || CheckGameOverState())
+				return false;
+
 			if (current.MoveModule is IInternalBoardModifier board)
 			{
+				var other = State.GetNextCurrentOpponent();
+				var currentBoard = State.GetCurrentOpponentBoard();
+				var otherBoard = State.GetNextOpponentBoard();
+
 				var modifications = board.ModifyBoards(State.CurrentDice, currentBoard, otherBoard, State.TurnIndex);
 				foreach (var modification in modifications)
 				{
