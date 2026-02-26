@@ -13,7 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
-	public partial class MainGame : BaseKnuckleBoneFadeView
+	public partial class MainGame : BaseTransitionView
 	{
 		private AnimatedLabelControl _diceLabel;
 		private LabelControl _firstOpponentTurnControl;

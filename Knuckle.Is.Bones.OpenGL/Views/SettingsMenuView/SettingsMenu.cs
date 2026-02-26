@@ -1,23 +1,26 @@
-﻿using Knuckle.Is.Bones.OpenGL.Models;
+﻿using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
+using FormMatter.OpenGL.Input;
+using Knuckle.Is.Bones.OpenGL.Controls;
+using Knuckle.Is.Bones.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using FormMatter.OpenGL.Controls;
-using FormMatter.OpenGL.Input;
 using System;
+using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 {
-	public partial class SettingsMenu : BaseKnuckleBoneFadeView
+	public partial class SettingsMenu : BaseNavigatableView
 	{
 		private readonly SettingsDefinition _newSettings;
-		private readonly KeyWatcher _escapeKeyWatcher;
 
-		public SettingsMenu(KnuckleBoneWindow parent) : base(parent, new Guid("356b5d18-1aaf-4c98-aa73-2b27fe82ed1f"))
+		public SettingsMenu(KnuckleBoneWindow parent) : base(parent, new Guid("356b5d18-1aaf-4c98-aa73-2b27fe82ed1f"), new List<int>() { 0 })
 		{
 			_newSettings = Parent.Settings.Clone();
-			_escapeKeyWatcher = new KeyWatcher(Keys.Escape, Escape);
+			BackAction = () => Escape();
 			Initialize();
 		}
 
@@ -30,12 +33,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 			Parent.Settings = newSettings;
 			Parent.ApplySettings();
 			SwitchView(new AcceptView(Parent, oldSettings, newSettings));
-		}
-
-		public override void OnUpdate(GameTime gameTime)
-		{
-			var keyState = Keyboard.GetState();
-			_escapeKeyWatcher.Update(keyState);
 		}
 
 		private void Escape()

@@ -6,7 +6,7 @@ using System;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.SplashScreenView
 {
-	public partial class SplashScreen : BaseKnuckleBoneFadeView
+	public partial class SplashScreen : BaseNavigatableView
 	{
 		public override void Initialize()
 		{

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
 {
-	public partial class HowToPlay : BaseKnuckleBoneFadeView
+	public partial class HowToPlay : BaseNavigatableView
 	{
 		public override void Initialize()
 		{

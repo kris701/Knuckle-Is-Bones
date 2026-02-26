@@ -8,10 +8,11 @@ using Microsoft.Xna.Framework.Input;
 using FormMatter.OpenGL.Input;
 using System;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
-	public partial class StartGame : BaseKnuckleBoneFadeView
+	public partial class StartGame : BaseNavigatableView
 	{
 		private Guid _selectedBoard = Guid.Empty;
 		private AnimatedAudioButton? _selectedBoardButton;
@@ -21,11 +22,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private AnimatedAudioButton? _selectedSecondOpponentButton;
 		private Guid _selectedDice = Guid.Empty;
 		private AnimatedAudioButton? _selectedDiceButton;
-		private readonly KeyWatcher _escapeKeyWatcher;
 
-		public StartGame(KnuckleBoneWindow parent) : base(parent, new Guid("9ba30a3d-f77c-4aa4-b390-8c8789dba4c0"))
+		public StartGame(KnuckleBoneWindow parent) : base(parent, new Guid("9ba30a3d-f77c-4aa4-b390-8c8789dba4c0"), new List<int>() { 0, 1 })
 		{
-			_escapeKeyWatcher = new KeyWatcher(Keys.Escape, () => SwitchView(new MainMenu(parent)));
+			BackAction = () => SwitchView(new MainMenu(Parent));
 			Initialize();
 		}
 
@@ -109,12 +109,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					_diceDescription.Text = def.Description;
 				}
 			}
-		}
-
-		public override void OnUpdate(GameTime gameTime)
-		{
-			var keyState = Keyboard.GetState();
-			_escapeKeyWatcher.Update(keyState);
 		}
 	}
 }

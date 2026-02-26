@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 {
-	public partial class AcceptView : BaseKnuckleBoneFadeView
+	public partial class AcceptView : BaseNavigatableView
 	{
 		private LabelControl _timeLeftLabel;
 

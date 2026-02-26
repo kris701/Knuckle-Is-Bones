@@ -6,29 +6,26 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using FormMatter.OpenGL.Input;
 using System;
+using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 {
-	public partial class AcceptView : BaseKnuckleBoneFadeView
+	public partial class AcceptView : BaseNavigatableView
 	{
 		private readonly SettingsDefinition _newSettings;
 		private readonly SettingsDefinition _oldSettings;
-		private readonly KeyWatcher _escapeKeyWatcher;
 		private TimeSpan _waitFor = TimeSpan.FromSeconds(10);
 		private int _secsLeft = 10;
-		public AcceptView(KnuckleBoneWindow parent, SettingsDefinition oldSettings, SettingsDefinition newSettings) : base(parent, new Guid("937b4268-87fc-4f72-a180-e53ebd47a18d"))
+		public AcceptView(KnuckleBoneWindow parent, SettingsDefinition oldSettings, SettingsDefinition newSettings) : base(parent, new Guid("937b4268-87fc-4f72-a180-e53ebd47a18d"), new List<int>() { 0 })
 		{
 			_oldSettings = oldSettings;
 			_newSettings = newSettings;
+			BackAction = () => Cancel();
 			Initialize();
-			_escapeKeyWatcher = new KeyWatcher(Keys.Escape, Cancel);
 		}
 
 		public override void OnUpdate(GameTime gameTime)
 		{
-			var keyState = Keyboard.GetState();
-			_escapeKeyWatcher.Update(keyState);
-
 			_waitFor -= gameTime.ElapsedGameTime;
 			if (_waitFor.Seconds != _secsLeft)
 			{
@@ -37,6 +34,7 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 			}
 			if (_waitFor <= TimeSpan.Zero)
 				Cancel();
+			base.OnUpdate(gameTime);
 		}
 
 		private void Accept()

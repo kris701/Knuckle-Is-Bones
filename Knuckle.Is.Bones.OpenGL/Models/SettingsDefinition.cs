@@ -14,6 +14,7 @@ namespace Knuckle.Is.Bones.OpenGL.Models
 		public float MusicVolume { get; set; } = 0.2f;
 		public float EffectsVolume { get; set; } = 0.2f;
 		public GameSpeedTypes GameSpeed { get; set; } = GameSpeedTypes.Normal;
+		public int GamepadIndex { get; set; } = 0;
 		public Guid ResourcePackID { get; set; } = new Guid("4f686e3a-9bd8-41cd-854c-17cca5fce01b");
 
 		public SettingsDefinition Clone() => new SettingsDefinition()
@@ -25,7 +26,8 @@ namespace Knuckle.Is.Bones.OpenGL.Models
 			MusicVolume = MusicVolume,
 			EffectsVolume = EffectsVolume,
 			ResourcePackID = ResourcePackID,
-			GameSpeed = GameSpeed
+			GameSpeed = GameSpeed,
+			GamepadIndex = GamepadIndex
 		};
 
 		public override bool Equals(object? obj)
@@ -38,12 +40,23 @@ namespace Knuckle.Is.Bones.OpenGL.Models
 				   MusicVolume == definition.MusicVolume &&
 				   EffectsVolume == definition.EffectsVolume &&
 				   GameSpeed == definition.GameSpeed &&
+				   GamepadIndex == definition.GamepadIndex &&
 				   ResourcePackID.Equals(definition.ResourcePackID);
 		}
 
 		public override int GetHashCode()
 		{
-			return HashCode.Combine(ResolutionX, ResolutionY, IsFullscreen, IsVsync, MusicVolume, EffectsVolume, GameSpeed, ResourcePackID);
+			var hash = new HashCode();
+			hash.Add(ResolutionX);
+			hash.Add(ResolutionY);
+			hash.Add(IsFullscreen);
+			hash.Add(IsVsync);
+			hash.Add(MusicVolume);
+			hash.Add(EffectsVolume);
+			hash.Add(GameSpeed);
+			hash.Add(GamepadIndex);
+			hash.Add(ResourcePackID);
+			return hash.ToHashCode();
 		}
 	}
 }

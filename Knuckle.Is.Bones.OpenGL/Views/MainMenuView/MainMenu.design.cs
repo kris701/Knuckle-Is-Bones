@@ -13,7 +13,7 @@ using System;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 {
-	public partial class MainMenu : BaseKnuckleBoneFadeView
+	public partial class MainMenu : BaseNavigatableView
 	{
 		public override void Initialize()
 		{

@@ -13,7 +13,7 @@ using static FormMatter.OpenGL.Controls.StackPanelControl;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 {
-	public partial class SettingsMenu : BaseKnuckleBoneFadeView
+	public partial class SettingsMenu : BaseNavigatableView
 	{
 		private static readonly List<Point> _resolutionPresets = new List<Point>()
 		{
@@ -41,6 +41,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 			0.4f,
 			0.2f,
 			0f
+		};
+		private static readonly List<int> _gamepadIndexes = new List<int>()
+		{
+			0,
+			1,
+			2,
+			3,
+			4,
+			5
 		};
 		private static readonly int _buttonWidth = 250;
 		private StackPanelControl _settingsPanel;
@@ -111,10 +120,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				CreateMusicPanel(),
 				CreateEffectsPanel(),
 				CreateGameSpeedPanel(),
+				CreateGamePadIndexPanel(),
 			})
 			{
 				Width = 1300,
-				Height = 800,
+				Height = 1000,
 				VerticalAlignment = VerticalAlignment.Middle,
 				HorizontalAlignment = HorizontalAlignment.Middle
 			};
@@ -380,6 +390,58 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				new LabelControl()
 				{
 					Text = "Game Speed",
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
+					FontColor = FontHelpers.SecondaryColor,
+					Height = 100,
+				},
+				new StackPanelControl(controls)
+				{
+					Height = 50,
+					Y = 100,
+					Gap = 10,
+					Orientation = Orientations.Horizontal,
+				}
+			})
+			{
+				Height = 150,
+			};
+		}
+
+		private CanvasPanelControl CreateGamePadIndexPanel()
+		{
+			var controls = new List<IControl>();
+			var selectedTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
+			var normalTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
+			foreach (var opt in _gamepadIndexes)
+			{
+				controls.Add(new AnimatedAudioButton(Parent, (x) =>
+				{
+					foreach (var control in controls)
+						if (control is AnimatedAudioButton other)
+							other.TileSet = normalTileset;
+					if (x is AnimatedAudioButton button)
+					{
+						button.TileSet = selectedTileset;
+						if (x.Tag is int index)
+							_newSettings.GamepadIndex = index;
+					}
+				})
+				{
+					TileSet = _newSettings.GamepadIndex == opt ? selectedTileset : normalTileset,
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
+					FillClickedColor = BasicTextures.GetClickedTexture(),
+					FontColor = Color.White,
+					Width = _buttonWidth,
+					Text = $"{opt}",
+					Tag = opt
+				});
+			}
+
+			return new CanvasPanelControl(new List<IControl>()
+			{
+				new LabelControl()
+				{
+					Text = "Gamepad",
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 					FontColor = FontHelpers.SecondaryColor,
 					Height = 100,

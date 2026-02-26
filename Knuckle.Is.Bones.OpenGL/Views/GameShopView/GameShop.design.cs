@@ -15,7 +15,7 @@ using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {
-	public partial class GameShop : BaseKnuckleBoneFadeView
+	public partial class GameShop : BaseNavigatableView
 	{
 		private AnimatedTextboxControl _descriptionControl;
 		private AnimatedButtonControl _buyItemControl;

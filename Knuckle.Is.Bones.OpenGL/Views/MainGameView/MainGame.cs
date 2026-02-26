@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
-	public partial class MainGame : BaseKnuckleBoneFadeView
+	public partial class MainGame : BaseTransitionView
 	{
 		public IKnuckleBonesEngine Engine { get; set; }
 
@@ -49,6 +49,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_modifyWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.ModifyWaitTimer), OnModifyWaitTimer);
 			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.SelectWaitTimer), OnSelectWaitTimer);
 			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.PointsGainedTimer), OnPointsGainedTimer);
+
 			Initialize();
 		}
 
@@ -192,6 +193,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			if (_modifyWait)
 				_modifyWaitTimer.Update(gameTime.ElapsedGameTime);
 			_pointsGainedTimer.Update(gameTime.ElapsedGameTime);
+			base.OnUpdate(gameTime);
 		}
 
 		private void TakeTurn()

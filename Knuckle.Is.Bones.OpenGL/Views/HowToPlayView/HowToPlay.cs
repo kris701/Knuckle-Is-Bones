@@ -1,24 +1,18 @@
-﻿using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
+﻿using FormMatter.OpenGL.Input;
+using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using FormMatter.OpenGL.Input;
 using System;
+using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
 {
-	public partial class HowToPlay : BaseKnuckleBoneFadeView
+	public partial class HowToPlay : BaseNavigatableView
 	{
-		private readonly KeyWatcher _escapeKeyWatcher;
-		public HowToPlay(KnuckleBoneWindow parent) : base(parent, new Guid("207df693-09c5-428c-b2ab-513950bf6bd0"))
+		public HowToPlay(KnuckleBoneWindow parent) : base(parent, new Guid("207df693-09c5-428c-b2ab-513950bf6bd0"), new List<int>() { 0 })
 		{
-			_escapeKeyWatcher = new KeyWatcher(Keys.Escape, () => SwitchView(new MainMenu(parent)));
+			BackAction = () => SwitchView(new MainMenu(Parent));
 			Initialize();
-		}
-
-		public override void OnUpdate(GameTime gameTime)
-		{
-			var keyState = Keyboard.GetState();
-			_escapeKeyWatcher.Update(keyState);
 		}
 	}
 }

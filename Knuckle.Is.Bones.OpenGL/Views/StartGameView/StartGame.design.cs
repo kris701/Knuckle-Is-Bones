@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
-	public partial class StartGame : BaseKnuckleBoneFadeView
+	public partial class StartGame : BaseNavigatableView
 	{
 		private AnimatedTextboxControl _boardsDescription;
 		private AnimatedTextboxControl _diceDescription;
@@ -49,7 +49,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Height = 100
 			});
 
-			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
+			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.Button);
 
 			_startButton = new AnimatedAudioButton(Parent, (x) =>
 			{
