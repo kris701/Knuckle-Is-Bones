@@ -1,5 +1,6 @@
 ﻿using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Models;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using MonoGame.OpenGL.Formatter;
@@ -42,9 +43,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 			0f
 		};
 		private static readonly int _buttonWidth = 250;
+		private StackPanelControl _settingsPanel;
 		private CanvasPanelControl _resolutionPanel;
 
-		[MemberNotNull(nameof(_resolutionPanel))]
+		[MemberNotNull(nameof(_resolutionPanel), nameof(_settingsPanel))]
 		public override void Initialize()
 		{
 			AddControl(0, new TileControl()
@@ -55,19 +57,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 			});
 
 			_resolutionPanel = CreateResolutionPanel();
-			AddControl(0, new StackPanelControl(new List<IControl>()
-			{
-				_resolutionPanel,
-				CreateOtherCanvas(),
-				CreateMusicPanel(),
-				CreateEffectsPanel(),
-			})
-			{
-				Width = 1300,
-				Height = 800,
-				VerticalAlignment = VerticalAlignment.Middle,
-				HorizontalAlignment = HorizontalAlignment.Middle
-			});
+			CreateMainSettingsPanel();
 
 			AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
 			{
@@ -109,6 +99,26 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 #endif
 
 			base.Initialize();
+		}
+
+		[MemberNotNull(nameof(_settingsPanel))]
+		private void CreateMainSettingsPanel()
+		{
+			_settingsPanel = new StackPanelControl(new List<IControl>()
+			{
+				CreateGeneralPanel(),
+				_resolutionPanel,
+				CreateMusicPanel(),
+				CreateEffectsPanel(),
+				CreateGameSpeedPanel(),
+			})
+			{
+				Width = 1300,
+				Height = 800,
+				VerticalAlignment = VerticalAlignment.Middle,
+				HorizontalAlignment = HorizontalAlignment.Middle
+			};
+			AddControl(0, _settingsPanel);
 		}
 
 		private CanvasPanelControl CreateResolutionPanel()
@@ -169,7 +179,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 
 		private bool IsResolutionSelected(Point point) => _newSettings.ResolutionX == point.X && _newSettings.ResolutionY == point.Y;
 
-		private CanvasPanelControl CreateOtherCanvas()
+		private CanvasPanelControl CreateGeneralPanel()
 		{
 			var controls = new List<IControl>();
 			var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
@@ -181,6 +191,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 					_newSettings.IsFullscreen = !_newSettings.IsFullscreen;
 					button.TileSet = _newSettings.IsFullscreen ? selectedTileset : normalTileset;
 					_resolutionPanel.IsVisible = !_newSettings.IsFullscreen;
+					_settingsPanel.Initialize();
 				}
 			})
 			{
@@ -212,7 +223,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 			{
 				new LabelControl()
 				{
-					Text = "Other",
+					Text = "General",
 					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
 					FontColor = new Color(217, 68, 144),
 					Height = 100,
@@ -317,6 +328,58 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				new LabelControl()
 				{
 					Text = "Sound Effects",
+					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
+					FontColor = new Color(217, 68, 144),
+					Height = 100,
+				},
+				new StackPanelControl(controls)
+				{
+					Height = 50,
+					Y = 100,
+					Gap = 10,
+					Orientation = Orientations.Horizontal,
+				}
+			})
+			{
+				Height = 150,
+			};
+		}
+
+		private CanvasPanelControl CreateGameSpeedPanel()
+		{
+			var controls = new List<IControl>();
+			var selectedTileset = Parent.Textures.GetTextureSet(new System.Guid("cfa11efd-0284-4abb-bd12-9df0837081b0"));
+			var normalTileset = Parent.Textures.GetTextureSet(new System.Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a"));
+			foreach (var opt in Enum.GetValues<GameSpeedTypes>())
+			{
+				controls.Add(new AnimatedAudioButton(Parent, (x) =>
+				{
+					foreach (var control in controls)
+						if (control is AnimatedAudioButton other)
+							other.TileSet = normalTileset;
+					if (x is AnimatedAudioButton button)
+					{
+						button.TileSet = selectedTileset;
+						if (x.Tag is GameSpeedTypes speed)
+							_newSettings.GameSpeed = speed;
+					}
+				})
+				{
+					TileSet = _newSettings.GameSpeed == opt ? selectedTileset : normalTileset,
+					Font = Parent.Fonts.GetFont(FontSizes.Ptx16),
+					FillClickedColor = BasicTextures.GetClickedTexture(),
+					FontColor = Color.White,
+					Width = _buttonWidth,
+					Text = $"{Enum.GetName(opt)}",
+					Tag = opt
+				});
+			}
+
+			return new CanvasPanelControl(new List<IControl>()
+			{
+				new LabelControl()
+				{
+					Text = "Game Speed",
 					Font = Parent.Fonts.GetFont(FontSizes.Ptx24),
 					FontColor = new Color(217, 68, 144),
 					Height = 100,
