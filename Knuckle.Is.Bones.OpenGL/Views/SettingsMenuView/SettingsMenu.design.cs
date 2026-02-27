@@ -94,11 +94,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				CreateMusicPanel(),
 				CreateEffectsPanel(),
 				CreateGameSpeedPanel(),
-				CreateGamePadIndexPanel(),
 			})
 			{
 				Width = 1300,
-				Height = 1000,
+				Height = 800,
 				VerticalAlignment = VerticalAlignment.Middle,
 				HorizontalAlignment = HorizontalAlignment.Middle
 			};
@@ -364,58 +363,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 				new LabelControl()
 				{
 					Text = "Game Speed",
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-					FontColor = FontHelpers.SecondaryColor,
-					Height = 100,
-				},
-				new StackPanelControl(controls)
-				{
-					Height = 50,
-					Y = 100,
-					Gap = 10,
-					Orientation = Orientations.Horizontal,
-				}
-			})
-			{
-				Height = 150,
-			};
-		}
-
-		private CanvasPanelControl CreateGamePadIndexPanel()
-		{
-			var controls = new List<IControl>();
-			var selectedTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
-			var normalTileset = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
-			foreach (var opt in _gamepadIndexes)
-			{
-				controls.Add(new AnimatedAudioButton(Parent, (x) =>
-				{
-					foreach (var control in controls)
-						if (control is AnimatedAudioButton other)
-							other.TileSet = normalTileset;
-					if (x is AnimatedAudioButton button)
-					{
-						button.TileSet = selectedTileset;
-						if (x.Tag is int index)
-							_newSettings.GamepadIndex = index;
-					}
-				})
-				{
-					TileSet = _newSettings.GamepadIndex == opt ? selectedTileset : normalTileset,
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					FillClickedColor = BasicTextures.GetClickedTexture(),
-					FontColor = Color.White,
-					Width = _buttonWidth,
-					Text = $"{opt}",
-					Tag = opt
-				});
-			}
-
-			return new CanvasPanelControl(new List<IControl>()
-			{
-				new LabelControl()
-				{
-					Text = "Gamepad",
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 					FontColor = FontHelpers.SecondaryColor,
 					Height = 100,
