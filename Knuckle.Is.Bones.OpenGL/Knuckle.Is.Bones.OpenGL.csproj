@@ -9,7 +9,7 @@
 	  <Authors>Kristian Skov Johansen</Authors>
 	  <Copyright>Kristian Skov Johansen</Copyright>
 	  <Product>Knuckle.Is.Bones</Product>
-	  <Version>0.2.4</Version>
+	  <Version>0.2.5</Version>
 	  <PublishSingleFile>true</PublishSingleFile>
 	  <SelfContained>true</SelfContained>
 	  <DebugType>embedded</DebugType>
@@ -66,13 +66,22 @@
     <None Update="Steamworks.NET.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="steam_api64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
 	  <None Update="steam_appid.txt">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
   </ItemGroup>
+
+	<ItemGroup>
+		<None Update="steam_api64.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="libsteam_api.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
