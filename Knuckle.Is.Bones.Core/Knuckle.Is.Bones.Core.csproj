@@ -7,7 +7,7 @@
 	  <Authors>Kristian Skov Johansen</Authors>
 	  <Copyright>Kristian Skov Johansen</Copyright>
 	  <Product>Knuckle.Is.Bones Core</Product>
-	  <Version>0.2.3</Version>
+	  <Version>0.2.4</Version>
 	  <SelfContained>true</SelfContained>
 	  <DebugType>embedded</DebugType>
 	  <PublishReadyToRun>false</PublishReadyToRun>
@@ -70,7 +70,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ToolsSharp" Version="1.1.6" />
+	  <PackageReference Include="ToolsSharp" Version="1.1.6" />
   </ItemGroup>
 
 	<ItemGroup>

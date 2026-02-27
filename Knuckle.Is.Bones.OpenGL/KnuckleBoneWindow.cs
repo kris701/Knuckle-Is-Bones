@@ -1,17 +1,17 @@
-﻿using Knuckle.Is.Bones.Core.Helpers;
+﻿using FormMatter.OpenGL;
+using FormMatter.OpenGL.Helpers;
+using FormMatter.OpenGL.Views;
+using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Saves;
+using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Models;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
-using FormMatter.OpenGL;
-using FormMatter.OpenGL.Helpers;
-using FormMatter.OpenGL.Views;
 using Steamworks;
 using System;
 using System.IO;
-using Knuckle.Is.Bones.Core.Resources;
 
 namespace Knuckle.Is.Bones.OpenGL
 {

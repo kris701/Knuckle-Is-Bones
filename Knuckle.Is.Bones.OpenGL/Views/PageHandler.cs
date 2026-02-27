@@ -1,9 +1,9 @@
-﻿using Knuckle.Is.Bones.OpenGL.Helpers;
-using Microsoft.Xna.Framework;
-using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Controls.Elements;
 using FormMatter.OpenGL.Helpers;
 using FormMatter.OpenGL.Views;
+using Knuckle.Is.Bones.OpenGL.Helpers;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 

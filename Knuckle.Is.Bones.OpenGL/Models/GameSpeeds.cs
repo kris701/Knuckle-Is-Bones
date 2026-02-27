@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Knuckle.Is.Bones.OpenGL.Models
+﻿namespace Knuckle.Is.Bones.OpenGL.Models
 {
 	public class GameSpeeds
 	{

@@ -1,4 +1,6 @@
-﻿using Knuckle.Is.Bones.Core.Helpers;
+﻿using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
+using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.GameShopView;
@@ -7,13 +9,10 @@ using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView;
 using Knuckle.Is.Bones.OpenGL.Views.StartGameView;
 using Microsoft.Xna.Framework;
-using FormMatter.OpenGL.Controls;
-using FormMatter.OpenGL.Helpers;
-using System;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 {
-	public partial class MainMenu : BaseKnuckleBoneFadeView
+	public partial class MainMenu : BaseNavigatableView
 	{
 		public override void Initialize()
 		{
@@ -113,8 +112,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 			{
 				Text = $"Points: {(Parent as KnuckleBoneWindow).User.Points}",
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				HorizontalAlignment = HorizontalAlignment.Left,
-				VerticalAlignment = VerticalAlignment.Bottom,
+				HorizontalAlignment = HorizontalAlignment.Right,
+				VerticalAlignment = VerticalAlignment.Top,
 				Width = 500,
 				Height = 100
 			});

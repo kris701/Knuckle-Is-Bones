@@ -28,7 +28,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 			return value;
 		}
 
-		internal bool IsFull()
+		public bool IsFull()
 		{
 			foreach (var cell in Cells)
 				if (cell == 0)

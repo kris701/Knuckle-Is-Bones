@@ -1,19 +1,18 @@
-﻿using Knuckle.Is.Bones.Core.Engines;
+﻿using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
+using Knuckle.Is.Bones.Core.Engines;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using FormMatter.OpenGL;
-using FormMatter.OpenGL.Controls;
-using FormMatter.OpenGL.Helpers;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
-	public partial class MainGame : BaseKnuckleBoneFadeView
+	public partial class MainGame : BaseNavigatableView
 	{
 		private AnimatedLabelControl _diceLabel;
 		private LabelControl _firstOpponentTurnControl;
@@ -47,8 +46,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				FillColor = BasicTextures.GetBasicRectange(Color.Black)
 			});
 
-			SetupControlsView();
-
 			CreateFirstOpponent();
 			CreateSeccondOpponent();
 
@@ -71,21 +68,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 #endif
 
 			base.Initialize();
-		}
 
-		private void SetupControlsView()
-		{
-			AddControl(0, new AnimatedAudioButton(Parent, (b) => Escape())
-			{
-				X = 50,
-				Y = 50,
-				Height = 100,
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				FontColor = Color.White,
-				Text = $"Back",
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-			});
+			UpdateForMove();
+			HideAllNavigators();
 		}
 
 		[MemberNotNull(

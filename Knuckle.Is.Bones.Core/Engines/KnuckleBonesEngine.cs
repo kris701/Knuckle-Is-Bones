@@ -170,7 +170,11 @@ namespace Knuckle.Is.Bones.Core.Engines
 			if (State.GameOver || CheckGameOverState())
 				return false;
 			if (current.MoveModule.TargetColumn != -1)
-				return false;
+			{
+				var currentBoard = State.GetCurrentOpponentBoard();
+				if (!currentBoard.Columns[current.MoveModule.TargetColumn].IsFull())
+					return false;
+			}
 
 			if (current.MoveModule is PlayerMoveModule player)
 			{

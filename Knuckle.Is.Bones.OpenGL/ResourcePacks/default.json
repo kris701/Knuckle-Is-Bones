@@ -314,6 +314,71 @@
         "Transitions/transition_2",
         "Transitions/transition_1"
       ]
+    },
+    {
+      "ID": "0f9bc026-4b1f-4558-9f6c-2a1b5682d5c0",
+      "FrameTime": 750,
+      "Contents": [
+        "Controls/arrows_1",
+        "Controls/arrows_2"
+      ]
+    },
+    {
+      "ID": "f08c0341-f1b3-4c37-b32c-628ec7e2400f",
+      "FrameTime": 750,
+      "Contents": [
+        "Controls/space_1",
+        "Controls/space_1"
+      ]
+    },
+    {
+      "ID": "08e972a7-42e7-4f50-9ffa-69ae05933d21",
+      "FrameTime": 750,
+      "Contents": [
+        "Controls/enter_1",
+        "Controls/enter_1"
+      ]
+    },
+    {
+      "ID": "61cf5d02-688a-4056-a48f-5cb1a52a9486",
+      "FrameTime": 750,
+      "Contents": [
+        "Controls/esc_1",
+        "Controls/esc_2"
+      ]
+    },
+
+    {
+      "ID": "42f85636-661c-4f9e-86c7-76749765764b",
+      "FrameTime": 750,
+      "Contents": [
+        "Controls/dpad_1",
+        "Controls/dpad_2"
+      ]
+    },
+    {
+      "ID": "aea4bd4a-368c-4504-b6d8-fb177222fcdd",
+      "FrameTime": 750,
+      "Contents": [
+        "Controls/a_1",
+        "Controls/a_2"
+      ]
+    },
+    {
+      "ID": "cd3c58b4-3891-4e18-915f-b99b21c2ad2c",
+      "FrameTime": 750,
+      "Contents": [
+        "Controls/b_1",
+        "Controls/b_2"
+      ]
+    },
+    {
+      "ID": "cf33a308-940e-499e-97ef-a7ccb794275e",
+      "FrameTime": 750,
+      "Contents": [
+        "Controls/start_1",
+        "Controls/start_2"
+      ]
     }
   ],
   "Songs": [

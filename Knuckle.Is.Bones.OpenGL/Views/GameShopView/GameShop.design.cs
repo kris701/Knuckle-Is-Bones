@@ -1,12 +1,11 @@
-﻿using Knuckle.Is.Bones.Core.Models.Shop;
+﻿using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
+using Knuckle.Is.Bones.Core.Models.Shop;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
-using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using FormMatter.OpenGL.Controls;
-using FormMatter.OpenGL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -15,7 +14,7 @@ using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {
-	public partial class GameShop : BaseKnuckleBoneFadeView
+	public partial class GameShop : BaseNavigatableView
 	{
 		private AnimatedTextboxControl _descriptionControl;
 		private AnimatedButtonControl _buyItemControl;
@@ -156,18 +155,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Y = 150,
 				Width = 500,
 				Height = height,
-			});
-
-			AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
-			{
-				Text = "Back",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				Y = 960,
-				X = 20,
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				Width = 400,
-				Height = 100
 			});
 
 #if DEBUG

@@ -1,14 +1,12 @@
-﻿using Knuckle.Is.Bones.OpenGL.Controls;
-using Knuckle.Is.Bones.OpenGL.Helpers;
-using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
-using Microsoft.Xna.Framework;
-using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Helpers;
+using Microsoft.Xna.Framework;
 using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
 {
-	public partial class HowToPlay : BaseKnuckleBoneFadeView
+	public partial class HowToPlay : BaseNavigatableView
 	{
 		public override void Initialize()
 		{
@@ -51,17 +49,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
 				WordWrap = TextboxControl.WordWrapTypes.Word,
 				Text = sb.ToString(),
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-			});
-			AddControl(0, new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
-			{
-				Text = "Back",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				Width = 400,
-				Height = 100,
-				Y = 960,
-				X = 20,
 			});
 
 #if DEBUG

@@ -1,15 +1,14 @@
-﻿using Knuckle.Is.Bones.OpenGL.Controls;
+﻿using FormMatter.OpenGL;
+using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views;
 using Microsoft.Xna.Framework;
-using FormMatter.OpenGL;
-using FormMatter.OpenGL.Controls;
-using FormMatter.OpenGL.Helpers;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 {
-	public partial class AcceptView : BaseKnuckleBoneFadeView
+	public partial class AcceptView : BaseNavigatableView
 	{
 		private LabelControl _timeLeftLabel;
 
@@ -52,31 +51,6 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 				FontColor = FontHelpers.ErrorColor
 			};
 			AddControl(0, _timeLeftLabel);
-
-
-			AddControl(0, new AnimatedAudioButton(Parent, (e) => Cancel())
-			{
-				Text = "Cancel",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				Width = 400,
-				Height = 100,
-				Y = 960,
-				X = 20,
-			});
-
-			AddControl(0, new AnimatedAudioButton(Parent, (e) => Accept())
-			{
-				Text = "Accept",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				FillClickedColor = BasicTextures.GetClickedTexture(),
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				Width = 400,
-				Height = 100,
-				Y = 960,
-				X = 1500,
-			});
 
 #if DEBUG
 			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new AcceptView(Parent, _oldSettings, _newSettings)))
