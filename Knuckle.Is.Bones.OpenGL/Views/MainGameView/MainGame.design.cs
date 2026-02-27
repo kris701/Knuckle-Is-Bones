@@ -70,6 +70,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			base.Initialize();
 
 			UpdateForMove();
+			HideAllNavigators();
 		}
 
 		[MemberNotNull(

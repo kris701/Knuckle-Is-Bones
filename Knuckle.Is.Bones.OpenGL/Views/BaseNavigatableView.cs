@@ -30,6 +30,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 		public Action? AcceptAction { get; set; }
 		public bool ShowGeneralControls { get; set; } = true;
 		public AnimatedAudioButton MouseAcceptButton { get; set; }
+		public bool ShowControls { get; set; } = true;
 
 		public static InputTypes InputType = InputTypes.Mouse;
 
@@ -92,33 +93,43 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			});
 
 			_keyboardNavigator = CreateKeyboardNavigator(this, navigationLayers);
-			_keyboardNavigator.OnAnyKeyDown += () =>
-			{
-				if (_gamepadNavigator!.Selector.IsVisible)
-				{
-					_keyboardNavigator.Selector.X = _gamepadNavigator.Selector.X;
-					_keyboardNavigator.Selector.Y = _gamepadNavigator.Selector.Y;
-					_keyboardNavigator.Focused = _gamepadNavigator.Focused;
-					_gamepadNavigator.Selector.IsVisible = false;
-				}
-				parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
-				InputType = InputTypes.Keyboard;
-				UpdateControlsVisual();
-			};
+			_keyboardNavigator.OnUpKeyDown += UpdateKeyboardNavigator;
+			_keyboardNavigator.OnDownKeyDown += UpdateKeyboardNavigator;
+			_keyboardNavigator.OnLeftKeyDown += UpdateKeyboardNavigator;
+			_keyboardNavigator.OnRightKeyDown += UpdateKeyboardNavigator;
 			_gamepadNavigator = CreateGamepadNavigator(this, navigationLayers, parent.Settings.GamepadIndex);
-			_gamepadNavigator.OnAnyKeyDown += () =>
+			_gamepadNavigator.OnUpKeyDown += UpdateGamepadNavigator;
+			_gamepadNavigator.OnDownKeyDown += UpdateGamepadNavigator;
+			_gamepadNavigator.OnLeftKeyDown += UpdateGamepadNavigator;
+			_gamepadNavigator.OnRightKeyDown += UpdateGamepadNavigator;
+		}
+
+		private void UpdateKeyboardNavigator()
+		{
+			if (_gamepadNavigator!.Selector.IsVisible)
 			{
-				if (_keyboardNavigator.Selector.IsVisible)
-				{
-					_gamepadNavigator.Selector.X = _keyboardNavigator.Selector.X;
-					_gamepadNavigator.Selector.Y = _keyboardNavigator.Selector.Y;
-					_gamepadNavigator.Focused = _keyboardNavigator.Focused;
-					_keyboardNavigator.Selector.IsVisible = false;
-				}
-				parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
-				InputType = InputTypes.Gamepad;
-				UpdateControlsVisual();
-			};
+				_keyboardNavigator.Selector.X = _gamepadNavigator.Selector.X;
+				_keyboardNavigator.Selector.Y = _gamepadNavigator.Selector.Y;
+				_keyboardNavigator.Focused = _gamepadNavigator.Focused;
+				_gamepadNavigator.Selector.IsVisible = false;
+			}
+			Parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+			InputType = InputTypes.Keyboard;
+			UpdateControlsVisual();
+		}
+
+		private void UpdateGamepadNavigator()
+		{
+			if (_keyboardNavigator.Selector.IsVisible)
+			{
+				_gamepadNavigator.Selector.X = _keyboardNavigator.Selector.X;
+				_gamepadNavigator.Selector.Y = _keyboardNavigator.Selector.Y;
+				_gamepadNavigator.Focused = _keyboardNavigator.Focused;
+				_keyboardNavigator.Selector.IsVisible = false;
+			}
+			Parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+			InputType = InputTypes.Gamepad;
+			UpdateControlsVisual();
 		}
 
 		public override void Initialize()
@@ -151,76 +162,143 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			{
 				new LabelControl()
 				{
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					Text = "Move: Arrow",
-					Width = 250,
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+					FontColor = FontHelpers.SecondaryColor,
+					Text = "Navigate",
+					Width = 50,
+					Height = 50,
+					IsVisible = ShowGeneralControls
+				},
+				new AnimatedTileControl()
+				{
+					TileSet = Parent.Textures.GetTextureSet(new Guid("0f9bc026-4b1f-4558-9f6c-2a1b5682d5c0")),
+					IsVisible = ShowGeneralControls,
+					Height = 50,
+					Width = 50
+				},
+				new AnimatedTileControl()
+				{
+					TileSet = Parent.Textures.GetTextureSet(new Guid("f08c0341-f1b3-4c37-b32c-628ec7e2400f")),
+					IsVisible = ShowGeneralControls,
+					Height = 50,
+					Width = 50
+				},
+				new TileControl()
+				{
+					Width = 100,
 					IsVisible = ShowGeneralControls
 				},
 				new LabelControl()
 				{
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					Text = "Enter: Space",
-					Width = 250,
-					IsVisible = ShowGeneralControls
-				},
-				new LabelControl()
-				{
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					Text = "Accept: Enter",
-					Width = 250,
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+					FontColor = FontHelpers.SecondaryColor,
+					Text = "Accept",
+					Width = 30,
+					Height = 50,
 					IsVisible = AcceptAction != null
 				},
+				new AnimatedTileControl()
+				{
+					TileSet = Parent.Textures.GetTextureSet(new Guid("08e972a7-42e7-4f50-9ffa-69ae05933d21")),
+					IsVisible = AcceptAction != null,
+					Height = 50,
+					Width = 50
+				},
 				new LabelControl()
 				{
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					Text = "Back: Esc",
-					Width = 250,
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+					FontColor = FontHelpers.SecondaryColor,
+					Text = "Back",
+					Width = 30,
+					Height = 50,
+					IsVisible = BackAction != null
+				},
+				new AnimatedTileControl()
+				{
+					TileSet = Parent.Textures.GetTextureSet(new Guid("61cf5d02-688a-4056-a48f-5cb1a52a9486")),
 					IsVisible = BackAction != null,
+					Height = 50,
+					Width = 50
 				}
 			};
 			_gamepadControls = new List<IControl>()
 			{
 				new LabelControl()
 				{
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					Text = "Move: Dpad",
-					Width = 250,
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+					FontColor = FontHelpers.SecondaryColor,
+					Text = "Navigate",
+					Width = 50,
+					Height = 50,
+					IsVisible = ShowGeneralControls
+				},
+				new AnimatedTileControl()
+				{
+					TileSet = Parent.Textures.GetTextureSet(new Guid("42f85636-661c-4f9e-86c7-76749765764b")),
+					IsVisible = ShowGeneralControls,
+					Height = 50,
+					Width = 50
+				},
+				new AnimatedTileControl()
+				{
+					TileSet = Parent.Textures.GetTextureSet(new Guid("aea4bd4a-368c-4504-b6d8-fb177222fcdd")),
+					IsVisible = ShowGeneralControls,
+					Height = 50,
+					Width = 50
+				},
+				new TileControl()
+				{
+					Width = 100,
 					IsVisible = ShowGeneralControls
 				},
 				new LabelControl()
 				{
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					Text = "Enter: A",
-					Width = 250,
-					IsVisible = ShowGeneralControls
-				},
-				new LabelControl()
-				{
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					Text = "Accept: Start",
-					Width = 250,
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+					FontColor = FontHelpers.SecondaryColor,
+					Text = "Accept",
+					Width = 30,
+					Height = 50,
 					IsVisible = AcceptAction != null
 				},
+				new AnimatedTileControl()
+				{
+					TileSet = Parent.Textures.GetTextureSet(new Guid("cf33a308-940e-499e-97ef-a7ccb794275e")),
+					IsVisible = AcceptAction != null,
+					Height = 50,
+					Width = 50
+				},
 				new LabelControl()
 				{
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					Text = "Back: B",
-					Width = 250,
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+					FontColor = FontHelpers.SecondaryColor,
+					Text = "Back",
+					Width = 30,
+					Height = 50,
+					IsVisible = BackAction != null
+				},
+				new AnimatedTileControl()
+				{
+					TileSet = Parent.Textures.GetTextureSet(new Guid("cd3c58b4-3891-4e18-915f-b99b21c2ad2c")),
 					IsVisible = BackAction != null,
+					Height = 50,
+					Width = 50
 				}
 			};
 
 			_controlsPanel = new StackPanelControl(new List<IControl>())
 			{
-				VerticalAlignment = VerticalAlignment.Bottom,
 				Height = 50,
 				Width = 300,
 				Gap = 30,
 				X = 30,
+				Y = 10,
 				Orientation = StackPanelControl.Orientations.Horizontal
 			};
-			UpdateControlsVisual();
-			AddControl(9999, _controlsPanel);
+			if (ShowControls)
+			{
+				UpdateControlsVisual();
+				AddControl(9999, _controlsPanel);
+			}
 
 			base.Initialize();
 		}

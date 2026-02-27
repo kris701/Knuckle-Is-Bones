@@ -126,6 +126,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			}
 			else
 			{
+				UpdateForMove();
 				if (Engine.State.Turn == Engine.State.FirstOpponent.MoveModule.OpponentID && Engine.State.FirstOpponent.MoveModule is PlayerMoveModule)
 					_firstOpponentBoard.CanSelect = true;
 				if (Engine.State.Turn == Engine.State.SecondOpponent.MoveModule.OpponentID && Engine.State.SecondOpponent.MoveModule is PlayerMoveModule)
@@ -217,6 +218,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_firstOpponentTurnControl.FontColor = FontHelpers.PrimaryColor;
 			_secondOpponentTurnControl.FontColor = FontHelpers.PrimaryColor;
 
+			HideAllNavigators();
+
 			Engine.Execute(new TurnAction());
 
 			var newFirstOpponentPoints = Engine.State.GetFirstOpponentBoardValue();
@@ -270,8 +273,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				_gameOverPanel.IsVisible = true;
 				return;
 			}
-
-			UpdateForMove();
 
 			_rolling = true;
 		}
@@ -351,21 +352,35 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			}
 		}
 
+		private void HideAllNavigators()
+		{
+			_secondOpponentBoard.DisableAll();
+			_firstOpponentBoard.DisableAll();
+		}
+
 		private void UpdateForMove()
 		{
 			if (Engine.State.Turn == Engine.State.FirstOpponent.MoveModule.OpponentID)
 			{
-				_secondOpponentBoard.DisableAll();
 				_keyboardNavigator.SelectorLocation = FormMatter.OpenGL.Input.NavigatorSelectorLocations.Bottom;
 				_gamepadNavigator.SelectorLocation = FormMatter.OpenGL.Input.NavigatorSelectorLocations.Bottom;
 				_firstOpponentBoard.EnableAll();
+
+				if (InputType == InputTypes.Keyboard)
+					_keyboardNavigator.GotoClosest(this);
+				if (InputType == InputTypes.Gamepad)
+					_gamepadNavigator.GotoClosest(this);
 			}
 			else if (Engine.State.Turn == Engine.State.SecondOpponent.MoveModule.OpponentID)
 			{
-				_firstOpponentBoard.DisableAll();
 				_keyboardNavigator.SelectorLocation = FormMatter.OpenGL.Input.NavigatorSelectorLocations.Top;
 				_gamepadNavigator.SelectorLocation = FormMatter.OpenGL.Input.NavigatorSelectorLocations.Top;
 				_secondOpponentBoard.EnableAll();
+
+				if (InputType == InputTypes.Keyboard)
+					_keyboardNavigator.GotoClosest(this);
+				if (InputType == InputTypes.Gamepad)
+					_gamepadNavigator.GotoClosest(this);
 			}
 		}
 	}

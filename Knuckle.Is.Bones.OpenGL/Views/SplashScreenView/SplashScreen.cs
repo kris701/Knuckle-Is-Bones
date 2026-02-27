@@ -19,6 +19,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SplashScreenView
 			_mouseWatcher = new MouseWatcher(SwitchToMainMenu);
 			_splashTimer = new GameTimer(TimeSpan.FromSeconds(3), (t) => SwitchView(new MainMenu(parent)));
 			BackAction = () => SwitchToMainMenu();
+			ShowControls = false;
 			_keyboardNavigator.OnAnyKeyDown = () => SwitchToMainMenu();
 			_gamepadNavigator.OnAnyKeyDown = () => SwitchToMainMenu();
 			Initialize();
