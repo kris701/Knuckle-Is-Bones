@@ -368,6 +368,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		{
 			_secondOpponentBoard.DisableAll();
 			_firstOpponentBoard.DisableAll();
+
+			_keyboardNavigator.Selector.IsVisible = false;
+			_gamepadNavigator.Selector.IsVisible = false;
 		}
 
 		private void UpdateForMove()
