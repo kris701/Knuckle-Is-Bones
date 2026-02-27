@@ -1,4 +1,5 @@
-﻿using FormMatter.OpenGL.Input;
+﻿using FormMatter.OpenGL.Helpers;
+using FormMatter.OpenGL.Input;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
@@ -33,7 +34,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SplashScreenView
 		public override void OnUpdate(GameTime gameTime)
 		{
 			_mouseWatcher.Update();
-			_splashTimer.Update(gameTime.ElapsedGameTime);
+			_splashTimer.Update(gameTime);
 			base.OnUpdate(gameTime);
 		}
 	}
