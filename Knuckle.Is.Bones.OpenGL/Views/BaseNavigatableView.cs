@@ -69,7 +69,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				}
 				InputType = InputTypes.Gamepad;
 				UpdateControlsVisual();
-			});
+			})
+			{
+				PlayerIndexes = new List<int>() { 0, 1, 2, 3 }
+			};
 
 			_keyboardAcceptKeyWatcher = new KeyWatcher(Keys.Enter, () =>
 			{
@@ -90,14 +93,17 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				}
 				InputType = InputTypes.Gamepad;
 				UpdateControlsVisual();
-			});
+			})
+			{
+				PlayerIndexes = new List<int>() { 0, 1, 2, 3 }
+			};
 
 			_keyboardNavigator = CreateKeyboardNavigator(this, navigationLayers);
 			_keyboardNavigator.OnUpKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnDownKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnLeftKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnRightKeyDown += UpdateKeyboardNavigator;
-			_gamepadNavigator = CreateGamepadNavigator(this, navigationLayers, parent.Settings.GamepadIndex);
+			_gamepadNavigator = CreateGamepadNavigator(this, navigationLayers);
 			_gamepadNavigator.OnUpKeyDown += UpdateGamepadNavigator;
 			_gamepadNavigator.OnDownKeyDown += UpdateGamepadNavigator;
 			_gamepadNavigator.OnLeftKeyDown += UpdateGamepadNavigator;
@@ -354,7 +360,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			return navigator;
 		}
 
-		private GamepadNavigator CreateGamepadNavigator(IView view, List<int> layers, int controller)
+		private GamepadNavigator CreateGamepadNavigator(IView view, List<int> layers)
 		{
 			var selector = new TileControl() { FillColor = BasicTextures.GetBasicCircle(FontHelpers.SecondaryColor, 10), Width = 20, Height = 20 };
 			view.AddControl(9999, selector);
@@ -368,7 +374,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				new List<Buttons>() { Buttons.X, Buttons.A },
 				layers)
 			{
-				PlayerIndex = controller
+				PlayerIndexes = new List<int>() { 0, 1, 2, 3 }
 			};
 			return navigator;
 		}

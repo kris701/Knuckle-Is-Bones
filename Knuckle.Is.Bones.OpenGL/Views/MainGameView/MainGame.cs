@@ -58,7 +58,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.SelectWaitTimer), OnSelectWaitTimer);
 			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.PointsGainedTimer), OnPointsGainedTimer);
 			
-			_hitRumbler = new GamepadRumbler(Parent.Settings.GamepadIndex, TimeSpan.FromMilliseconds(100));
+			_hitRumbler = new GamepadRumbler(new List<int>() { 0, 1, 2, 3 }, TimeSpan.FromMilliseconds(100));
 
 			BackAction = () => Escape();
 
