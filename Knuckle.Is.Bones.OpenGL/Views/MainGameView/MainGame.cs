@@ -1,4 +1,5 @@
 ﻿using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Helpers;
 using FormMatter.OpenGL.Input;
 using Knuckle.Is.Bones.Core.Engines;
 using Knuckle.Is.Bones.Core.Engines.Actions;
@@ -7,6 +8,7 @@ using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
@@ -30,6 +32,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private int _rolledTimes = 0;
 		private readonly Random _rnd = new Random();
 		private Guid _rollSoundEffect = Guid.Empty;
+		private readonly GamepadRumbler _hitRumbler;
 
 		private int _currentFirstOpponentPoints = 0;
 		private int _currentSecondOpponentPoints = 0;
@@ -39,7 +42,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361"), new List<int>() { 10, 20, 1001 })
 		{
 			Engine = new KnuckleBonesEngine(state);
-			Engine.OnOpponentDiceRemoved += () => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnDiceRemove);
+			Engine.OnOpponentDiceRemoved += () => {
+				Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnDiceRemove);
+				if (InputType == InputTypes.Gamepad)
+					_hitRumbler!.Rumble();
+			};
 			Engine.OnCombo += () => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnCombo);
 			Engine.OnTurn += () => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnTurn);
 			Engine.OnBoardModified += (o) => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnBoardModified);
@@ -50,8 +57,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_modifyWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.ModifyWaitTimer), OnModifyWaitTimer);
 			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.SelectWaitTimer), OnSelectWaitTimer);
 			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.PointsGainedTimer), OnPointsGainedTimer);
+			
+			_hitRumbler = new GamepadRumbler(Parent.Settings.GamepadIndex, TimeSpan.FromMilliseconds(100));
 
 			BackAction = () => Escape();
+
+			var cap = GamePad.GetCapabilities(1);
+			var tst = GamePad.SetVibration(0, 0, 0);
 
 			Initialize();
 		}
@@ -198,14 +210,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				return;
 
 			if (_rolling)
-				_rollTimer.Update(gameTime.ElapsedGameTime);
+				_rollTimer.Update(gameTime);
 			if (_rollWait)
-				_rollWaitTimer.Update(gameTime.ElapsedGameTime);
+				_rollWaitTimer.Update(gameTime);
 			if (_selectWait)
-				_selectWaitTimer.Update(gameTime.ElapsedGameTime);
+				_selectWaitTimer.Update(gameTime);
 			if (_modifyWait)
-				_modifyWaitTimer.Update(gameTime.ElapsedGameTime);
-			_pointsGainedTimer.Update(gameTime.ElapsedGameTime);
+				_modifyWaitTimer.Update(gameTime);
+			_pointsGainedTimer.Update(gameTime);
+			_hitRumbler.Update(gameTime);
 			base.OnUpdate(gameTime);
 		}
 
