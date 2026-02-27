@@ -55,7 +55,7 @@ namespace Knuckle.Is.Bones.OpenGL
 			BasicTextures.Initialize(Device.GraphicsDevice);
 			MediaPlayer.IsRepeating = true;
 			SoundEffect.Initialize();
-			ResourcePacks.OnLoadMod += (f) => ResourceManager.ReloadResources();
+			ResourcePacks.OnLoadMod += ResourceManager.LoadResource;
 			LoadMods();
 			ResourcePacks.LoadResourcePack(Settings.ResourcePackID);
 

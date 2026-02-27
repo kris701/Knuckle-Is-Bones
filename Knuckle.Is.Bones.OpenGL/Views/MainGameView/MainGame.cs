@@ -7,7 +7,6 @@ using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
@@ -131,7 +130,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 					_firstOpponentBoard.CanSelect = true;
 				if (Engine.State.Turn == Engine.State.SecondOpponent.MoveModule.OpponentID && Engine.State.SecondOpponent.MoveModule is PlayerMoveModule)
 					_secondOpponentBoard.CanSelect = true;
-				
+
 				if (InputType == InputTypes.Keyboard)
 				{
 					_keyboardNavigator.Selector.IsVisible = true;
