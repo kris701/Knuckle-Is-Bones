@@ -1,6 +1,7 @@
 ﻿using FormMatter.OpenGL;
 using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
+using FormMatter.OpenGL.Input;
 using Knuckle.Is.Bones.Core.Models.Shop;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.OpenGL.Controls;
@@ -27,8 +28,16 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 		public GameShop(KnuckleBoneWindow parent) : base(parent, new Guid("169e9e54-b45f-41d4-9845-f8519d256033"), new List<int>() { 6 })
 		{
-			BackAction = () => SwitchView(new MainMenu(Parent));
+			_keyboardNavigator.MaxDistance = 500;
+			_gamepadNavigator.MaxDistance = 500;
+
+			BackAction += () => SwitchView(new MainMenu(Parent));
+
 			Initialize();
+
+			_keyboardNavigator.Focused = _coreItem;
+			_gamepadNavigator.Focused = _coreItem;
+
 			_mouseControls.Add(new LabelControl()
 			{
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
@@ -71,7 +80,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 		private void PurchaseItem(ShopItemDefinition item)
 		{
 			if (item.CanAffort(Parent.User) && item.Buy(Parent.User))
+			{
+				Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ShopBuySound);
 				SwitchView(new GameShop(Parent));
+			}
 		}
 
 		public override void OnUpdate(GameTime gameTime)

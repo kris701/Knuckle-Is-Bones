@@ -21,7 +21,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 	{
 		private AnimatedTextboxControl _descriptionControl;
 		private AnimatedTextboxControl _overallDescriptionControl;
-		private TileControl _coreItem;
+		private ButtonControl _coreItem;
 		private readonly int _itemDist = 200;
 
 		[MemberNotNull(
@@ -191,12 +191,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 		private void BuildTreeFromRoot(List<ShopItemDefinition> allItems, List<ShopItemDefinition> rootItems)
 		{
-			_coreItem = new TileControl()
+			_coreItem = new ButtonControl(Parent)
 			{
 				Width = 1,
 				Height = 1,
 				X = IWindow.BaseScreenSize.X / 2,
-				Y = IWindow.BaseScreenSize.Y / 2
+				Y = IWindow.BaseScreenSize.Y / 2,
+				Alpha = 0
 			};
 			AddControl(0, _coreItem);
 
