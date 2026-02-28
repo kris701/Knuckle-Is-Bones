@@ -1,0 +1,16 @@
+﻿{
+	"ID": "5e4431a8-0538-4cc4-b120-c5aede9817e1",
+	"Name": "Make 7's combos worth 2x more",
+	"Description": "Permanently make all combos of 7's you throw be worth 2x as much!",
+	"Cost": 14000,
+	"BuyTimes": 2,
+	"ShopType": 4,
+	"Requires": "689fe502-8f98-462b-b887-713c8e8abb1f",
+	"Effects": [
+		{
+			"$type": "DiceComboMultiplierEffect",
+			"Number": 7,
+			"Multiplier": 2
+		}
+	]
+}

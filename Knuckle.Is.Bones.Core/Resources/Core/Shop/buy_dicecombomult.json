@@ -1,0 +1,10 @@
+{
+  "ID": "a94ef141-209d-4b2b-9f52-aae6eb9bee62",
+  "Name": "Buy Dice Combo Mult",
+  "Description": "Dice combo multipliers makes the multiplier when making combos of a given dice value better.",
+  "Cost": 0,
+  "BuyTimes": 1,
+  "ShopType": 4,
+  "Effects": [
+  ]
+}

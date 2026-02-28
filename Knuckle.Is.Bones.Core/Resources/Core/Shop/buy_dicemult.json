@@ -1,8 +1,8 @@
 {
   "ID": "f58b35d5-6fce-4a0e-9614-fa8521647b43",
-  "Name": "Buy Dice Mult",
-  "Description": "Unlocks the dice multiplier buying tree",
-  "Cost": 50,
+  "Name": "Buy Dice Value Mult",
+  "Description": "Dice value multipliers makes the value of certain dice rolls better",
+  "Cost": 0,
   "BuyTimes": 1,
   "ShopType": 4,
   "Effects": [

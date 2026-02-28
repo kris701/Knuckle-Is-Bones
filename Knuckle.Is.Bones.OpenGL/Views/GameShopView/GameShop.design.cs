@@ -343,9 +343,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 		private int GetDistanceByAngle(float minAngle, float maxAngle, int index)
 		{
-			if (Math.Abs(maxAngle - minAngle) < 0.2)
+			if (Math.Abs(maxAngle - minAngle) < 0.3)
 			{
-				return _itemDist + (_itemDist / 3) * index;
+				return _itemDist + (_itemDist / 4) * index;
 			}
 			return _itemDist;
 		}
