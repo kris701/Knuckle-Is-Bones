@@ -1,0 +1,16 @@
+{
+  "ID": "3a7644b2-d2a5-4cd4-81eb-58515734510b",
+  "Name": "'Steps' board 20% more points",
+  "Description": "Get 20% more points for winning on the 'Steps' board",
+  "Cost": 10000,
+  "BuyTimes": 2,
+  "ShopType": 7,
+  "Requires": "cfa265b3-64fb-4749-b35a-646fe253dafe",
+  "Effects": [
+    {
+      "$type": "PointsBoardMultiplierEffect",
+      "BoardID": "a501943e-e6be-47d8-9b2c-01ca54c01c36",
+      "Multiplier": 1.2
+    }
+  ]
+}

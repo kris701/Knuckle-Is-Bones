@@ -1,0 +1,16 @@
+{
+  "ID": "07e7d452-6fa5-41bd-9ec4-98778931a4c0",
+  "Name": "'Normal' board 20% more points",
+  "Description": "Get 20% more points for winning on the 'Normal' board",
+  "Cost": 2500,
+  "BuyTimes": 2,
+  "ShopType": 7,
+  "Requires": "23f4991e-3fdf-4fff-8ebd-1f5af20567d0",
+  "Effects": [
+    {
+      "$type": "PointsBoardMultiplierEffect",
+      "BoardID": "907bddf8-cbe1-49f4-a1f8-92ad5266f116",
+      "Multiplier": 1.2
+    }
+  ]
+}

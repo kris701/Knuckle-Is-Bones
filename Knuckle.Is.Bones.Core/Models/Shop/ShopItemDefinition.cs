@@ -59,6 +59,13 @@ namespace Knuckle.Is.Bones.Core.Models.Shop
 			return false;
 		}
 
+		public bool IsUnlocked(UserSaveDefinition user)
+		{
+			if (Requires != null)
+				return user.PurchasedShopItems.ContainsKey((Guid)Requires);
+			return true;
+		}
+
 		public bool CanAffort(UserSaveDefinition user)
 		{
 			return CanPurchase(user) && user.Points >= Cost;

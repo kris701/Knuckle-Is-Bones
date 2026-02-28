@@ -1,0 +1,16 @@
+{
+  "ID": "3e2ffc1b-745c-4b11-84e3-66fa8e186ecf",
+  "Name": "'Tall' board 20% more points",
+  "Description": "Get 20% more points for winning on the 'Tall' board",
+  "Cost": 7500,
+  "BuyTimes": 2,
+  "ShopType": 7,
+  "Requires": "b49bb00b-c74a-4516-92e1-79bcc7c3120b",
+  "Effects": [
+    {
+      "$type": "PointsBoardMultiplierEffect",
+      "BoardID": "322dbaa5-c806-4b56-af9d-164b135a6d42",
+      "Multiplier": 1.2
+    }
+  ]
+}

@@ -254,6 +254,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			var canAffort = item.CanAffort(Parent.User);
 			var isFullyPurchased = item.IsFullyPurchased(Parent.User);
 			var isPartiallyPurchased = item.IsPartiallyPurchased(Parent.User);
+			var isUnlocked = item.IsUnlocked(Parent.User);
 
 			var newItem = new AnimatedAudioButton(Parent, (s) =>
 			{
@@ -267,9 +268,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Tag = item,
 				X = from.X + (float)(Math.Cos(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
 				Y = from.Y + (float)(Math.Sin(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
-				Alpha = canAffort || isFullyPurchased ? 256 : (isPartiallyPurchased && canAffort ? 256 : 100),
+				Alpha = !isUnlocked ? 50 : (canAffort || isFullyPurchased ? 256 : (isPartiallyPurchased && canAffort ? 256 : 100)),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx10),
+				FontColor = !isUnlocked ? new Color(100, 100, 100) : FontHelpers.PrimaryColor,
 				Text = GetShortTextByShopType(item.ShopType)
 			};
 			newItem.OnEnter += OnShopItemEnter;
@@ -297,6 +299,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				case ShopItemTypes.Multiple:
 					return "M";
 
+				case ShopItemTypes.BoardPointMultiplier:
+					return "B*";
+
 				default:
 					return "?";
 			}
@@ -322,6 +327,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				case ShopItemTypes.Multiple:
 					return "Multiple";
 
+				case ShopItemTypes.BoardPointMultiplier:
+					return "Board Point Multiplier";
+
 				default:
 					return "Other";
 			}
@@ -335,7 +343,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Y = from.Y + from.Height / 2,
 				X2 = to.X + to.Width / 2,
 				Y2 = to.Y + to.Height / 2,
-				Stroke = BasicTextures.GetBasicRectange(Color.Gray),
+				Stroke = BasicTextures.GetBasicRectange(new Color(35,35,35)),
 				Thickness = 2
 			};
 			return newLine;

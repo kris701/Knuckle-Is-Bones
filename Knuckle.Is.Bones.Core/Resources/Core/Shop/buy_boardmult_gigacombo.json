@@ -1,0 +1,16 @@
+{
+  "ID": "dcb5d698-bfa5-401c-9f95-b7b3d27ae0fa",
+  "Name": "'Giga-Combo' board 20% more points",
+  "Description": "Get 20% more points for winning on the 'Giga Combo' board",
+  "Cost": 25000,
+  "BuyTimes": 2,
+  "ShopType": 7,
+  "Requires": "263d5cc6-45fe-4935-8cfd-a6b09247164c",
+  "Effects": [
+    {
+      "$type": "PointsBoardMultiplierEffect",
+      "BoardID": "7d7a3947-eed2-4e79-b20d-f75235fb04e2",
+      "Multiplier": 1.2
+    }
+  ]
+}

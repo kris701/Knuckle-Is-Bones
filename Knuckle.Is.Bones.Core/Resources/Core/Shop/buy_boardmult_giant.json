@@ -1,0 +1,16 @@
+{
+  "ID": "7907eaca-f7b7-4438-92c6-dfe8ef4d66e4",
+  "Name": "'Giant' board 20% more points",
+  "Description": "Get 20% more points for winning on the 'Giant' board",
+  "Cost": 50000,
+  "BuyTimes": 2,
+  "ShopType": 7,
+  "Requires": "88fd6b85-3d1b-405e-9d04-a848762370c6",
+  "Effects": [
+    {
+      "$type": "PointsBoardMultiplierEffect",
+      "BoardID": "aff95738-a568-4628-9b04-c3f8d649fd6f",
+      "Multiplier": 1.2
+    }
+  ]
+}

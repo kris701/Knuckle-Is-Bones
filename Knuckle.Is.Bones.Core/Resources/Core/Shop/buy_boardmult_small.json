@@ -1,0 +1,16 @@
+{
+  "ID": "0dfe2a1e-99c3-4e0c-bdf1-e30747c26ddc",
+  "Name": "'Small' board 50% more points",
+  "Description": "Get 50% more points for winning on the 'Small' board",
+  "Cost": 3500,
+  "BuyTimes": 2,
+  "ShopType": 7,
+  "Requires": "23f4991e-3fdf-4fff-8ebd-1f5af20567d0",
+  "Effects": [
+    {
+      "$type": "PointsBoardMultiplierEffect",
+      "BoardID": "9cbc4760-d71b-482c-ab06-f05fecedd741",
+      "Multiplier": 1.5
+    }
+  ]
+}

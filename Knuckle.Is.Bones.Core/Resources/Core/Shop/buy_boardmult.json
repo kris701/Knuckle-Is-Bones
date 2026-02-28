@@ -1,0 +1,10 @@
+{
+  "ID": "23f4991e-3fdf-4fff-8ebd-1f5af20567d0",
+  "Name": "Upgrade boards",
+  "Description": "You can upgrade your boards as well!",
+  "Cost": 0,
+  "BuyTimes": 1,
+  "ShopType": 7,
+  "Effects": [
+  ]
+}
