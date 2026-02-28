@@ -12,9 +12,10 @@ namespace Knuckle.Is.Bones.Core.Models.Shop
 		public int Cost { get; set; }
 		public int BuyTimes { get; set; }
 		public Guid? Requires { get; set; }
+		public ShopItemTypes ShopType { get; set; }
 		public List<IPurchaseEffect> Effects { get; set; }
 
-		public ShopItemDefinition(Guid iD, string name, string description, int cost, int buyTimes, Guid? requires, List<IPurchaseEffect> effects)
+		public ShopItemDefinition(Guid iD, string name, string description, int cost, int buyTimes, Guid? requires, ShopItemTypes shopType, List<IPurchaseEffect> effects)
 		{
 			ID = iD;
 			Name = name;
@@ -22,6 +23,7 @@ namespace Knuckle.Is.Bones.Core.Models.Shop
 			Cost = cost;
 			BuyTimes = buyTimes;
 			Requires = requires;
+			ShopType = shopType;
 			Effects = effects;
 		}
 

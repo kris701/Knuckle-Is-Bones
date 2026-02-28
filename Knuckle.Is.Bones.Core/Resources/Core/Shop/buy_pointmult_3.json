@@ -5,6 +5,7 @@
 	"Cost": 5000,
 	"BuyTimes": 2,
 	"Requires": "8d91db02-4532-495c-be1c-be8bb9cadc6c",
+	"ShopType": 5,
 	"Effects": [
 		{
 			"$type": "PointsMultiplierEffect",

@@ -4,6 +4,8 @@
   "Description": "An insane 50 sided dice!",
   "Cost": 5000,
   "BuyTimes": 1,
+  "ShopType": 2,
+  "Requires": "e78732e6-d539-4f8a-a8da-fe8ddbf9772b",
   "Effects": [
     {
       "$type": "UnlockDiceEffect",

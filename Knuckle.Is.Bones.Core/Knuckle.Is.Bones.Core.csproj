@@ -29,6 +29,10 @@
 	  <EmbeddedResource Include="Resources\Core\Opponents\charlie.json" />
 	  <EmbeddedResource Include="Resources\Core\Opponents\chuck.json" />
 	  <EmbeddedResource Include="Resources\Core\Opponents\spicyjerry.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_dice.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_boards.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_6.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_5.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_4.json" />

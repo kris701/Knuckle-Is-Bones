@@ -1,0 +1,10 @@
+{
+  "ID": "b0b9f33b-e330-41c8-9021-2815e40d232f",
+  "Name": "Buy Boards",
+  "Description": "Unlocks the board buying tree",
+  "Cost": 50,
+  "BuyTimes": 1,
+  "ShopType": 1,
+  "Effects": [
+  ]
+}

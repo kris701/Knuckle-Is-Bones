@@ -4,6 +4,8 @@
   "Description": "A large 4x4 field.",
   "Cost": 500,
   "BuyTimes": 1,
+  "Requires": "b0b9f33b-e330-41c8-9021-2815e40d232f",
+  "ShopType": 1,
   "Effects": [
     {
       "$type": "UnlockBoardEffect",

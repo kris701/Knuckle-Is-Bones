@@ -4,6 +4,8 @@
   "Description": "A board that is shaped like steps.",
   "Cost": 350,
   "BuyTimes": 1,
+  "Requires": "23949e0f-886a-4224-841d-77fe6f3f382a",
+  "ShopType": 1,
   "Effects": [
     {
       "$type": "UnlockBoardEffect",

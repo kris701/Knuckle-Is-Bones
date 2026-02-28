@@ -62,28 +62,28 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Height = 50,
 				FontColor = Color.White
 			});
-			var stack = new StackPanelControl(new List<IControl>()
+			var pointsPanel = new StackPanelControl(new List<IControl>()
 			{
 				new LabelControl()
 				{
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
 					Text = $"You have ",
 					FontColor = FontHelpers.PrimaryColor,
-					FitText = true
+					FitTextWidth = true
 				},
 				new LabelControl()
 				{
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
 					Text = $"{Parent.User.Points}",
 					FontColor = FontHelpers.SecondaryColor,
-					FitText = true
+					FitTextWidth = true
 				},
 				new LabelControl()
 				{
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
 					Text = $" points",
 					FontColor = FontHelpers.PrimaryColor,
-					FitText = true
+					FitTextWidth = true
 				}
 			})
 			{
@@ -93,7 +93,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				Orientation = StackPanelControl.Orientations.Horizontal
 			};
-			AddControl(10, stack);
+			AddControl(10, pointsPanel);
 
 			var shopIds = ResourceManager.Shop.GetResources();
 			var items = new List<ShopItemDefinition>();
@@ -269,11 +269,63 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				X = from.X + (float)(Math.Cos(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
 				Y = from.Y + (float)(Math.Sin(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
 				Alpha = canAffort || isFullyPurchased ? 256 : (isPartiallyPurchased && canAffort ? 256 : 100),
-				FillClickedColor = BasicTextures.GetClickedTexture()
+				FillClickedColor = BasicTextures.GetClickedTexture(),
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx10),
+				Text = GetShortTextByShopType(item.ShopType)
 			};
 			newItem.OnEnter += OnShopItemEnter;
 			newItem.OnLeave += OnShopItemLeave;
 			return newItem;
+		}
+
+		private string GetShortTextByShopType(ShopItemTypes type)
+		{
+			switch (type)
+			{
+				case ShopItemTypes.NewBoard:
+					return "B";
+				case ShopItemTypes.NewDice:
+					return "D";
+				case ShopItemTypes.NewOpponent:
+					return "O";
+
+				case ShopItemTypes.DiceMultiplier:
+					return "D*";
+
+				case ShopItemTypes.PointMultiplier:
+					return "P*";
+
+				case ShopItemTypes.Multiple:
+					return "M";
+
+				default:
+					return "?";
+			}
+		}
+
+		private string GetTextByShopType(ShopItemTypes type)
+		{
+			switch (type)
+			{
+				case ShopItemTypes.NewBoard:
+					return "New Board";
+				case ShopItemTypes.NewDice:
+					return "New Dice";
+				case ShopItemTypes.NewOpponent:
+					return "New Opponent";
+
+				case ShopItemTypes.DiceMultiplier:
+					return "Dice Multiplier";
+
+				case ShopItemTypes.PointMultiplier:
+					return "Point Multiplier";
+
+				case ShopItemTypes.Multiple:
+					return "Multiple";
+
+				default:
+					return "Other";
+			}
 		}
 
 		private LineControl CreateLineControl(IControl from, IControl to)

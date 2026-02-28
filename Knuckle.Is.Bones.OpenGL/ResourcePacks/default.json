@@ -395,6 +395,14 @@
         "Views/GameShop/itempartialpurchased_1",
         "Views/GameShop/itempartialpurchased_2"
       ]
+    },
+    {
+      "ID": "4e62791c-4a75-4455-b432-5b9186d96bea",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/GameShop/middlemouse_1",
+        "Views/GameShop/middlemouse_2"
+      ]
     }
   ],
   "Songs": [

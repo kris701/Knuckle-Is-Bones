@@ -4,6 +4,7 @@ using FormMatter.OpenGL.Helpers;
 using Knuckle.Is.Bones.Core.Models.Shop;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.OpenGL.Controls;
+using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -28,6 +29,23 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 		{
 			BackAction = () => SwitchView(new MainMenu(Parent));
 			Initialize();
+			_mouseControls.Add(new LabelControl()
+			{
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+				FontColor = FontHelpers.SecondaryColor,
+				Text = "Move",
+				FitTextWidth = true,
+				Height = 50,
+				IsVisible = BackAction != null
+			});
+			_mouseControls.Add(new AnimatedTileControl()
+			{
+				TileSet = Parent.Textures.GetTextureSet(new Guid("4e62791c-4a75-4455-b432-5b9186d96bea")),
+				IsVisible = BackAction != null,
+				Height = 50,
+				Width = 50
+			});
+			UpdateControlsVisual();
 		}
 
 		private string BuildDescription(ShopItemDefinition item)
@@ -42,36 +60,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 					sb.AppendLine($"0/{item.BuyTimes}");
 			}
 
-			foreach (var effect in item.Effects)
-			{
-				switch (effect)
-				{
-					case UnlockDiceEffect m:
-						sb.AppendLine("Type: New Dice");
-						sb.AppendLine("Cost: " + item.Cost);
-						sb.AppendLine(" ");
-						sb.AppendLine(item.Description);
-						break;
-					case UnlockBoardEffect m:
-						sb.AppendLine("Type: New Board");
-						sb.AppendLine("Cost: " + item.Cost);
-						sb.AppendLine(" ");
-						sb.AppendLine(item.Description);
-						break;
-					case PointsMultiplierEffect m:
-						sb.AppendLine("Type: Point Multiplier");
-						sb.AppendLine("Cost: " + item.Cost);
-						sb.AppendLine(" ");
-						sb.AppendLine(item.Description);
-						break;
-					default:
-						sb.AppendLine("Type: Unknown");
-						sb.AppendLine("Cost: " + item.Cost);
-						sb.AppendLine(" ");
-						sb.AppendLine(item.Description);
-						break;
-				}
-			}
+			sb.AppendLine($"{GetTextByShopType(item.ShopType)}");
+			sb.AppendLine("Cost: " + item.Cost);
+			sb.AppendLine(" ");
+			sb.AppendLine(item.Description);
 
 			return sb.ToString();
 		}
@@ -114,20 +106,20 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 					var state = Mouse.GetState();
 					if (_mouseDown)
 					{
-						_descriptionControl.IsVisible = false;
-						if (state.MiddleButton == ButtonState.Released && state.RightButton == ButtonState.Released)
+						if (state.MiddleButton == ButtonState.Released)
 						{
 							_mouseDown = false;
 						}
 						else
 						{
+							_descriptionControl.IsVisible = false;
 							var newPos = InputHelper.GetRelativePosition(Parent.XScale, Parent.YScale);
 							UpdateOffsetLocations(newPos);
 						}
 					}
 					else
 					{
-						if (state.MiddleButton == ButtonState.Pressed || state.RightButton == ButtonState.Released)
+						if (state.MiddleButton == ButtonState.Pressed)
 						{
 							_mouseDown = true;
 							_origin = InputHelper.GetRelativePosition(Parent.XScale, Parent.YScale);
@@ -155,6 +147,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			{
 				control.X = _buttonOrigins[control].X + _lastOffset.X;
 				control.Y = _buttonOrigins[control].Y + _lastOffset.Y;
+				control.Initialize();
 			}
 			foreach (var control in _lineOrigins.Keys)
 			{
@@ -162,6 +155,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				control.Y = _lineOrigins[control].Location.Y + _lastOffset.Y;
 				control.X2 = _lineOrigins[control].Location2.X + _lastOffset.X;
 				control.Y2 = _lineOrigins[control].Location2.Y + _lastOffset.Y;
+				control.Initialize();
 			}
 		}
 
@@ -171,6 +165,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			_descriptionControl.X = origin.X + origin.Width;
 			_descriptionControl.Y = origin.Y + origin.Height;
 			_descriptionControl.IsVisible = true;
+			_descriptionControl.Initialize();
 			_lastFocus = origin;
 		}
 	}

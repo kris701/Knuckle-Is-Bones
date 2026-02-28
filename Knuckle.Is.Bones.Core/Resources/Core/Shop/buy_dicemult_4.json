@@ -4,6 +4,8 @@
 	"Description": "Permanently make all 4's you throw be worth 2x as much!",
 	"Cost": 4000,
 	"BuyTimes": 2,
+	"ShopType": 4,
+	"Requires": "f58b35d5-6fce-4a0e-9614-fa8521647b43",
 	"Effects": [
 		{
 			"$type": "DiceMultiplierEffect",
