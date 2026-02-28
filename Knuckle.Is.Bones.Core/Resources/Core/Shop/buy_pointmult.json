@@ -1,8 +1,8 @@
 {
   "ID": "1f9e4f5b-cdb8-4e78-a59a-596e66d5b9de",
   "Name": "Buy Point Mult",
-  "Description": "Unlocks the point multiplier buying tree",
-  "Cost": 50,
+  "Description": "Point multipliers gives a multiplier to the final point result you get when a game is over.",
+  "Cost": 0,
   "BuyTimes": 1,
   "ShopType": 5,
   "Effects": [

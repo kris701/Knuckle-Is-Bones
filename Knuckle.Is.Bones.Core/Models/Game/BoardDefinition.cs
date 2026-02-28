@@ -32,11 +32,11 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 			IsPurchasable = other.IsPurchasable;
 		}
 
-		internal int GetValue(Dictionary<int, double> multipliers)
+		internal int GetValue(Dictionary<int, double> valueMultiplier, Dictionary<int, double> comboMultiplier)
 		{
 			int value = 0;
 			foreach (var column in Columns)
-				value += column.GetValue(multipliers);
+				value += column.GetValue(valueMultiplier, comboMultiplier);
 			return value;
 		}
 

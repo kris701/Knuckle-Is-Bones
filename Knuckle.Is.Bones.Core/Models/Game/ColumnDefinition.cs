@@ -19,12 +19,12 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 				Cells.Add(cell);
 		}
 
-		internal int GetValue(Dictionary<int, double> multipliers)
+		internal int GetValue(Dictionary<int, double> valueMultipliers, Dictionary<int, double> comboMultiplier)
 		{
 			int value = 0;
 			for (int i = 0; i < Cells.Count; i++)
 				if (Cells[i] != 0)
-					value += (int)((Cells[i] * Cells.Count(x => x == Cells[i])) * multipliers[Cells[i]]);
+					value += (int)((Cells[i] * (Cells.Count(x => x == Cells[i]) * comboMultiplier[Cells[i]])) * valueMultipliers[Cells[i]]);
 			return value;
 		}
 

@@ -1,0 +1,16 @@
+﻿{
+	"ID": "2bf3bc46-66f0-4bf4-b8f5-d727da1a109b",
+	"Name": "Make 42's worth 5x more",
+	"Description": "Permanently make all 42's you throw be worth 5x as much!",
+	"Cost": 20000,
+	"BuyTimes": 2,
+	"ShopType": 4,
+	"Requires": "13745a1f-0f9d-480c-917a-0e2ab25c8589",
+	"Effects": [
+		{
+			"$type": "DiceMultiplierEffect",
+			"Number": 42,
+			"Multiplier": 5
+		}
+	]
+}

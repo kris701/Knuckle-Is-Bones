@@ -24,6 +24,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 		public UserSaveDefinition User { get; internal set; }
 
 		private readonly Dictionary<int, double> _playerDiceValueMap;
+		private readonly Dictionary<int, double> _playerDiceComboMap;
 		private readonly Dictionary<int, double> _blankDiceValueMap;
 
 		[JsonConstructor]
@@ -42,6 +43,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 
 			_blankDiceValueMap = BuildBlankDiceValueMultiplierMap();
 			_playerDiceValueMap = BuildPlayerDiceValueMultiplierMap();
+			_playerDiceComboMap = BuildPlayerDiceComboMultiplierMap();
 		}
 
 		public GameState(OpponentDefinition firstOpponent, BoardDefinition firstOpponentBoard, OpponentDefinition secondOpponent, BoardDefinition secondOpponentBoard, DiceDefinition currentDice, UserSaveDefinition user)
@@ -62,6 +64,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 
 			_blankDiceValueMap = BuildBlankDiceValueMultiplierMap();
 			_playerDiceValueMap = BuildPlayerDiceValueMultiplierMap();
+			_playerDiceComboMap = BuildPlayerDiceComboMultiplierMap();
 		}
 
 		public Guid SetRandomStartingPlayer()
@@ -94,6 +97,23 @@ namespace Knuckle.Is.Bones.Core.Engines
 				var item = ResourceManager.Shop.GetResource(purchaseId);
 				foreach (var effect in item.Effects)
 					if (effect is DiceMultiplierEffect eff && result.ContainsKey(eff.Number))
+						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
+							result[eff.Number] *= eff.Multiplier;
+			}
+
+			return result;
+		}
+
+		private Dictionary<int, double> BuildPlayerDiceComboMultiplierMap()
+		{
+			var result = BuildBlankDiceValueMultiplierMap();
+
+			var allShopItems = ResourceManager.Shop.GetResources();
+			foreach (var purchaseId in User.PurchasedShopItems.Keys.Where(x => allShopItems.Contains(x)))
+			{
+				var item = ResourceManager.Shop.GetResource(purchaseId);
+				foreach (var effect in item.Effects)
+					if (effect is DiceComboMultiplierEffect eff && result.ContainsKey(eff.Number))
 						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
 							result[eff.Number] *= eff.Multiplier;
 			}
@@ -134,16 +154,16 @@ namespace Knuckle.Is.Bones.Core.Engines
 		public int GetFirstOpponentBoardValue()
 		{
 			if (FirstOpponent.MoveModule is PlayerMoveModule)
-				return FirstOpponentBoard.GetValue(_playerDiceValueMap);
+				return FirstOpponentBoard.GetValue(_playerDiceValueMap, _playerDiceComboMap);
 			else
-				return FirstOpponentBoard.GetValue(_blankDiceValueMap);
+				return FirstOpponentBoard.GetValue(_blankDiceValueMap, _blankDiceValueMap);
 		}
 		public int GetSecondOpponentBoardValue()
 		{
 			if (SecondOpponent.MoveModule is PlayerMoveModule)
-				return SecondOpponentBoard.GetValue(_playerDiceValueMap);
+				return SecondOpponentBoard.GetValue(_playerDiceValueMap, _playerDiceComboMap);
 			else
-				return SecondOpponentBoard.GetValue(_blankDiceValueMap);
+				return SecondOpponentBoard.GetValue(_blankDiceValueMap, _blankDiceValueMap);
 		}
 
 		public GameResult GetGameResult()
