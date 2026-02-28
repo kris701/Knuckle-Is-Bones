@@ -11,9 +11,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {
 	public partial class GameShop : BaseNavigatableView
 	{
-		private static Random _rnd = new Random();
-
-		public GameShop(KnuckleBoneWindow parent) : base(parent, new Guid("169e9e54-b45f-41d4-9845-f8519d256033"), new List<int>() { 0, 1 })
+		public GameShop(KnuckleBoneWindow parent) : base(parent, new Guid("169e9e54-b45f-41d4-9845-f8519d256033"), new List<int>() { 6 })
 		{
 			BackAction = () => SwitchView(new MainMenu(Parent));
 			Initialize();
@@ -83,6 +81,19 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 					_descriptionControl.IsVisible = true;
 				}
 			}
+			else if (InputType == InputTypes.Gamepad)
+			{
+				if (_gamepadNavigator.Focused is AnimatedAudioButton but && but.Tag is ShopItemDefinition shop)
+				{
+					_descriptionControl.Text = BuildDescription(shop);
+					_descriptionControl.X = but.X + but.Width;
+					_descriptionControl.Y = but.Y + but.Height;
+					_descriptionControl.IsVisible = true;
+				}
+			}
+
+			
+
 			base.OnUpdate(gameTime);
 		}
 	}

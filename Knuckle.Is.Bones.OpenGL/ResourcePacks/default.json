@@ -260,30 +260,6 @@
       ]
     },
     {
-      "ID": "ac42399b-fecf-4627-96e8-bb188369dc81",
-      "FrameTime": 750,
-      "Contents": [
-        "Views/GameShop/shopitem_1",
-        "Views/GameShop/shopitem_2"
-      ]
-    },
-    {
-      "ID": "ba6403c6-4af5-4b17-b5ee-62052beb7732",
-      "FrameTime": 500,
-      "Contents": [
-        "Views/GameShop/shopitem_selected_1",
-        "Views/GameShop/shopitem_selected_2"
-      ]
-    },
-    {
-      "ID": "0c464e6e-8fcb-4ba9-838d-0b1e5edfca12",
-      "FrameTime": 750,
-      "Contents": [
-        "Views/GameShop/shopdesc_1",
-        "Views/GameShop/shopdesc_2"
-      ]
-    },
-    {
       "ID": "fbf34095-55e4-4b14-876e-ce7a2e0756ec",
       "FrameTime": 25,
       "Contents": [
@@ -378,6 +354,22 @@
       "Contents": [
         "Controls/start_1",
         "Controls/start_2"
+      ]
+    },
+    {
+      "ID": "0c464e6e-8fcb-4ba9-838d-0b1e5edfca12",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/GameShop/shopdesc_1",
+        "Views/GameShop/shopdesc_2"
+      ]
+    },
+    {
+      "ID": "0089c38b-65cb-40c1-98e2-8f760f1a7fa9",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/GameShop/shopoverall_1",
+        "Views/GameShop/shopoverall_2"
       ]
     },
     {

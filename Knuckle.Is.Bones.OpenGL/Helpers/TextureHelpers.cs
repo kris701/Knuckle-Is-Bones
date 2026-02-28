@@ -30,8 +30,8 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 
 		#region Shop
 
-		public static Guid ShopItem => new Guid("ac42399b-fecf-4627-96e8-bb188369dc81");
 		public static Guid ShopDescription => new Guid("0c464e6e-8fcb-4ba9-838d-0b1e5edfca12");
+		public static Guid ShopOverallDescription => new Guid("0089c38b-65cb-40c1-98e2-8f760f1a7fa9");
 
 		#endregion
 

@@ -19,11 +19,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 	public partial class GameShop : BaseNavigatableView
 	{
 		private AnimatedTextboxControl _descriptionControl;
+		private AnimatedTextboxControl _overallDescriptionControl;
 		private TileControl _coreItem;
 		private readonly int _itemDist = 200;
+		private Point _origin = new Point(IWindow.BaseScreenSize.X / 2, IWindow.BaseScreenSize.Y / 2);
+		private Point _offset = new Point(IWindow.BaseScreenSize.X / 2, IWindow.BaseScreenSize.Y / 2);
 
 		[MemberNotNull(
 			nameof(_descriptionControl),
+			nameof(_overallDescriptionControl),
 			nameof(_coreItem)
 			)]
 		public override void Initialize()
@@ -81,7 +85,23 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Height = 200,
 				IsVisible = false,
 			};
-			AddControl(1, _descriptionControl);
+			AddControl(6, _descriptionControl);
+
+			_overallDescriptionControl = new AnimatedTextboxControl()
+			{
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+				Margin = 50,
+				FontColor = Color.White,
+				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopOverallDescription),
+				WordWrap = TextboxControl.WordWrapTypes.Word,
+				Text = BuildUpgradeList(),
+				Width = 500,
+				Height = 900,
+				IsVisible = Parent.User.PurchasedShopItems.Count > 0,
+				VerticalAlignment = VerticalAlignment.Middle,
+				X = 1400
+			};
+			AddControl(10, _overallDescriptionControl);
 
 #if DEBUG
 			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new GameShop(Parent)))
@@ -179,7 +199,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				};
 				newItem.OnEnter += OnShopItemEnter;
 				newItem.OnLeave += OnShopItemLeave;
-				AddControl(1, newItem);
+				AddControl(6, newItem);
 				existing.Add(newItem);
 
 				var newLine = new LineControl()
@@ -191,7 +211,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 					Stroke = BasicTextures.GetBasicRectange(Color.White),
 					Thickness = 2
 				};
-				AddControl(0, newLine);
+				AddControl(5, newLine);
 				index++;
 
 				var items = allItems.Where(x => x.Requires == root.ID).ToList();
@@ -228,7 +248,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				};
 				newItem.OnEnter += OnShopItemEnter;
 				newItem.OnLeave += OnShopItemLeave;
-				AddControl(1, newItem);
+				AddControl(6, newItem);
 				existing.Add(newItem);
 
 				var newLine = new LineControl()
@@ -240,7 +260,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 					Stroke = BasicTextures.GetBasicRectange(Color.White),
 					Thickness = 2
 				};
-				AddControl(0, newLine);
+				AddControl(5, newLine);
 				index++;
 
 				var subItems = allItems.Where(x => x.Requires == item.ID).ToList();
