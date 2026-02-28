@@ -16,6 +16,9 @@
 		PointMultiplier,
 
 		// Misc
-		Multiple
+		Multiple,
+
+		// Board Upgrades
+		BoardPointMultiplier
 	}
 }

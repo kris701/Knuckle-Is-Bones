@@ -179,7 +179,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			if ((FirstOpponent.MoveModule is PlayerMoveModule) && (SecondOpponent.MoveModule is not PlayerMoveModule) && Winner == FirstOpponent.MoveModule.OpponentID)
 			{
 				playerWon = true;
-				pointsGained = GetPointsGained(GetFirstOpponentBoardValue(), SecondOpponent.Difficulty);
+				pointsGained = GetPointsGained(GetFirstOpponentBoardValue(), SecondOpponent.Difficulty, FirstOpponentBoard.ID);
 				completedItems.Add(SecondOpponent.ID);
 				completedItems.Add(FirstOpponentBoard.ID);
 				completedItems.Add(CurrentDice.ID);
@@ -187,7 +187,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			if ((SecondOpponent.MoveModule is PlayerMoveModule) && (FirstOpponent.MoveModule is not PlayerMoveModule) && Winner == SecondOpponent.MoveModule.OpponentID)
 			{
 				playerWon = true;
-				pointsGained = GetPointsGained(GetSecondOpponentBoardValue(), FirstOpponent.Difficulty);
+				pointsGained = GetPointsGained(GetSecondOpponentBoardValue(), FirstOpponent.Difficulty, FirstOpponentBoard.ID);
 				completedItems.Add(FirstOpponent.ID);
 				completedItems.Add(FirstOpponentBoard.ID);
 				completedItems.Add(CurrentDice.ID);
@@ -205,7 +205,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 			return new GameResult(playerWon, hadPlayer, pointsGained, winnerName, completedItems);
 		}
 
-		private int GetPointsGained(int boardValue, double opponentDifficulty)
+		private int GetPointsGained(int boardValue, double opponentDifficulty, Guid boardId)
 		{
 			var value = (int)(boardValue * opponentDifficulty);
 
@@ -214,9 +214,13 @@ namespace Knuckle.Is.Bones.Core.Engines
 			{
 				var item = ResourceManager.Shop.GetResource(purchaseId);
 				foreach (var effect in item.Effects)
+				{
 					if (effect is PointsMultiplierEffect eff)
 						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
 							value = (int)(value * eff.Multiplier);
+					else if (effect is PointsBoardMultiplierEffect eff2 && eff2.BoardID == boardId)
+						value = (int)(value * eff2.Multiplier);
+				}
 			}
 
 			return value;

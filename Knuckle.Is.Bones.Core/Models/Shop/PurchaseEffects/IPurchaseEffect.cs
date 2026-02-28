@@ -7,6 +7,7 @@ namespace Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects
 	[JsonDerivedType(typeof(PointsMultiplierEffect), typeDiscriminator: nameof(PointsMultiplierEffect))]
 	[JsonDerivedType(typeof(DiceMultiplierEffect), typeDiscriminator: nameof(DiceMultiplierEffect))]
 	[JsonDerivedType(typeof(DiceComboMultiplierEffect), typeDiscriminator: nameof(DiceComboMultiplierEffect))]
+	[JsonDerivedType(typeof(PointsBoardMultiplierEffect), typeDiscriminator: nameof(PointsBoardMultiplierEffect))]
 	public interface IPurchaseEffect
 	{
 		public List<Guid> GetReferenceIDs();
