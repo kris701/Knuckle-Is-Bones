@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using ToolsSharp;
 
@@ -22,8 +23,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 		private AnimatedTextboxControl _overallDescriptionControl;
 		private TileControl _coreItem;
 		private readonly int _itemDist = 200;
-		private Point _origin = new Point(IWindow.BaseScreenSize.X / 2, IWindow.BaseScreenSize.Y / 2);
-		private Point _offset = new Point(IWindow.BaseScreenSize.X / 2, IWindow.BaseScreenSize.Y / 2);
 
 		[MemberNotNull(
 			nameof(_descriptionControl),
@@ -39,7 +38,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				FillColor = BasicTextures.GetBasicRectange(Color.Black)
 			});
 
-			AddControl(1, new LabelControl()
+			AddControl(9, new TileControl()
+			{
+				Width = 1920,
+				Height = 150,
+				FillColor = BasicTextures.GetBasicRectange(Color.Black)
+			});
+			AddControl(10, new LabelControl()
 			{
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				Text = "Shop",
@@ -48,7 +53,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Height = 50,
 				FontColor = FontHelpers.SecondaryColor
 			});
-			AddControl(1, new LabelControl()
+			AddControl(10, new LabelControl()
 			{
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Text = "Purchase new items and upgrades to the game here!",
@@ -57,15 +62,38 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Height = 50,
 				FontColor = Color.White
 			});
-			AddControl(1, new LabelControl()
+			var stack = new StackPanelControl(new List<IControl>()
 			{
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
-				Text = $"You have {Parent.User.Points} points",
-				HorizontalAlignment = HorizontalAlignment.Middle,
+				new LabelControl()
+				{
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
+					Text = $"You have ",
+					FontColor = FontHelpers.PrimaryColor,
+					FitText = true
+				},
+				new LabelControl()
+				{
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
+					Text = $"{Parent.User.Points}",
+					FontColor = FontHelpers.SecondaryColor,
+					FitText = true
+				},
+				new LabelControl()
+				{
+					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
+					Text = $" points",
+					FontColor = FontHelpers.PrimaryColor,
+					FitText = true
+				}
+			})
+			{
 				Y = 100,
 				Height = 50,
-				FontColor = Color.White
-			});
+				Width = 350,
+				HorizontalAlignment = HorizontalAlignment.Middle,
+				Orientation = StackPanelControl.Orientations.Horizontal
+			};
+			AddControl(10, stack);
 
 			var shopIds = ResourceManager.Shop.GetResources();
 			var items = new List<ShopItemDefinition>();
@@ -104,7 +132,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			AddControl(10, _overallDescriptionControl);
 
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new GameShop(Parent)))
+			AddControl(10, new ButtonControl(Parent, (x) => SwitchView(new GameShop(Parent)))
 			{
 				X = 0,
 				Y = 0,
@@ -174,50 +202,30 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 			var existing = new List<IControl>() { _coreItem };
 			var index = 0;
-			foreach(var root in rootItems)
+			foreach(var item in rootItems)
 			{
 				var minAngle = (6.28f / rootItems.Count) * index;
 				var maxAngle = (6.28f / rootItems.Count) * (index + 1);
 
-				var canAffort = root.CanAffort(Parent.User);
-				var isFullyPurchased = root.IsFullyPurchased(Parent.User);
-
-				var newItem = new AnimatedAudioButton(Parent, (s) =>
-				{
-					if (s.Tag is ShopItemDefinition shopItem)
-						PurchaseItem(shopItem);
-				})
-				{
-					Width = 50,
-					Height = 50,
-					TileSet = isFullyPurchased ? Parent.Textures.GetTextureSet(new Guid("7f776a6c-87c6-40d9-a978-eb4eccde20d0")) : Parent.Textures.GetTextureSet(new Guid("0d3b5971-75f8-4df1-afd4-dbe0a9a16a07")),
-					Tag = root,
-					X = _coreItem.X + (float)(Math.Cos(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
-					Y = _coreItem.Y + (float)(Math.Sin(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
-					Alpha = canAffort || isFullyPurchased ? 256 : 100,
-					FillClickedColor = BasicTextures.GetClickedTexture()
-				};
-				newItem.OnEnter += OnShopItemEnter;
-				newItem.OnLeave += OnShopItemLeave;
+				var newItem = CreateButtonControl(item, _coreItem, minAngle, maxAngle, index);
 				AddControl(6, newItem);
 				existing.Add(newItem);
 
-				var newLine = new LineControl()
-				{
-					X = _coreItem.X,
-					Y = _coreItem.Y,
-					X2 = newItem.X + newItem.Width / 2,
-					Y2 = newItem.Y + newItem.Height / 2,
-					Stroke = BasicTextures.GetBasicRectange(Color.White),
-					Thickness = 2
-				};
+				var newLine = CreateLineControl(_coreItem, newItem);
 				AddControl(5, newLine);
 				index++;
 
-				var items = allItems.Where(x => x.Requires == root.ID).ToList();
+				var items = allItems.Where(x => x.Requires == item.ID).ToList();
 				if (items.Count > 0)
 					BuildTree(newItem, items, allItems, existing, minAngle, maxAngle);
 			}
+
+			foreach (var item in GetAll(6))
+				if (item is AnimatedAudioButton but)
+					_buttonOrigins[but] = new Point((int)but.X, (int)but.Y);
+			foreach (var item in GetAll(5))
+				if (item is LineControl line)
+					_lineOrigins[line] = new LineOrigin(new Point((int)line.X, (int)line.Y), new Point((int)line.X2, (int)line.Y2));
 		}
 
 		private void BuildTree(IControl from, List<ShopItemDefinition> items, List<ShopItemDefinition> allItems, List<IControl> existing, float parentMinAngle, float parentMaxAngle)
@@ -228,38 +236,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				var minAngle = parentMinAngle + ((parentMaxAngle - parentMinAngle) / items.Count) * index;
 				var maxAngle = parentMinAngle + ((parentMaxAngle - parentMinAngle) / items.Count) * (index + 1);
 
-				var canAffort = item.CanAffort(Parent.User);
-				var isFullyPurchased = item.IsFullyPurchased(Parent.User);
-
-				var newItem = new AnimatedAudioButton(Parent, (s) =>
-				{
-					if (s.Tag is ShopItemDefinition shopItem)
-						PurchaseItem(shopItem);
-				})
-				{
-					Width = 50,
-					Height = 50,
-					TileSet = isFullyPurchased ? Parent.Textures.GetTextureSet(new Guid("7f776a6c-87c6-40d9-a978-eb4eccde20d0")) : Parent.Textures.GetTextureSet(new Guid("0d3b5971-75f8-4df1-afd4-dbe0a9a16a07")),
-					Tag = item,
-					X = from.X + (float)(Math.Cos(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
-					Y = from.Y + (float)(Math.Sin(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
-					Alpha = canAffort || isFullyPurchased ? 256 : 100,
-					FillClickedColor = BasicTextures.GetClickedTexture()
-				};
-				newItem.OnEnter += OnShopItemEnter;
-				newItem.OnLeave += OnShopItemLeave;
+				var newItem = CreateButtonControl(item, from, minAngle, maxAngle, index);
 				AddControl(6, newItem);
 				existing.Add(newItem);
 
-				var newLine = new LineControl()
-				{
-					X = from.X + from.Width / 2,
-					Y = from.Y + from.Height / 2,
-					X2 = newItem.X + newItem.Width / 2,
-					Y2 = newItem.Y + newItem.Height / 2,
-					Stroke = BasicTextures.GetBasicRectange(Color.White),
-					Thickness = 2
-				};
+				var newLine = CreateLineControl(from, newItem);
 				AddControl(5, newLine);
 				index++;
 
@@ -267,6 +248,46 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				if (subItems.Count > 0)
 					BuildTree(newItem, subItems, allItems, existing, minAngle, maxAngle);
 			}
+		}
+
+		private AnimatedAudioButton CreateButtonControl(ShopItemDefinition item, IControl from, float minAngle, float maxAngle, int index)
+		{
+			var canAffort = item.CanAffort(Parent.User);
+			var isFullyPurchased = item.IsFullyPurchased(Parent.User);
+			var isPartiallyPurchased = item.IsPartiallyPurchased(Parent.User);
+
+			var newItem = new AnimatedAudioButton(Parent, (s) =>
+			{
+				if (s.Tag is ShopItemDefinition shopItem)
+					PurchaseItem(shopItem);
+			})
+			{
+				Width = 50,
+				Height = 50,
+				TileSet = isFullyPurchased ? Parent.Textures.GetTextureSet(TextureHelpers.ShopItemPurchased) : (isPartiallyPurchased ? Parent.Textures.GetTextureSet(TextureHelpers.ShopItemPartialPurchased) : Parent.Textures.GetTextureSet(TextureHelpers.ShopItem)),
+				Tag = item,
+				X = from.X + (float)(Math.Cos(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
+				Y = from.Y + (float)(Math.Sin(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
+				Alpha = canAffort || isFullyPurchased ? 256 : (isPartiallyPurchased && canAffort ? 256 : 100),
+				FillClickedColor = BasicTextures.GetClickedTexture()
+			};
+			newItem.OnEnter += OnShopItemEnter;
+			newItem.OnLeave += OnShopItemLeave;
+			return newItem;
+		}
+
+		private LineControl CreateLineControl(IControl from, IControl to)
+		{
+			var newLine = new LineControl()
+			{
+				X = from.X + from.Width / 2,
+				Y = from.Y + from.Height / 2,
+				X2 = to.X + to.Width / 2,
+				Y2 = to.Y + to.Height / 2,
+				Stroke = BasicTextures.GetBasicRectange(Color.Gray),
+				Thickness = 2
+			};
+			return newLine;
 		}
 
 		private int GetDistanceByAngle(float minAngle, float maxAngle, int index)
@@ -281,12 +302,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 		private void OnShopItemEnter(ButtonControl s)
 		{
 			if (s.Tag is ShopItemDefinition shopItem)
-			{
-				_descriptionControl.Text = BuildDescription(shopItem);
-				_descriptionControl.X = s.X + s.Width;
-				_descriptionControl.Y = s.Y + s.Height;
-				_descriptionControl.IsVisible = true;
-			}
+				UpdateItemDescription(s, shopItem);
 		}
 		private void OnShopItemLeave(ButtonControl s)
 		{

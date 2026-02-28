@@ -387,6 +387,14 @@
         "Views/GameShop/itempurchased_1",
         "Views/GameShop/itempurchased_2"
       ]
+    },
+    {
+      "ID": "9e58426c-4915-4598-8254-2fb67f798a65",
+      "FrameTime": 650,
+      "Contents": [
+        "Views/GameShop/itempartialpurchased_1",
+        "Views/GameShop/itempartialpurchased_2"
+      ]
     }
   ],
   "Songs": [

@@ -47,6 +47,16 @@ namespace Knuckle.Is.Bones.Core.Models.Shop
 			return false;
 		}
 
+		public bool IsPartiallyPurchased(UserSaveDefinition user)
+		{
+			if (!user.PurchasedShopItems.ContainsKey(ID))
+				return false;
+			var times = user.PurchasedShopItems[ID];
+			if (times > 0)
+				return true;
+			return false;
+		}
+
 		public bool CanAffort(UserSaveDefinition user)
 		{
 			return CanPurchase(user) && user.Points >= Cost;

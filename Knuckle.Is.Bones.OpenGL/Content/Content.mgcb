@@ -650,6 +650,30 @@
 /processorParam:TextureFormat=Color
 /build:Views/GameShop/item_2.png
 
+#begin Views/GameShop/itempartialpurchased_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Views/GameShop/itempartialpurchased_1.png
+
+#begin Views/GameShop/itempartialpurchased_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Views/GameShop/itempartialpurchased_2.png
+
 #begin Views/GameShop/itempurchased_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
