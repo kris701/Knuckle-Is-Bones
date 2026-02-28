@@ -19,15 +19,15 @@ The game currenctly contains:
 * 6 opponents
 * 6 dice
 * 8 board
-* 18 shop items
+* Several upgrades
 
 The game has a shop system, where the the more points you gain by winning against opponents, the better dice er larger boards you get get!
 
 This game is also fully moddable! You can add boards, dice, opponents, shop items, change textures and much more.
 
-This game is still Work in Progress and i appreciate any input you can give :)
+You can play this game with a mouse, keyboard, gamepad or a combination of them all. (Do note, for gamepad users, the game only accepts input for controller 1-4)
 
-![gif](https://github.com/user-attachments/assets/11ac6359-60d8-43dc-af79-ca9156a84abd)
+![gif](https://github.com/user-attachments/assets/24993fc5-66ee-4bcc-89e2-e1be8df2c585)
 
 ## Modding
 This game supports modding of both visual content and game content.
