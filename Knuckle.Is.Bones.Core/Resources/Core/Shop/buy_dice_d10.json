@@ -3,6 +3,7 @@
   "Name": "A D10 dice",
   "Description": "A larger 10 sides dice.",
   "Cost": 1000,
+  "BuyTimes": 1,
   "Effects": [
     {
       "$type": "UnlockDiceEffect",

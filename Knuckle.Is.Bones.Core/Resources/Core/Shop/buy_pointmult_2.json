@@ -3,6 +3,7 @@
 	"Name": "15% point multiplier",
 	"Description": "Permanently get 15% more points when winning a match! (Do note, this also stacks with other point multiplier upgrades!)",
 	"Cost": 2500,
+	"BuyTimes": 2,
 	"Effects": [
 		{
 			"$type": "PointsMultiplierEffect",

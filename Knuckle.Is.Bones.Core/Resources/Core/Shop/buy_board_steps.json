@@ -3,6 +3,7 @@
   "Name": "Steps Board",
   "Description": "A board that is shaped like steps.",
   "Cost": 350,
+  "BuyTimes": 1,
   "Effects": [
     {
       "$type": "UnlockBoardEffect",

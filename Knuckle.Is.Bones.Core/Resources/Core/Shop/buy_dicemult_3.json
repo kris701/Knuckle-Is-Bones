@@ -3,6 +3,7 @@
 	"Name": "Make 3's worth 2x more",
 	"Description": "Permanently make all 3's you throw be worth 2x as much!",
 	"Cost": 3000,
+	"BuyTimes": 2,
 	"Effects": [
 		{
 			"$type": "DiceMultiplierEffect",

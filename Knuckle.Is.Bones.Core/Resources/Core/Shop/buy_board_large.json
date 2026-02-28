@@ -3,10 +3,11 @@
   "Name": "Large Board",
   "Description": "A large 4x4 field.",
   "Cost": 500,
+  "BuyTimes": 1,
   "Effects": [
     {
       "$type": "UnlockBoardEffect",
       "ID": "09144a57-a719-47bd-a36c-1cfb287c295d"
     }
-  ] 
+  ]
 }

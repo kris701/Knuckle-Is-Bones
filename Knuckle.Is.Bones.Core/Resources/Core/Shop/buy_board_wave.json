@@ -3,6 +3,7 @@
   "Name": "Wave Board",
   "Description": "A weird wavy board.",
   "Cost": 250,
+  "BuyTimes": 1,
   "Effects": [
     {
       "$type": "UnlockBoardEffect",

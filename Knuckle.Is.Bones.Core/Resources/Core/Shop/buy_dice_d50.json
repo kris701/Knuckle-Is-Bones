@@ -3,6 +3,7 @@
   "Name": "A D50 dice",
   "Description": "An insane 50 sided dice!",
   "Cost": 5000,
+  "BuyTimes": 1,
   "Effects": [
     {
       "$type": "UnlockDiceEffect",

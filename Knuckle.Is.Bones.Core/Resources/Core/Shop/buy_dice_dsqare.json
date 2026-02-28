@@ -3,6 +3,7 @@
   "Name": "A D^2 dice",
   "Description": "A dice with the values 2, 4, 16, 32 and 64",
   "Cost": 10000,
+  "BuyTimes": 1,
   "Effects": [
     {
       "$type": "UnlockDiceEffect",

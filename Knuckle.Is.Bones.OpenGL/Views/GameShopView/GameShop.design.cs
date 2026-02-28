@@ -67,7 +67,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			var items = new List<ShopItemDefinition>();
 			foreach (var id in shopIds)
 				items.Add(ResourceManager.Shop.GetResource(id));
-			items.RemoveAll(x => x.HasPurchased(Parent.User));
+			items.RemoveAll(x => !x.CanPurchase(Parent.User));
 			items = items.OrderBy(x => x.Cost).ToList();
 
 			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopItem);
@@ -184,8 +184,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 			var shopItemIds = ResourceManager.Shop.GetResources();
 			var effects = new List<IPurchaseEffect>();
-			foreach (var purcahesedId in Parent.User.PurchasedShopItems.Where(x => shopItemIds.Contains(x)))
-				effects.AddRange(ResourceManager.Shop.GetResource(purcahesedId).Effects);
+			foreach (var purchaseId in Parent.User.PurchasedShopItems.Keys.Where(x => shopItemIds.Contains(x)))
+				for (int i = 0; i < Parent.User.PurchasedShopItems[purchaseId]; i++)
+					effects.AddRange(ResourceManager.Shop.GetResource(purchaseId).Effects);
 
 			var allPointMult = effects.Where(x => x is PointsMultiplierEffect).Cast<PointsMultiplierEffect>();
 			if (allPointMult.Count() > 0)

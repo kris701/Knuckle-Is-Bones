@@ -29,7 +29,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			{
 				_currentShopItem = item;
 				_descriptionControl.Text = BuildDescription(item);
-				if (item.CanPurchase(Parent.User))
+				if (item.CanAffort(Parent.User))
 					_buyItemControl.IsVisible = true;
 			}
 		}

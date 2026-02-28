@@ -204,13 +204,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			var items = new List<IPurchasable>();
 			foreach (var id in ids)
 				items.Add(getMethod(id));
-			items = items.OrderByDescending(x => !x.IsPurchasable || Parent.User.PurchasedShopItems.Contains(x.ID)).ToList();
+			items = items.OrderByDescending(x => !x.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(x.ID)).ToList();
 
 			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 			var controlList = new List<StackPanelControl>();
 			foreach (var item in items)
 			{
-				var isUnlocked = !item.IsPurchasable || Parent.User.PurchasedShopItems.Contains(item.ID);
+				var isUnlocked = !item.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(item.ID);
 				Guid? tileSet = null;
 				if (Parent.User.CompletedItems.ContainsKey(item.ID))
 				{

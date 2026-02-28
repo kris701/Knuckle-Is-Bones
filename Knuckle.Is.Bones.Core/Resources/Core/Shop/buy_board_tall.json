@@ -3,6 +3,7 @@
   "Name": "Tall Board",
   "Description": "A tall 3x4 field.",
   "Cost": 750,
+  "BuyTimes": 1,
   "Effects": [
     {
       "$type": "UnlockBoardEffect",
