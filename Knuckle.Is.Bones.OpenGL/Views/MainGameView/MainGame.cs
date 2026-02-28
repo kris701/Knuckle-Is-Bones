@@ -49,7 +49,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			};
 			Engine.OnCombo += () => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnCombo);
 			Engine.OnTurn += () => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnTurn);
-			Engine.OnBoardModified += (o) => Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnBoardModified);
+			Engine.OnBoardModified += (o) =>
+			{
+				Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnBoardModified);
+				if (o == Engine.State.FirstOpponent.MoveModule.OpponentID)
+					_firstOpponentBoard!.ShowModifying();
+				else if (o == Engine.State.SecondOpponent.MoveModule.OpponentID)
+					_secondOpponentBoard!.ShowModifying();
+			};
 
 			var speeds = GameSpeedHelpers.GetGameSpeed(Parent.Settings.GameSpeed);
 			_rollTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.RollTimer), OnRollTimer);
@@ -121,12 +128,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 					Engine.Execute(new SetCPUMoveAction());
 				if (_shouldModifyWait)
 				{
-					_secondOpponentBoard!.UpdateBoard();
-					_firstOpponentBoard!.UpdateBoard();
-					if (current.MoveModule.OpponentID == Engine.State.FirstOpponent.MoveModule.OpponentID)
-						_firstOpponentBoard.ShowModifying();
-					else
-						_secondOpponentBoard.ShowModifying();
+					_secondOpponentBoard.UpdateBoard();
+					_firstOpponentBoard.UpdateBoard();
 					_modifyWait = true;
 				}
 				else
