@@ -314,6 +314,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			switch (InputType)
 			{
 				case InputTypes.Mouse:
+					_keyboardNavigator.Selector.IsVisible = false;
+					_gamepadNavigator.Selector.IsVisible = false;
 					_controlsPanel.Children = _mouseControls;
 					_controlsPanel.Initialize();
 					break;

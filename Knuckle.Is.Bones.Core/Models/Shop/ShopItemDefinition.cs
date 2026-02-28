@@ -11,26 +11,40 @@ namespace Knuckle.Is.Bones.Core.Models.Shop
 		public string Description { get; set; }
 		public int Cost { get; set; }
 		public int BuyTimes { get; set; }
+		public Guid? Requires { get; set; }
 		public List<IPurchaseEffect> Effects { get; set; }
 
-		public ShopItemDefinition(Guid iD, string name, string description, int cost, int buyTimes, List<IPurchaseEffect> effects)
+		public ShopItemDefinition(Guid iD, string name, string description, int cost, int buyTimes, Guid? requires, List<IPurchaseEffect> effects)
 		{
 			ID = iD;
 			Name = name;
 			Description = description;
 			Cost = cost;
 			BuyTimes = buyTimes;
+			Requires = requires;
 			Effects = effects;
 		}
 
 		public bool CanPurchase(UserSaveDefinition user)
 		{
+			if (Requires != null && !user.PurchasedShopItems.ContainsKey((Guid)Requires))
+				return false;
 			if (!user.PurchasedShopItems.ContainsKey(ID))
 				return true;
 			var times = user.PurchasedShopItems[ID];
 			if (times >= BuyTimes)
 				return false;
 			return true;
+		}
+
+		public bool IsFullyPurchased(UserSaveDefinition user)
+		{
+			if (!user.PurchasedShopItems.ContainsKey(ID))
+				return false;
+			var times = user.PurchasedShopItems[ID];
+			if (times == BuyTimes)
+				return true;
+			return false;
 		}
 
 		public bool CanAffort(UserSaveDefinition user)

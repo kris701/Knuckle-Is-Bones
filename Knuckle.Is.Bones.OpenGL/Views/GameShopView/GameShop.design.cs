@@ -1,4 +1,5 @@
-﻿using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL;
+using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
 using Knuckle.Is.Bones.Core.Models.Shop;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
@@ -11,18 +12,19 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using ToolsSharp;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {
 	public partial class GameShop : BaseNavigatableView
 	{
 		private AnimatedTextboxControl _descriptionControl;
-		private AnimatedButtonControl _buyItemControl;
-		private AnimatedAudioButton? _currentSelectedItem;
+		private TileControl _coreItem;
+		private readonly int _itemDist = 200;
 
 		[MemberNotNull(
 			nameof(_descriptionControl),
-			nameof(_buyItemControl)
+			nameof(_coreItem)
 			)]
 		public override void Initialize()
 		{
@@ -61,101 +63,25 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				FontColor = Color.White
 			});
 
-			var width = 600;
-			var height = 800;
 			var shopIds = ResourceManager.Shop.GetResources();
 			var items = new List<ShopItemDefinition>();
 			foreach (var id in shopIds)
 				items.Add(ResourceManager.Shop.GetResource(id));
-			items.RemoveAll(x => !x.CanPurchase(Parent.User));
-			items = items.OrderBy(x => x.Cost).ToList();
-
-			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopItem);
-			var controlList = new List<AnimatedAudioButton>();
-			foreach (var item in items)
-			{
-				var canBuy = Parent.User.Points >= item.Cost;
-				controlList.Add(new AnimatedAudioButton(Parent, (x) => SelectItemToPurchase((AnimatedAudioButton)x))
-				{
-					TileSet = textureSet,
-					FillClickedColor = BasicTextures.GetClickedTexture(),
-					FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
-					Text = $"{item.Name} [{item.Cost}]",
-					FontColor = canBuy ? Color.White : Color.Gray,
-					Alpha = canBuy ? 256 : 100,
-					Tag = item,
-					IsEnabled = canBuy
-				});
-			}
-			var pagehandler = new PageHandler<AnimatedAudioButton>(this, controlList)
-			{
-				LeftButtonX = 10,
-				LeftButtonY = -50,
-				RightButtonX = width - 80,
-				RightButtonY = -50,
-				ItemsPrPage = 13,
-				X = 120,
-				Y = 200,
-				Width = width,
-				Height = height - 50
-			};
-			AddControl(1, pagehandler);
-
-			if (items.Count == 0)
-			{
-				AchievementHelper.UnlockAchievement("BuyAllShopItems");
-				AddControl(1, new LabelControl()
-				{
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					Text = "All items purchased!",
-					X = 400,
-					Y = 550,
-					Height = 50,
-					FontColor = FontHelpers.SecondaryColor
-				});
-			}
+			CheckAchievement(items);
+			BuildTreeFromRoot(items, items.Where(x => x.Requires == null).ToList());
 
 			_descriptionControl = new AnimatedTextboxControl()
 			{
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
-				Margin = 50,
+				Margin = 15,
 				FontColor = Color.White,
 				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopDescription),
-				X = pagehandler.X + 10 + width,
 				WordWrap = TextboxControl.WordWrapTypes.Word,
-				Y = 150,
-				Width = 500,
-				Height = height,
+				Width = 200,
+				Height = 200,
+				IsVisible = false,
 			};
 			AddControl(1, _descriptionControl);
-			_buyItemControl = new AnimatedButtonControl(Parent, (x) => PurchaseItem())
-			{
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
-				FontColor = Color.Gold,
-				Text = "Buy",
-				ClickSound = SoundEffectHelpers.ShopBuySound,
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				X = pagehandler.X + 10 + width + 50,
-				Y = height + 50,
-				Width = 400,
-				Height = 50,
-				IsVisible = false
-			};
-			AddControl(1, _buyItemControl);
-			AddControl(1, new AnimatedTextboxControl()
-			{
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
-				Margin = 50,
-				FontColor = Color.White,
-				Text = BuildUpgradeList(),
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopDescription),
-				X = _descriptionControl.X + 10 + _descriptionControl.Width,
-				WordWrap = TextboxControl.WordWrapTypes.Word,
-				Y = 150,
-				Width = 500,
-				Height = height,
-			});
 
 #if DEBUG
 			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new GameShop(Parent)))
@@ -213,6 +139,158 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			}
 
 			return sb.ToString();
+		}
+
+		private void BuildTreeFromRoot(List<ShopItemDefinition> allItems, List<ShopItemDefinition> rootItems)
+		{
+			_coreItem = new TileControl()
+			{
+				Width = 1,
+				Height = 1,
+				X = IWindow.BaseScreenSize.X / 2,
+				Y = IWindow.BaseScreenSize.Y / 2
+			};
+			AddControl(0, _coreItem);
+
+			var existing = new List<IControl>() { _coreItem };
+			var index = 0;
+			foreach(var root in rootItems)
+			{
+				var minAngle = (6.28f / rootItems.Count) * index;
+				var maxAngle = (6.28f / rootItems.Count) * (index + 1);
+
+				var canAffort = root.CanAffort(Parent.User);
+				var isFullyPurchased = root.IsFullyPurchased(Parent.User);
+
+				var newItem = new AnimatedAudioButton(Parent, (s) =>
+				{
+					if (s.Tag is ShopItemDefinition shopItem)
+						PurchaseItem(shopItem);
+				})
+				{
+					Width = 50,
+					Height = 50,
+					TileSet = isFullyPurchased ? Parent.Textures.GetTextureSet(new Guid("7f776a6c-87c6-40d9-a978-eb4eccde20d0")) : Parent.Textures.GetTextureSet(new Guid("0d3b5971-75f8-4df1-afd4-dbe0a9a16a07")),
+					Tag = root,
+					X = _coreItem.X + (float)(Math.Cos(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
+					Y = _coreItem.Y + (float)(Math.Sin(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
+					Alpha = canAffort || isFullyPurchased ? 256 : 100,
+					FillClickedColor = BasicTextures.GetClickedTexture()
+				};
+				newItem.OnEnter += OnShopItemEnter;
+				newItem.OnLeave += OnShopItemLeave;
+				AddControl(1, newItem);
+				existing.Add(newItem);
+
+				var newLine = new LineControl()
+				{
+					X = _coreItem.X,
+					Y = _coreItem.Y,
+					X2 = newItem.X + newItem.Width / 2,
+					Y2 = newItem.Y + newItem.Height / 2,
+					Stroke = BasicTextures.GetBasicRectange(Color.White),
+					Thickness = 2
+				};
+				AddControl(0, newLine);
+				index++;
+
+				var items = allItems.Where(x => x.Requires == root.ID).ToList();
+				if (items.Count > 0)
+					BuildTree(newItem, items, allItems, existing, minAngle, maxAngle);
+			}
+		}
+
+		private void BuildTree(IControl from, List<ShopItemDefinition> items, List<ShopItemDefinition> allItems, List<IControl> existing, float parentMinAngle, float parentMaxAngle)
+		{
+			var index = 0;
+			foreach (var item in items)
+			{
+				var minAngle = parentMinAngle + ((parentMaxAngle - parentMinAngle) / items.Count) * index;
+				var maxAngle = parentMinAngle + ((parentMaxAngle - parentMinAngle) / items.Count) * (index + 1);
+
+				var canAffort = item.CanAffort(Parent.User);
+				var isFullyPurchased = item.IsFullyPurchased(Parent.User);
+
+				var newItem = new AnimatedAudioButton(Parent, (s) =>
+				{
+					if (s.Tag is ShopItemDefinition shopItem)
+						PurchaseItem(shopItem);
+				})
+				{
+					Width = 50,
+					Height = 50,
+					TileSet = isFullyPurchased ? Parent.Textures.GetTextureSet(new Guid("7f776a6c-87c6-40d9-a978-eb4eccde20d0")) : Parent.Textures.GetTextureSet(new Guid("0d3b5971-75f8-4df1-afd4-dbe0a9a16a07")),
+					Tag = item,
+					X = from.X + (float)(Math.Cos(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
+					Y = from.Y + (float)(Math.Sin(minAngle) * GetDistanceByAngle(minAngle, maxAngle, index)) - 50 / 2,
+					Alpha = canAffort || isFullyPurchased ? 256 : 100,
+					FillClickedColor = BasicTextures.GetClickedTexture()
+				};
+				newItem.OnEnter += OnShopItemEnter;
+				newItem.OnLeave += OnShopItemLeave;
+				AddControl(1, newItem);
+				existing.Add(newItem);
+
+				var newLine = new LineControl()
+				{
+					X = from.X + from.Width / 2,
+					Y = from.Y + from.Height / 2,
+					X2 = newItem.X + newItem.Width / 2,
+					Y2 = newItem.Y + newItem.Height / 2,
+					Stroke = BasicTextures.GetBasicRectange(Color.White),
+					Thickness = 2
+				};
+				AddControl(0, newLine);
+				index++;
+
+				var subItems = allItems.Where(x => x.Requires == item.ID).ToList();
+				if (subItems.Count > 0)
+					BuildTree(newItem, subItems, allItems, existing, minAngle, maxAngle);
+			}
+		}
+
+		private int GetDistanceByAngle(float minAngle, float maxAngle, int index)
+		{
+			if (Math.Abs(maxAngle - minAngle) < 0.2)
+			{
+				return _itemDist + (_itemDist / 3) * index;
+			}
+			return _itemDist;
+		}
+
+		private void OnShopItemEnter(ButtonControl s)
+		{
+			if (s.Tag is ShopItemDefinition shopItem)
+			{
+				_descriptionControl.Text = BuildDescription(shopItem);
+				_descriptionControl.X = s.X + s.Width;
+				_descriptionControl.Y = s.Y + s.Height;
+				_descriptionControl.IsVisible = true;
+			}
+		}
+		private void OnShopItemLeave(ButtonControl s)
+		{
+			_descriptionControl.IsVisible = false;
+		}
+
+		private void CheckAchievement(List<ShopItemDefinition> items)
+		{
+			var gotAll = true;
+			foreach (var item in items)
+			{
+				if (!Parent.User.PurchasedShopItems.ContainsKey(item.ID))
+				{
+					gotAll = false;
+					break;
+				}
+				if (Parent.User.PurchasedShopItems[item.ID] < item.BuyTimes)
+				{
+					gotAll = false;
+					break;
+				}
+			}
+			if (gotAll)
+				AchievementHelper.UnlockAchievement("BuyAllShopItems");
 		}
 	}
 }
