@@ -1,6 +1,5 @@
 ﻿using FormMatter.OpenGL.Helpers;
 using FormMatter.OpenGL.Input;
-using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;

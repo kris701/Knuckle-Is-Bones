@@ -260,30 +260,6 @@
       ]
     },
     {
-      "ID": "ac42399b-fecf-4627-96e8-bb188369dc81",
-      "FrameTime": 750,
-      "Contents": [
-        "Views/GameShop/shopitem_1",
-        "Views/GameShop/shopitem_2"
-      ]
-    },
-    {
-      "ID": "ba6403c6-4af5-4b17-b5ee-62052beb7732",
-      "FrameTime": 500,
-      "Contents": [
-        "Views/GameShop/shopitem_selected_1",
-        "Views/GameShop/shopitem_selected_2"
-      ]
-    },
-    {
-      "ID": "0c464e6e-8fcb-4ba9-838d-0b1e5edfca12",
-      "FrameTime": 750,
-      "Contents": [
-        "Views/GameShop/shopdesc_1",
-        "Views/GameShop/shopdesc_2"
-      ]
-    },
-    {
       "ID": "fbf34095-55e4-4b14-876e-ce7a2e0756ec",
       "FrameTime": 25,
       "Contents": [
@@ -378,6 +354,54 @@
       "Contents": [
         "Controls/start_1",
         "Controls/start_2"
+      ]
+    },
+    {
+      "ID": "0c464e6e-8fcb-4ba9-838d-0b1e5edfca12",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/GameShop/shopdesc_1",
+        "Views/GameShop/shopdesc_2"
+      ]
+    },
+    {
+      "ID": "0089c38b-65cb-40c1-98e2-8f760f1a7fa9",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/GameShop/shopoverall_1",
+        "Views/GameShop/shopoverall_2"
+      ]
+    },
+    {
+      "ID": "0d3b5971-75f8-4df1-afd4-dbe0a9a16a07",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/GameShop/item_1",
+        "Views/GameShop/item_2"
+      ]
+    },
+    {
+      "ID": "7f776a6c-87c6-40d9-a978-eb4eccde20d0",
+      "FrameTime": 500,
+      "Contents": [
+        "Views/GameShop/itempurchased_1",
+        "Views/GameShop/itempurchased_2"
+      ]
+    },
+    {
+      "ID": "9e58426c-4915-4598-8254-2fb67f798a65",
+      "FrameTime": 650,
+      "Contents": [
+        "Views/GameShop/itempartialpurchased_1",
+        "Views/GameShop/itempartialpurchased_2"
+      ]
+    },
+    {
+      "ID": "4e62791c-4a75-4455-b432-5b9186d96bea",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/GameShop/middlemouse_1",
+        "Views/GameShop/middlemouse_2"
       ]
     }
   ],

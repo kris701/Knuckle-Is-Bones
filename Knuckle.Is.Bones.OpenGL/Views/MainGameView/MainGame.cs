@@ -42,7 +42,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361"), new List<int>() { 10, 20, 1001 })
 		{
 			Engine = new KnuckleBonesEngine(state);
-			Engine.OnOpponentDiceRemoved += () => {
+			Engine.OnOpponentDiceRemoved += () =>
+			{
 				Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.GameOnDiceRemove);
 				if (InputType == InputTypes.Gamepad)
 					_hitRumbler!.Rumble();
@@ -64,7 +65,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			_modifyWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.ModifyWaitTimer), OnModifyWaitTimer);
 			_selectWaitTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.SelectWaitTimer), OnSelectWaitTimer);
 			_pointsGainedTimer = new GameTimer(TimeSpan.FromMilliseconds(speeds.PointsGainedTimer), OnPointsGainedTimer);
-			
+
 			_hitRumbler = new GamepadRumbler(new List<int>() { 0, 1, 2, 3 }, TimeSpan.FromMilliseconds(100));
 
 			BackAction = () => Escape();

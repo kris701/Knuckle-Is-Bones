@@ -89,12 +89,13 @@ namespace Knuckle.Is.Bones.Core.Engines
 			var result = BuildBlankDiceValueMultiplierMap();
 
 			var allShopItems = ResourceManager.Shop.GetResources();
-			foreach (var purchaseId in User.PurchasedShopItems.Where(x => allShopItems.Contains(x)))
+			foreach (var purchaseId in User.PurchasedShopItems.Keys.Where(x => allShopItems.Contains(x)))
 			{
 				var item = ResourceManager.Shop.GetResource(purchaseId);
 				foreach (var effect in item.Effects)
 					if (effect is DiceMultiplierEffect eff && result.ContainsKey(eff.Number))
-						result[eff.Number] = eff.Multiplier;
+						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
+							result[eff.Number] *= eff.Multiplier;
 			}
 
 			return result;
@@ -189,12 +190,13 @@ namespace Knuckle.Is.Bones.Core.Engines
 			var value = (int)(boardValue * opponentDifficulty);
 
 			var allShopItems = ResourceManager.Shop.GetResources();
-			foreach (var purchaseId in User.PurchasedShopItems.Where(x => allShopItems.Contains(x)))
+			foreach (var purchaseId in User.PurchasedShopItems.Keys.Where(x => allShopItems.Contains(x)))
 			{
 				var item = ResourceManager.Shop.GetResource(purchaseId);
 				foreach (var effect in item.Effects)
 					if (effect is PointsMultiplierEffect eff)
-						value = (int)(value * eff.Multiplier);
+						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
+							value = (int)(value * eff.Multiplier);
 			}
 
 			return value;

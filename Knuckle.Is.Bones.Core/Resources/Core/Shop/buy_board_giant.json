@@ -3,6 +3,9 @@
   "Name": "Giant Board",
   "Description": "A giant 10x10 field.",
   "Cost": 3000,
+  "BuyTimes": 1,
+  "Requires": "263d5cc6-45fe-4935-8cfd-a6b09247164c",
+  "ShopType": 1,
   "Effects": [
     {
       "$type": "UnlockBoardEffect",

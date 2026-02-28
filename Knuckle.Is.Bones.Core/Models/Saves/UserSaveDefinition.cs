@@ -4,7 +4,7 @@
 	{
 		public int Points { get; set; } = 0;
 		public Dictionary<Guid, int> CompletedItems { get; set; } = new Dictionary<Guid, int>();
-		public List<Guid> PurchasedShopItems { get; set; } = new List<Guid>();
+		public Dictionary<Guid, int> PurchasedShopItems { get; set; } = new Dictionary<Guid, int>();
 
 		public void AppendCompletedItem(Guid id)
 		{

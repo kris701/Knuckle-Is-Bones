@@ -3,6 +3,9 @@
   "Name": "Wave Board",
   "Description": "A weird wavy board.",
   "Cost": 250,
+  "BuyTimes": 1,
+  "Requires": "b0b9f33b-e330-41c8-9021-2815e40d232f",
+  "ShopType": 1,
   "Effects": [
     {
       "$type": "UnlockBoardEffect",

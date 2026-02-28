@@ -3,10 +3,13 @@
   "Name": "Large Board",
   "Description": "A large 4x4 field.",
   "Cost": 500,
+  "BuyTimes": 1,
+  "Requires": "b0b9f33b-e330-41c8-9021-2815e40d232f",
+  "ShopType": 1,
   "Effects": [
     {
       "$type": "UnlockBoardEffect",
       "ID": "09144a57-a719-47bd-a36c-1cfb287c295d"
     }
-  ] 
+  ]
 }

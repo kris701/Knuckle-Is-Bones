@@ -3,6 +3,9 @@
 	"Name": "10% point multiplier",
 	"Description": "Permanently get 10% more points when winning a match!",
 	"Cost": 1500,
+	"BuyTimes": 2,
+	"ShopType": 5,
+	"Requires": "1f9e4f5b-cdb8-4e78-a59a-596e66d5b9de",
 	"Effects": [
 		{
 			"$type": "PointsMultiplierEffect",

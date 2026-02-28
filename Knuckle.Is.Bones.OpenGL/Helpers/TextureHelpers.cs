@@ -30,8 +30,12 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 
 		#region Shop
 
-		public static Guid ShopItem => new Guid("ac42399b-fecf-4627-96e8-bb188369dc81");
 		public static Guid ShopDescription => new Guid("0c464e6e-8fcb-4ba9-838d-0b1e5edfca12");
+		public static Guid ShopOverallDescription => new Guid("0089c38b-65cb-40c1-98e2-8f760f1a7fa9");
+
+		public static Guid ShopItem => new Guid("0d3b5971-75f8-4df1-afd4-dbe0a9a16a07");
+		public static Guid ShopItemPurchased => new Guid("7f776a6c-87c6-40d9-a978-eb4eccde20d0");
+		public static Guid ShopItemPartialPurchased => new Guid("9e58426c-4915-4598-8254-2fb67f798a65");
 
 		#endregion
 

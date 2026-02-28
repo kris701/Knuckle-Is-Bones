@@ -3,6 +3,9 @@
   "Name": "Giga-Combo Board",
   "Description": "A very tall tower, to make giant combos.",
   "Cost": 1500,
+  "BuyTimes": 1,
+  "Requires": "b0b9f33b-e330-41c8-9021-2815e40d232f",
+  "ShopType": 1,
   "Effects": [
     {
       "$type": "UnlockBoardEffect",

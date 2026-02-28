@@ -3,6 +3,9 @@
 	"Name": "15% point multiplier",
 	"Description": "Permanently get 15% more points when winning a match! (Do note, this also stacks with other point multiplier upgrades!)",
 	"Cost": 2500,
+	"BuyTimes": 2,
+	"Requires": "88dfa41b-6fca-474c-bdfd-6784942eba50",
+	"ShopType": 5,
 	"Effects": [
 		{
 			"$type": "PointsMultiplierEffect",

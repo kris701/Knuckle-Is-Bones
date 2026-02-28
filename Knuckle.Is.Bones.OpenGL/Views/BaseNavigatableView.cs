@@ -146,8 +146,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				FillClickedColor = BasicTextures.GetClickedTexture(),
 				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-				Height = 30,
-				Width = 150,
+				Height = 50,
+				Width = 200,
 				IsVisible = AcceptAction != null
 			};
 			_mouseControls = new List<IControl>()
@@ -159,8 +159,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 					FillClickedColor = BasicTextures.GetClickedTexture(),
 					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-					Height = 30,
-					Width = 150,
+					Height = 50,
+					Width = 200,
 					IsVisible = BackAction != null,
 				}
 			};
@@ -171,7 +171,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
 					FontColor = FontHelpers.SecondaryColor,
 					Text = "Navigate",
-					Width = 50,
+					FitTextWidth = true,
 					Height = 50,
 					IsVisible = ShowGeneralControls
 				},
@@ -191,7 +191,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				},
 				new TileControl()
 				{
-					Width = 100,
+					Width = 50,
 					IsVisible = ShowGeneralControls
 				},
 				new LabelControl()
@@ -199,7 +199,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
 					FontColor = FontHelpers.SecondaryColor,
 					Text = "Accept",
-					Width = 30,
+					FitTextWidth = true,
 					Height = 50,
 					IsVisible = AcceptAction != null
 				},
@@ -215,7 +215,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
 					FontColor = FontHelpers.SecondaryColor,
 					Text = "Back",
-					Width = 30,
+					FitTextWidth = true,
 					Height = 50,
 					IsVisible = BackAction != null
 				},
@@ -234,7 +234,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
 					FontColor = FontHelpers.SecondaryColor,
 					Text = "Navigate",
-					Width = 50,
+					FitTextWidth = true,
 					Height = 50,
 					IsVisible = ShowGeneralControls
 				},
@@ -254,7 +254,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				},
 				new TileControl()
 				{
-					Width = 100,
+					Width = 50,
 					IsVisible = ShowGeneralControls
 				},
 				new LabelControl()
@@ -262,7 +262,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
 					FontColor = FontHelpers.SecondaryColor,
 					Text = "Accept",
-					Width = 30,
+					FitTextWidth = true,
 					Height = 50,
 					IsVisible = AcceptAction != null
 				},
@@ -278,7 +278,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
 					FontColor = FontHelpers.SecondaryColor,
 					Text = "Back",
-					Width = 30,
+					FitTextWidth = true,
 					Height = 50,
 					IsVisible = BackAction != null
 				},
@@ -309,11 +309,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			base.Initialize();
 		}
 
-		private void UpdateControlsVisual()
+		internal void UpdateControlsVisual()
 		{
 			switch (InputType)
 			{
 				case InputTypes.Mouse:
+					_keyboardNavigator.Selector.IsVisible = false;
+					_gamepadNavigator.Selector.IsVisible = false;
 					_controlsPanel.Children = _mouseControls;
 					_controlsPanel.Initialize();
 					break;
