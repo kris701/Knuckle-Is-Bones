@@ -1,9 +1,7 @@
 ﻿using FormMatter.OpenGL;
 using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
-using FormMatter.OpenGL.Input;
 using Knuckle.Is.Bones.Core.Models.Shop;
-using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
@@ -20,10 +18,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 	{
 		private IControl? _lastFocus;
 
-		private FloatPoint _origin = new FloatPoint(0,0);
-		private FloatPoint _lastOffset = new FloatPoint(0,0);
-		private Dictionary<AnimatedAudioButton, Point> _buttonOrigins = new Dictionary<AnimatedAudioButton, Point>();
-		private Dictionary<LineControl, LineOrigin> _lineOrigins = new Dictionary<LineControl, LineOrigin>();
+		private FloatPoint _origin = new FloatPoint(0, 0);
+		private FloatPoint _lastOffset = new FloatPoint(0, 0);
+		private readonly Dictionary<AnimatedAudioButton, Point> _buttonOrigins = new Dictionary<AnimatedAudioButton, Point>();
+		private readonly Dictionary<LineControl, LineOrigin> _lineOrigins = new Dictionary<LineControl, LineOrigin>();
 		private bool _mouseDown = false;
 
 		public GameShop(KnuckleBoneWindow parent) : base(parent, new Guid("169e9e54-b45f-41d4-9845-f8519d256033"), new List<int>() { 6 })
@@ -95,7 +93,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 					{
 						if (!_buttonOrigins.ContainsKey(keyBut))
 							break;
-						_origin = new FloatPoint(0,0);
+						_origin = new FloatPoint(0, 0);
 						var diff = new FloatPoint((IWindow.BaseScreenSize.X / 2) - _buttonOrigins[keyBut].X, (IWindow.BaseScreenSize.Y / 2) - _buttonOrigins[keyBut].Y);
 						UpdateOffsetLocations(diff);
 						UpdateItemDescription(keyBut, keyShop);

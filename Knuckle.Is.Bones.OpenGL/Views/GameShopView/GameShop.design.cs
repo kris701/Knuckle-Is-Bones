@@ -11,9 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 using System.Text;
-using ToolsSharp;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {
@@ -203,7 +201,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 			var existing = new List<IControl>() { _coreItem };
 			var index = 0;
-			foreach(var item in rootItems)
+			foreach (var item in rootItems)
 			{
 				var minAngle = (6.28f / rootItems.Count) * index;
 				var maxAngle = (6.28f / rootItems.Count) * (index + 1);

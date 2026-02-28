@@ -94,7 +94,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 				var item = ResourceManager.Shop.GetResource(purchaseId);
 				foreach (var effect in item.Effects)
 					if (effect is DiceMultiplierEffect eff && result.ContainsKey(eff.Number))
-						for(int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
+						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
 							result[eff.Number] *= eff.Multiplier;
 			}
 
