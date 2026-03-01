@@ -103,11 +103,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			_keyboardNavigator.OnDownKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnLeftKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnRightKeyDown += UpdateKeyboardNavigator;
+			_keyboardNavigator.OnEnterKeyDown += () => InputType = InputTypes.Keyboard;
 			_gamepadNavigator = CreateGamepadNavigator(this, navigationLayers);
 			_gamepadNavigator.OnUpKeyDown += UpdateGamepadNavigator;
 			_gamepadNavigator.OnDownKeyDown += UpdateGamepadNavigator;
 			_gamepadNavigator.OnLeftKeyDown += UpdateGamepadNavigator;
 			_gamepadNavigator.OnRightKeyDown += UpdateGamepadNavigator;
+			_gamepadNavigator.OnEnterKeyDown += () => InputType = InputTypes.Gamepad;
 		}
 
 		private void UpdateKeyboardNavigator()
