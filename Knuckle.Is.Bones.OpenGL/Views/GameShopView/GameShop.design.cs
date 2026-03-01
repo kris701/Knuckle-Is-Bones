@@ -189,6 +189,37 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				}
 			}
 
+			var allBoardMult = effects.Where(x => x is PointsBoardMultiplierEffect).Cast<PointsBoardMultiplierEffect>();
+			if (allBoardMult.Count() > 0)
+			{
+				var groups = allBoardMult.GroupBy(x => x.BoardID, x => x.Multiplier, (key, g) => new { Key = key, Mults = g.ToList() });
+				foreach (var group in groups)
+				{
+					double totalMult = 1;
+					foreach (var mult in group.Mults)
+						totalMult *= mult;
+					sb.AppendLine($"Point modifier for board '{ResourceManager.Boards.GetResource(group.Key).Name}': {Math.Round(totalMult, 2)}x");
+					sb.AppendLine(" ");
+				}
+			}
+
+			var allIdleGenerators = effects.Where(x => x is UnlockIdlePointEffect).Cast<UnlockIdlePointEffect>();
+			if (allIdleGenerators.Count() > 0)
+			{
+				sb.AppendLine($"You have {allIdleGenerators.Count()} idle point generators making {allIdleGenerators.Sum(x => x.PointsToAdd)} points/S");
+				sb.AppendLine(" ");
+			}
+
+			var allIdleMultipliers = effects.Where(x => x is IdlePointMultiplierEffect).Cast<IdlePointMultiplierEffect>();
+			if (allIdleMultipliers.Count() > 0)
+			{
+				double total = 1;
+				foreach (var eff in allIdleMultipliers)
+					total *= eff.Multiplier;
+				sb.AppendLine($"Multiplier for idle point generators: {Math.Round(total, 2)}x");
+				sb.AppendLine(" ");
+			}
+
 			return sb.ToString();
 		}
 
