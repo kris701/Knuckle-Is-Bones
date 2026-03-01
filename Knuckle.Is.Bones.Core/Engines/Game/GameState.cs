@@ -6,7 +6,7 @@ using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.Core.Resources;
 using System.Text.Json.Serialization;
 
-namespace Knuckle.Is.Bones.Core.Engines
+namespace Knuckle.Is.Bones.Core.Engines.Game
 {
 	public class GameState : IGenericClonable<GameState>
 	{
@@ -219,7 +219,8 @@ namespace Knuckle.Is.Bones.Core.Engines
 						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
 							value = (int)(value * eff.Multiplier);
 					else if (effect is PointsBoardMultiplierEffect eff2 && eff2.BoardID == boardId)
-						value = (int)(value * eff2.Multiplier);
+						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
+							value = (int)(value * eff2.Multiplier);
 				}
 			}
 

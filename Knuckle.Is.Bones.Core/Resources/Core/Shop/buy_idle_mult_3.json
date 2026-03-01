@@ -1,0 +1,15 @@
+﻿{
+	"ID": "474fb28f-de99-49e7-8f7f-b739c84c3669",
+	"Name": "Idle point multiplier",
+	"Description": "Multiply your idle point generation by 80%",
+	"Cost": 7500,
+	"BuyTimes": 2,
+	"ShopType": 9,
+	"Requires": "84282bb4-2782-4876-bbbe-762cd65078c0",
+	"Effects": [
+		{
+			"$type": "IdlePointMultiplierEffect",
+			"Multiplier": 1.8
+		}
+	]
+}

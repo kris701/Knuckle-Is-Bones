@@ -1,4 +1,4 @@
-﻿namespace Knuckle.Is.Bones.Core.Engines
+﻿namespace Knuckle.Is.Bones.Core.Engines.Game
 {
 	public class GameResult
 	{

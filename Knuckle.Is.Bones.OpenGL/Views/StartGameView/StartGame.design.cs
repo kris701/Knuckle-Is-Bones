@@ -34,16 +34,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				FillColor = BasicTextures.GetBasicRectange(Color.Black)
 			});
 
-			AddControl(0, new LabelControl()
-			{
-				Text = $"Points: {(Parent as KnuckleBoneWindow).User.Points}",
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				HorizontalAlignment = HorizontalAlignment.Middle,
-				VerticalAlignment = VerticalAlignment.Top,
-				Width = 500,
-				Height = 100
-			});
-
 			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.Button);
 
 			var margin = 50;

@@ -1,11 +1,11 @@
-﻿using Knuckle.Is.Bones.Core.Engines.Actions;
+﻿using Knuckle.Is.Bones.Core.Engines.Game.Actions;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 
-namespace Knuckle.Is.Bones.Core.Engines
+namespace Knuckle.Is.Bones.Core.Engines.Game
 {
-	public class KnuckleBonesEngine : IKnuckleBonesEngine
+	public class GameEngine : IGameEngine
 	{
 		public GameEventHandler? OnGameOver { get; set; }
 		public GameEventHandler? OnOpponentDiceRemoved { get; set; }
@@ -15,7 +15,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 
 		public GameState State { get; }
 
-		public KnuckleBonesEngine(GameState state)
+		public GameEngine(GameState state)
 		{
 			State = state;
 		}

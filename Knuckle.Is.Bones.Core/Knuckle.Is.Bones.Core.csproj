@@ -54,6 +54,9 @@
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_9.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_8.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_7.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_idle_mult_3.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_idle_mult_2.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_idle_mult_1.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dice.json" />
@@ -65,6 +68,7 @@
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_2.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_1.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dice_dsqare.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_idle.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_3.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_2.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_pointmult_1.json" />

@@ -17,15 +17,19 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {
 	public partial class GameShop : BaseNavigatableView
 	{
-		private AnimatedTextboxControl _descriptionControl;
+		private ShopItemDescription _descriptionControl;
 		private AnimatedTextboxControl _overallDescriptionControl;
 		private ButtonControl _coreItem;
+		private StackPanelControl _scoreItemPanel;
+		private LabelControl _scoreItem;
 		private readonly int _itemDist = 200;
 
 		[MemberNotNull(
 			nameof(_descriptionControl),
 			nameof(_overallDescriptionControl),
-			nameof(_coreItem)
+			nameof(_coreItem),
+			nameof(_scoreItemPanel),
+			nameof(_scoreItem)
 			)]
 		public override void Initialize()
 		{
@@ -60,7 +64,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Height = 50,
 				FontColor = Color.White
 			});
-			var pointsPanel = new StackPanelControl(new List<IControl>()
+			_scoreItem = new LabelControl()
+			{
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
+				Text = $"{Parent.User.Points}",
+				FontColor = FontHelpers.SecondaryColor,
+				FitTextWidth = true
+			};
+			_scoreItemPanel = new StackPanelControl(new List<IControl>()
 			{
 				new LabelControl()
 				{
@@ -69,13 +80,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 					FontColor = FontHelpers.PrimaryColor,
 					FitTextWidth = true
 				},
-				new LabelControl()
-				{
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
-					Text = $"{Parent.User.Points}",
-					FontColor = FontHelpers.SecondaryColor,
-					FitTextWidth = true
-				},
+				_scoreItem,
 				new LabelControl()
 				{
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
@@ -91,7 +96,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				Orientation = StackPanelControl.Orientations.Horizontal
 			};
-			AddControl(10, pointsPanel);
+			AddControl(10, _scoreItemPanel);
 
 			var shopIds = ResourceManager.Shop.GetResources();
 			var items = new List<ShopItemDefinition>();
@@ -100,17 +105,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			CheckAchievement(items);
 			BuildTreeFromRoot(items, items.Where(x => x.Requires == null).ToList());
 
-			_descriptionControl = new AnimatedTextboxControl()
-			{
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
-				Margin = 15,
-				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopDescription),
-				WordWrap = TextboxControl.WordWrapTypes.Word,
-				Width = 200,
-				Height = 200,
-				IsVisible = false,
-			};
+			_descriptionControl = new ShopItemDescription(Parent);
 			AddControl(6, _descriptionControl);
 
 			_overallDescriptionControl = new AnimatedTextboxControl()
@@ -184,9 +179,41 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				}
 			}
 
+			var allBoardMult = effects.Where(x => x is PointsBoardMultiplierEffect).Cast<PointsBoardMultiplierEffect>();
+			if (allBoardMult.Count() > 0)
+			{
+				var groups = allBoardMult.GroupBy(x => x.BoardID, x => x.Multiplier, (key, g) => new { Key = key, Mults = g.ToList() });
+				foreach (var group in groups)
+				{
+					double totalMult = 1;
+					foreach (var mult in group.Mults)
+						totalMult *= mult;
+					sb.AppendLine($"Point modifier for board '{ResourceManager.Boards.GetResource(group.Key).Name}': {Math.Round(totalMult, 2)}x");
+					sb.AppendLine(" ");
+				}
+			}
+
+			var allIdleGenerators = effects.Where(x => x is UnlockIdlePointEffect).Cast<UnlockIdlePointEffect>();
+			if (allIdleGenerators.Count() > 0)
+			{
+				sb.AppendLine($"You have {allIdleGenerators.Count()} idle point generators making {allIdleGenerators.Sum(x => x.PointsToAdd)} points/S");
+				sb.AppendLine(" ");
+			}
+
+			var allIdleMultipliers = effects.Where(x => x is IdlePointMultiplierEffect).Cast<IdlePointMultiplierEffect>();
+			if (allIdleMultipliers.Count() > 0)
+			{
+				double total = 1;
+				foreach (var eff in allIdleMultipliers)
+					total *= eff.Multiplier;
+				sb.AppendLine($"Multiplier for idle point generators: {Math.Round(total, 2)}x");
+				sb.AppendLine(" ");
+			}
+
 			return sb.ToString();
 		}
 
+		[MemberNotNull(nameof(_coreItem))]
 		private void BuildTreeFromRoot(List<ShopItemDefinition> allItems, List<ShopItemDefinition> rootItems)
 		{
 			_coreItem = new ButtonControl(Parent)
@@ -279,6 +306,24 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			return newItem;
 		}
 
+		private void CheckPurchaseState(AnimatedAudioButton button, ShopItemDefinition item)
+		{
+			var canAffort = item.CanAffort(Parent.User);
+			var isFullyPurchased = item.IsFullyPurchased(Parent.User);
+			var isPartiallyPurchased = item.IsPartiallyPurchased(Parent.User);
+			var isUnlocked = item.IsUnlocked(Parent.User);
+
+			var targetTileset = isFullyPurchased ? Parent.Textures.GetTextureSet(TextureHelpers.ShopItemPurchased) : (isPartiallyPurchased ? Parent.Textures.GetTextureSet(TextureHelpers.ShopItemPartialPurchased) : Parent.Textures.GetTextureSet(TextureHelpers.ShopItem));
+			if (button.TileSet != targetTileset)
+				button.TileSet = targetTileset;
+			var targetAlpha = !isUnlocked ? 50 : (canAffort || isFullyPurchased ? 256 : (isPartiallyPurchased && canAffort ? 256 : 100));
+			if (button.Alpha != targetAlpha)
+				button.Alpha = targetAlpha;
+			var targetFontColor = !isUnlocked ? new Color(100, 100, 100) : FontHelpers.PrimaryColor;
+			if (button.FontColor != targetFontColor)
+				button.FontColor = targetFontColor;
+		}
+
 		private string GetShortTextByShopType(ShopItemTypes type)
 		{
 			switch (type)
@@ -302,36 +347,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				case ShopItemTypes.BoardPointMultiplier:
 					return "B*";
 
+				case ShopItemTypes.NewIdlePoint:
+					return "I";
+
+				case ShopItemTypes.IdlePointMultiplier:
+					return "I*";
+
 				default:
 					return "?";
-			}
-		}
-
-		private string GetTextByShopType(ShopItemTypes type)
-		{
-			switch (type)
-			{
-				case ShopItemTypes.NewBoard:
-					return "New Board";
-				case ShopItemTypes.NewDice:
-					return "New Dice";
-				case ShopItemTypes.NewOpponent:
-					return "New Opponent";
-
-				case ShopItemTypes.DiceMultiplier:
-					return "Dice Multiplier";
-
-				case ShopItemTypes.PointMultiplier:
-					return "Point Multiplier";
-
-				case ShopItemTypes.Multiple:
-					return "Multiple";
-
-				case ShopItemTypes.BoardPointMultiplier:
-					return "Board Point Multiplier";
-
-				default:
-					return "Other";
 			}
 		}
 

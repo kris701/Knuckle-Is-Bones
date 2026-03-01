@@ -9,7 +9,7 @@
   "Effects": [
     {
       "$type": "PointsBoardMultiplierEffect",
-      "BoardID": "d1649119-dd57-4c86-a952-2748387ef042",
+      "BoardID": "09144a57-a719-47bd-a36c-1cfb287c295d",
       "Multiplier": 1.2
     }
   ]
