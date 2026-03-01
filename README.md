@@ -18,7 +18,7 @@ The game is all about ***Dice***, and getting the biggest combos possible to bea
 The game currenctly contains:
 * 6 opponents
 * 6 dice
-* 8 board
+* 10 board
 * Several upgrades
 
 The game has a shop system, where the the more points you gain by winning against opponents, the better dice er larger boards you get get!
