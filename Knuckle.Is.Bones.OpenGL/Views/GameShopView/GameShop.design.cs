@@ -111,7 +111,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			_overallDescriptionControl = new AnimatedTextboxControl()
 			{
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
-				Margin = 50,
+				Margin = 25,
 				FontColor = Color.White,
 				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopOverallDescription),
 				WordWrap = TextboxControl.WordWrapTypes.Word,

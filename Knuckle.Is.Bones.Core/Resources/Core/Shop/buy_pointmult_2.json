@@ -1,7 +1,7 @@
 ﻿{
 	"ID": "8d91db02-4532-495c-be1c-be8bb9cadc6c",
 	"Name": "15% point multiplier",
-	"Description": "Permanently get 15% more points when winning a match! (Do note, this also stacks with other point multiplier upgrades!)",
+	"Description": "Permanently get 15% more points when winning a match! (stacks)",
 	"Cost": 2500,
 	"BuyTimes": 2,
 	"Requires": "88dfa41b-6fca-474c-bdfd-6784942eba50",

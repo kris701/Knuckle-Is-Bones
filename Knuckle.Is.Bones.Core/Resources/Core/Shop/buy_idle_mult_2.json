@@ -1,7 +1,7 @@
 ﻿{
 	"ID": "84282bb4-2782-4876-bbbe-762cd65078c0",
-	"Name": "Idle point multiplier",
-	"Description": "Multiply your idle point generation by 40%",
+	"Name": "40% more",
+	"Description": "Multiply your idle point generation by 40% (stacks)",
 	"Cost": 5000,
 	"BuyTimes": 2,
 	"ShopType": 9,

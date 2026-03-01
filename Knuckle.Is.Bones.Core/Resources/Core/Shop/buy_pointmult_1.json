@@ -1,7 +1,7 @@
 ﻿{
 	"ID": "88dfa41b-6fca-474c-bdfd-6784942eba50",
 	"Name": "10% point multiplier",
-	"Description": "Permanently get 10% more points when winning a match!",
+	"Description": "Permanently get 10% more points when winning a match! (stacks)",
 	"Cost": 1500,
 	"BuyTimes": 2,
 	"ShopType": 5,
