@@ -219,7 +219,8 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
 							value = (int)(value * eff.Multiplier);
 					else if (effect is PointsBoardMultiplierEffect eff2 && eff2.BoardID == boardId)
-						value = (int)(value * eff2.Multiplier);
+						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
+							value = (int)(value * eff2.Multiplier);
 				}
 			}
 

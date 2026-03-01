@@ -1,9 +1,12 @@
 ﻿using FormMatter.OpenGL;
+using FormMatter.OpenGL.BackgroundWorkers;
 using FormMatter.OpenGL.Helpers;
 using FormMatter.OpenGL.Views;
+using Knuckle.Is.Bones.Core.Engines.Idle;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
+using Knuckle.Is.Bones.OpenGL.BackgroundWorkers;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Models;
 using Microsoft.Xna.Framework.Audio;
@@ -11,6 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using Steamworks;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Knuckle.Is.Bones.OpenGL
@@ -62,6 +66,11 @@ namespace Knuckle.Is.Bones.OpenGL
 			SteamHelpers.IsInitialized = SteamAPI.Init();
 
 			AchievementHelper.UpdateAchievements(User);
+
+			BackroundWorkers = new List<IBackgroundWorker>()
+			{
+				new IdleEngineBackgroundWorker(new IdleEngine(), User)
+			};
 
 			CurrentScreen = _screenToLoad(this);
 			CurrentScreen.Initialize();

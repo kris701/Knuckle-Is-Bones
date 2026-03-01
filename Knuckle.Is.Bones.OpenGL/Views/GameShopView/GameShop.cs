@@ -18,6 +18,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 	{
 		private IControl? _lastFocus;
 
+		private int _lastPoints = 0;
+		private GameTimer _updatePointsTimer;
 		private FloatPoint _origin = new FloatPoint(0, 0);
 		private FloatPoint _lastOffset = new FloatPoint(0, 0);
 		private readonly Dictionary<AnimatedAudioButton, Point> _buttonOrigins = new Dictionary<AnimatedAudioButton, Point>();
@@ -52,6 +54,19 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Height = 50,
 				Width = 50
 			});
+
+			_lastPoints = Parent.User.Points;
+			_updatePointsTimer = new GameTimer(TimeSpan.FromSeconds(1), (s) =>
+			{
+				if (_lastPoints != Parent.User.Points)
+				{
+					_scoreItem.Text = $"{Parent.User.Points}";
+					_scoreItemPanel.Initialize();
+					foreach (var control in _buttonOrigins.Keys)
+						if (control.Tag is ShopItemDefinition def)
+							CheckPurchaseState(control, def);
+				}
+			});
 			UpdateControlsVisual();
 		}
 
@@ -68,6 +83,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			}
 
 			sb.AppendLine($"{GetTextByShopType(item.ShopType)}");
+			sb.AppendLine("Name: " + item.Name);
 			sb.AppendLine("Cost: " + item.Cost);
 			sb.AppendLine(" ");
 			sb.AppendLine(item.Description);
@@ -80,7 +96,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			if (item.CanAffort(Parent.User) && item.Buy(Parent.User))
 			{
 				Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ShopBuySound);
-				SwitchView(new GameShop(Parent));
+				foreach (var control in _buttonOrigins.Keys)
+					if (control.Tag is ShopItemDefinition def)
+						CheckPurchaseState(control, def);
+				_overallDescriptionControl.Text = BuildUpgradeList();
 			}
 		}
 
@@ -140,6 +159,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 					break;
 			}
+			_updatePointsTimer.Update(gameTime);
 			base.OnUpdate(gameTime);
 		}
 

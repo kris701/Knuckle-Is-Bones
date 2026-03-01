@@ -20,12 +20,16 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 		private AnimatedTextboxControl _descriptionControl;
 		private AnimatedTextboxControl _overallDescriptionControl;
 		private ButtonControl _coreItem;
+		private StackPanelControl _scoreItemPanel;
+		private LabelControl _scoreItem;
 		private readonly int _itemDist = 200;
 
 		[MemberNotNull(
 			nameof(_descriptionControl),
 			nameof(_overallDescriptionControl),
-			nameof(_coreItem)
+			nameof(_coreItem),
+			nameof(_scoreItemPanel),
+			nameof(_scoreItem)
 			)]
 		public override void Initialize()
 		{
@@ -60,7 +64,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Height = 50,
 				FontColor = Color.White
 			});
-			var pointsPanel = new StackPanelControl(new List<IControl>()
+			_scoreItem = new LabelControl()
+			{
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
+				Text = $"{Parent.User.Points}",
+				FontColor = FontHelpers.SecondaryColor,
+				FitTextWidth = true
+			};
+			_scoreItemPanel = new StackPanelControl(new List<IControl>()
 			{
 				new LabelControl()
 				{
@@ -69,13 +80,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 					FontColor = FontHelpers.PrimaryColor,
 					FitTextWidth = true
 				},
-				new LabelControl()
-				{
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
-					Text = $"{Parent.User.Points}",
-					FontColor = FontHelpers.SecondaryColor,
-					FitTextWidth = true
-				},
+				_scoreItem,
 				new LabelControl()
 				{
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
@@ -91,7 +96,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				Orientation = StackPanelControl.Orientations.Horizontal
 			};
-			AddControl(10, pointsPanel);
+			AddControl(10, _scoreItemPanel);
 
 			var shopIds = ResourceManager.Shop.GetResources();
 			var items = new List<ShopItemDefinition>();
@@ -187,6 +192,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			return sb.ToString();
 		}
 
+		[MemberNotNull(nameof(_coreItem))]
 		private void BuildTreeFromRoot(List<ShopItemDefinition> allItems, List<ShopItemDefinition> rootItems)
 		{
 			_coreItem = new ButtonControl(Parent)
@@ -279,6 +285,24 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			return newItem;
 		}
 
+		private void CheckPurchaseState(AnimatedAudioButton button, ShopItemDefinition item)
+		{
+			var canAffort = item.CanAffort(Parent.User);
+			var isFullyPurchased = item.IsFullyPurchased(Parent.User);
+			var isPartiallyPurchased = item.IsPartiallyPurchased(Parent.User);
+			var isUnlocked = item.IsUnlocked(Parent.User);
+
+			var targetTileset = isFullyPurchased ? Parent.Textures.GetTextureSet(TextureHelpers.ShopItemPurchased) : (isPartiallyPurchased ? Parent.Textures.GetTextureSet(TextureHelpers.ShopItemPartialPurchased) : Parent.Textures.GetTextureSet(TextureHelpers.ShopItem));
+			if (button.TileSet != targetTileset)
+				button.TileSet = targetTileset;
+			var targetAlpha = !isUnlocked ? 50 : (canAffort || isFullyPurchased ? 256 : (isPartiallyPurchased && canAffort ? 256 : 100));
+			if (button.Alpha != targetAlpha)
+				button.Alpha = targetAlpha;
+			var targetFontColor = !isUnlocked ? new Color(100, 100, 100) : FontHelpers.PrimaryColor;
+			if (button.FontColor != targetFontColor)
+				button.FontColor = targetFontColor;
+		}
+
 		private string GetShortTextByShopType(ShopItemTypes type)
 		{
 			switch (type)
@@ -301,6 +325,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 				case ShopItemTypes.BoardPointMultiplier:
 					return "B*";
+
+				case ShopItemTypes.NewIdlePoint:
+					return "I";
+
+				case ShopItemTypes.IdlePointMultiplier:
+					return "I*";
 
 				default:
 					return "?";
@@ -329,6 +359,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 				case ShopItemTypes.BoardPointMultiplier:
 					return "Board Point Multiplier";
+
+				case ShopItemTypes.NewIdlePoint:
+					return "Idle Point Generation";
+
+				case ShopItemTypes.IdlePointMultiplier:
+					return "Idle Point Multiplier";
 
 				default:
 					return "Other";

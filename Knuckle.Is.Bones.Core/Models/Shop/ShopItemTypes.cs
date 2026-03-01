@@ -19,6 +19,10 @@
 		Multiple,
 
 		// Board Upgrades
-		BoardPointMultiplier
+		BoardPointMultiplier,
+
+		// Idle
+		NewIdlePoint,
+		IdlePointMultiplier,
 	}
 }
