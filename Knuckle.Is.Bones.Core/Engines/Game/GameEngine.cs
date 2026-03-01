@@ -135,19 +135,22 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 		{
 			if (newBoard.Columns.Count != opponentBoard.Columns.Count)
 				throw new Exception("Boards are not the same!");
-			for (int i = 0; i < newBoard.Columns.Count; i++)
+			for (int col = 0; col < newBoard.Columns.Count; col++)
 			{
 				// Remove all equals in each column from the opponent board
 				bool any = false;
-				foreach (var value in newBoard.Columns[i].Cells)
+				foreach (var value in newBoard.Columns[col].Cells.Distinct())
 				{
-					if (value == 0)
+					if (value == 0 || value == -1)
 						continue;
 
-					while (opponentBoard.Columns[i].Cells.Any(x => x == value))
+					for (int row = 0; row < opponentBoard.Columns[col].Cells.Count; row++)
 					{
-						any = true;
-						opponentBoard.Columns[i].Cells.AddRange(Enumerable.Repeat(0, opponentBoard.Columns[i].Cells.RemoveAll(x => x == value)));
+						if (opponentBoard.Columns[col].Cells[row] == value)
+						{
+							opponentBoard.Columns[col].Cells[row] = 0;
+							any = true;
+						}
 					}
 				}
 				// Collapse column
@@ -155,9 +158,28 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 				{
 					OnOpponentDiceRemoved?.Invoke();
 
-					var targetSize = opponentBoard.Columns[i].Cells.Count;
-					opponentBoard.Columns[i].Cells.RemoveAll(x => x == 0);
-					opponentBoard.Columns[i].Cells.AddRange(Enumerable.Repeat(0, targetSize - opponentBoard.Columns[i].Cells.Count));
+					for (int sourceRow = 0; sourceRow < opponentBoard.Columns[col].Cells.Count; sourceRow++)
+					{
+						var sourceValue = opponentBoard.Columns[col].Cells[sourceRow];
+						if (sourceValue == -1)
+							continue;
+
+						if (sourceValue == 0)
+						{
+							var currentTargetIndex = sourceRow;
+							for (int targetRow = sourceRow + 1; targetRow < opponentBoard.Columns[col].Cells.Count; targetRow++)
+							{
+								var targetValue = opponentBoard.Columns[col].Cells[targetRow];
+								if (targetValue == -1 || targetValue == 0)
+									continue;
+
+								opponentBoard.Columns[col].Cells[targetRow] = 0;
+								opponentBoard.Columns[col].Cells[currentTargetIndex] = targetValue;
+								currentTargetIndex = targetRow;
+							}
+							break;
+						}
+					}
 				}
 			}
 		}

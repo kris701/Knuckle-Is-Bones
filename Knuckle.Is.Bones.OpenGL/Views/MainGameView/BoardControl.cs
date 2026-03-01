@@ -107,7 +107,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 						FontColor = Color.White,
 						Alpha = 100,
 						Text = text,
-						TileSet = GetBackgroundForCount(column.Cells, cell)
+						TileSet = GetBackgroundForCount(column.Cells, cell),
+						IsVisible = cell != -1
 					};
 					Children.Add(newTile);
 					_tiles.Add(newTile);

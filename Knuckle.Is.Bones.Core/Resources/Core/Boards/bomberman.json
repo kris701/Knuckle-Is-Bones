@@ -1,0 +1,23 @@
+{
+  "ID": "e7b71762-e102-4287-8ae7-80c11e711979",
+  "Name": "Bomberman",
+  "Description": "A wonky bomberman-like board",
+  "IsPurchasable": true,
+  "Columns": [
+    {
+      "Cells": [ 0, 0, 0, 0, 0 ]
+    },
+    {
+      "Cells": [ 0, -1, 0, -1, 0 ]
+    },
+    {
+      "Cells": [ 0, 0, 0, 0, 0 ]
+    },
+    {
+      "Cells": [ 0, -1, 0, -1, 0 ]
+    },
+    {
+      "Cells": [ 0, 0, 0, 0, 0 ]
+    }
+  ]
+}
