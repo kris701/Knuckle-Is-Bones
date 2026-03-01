@@ -5,7 +5,7 @@ namespace Knuckle.Is.Bones.Core.Engines
 	public delegate void GameEventHandler();
 	public delegate void GameBoardModifiedEventHandler(Guid opponentId);
 
-	public interface IKnuckleBonesEngine
+	public interface IGameEngine
 	{
 		public GameEventHandler? OnGameOver { get; set; }
 		public GameEventHandler? OnOpponentDiceRemoved { get; set; }
