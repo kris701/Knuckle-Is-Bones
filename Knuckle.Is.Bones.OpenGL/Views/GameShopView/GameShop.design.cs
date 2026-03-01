@@ -17,7 +17,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {
 	public partial class GameShop : BaseNavigatableView
 	{
-		private AnimatedTextboxControl _descriptionControl;
+		private ShopItemDescription _descriptionControl;
 		private AnimatedTextboxControl _overallDescriptionControl;
 		private ButtonControl _coreItem;
 		private StackPanelControl _scoreItemPanel;
@@ -105,17 +105,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			CheckAchievement(items);
 			BuildTreeFromRoot(items, items.Where(x => x.Requires == null).ToList());
 
-			_descriptionControl = new AnimatedTextboxControl()
-			{
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
-				Margin = 15,
-				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopDescription),
-				WordWrap = TextboxControl.WordWrapTypes.Word,
-				Width = 200,
-				Height = 200,
-				IsVisible = false,
-			};
+			_descriptionControl = new ShopItemDescription(Parent);
 			AddControl(6, _descriptionControl);
 
 			_overallDescriptionControl = new AnimatedTextboxControl()
@@ -365,40 +355,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 				default:
 					return "?";
-			}
-		}
-
-		private string GetTextByShopType(ShopItemTypes type)
-		{
-			switch (type)
-			{
-				case ShopItemTypes.NewBoard:
-					return "New Board";
-				case ShopItemTypes.NewDice:
-					return "New Dice";
-				case ShopItemTypes.NewOpponent:
-					return "New Opponent";
-
-				case ShopItemTypes.DiceMultiplier:
-					return "Dice Multiplier";
-
-				case ShopItemTypes.PointMultiplier:
-					return "Point Multiplier";
-
-				case ShopItemTypes.Multiple:
-					return "Multiple";
-
-				case ShopItemTypes.BoardPointMultiplier:
-					return "Board Point Multiplier";
-
-				case ShopItemTypes.NewIdlePoint:
-					return "Idle Point Generation";
-
-				case ShopItemTypes.IdlePointMultiplier:
-					return "Idle Point Multiplier";
-
-				default:
-					return "Other";
 			}
 		}
 

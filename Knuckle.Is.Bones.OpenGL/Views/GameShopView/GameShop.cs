@@ -70,27 +70,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			UpdateControlsVisual();
 		}
 
-		private string BuildDescription(ShopItemDefinition item)
-		{
-			var sb = new StringBuilder();
-
-			if (item.BuyTimes > 1)
-			{
-				if (Parent.User.PurchasedShopItems.ContainsKey(item.ID))
-					sb.AppendLine($"{Parent.User.PurchasedShopItems[item.ID]}/{item.BuyTimes}");
-				else
-					sb.AppendLine($"0/{item.BuyTimes}");
-			}
-
-			sb.AppendLine($"{GetTextByShopType(item.ShopType)}");
-			sb.AppendLine("Name: " + item.Name);
-			sb.AppendLine("Cost: " + item.Cost);
-			sb.AppendLine(" ");
-			sb.AppendLine(item.Description);
-
-			return sb.ToString();
-		}
-
 		private void PurchaseItem(ShopItemDefinition item)
 		{
 			if (item.CanAffort(Parent.User) && item.Buy(Parent.User))
@@ -99,6 +78,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				foreach (var control in _buttonOrigins.Keys)
 					if (control.Tag is ShopItemDefinition def)
 						CheckPurchaseState(control, def);
+				if (_lastFocus != null)
+					UpdateItemDescription(_lastFocus, item);
 				_overallDescriptionControl.Text = BuildUpgradeList();
 			}
 		}
@@ -191,10 +172,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 		private void UpdateItemDescription(IControl origin, ShopItemDefinition item)
 		{
-			_descriptionControl.Text = BuildDescription(item);
-			_descriptionControl.X = origin.X + origin.Width;
+			_descriptionControl.X = origin.X - origin.Width - _descriptionControl.Width;
 			_descriptionControl.Y = origin.Y + origin.Height;
 			_descriptionControl.IsVisible = true;
+			_descriptionControl.SetItem(item);
 			_descriptionControl.Initialize();
 			_lastFocus = origin;
 		}
