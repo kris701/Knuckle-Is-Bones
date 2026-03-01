@@ -1,0 +1,15 @@
+{
+  "ID": "a38d4b5d-1008-4cb9-95dc-3805cb2c48d2",
+  "Name": "Happy",
+  "Description": "A very happy board :)",
+  "Cost": 2000,
+  "BuyTimes": 1,
+  "Requires": "b0b9f33b-e330-41c8-9021-2815e40d232f",
+  "ShopType": 1,
+  "Effects": [
+    {
+      "$type": "UnlockBoardEffect",
+      "ID": "9d79c775-8e03-46a9-b98e-b3821a0299d3"
+    }
+  ]
+}
