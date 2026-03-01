@@ -360,11 +360,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 
 		private void OnShopItemEnter(ButtonControl s)
 		{
+			if (InputType != InputTypes.Mouse)
+				return;
 			if (s.Tag is ShopItemDefinition shopItem)
 				UpdateItemDescription(s, shopItem);
 		}
 		private void OnShopItemLeave(ButtonControl s)
 		{
+			if (InputType != InputTypes.Mouse)
+				return;
 			_descriptionControl.IsVisible = false;
 		}
 

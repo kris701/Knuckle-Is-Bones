@@ -9,11 +9,15 @@ using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView;
 using Knuckle.Is.Bones.OpenGL.Views.StartGameView;
 using Microsoft.Xna.Framework;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 {
 	public partial class MainMenu : BaseNavigatableView
 	{
+		private  StackPanelControl _menuPanel;
+
+		[MemberNotNull(nameof(_menuPanel))]
 		public override void Initialize()
 		{
 			AddControl(0, new TileControl()
@@ -32,7 +36,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Title)
 			});
 
-			AddControl(0, new StackPanelControl(new System.Collections.Generic.List<IControl>()
+			_menuPanel = new StackPanelControl(new System.Collections.Generic.List<IControl>()
 			{
 				new AnimatedAudioButton(Parent, (x) =>
 				{
@@ -106,7 +110,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 				Width = 400,
 				Height = 500,
 				Gap = 25,
-			});
+			};
+			AddControl(0, _menuPanel);
 
 			AddControl(0, new LabelControl()
 			{
