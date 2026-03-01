@@ -25,12 +25,14 @@
 	</Choose>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Core\Boards\happy.json" />
 	  <EmbeddedResource Include="Resources\Core\Boards\bomberman.json" />
 	  <EmbeddedResource Include="Resources\Core\Dice\DSqare.json" />
 	  <EmbeddedResource Include="Resources\Core\Opponents\charlie.json" />
 	  <EmbeddedResource Include="Resources\Core\Opponents\chuck.json" />
 	  <EmbeddedResource Include="Resources\Core\Opponents\spicyjerry.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_boardmult.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_boardmult_happy.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_boardmult_bomberman.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_boardmult_wave.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_boardmult_tall.json" />
@@ -39,6 +41,7 @@
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_boardmult_giant.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_boardmult_large.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_boardmult_small.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_board_happy.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_board_bomberman.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicecombomult.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicecombomult_10.json" />

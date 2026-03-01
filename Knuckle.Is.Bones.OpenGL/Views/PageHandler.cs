@@ -28,6 +28,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 		public int MinItem { get; set; } = 0;
 		public int MaxItem { get; set; } = int.MaxValue;
 
+		private int _previousPageIndex = 0;
 		private readonly List<T> _items;
 		private ButtonControl? _leftButton;
 		private ButtonControl? _rightButton;
@@ -176,6 +177,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			foreach (var item in Pages[PageIndex])
 			{
 				item.IsVisible = count >= MinItem && count < MaxItem;
+				if (item.IsVisible)
+					item.Initialize();
 				count++;
 			}
 

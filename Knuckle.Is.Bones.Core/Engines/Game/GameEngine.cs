@@ -98,7 +98,7 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 			if (columnID < 0 || columnID >= board.Columns.Count)
 				return false;
 			var column = board.Columns[columnID];
-			if (column.Cells[column.Cells.Count - 1] != 0)
+			if (!column.Cells.Any(x => x == 0))
 				return false;
 			var lowest = column.Cells.IndexOf(0);
 			if (column.Cells.Contains(State.CurrentDice.Value))
