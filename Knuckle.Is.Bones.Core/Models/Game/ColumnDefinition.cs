@@ -23,7 +23,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 		{
 			int value = 0;
 			for (int i = 0; i < Cells.Count; i++)
-				if (Cells[i] != 0)
+				if (Cells[i] != 0 && Cells[i] != -1)
 					value += (int)((Cells[i] * (Cells.Count(x => x == Cells[i]) * comboMultiplier[Cells[i]])) * valueMultipliers[Cells[i]]);
 			return value;
 		}
@@ -39,7 +39,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 		internal bool IsEmpty()
 		{
 			foreach (var cell in Cells)
-				if (cell != 0)
+				if (cell != 0 && cell != -1)
 					return false;
 			return true;
 		}
@@ -48,7 +48,7 @@ namespace Knuckle.Is.Bones.Core.Models.Game
 		{
 			var count = 0;
 			foreach (var cell in Cells)
-				if (cell != 0)
+				if (cell != 0 && cell != -1)
 					count++;
 			return count;
 		}

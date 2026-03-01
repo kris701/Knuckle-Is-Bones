@@ -31,7 +31,8 @@ namespace Knuckle.Is.Bones.Core.Models.Game.MoveModules
 				{
 					targetCol = _rnd.Next(0, opponentBoard.Columns.Count);
 					targetRow = _rnd.Next(0, opponentBoard.Columns[targetCol].Cells.Count);
-					if (opponentBoard.Columns[targetCol].Cells[targetRow] != 0)
+					var value = opponentBoard.Columns[targetCol].Cells[targetRow];
+					if (value != 0 && value != -1)
 						valid = true;
 				}
 

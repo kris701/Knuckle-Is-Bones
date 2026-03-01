@@ -1,0 +1,16 @@
+{
+  "ID": "06afa11b-41af-4cdc-a6cc-4afd104a694c",
+  "Name": "20% more points",
+  "Description": "Get 20% more points for winning on the 'Bomberman' board",
+  "Cost": 3000,
+  "BuyTimes": 2,
+  "ShopType": 7,
+  "Requires": "85f711a7-f83a-412e-b2f9-5b1b247b9664",
+  "Effects": [
+    {
+      "$type": "PointsBoardMultiplierEffect",
+      "BoardID": "e7b71762-e102-4287-8ae7-80c11e711979",
+      "Multiplier": 1.2
+    }
+  ]
+}
