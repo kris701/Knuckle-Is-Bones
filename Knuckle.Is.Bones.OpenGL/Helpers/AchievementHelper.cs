@@ -80,6 +80,12 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 					case "0ac3da70-4cb8-4e97-9af9-4b9759499dd7":
 						SteamUserStats.SetStat("WaveBoardWins", value);
 						break;
+					case "e7b71762-e102-4287-8ae7-80c11e711979":
+						SteamUserStats.SetStat("BombermanWins", value);
+						break;
+					case "9d79c775-8e03-46a9-b98e-b3821a0299d3":
+						SteamUserStats.SetStat("HappyWins", value);
+						break;
 				}
 			}
 			SteamUserStats.StoreStats();
