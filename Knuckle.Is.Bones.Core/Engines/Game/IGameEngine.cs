@@ -1,6 +1,6 @@
-﻿using Knuckle.Is.Bones.Core.Engines.Actions;
+﻿using Knuckle.Is.Bones.Core.Engines.Game.Actions;
 
-namespace Knuckle.Is.Bones.Core.Engines
+namespace Knuckle.Is.Bones.Core.Engines.Game
 {
 	public delegate void GameEventHandler();
 	public delegate void GameBoardModifiedEventHandler(Guid opponentId);

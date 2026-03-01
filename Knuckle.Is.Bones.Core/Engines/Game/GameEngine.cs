@@ -1,9 +1,9 @@
-﻿using Knuckle.Is.Bones.Core.Engines.Actions;
+﻿using Knuckle.Is.Bones.Core.Engines.Game.Actions;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 
-namespace Knuckle.Is.Bones.Core.Engines
+namespace Knuckle.Is.Bones.Core.Engines.Game
 {
 	public class GameEngine : IGameEngine
 	{

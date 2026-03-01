@@ -6,7 +6,7 @@ using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.Core.Resources;
 using System.Text.Json.Serialization;
 
-namespace Knuckle.Is.Bones.Core.Engines
+namespace Knuckle.Is.Bones.Core.Engines.Game
 {
 	public class GameState : IGenericClonable<GameState>
 	{

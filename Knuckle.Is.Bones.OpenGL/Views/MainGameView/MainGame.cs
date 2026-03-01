@@ -1,8 +1,8 @@
 ﻿using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
 using FormMatter.OpenGL.Input;
-using Knuckle.Is.Bones.Core.Engines;
-using Knuckle.Is.Bones.Core.Engines.Actions;
+using Knuckle.Is.Bones.Core.Engines.Game;
+using Knuckle.Is.Bones.Core.Engines.Game.Actions;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.OpenGL.Helpers;
