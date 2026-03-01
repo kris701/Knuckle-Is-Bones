@@ -343,7 +343,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				Y = from.Y + from.Height / 2,
 				X2 = to.X + to.Width / 2,
 				Y2 = to.Y + to.Height / 2,
-				Stroke = BasicTextures.GetBasicRectange(new Color(35,35,35)),
+				Stroke = BasicTextures.GetBasicRectange(new Color(35, 35, 35)),
 				Thickness = 2
 			};
 			return newLine;

@@ -15,7 +15,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 {
 	public partial class MainMenu : BaseNavigatableView
 	{
-		private  StackPanelControl _menuPanel;
+		private StackPanelControl _menuPanel;
 
 		[MemberNotNull(nameof(_menuPanel))]
 		public override void Initialize()
