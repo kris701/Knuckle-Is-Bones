@@ -22,11 +22,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private LabelControl _secondOpponentTurnControl;
 		private BoardControl _secondOpponentBoard;
 		private AnimatedLabelControl _secondOpponentPoints;
-		private CanvasPanelControl _gameOverPanel;
-		private LabelControl _winnerLabel;
-		private LabelControl _pointsGainedLabel;
-		private CanvasPanelControl _pointsGainedCanvas;
-		private StackPanelControl _pointsGainedPanel;
+		private GameOverControl _gameOverControl;
 
 		[MemberNotNull(
 			nameof(_diceLabel),
@@ -36,11 +32,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			nameof(_secondOpponentTurnControl),
 			nameof(_secondOpponentBoard),
 			nameof(_secondOpponentPoints),
-			nameof(_gameOverPanel),
-			nameof(_winnerLabel),
-			nameof(_pointsGainedLabel),
-			nameof(_pointsGainedCanvas),
-			nameof(_pointsGainedPanel)
+			nameof(_gameOverControl)
 			)]
 		public override void Initialize()
 		{
@@ -53,9 +45,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 			CreateFirstOpponent();
 			CreateSeccondOpponent();
+			_gameOverControl = new GameOverControl(this, Engine.State);
+			AddControl(1001, _gameOverControl);
 
 			SetupDice();
-			SetupGameOverView();
 
 #if DEBUG
 			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new MainGame(Parent, Engine.State)))
@@ -190,128 +183,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				TileSet = targetTileSet
 			};
 			AddControl(1000, _diceLabel);
-		}
-
-		[MemberNotNull(
-			nameof(_gameOverPanel),
-			nameof(_winnerLabel),
-			nameof(_pointsGainedCanvas),
-			nameof(_pointsGainedLabel),
-			nameof(_pointsGainedPanel)
-			)]
-		private void SetupGameOverView()
-		{
-			_winnerLabel = new LabelControl()
-			{
-				Width = 500,
-				Height = 50,
-				HorizontalAlignment = HorizontalAlignment.Middle,
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				Text = "",
-				FontColor = FontHelpers.SecondaryColor,
-			};
-			_pointsGainedLabel = new LabelControl()
-			{
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
-				FontColor = FontHelpers.PrimaryColor,
-				HorizontalAlignment = HorizontalAlignment.Middle,
-				Text = "",
-				Height = 75,
-				Width = 500
-			};
-			_pointsGainedPanel = new StackPanelControl(new List<IControl>())
-			{
-				Width = 300,
-				X = 50,
-				Y = 50,
-				Height = 400
-			};
-			_pointsGainedCanvas = new CanvasPanelControl(new List<IControl>()
-			{
-				new AnimatedTileControl()
-				{
-					Width = 400,
-					Height = 500,
-					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.GameGameOver)
-				},
-				_pointsGainedPanel
-			})
-			{
-				VerticalAlignment = VerticalAlignment.Middle,
-				Width = 300,
-				Height = 500,
-				X = 1300,
-				IsVisible = false
-			};
-			_gameOverPanel = new CanvasPanelControl(new List<IControl>()
-			{
-				new AnimatedTileControl()
-				{
-					Width = 600,
-					Height = 500,
-					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.GameGameOver)
-				},
-				new StackPanelControl(new List<IControl>()
-				{
-					new LabelControl()
-					{
-						Width = 500,
-						Height = 100,
-						HorizontalAlignment = HorizontalAlignment.Middle,
-						Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-						Text = $"Game Over!",
-						FontColor = Color.White,
-					},
-					_winnerLabel,
-					_pointsGainedLabel,
-					new AnimatedAudioButton(Parent, (x) =>
-					{
-						var state = new GameState(
-							ResourceManager.Opponents.GetResource(Engine.State.FirstOpponent.ID).Clone(),
-							ResourceManager.Boards.GetResource(Engine.State.FirstOpponentBoard.ID).Clone(),
-							ResourceManager.Opponents.GetResource(Engine.State.SecondOpponent.ID).Clone(),
-							ResourceManager.Boards.GetResource(Engine.State.FirstOpponentBoard.ID).Clone(),
-							ResourceManager.Dice.GetResource(Engine.State.CurrentDice.ID).Clone(),
-							Engine.State.User.Clone()
-							);
-
-						GameSaveHelpers.Save(state);
-
-						SwitchView(new MainGame(Parent, state));
-					})
-					{
-						Width = 500,
-						Height = 110,
-						HorizontalAlignment = HorizontalAlignment.Middle,
-						Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-						Text = "Try Again",
-						FontColor = Color.White,
-						TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-						FillClickedColor = BasicTextures.GetClickedTexture(),
-					},
-					new AnimatedAudioButton(Parent, (x) => SwitchView(new MainMenu(Parent)))
-					{
-						Width = 500,
-						Height = 110,
-						HorizontalAlignment = HorizontalAlignment.Middle,
-						Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-						Text = "Main Menu",
-						FontColor = Color.White,
-						TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-						FillClickedColor = BasicTextures.GetClickedTexture(),
-					}
-				})
-			})
-			{
-				HorizontalAlignment = HorizontalAlignment.Middle,
-				VerticalAlignment = VerticalAlignment.Middle,
-				Width = 600,
-				Height = 500,
-				IsVisible = false
-			};
-			;
-			AddControl(1001, _gameOverPanel);
-			AddControl(1001, _pointsGainedCanvas);
 		}
 	}
 }
