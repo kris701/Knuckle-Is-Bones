@@ -14,9 +14,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
 	public class SelectorWheelControl : CollectionControl
 	{
+		public IDefinition CurrentDefinition { get; private set; }
+
 		private int _wheelSize = 9;
 		private readonly List<IDefinition> _definitions;
-		private IDefinition _currentDefinition;
 		private int _index = 0;
 		private List<AnimatedLabelControl> _wheelItems = new List<AnimatedLabelControl>();
 		private List<AnimatedTileControl> _wheelMedalItems = new List<AnimatedTileControl>();
@@ -24,17 +25,18 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private KnuckleBoneWindow _parent;
 		private LabelControl _selectedName;
 		private TextboxControl _selectedDesc;
+		private AnimatedTileControl _selectedMedal;
 
 		public SelectorWheelControl(KnuckleBoneWindow parent, List<IDefinition> definitions, IDefinition? selected)
 		{
 			_parent = parent;
 			_definitions = definitions;
 			if (selected != null)
-				_currentDefinition = selected;
+				CurrentDefinition = selected;
 			else
-				_currentDefinition = definitions[0];
+				CurrentDefinition = definitions[0];
 
-			_index = definitions.IndexOf(_currentDefinition);
+			_index = definitions.IndexOf(CurrentDefinition);
 
 			Children = new List<IControl>();
 
@@ -43,7 +45,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			_selectedName = new LabelControl()
 			{
 				Font = parent.Fonts.GetFont(FontHelpers.Ptx16),
-				Text = $"{_currentDefinition.Name}",
+				Text = $"{CurrentDefinition.Name}",
 				FontColor = FontHelpers.SecondaryColor,
 				Height = 75,
 				Y = Height / 2 - 350 / 2,
@@ -53,40 +55,52 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			_selectedDesc = new TextboxControl()
 			{
 				Font = parent.Fonts.GetFont(FontHelpers.Ptx8),
-				Text = $"{_currentDefinition.Description}",
+				Text = $"{CurrentDefinition.Description}",
 				FontColor = FontHelpers.PrimaryColor,
 				Height = 200,
 				Width = Width,
+				Margin = 20,
 				Y = Height / 2 - 350 / 2 + 75,
 				WordWrap = TextboxControl.WordWrapTypes.Word
 			};
 			Children.Add(_selectedDesc);
+			_selectedMedal = new AnimatedTileControl()
+			{
+				TileSet = parent.Textures.GetTextureSet(TextureHelpers.CompletionBronze),
+				IsVisible = false,
+				X = _selectedDesc.X + _selectedDesc.Width,
+				Y = _selectedDesc.Y + _selectedDesc.Height / 2 - 50 / 2
+			};
+			Children.Add(_selectedMedal);
+			UpdateCompletionControl(_selectedMedal, CurrentDefinition.ID);
 			Children.Add(new AnimatedTileControl()
 			{
 				TileSet = parent.Textures.GetTextureSet(TextureHelpers.StartGameDescription),
-				Height = 350,
-				Y = Height / 2 - 350 / 2,
+				Height = 470,
+				Y = Height / 2 - 350 / 2 - 60,
 				Width = Width
 			});
 
-			Children.Add(new AnimatedAudioButton(parent, (s) => MoveUp())
-			{
-				Height = 50,
-				Y = Height / 2 - 350 / 2 - 50,
-				Width = Width,
-				Text = "^",
-				FontColor = FontHelpers.SecondaryColor,
-				TileSet = parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall),
-				Font = parent.Fonts.GetFont(FontHelpers.Ptx16)
-			});
 			Children.Add(new AnimatedAudioButton(parent, (s) => MoveDown())
 			{
 				Height = 50,
-				Y = Height / 2 + 350 / 2,
-				Width = Width,
-				Text = "v",
+				Y = Height / 2 - 350 / 2 - 40,
+				Width = Width - 50,
+				X = 25,
 				FontColor = FontHelpers.SecondaryColor,
-				TileSet = parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall),
+				FillClickedColor = BasicTextures.GetClickedTexture(),
+				TileSet = parent.Textures.GetTextureSet(TextureHelpers.MoveUp),
+				Font = parent.Fonts.GetFont(FontHelpers.Ptx16)
+			});
+			Children.Add(new AnimatedAudioButton(parent, (s) => MoveUp())
+			{
+				Height = 50,
+				Y = Height / 2 + 350 / 2 - 10,
+				Width = Width - 50,
+				X = 25,
+				FontColor = FontHelpers.SecondaryColor,
+				FillClickedColor = BasicTextures.GetClickedTexture(),
+				TileSet = parent.Textures.GetTextureSet(TextureHelpers.MoveDown),
 				Font = parent.Fonts.GetFont(FontHelpers.Ptx16)
 			});
 
@@ -101,7 +115,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					index++;
 					continue;
 				}
-				var def = _definitions[(i + _index + middle + (_definitions.Count % 2 == 0 ? 0 : 1)) % _definitions.Count];
+				var defIndex = GetCircularIndex(i + _index - middle);
+				var def = _definitions[defIndex];
 				var alpha = index > middle ? (150 / (i - middle)) : (150 / (middle - i));
 				var newItem = new AnimatedLabelControl()
 				{
@@ -131,7 +146,18 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			}
 		}
 
-		public void MoveUp()
+		private int GetCircularIndex(int value)
+		{
+			var mod = value % _definitions.Count;
+			if (mod == 0)
+				return 0;
+			if (value < 0)
+				return (_definitions.Count) + mod;
+			else
+				return mod;
+		}
+
+		private void MoveUp()
 		{
 			_index--;
 			if (_index < 0)
@@ -140,13 +166,23 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			UpdateNames();
 		}
 
-		public void MoveDown()
+		private void MoveDown()
 		{
 			_index++;
 			if (_index >= _definitions.Count)
 				_index = 0;
 
 			UpdateNames();
+		}
+
+		public void SetByID(Guid id)
+		{
+			var target = _definitions.FirstOrDefault(x => x.ID == id);
+			if (target != null)
+			{
+				_index = _definitions.IndexOf(target);
+				UpdateNames();
+			}
 		}
 
 		private void UpdateNames()
@@ -156,17 +192,17 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			{
 				if (i == middle)
 					continue;
-				var def = _definitions[(i + _index + middle + (_definitions.Count % 2 == 0 ? 0 : 1)) % _definitions.Count];
+				var defIndex = GetCircularIndex(i + _index - middle);
+				var def = _definitions[defIndex];
 				var wheelIndex = i - (i > middle ? 1 : 0);
 				_wheelItems[wheelIndex].Text = def.Name;
 				UpdateCompletionControl(_wheelMedalItems[wheelIndex], def.ID);
 			}
 
-			_currentDefinition = _definitions[_index];
-			_selectedName.Text = _currentDefinition.Name;
-			_selectedDesc.Text = _currentDefinition.Description;
-			if (_parent.User.CompletedItems.ContainsKey(_currentDefinition.ID))
-				_selectedDesc.Text += $"You have won with this {_parent.User.CompletedItems[_currentDefinition.ID]} times";
+			CurrentDefinition = _definitions[_index];
+			_selectedName.Text = CurrentDefinition.Name;
+			_selectedDesc.Text = CurrentDefinition.Description;
+			UpdateCompletionControl(_selectedMedal, CurrentDefinition.ID);
 		}
 
 		private void UpdateCompletionControl(AnimatedTileControl tile, Guid id)

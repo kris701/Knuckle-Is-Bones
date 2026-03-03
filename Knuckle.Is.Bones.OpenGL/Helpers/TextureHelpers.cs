@@ -25,6 +25,8 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 		public static Guid CompletionBronze => new Guid("855231a0-daf4-4a10-b163-8da4fd7ae408");
 		public static Guid CompletionSilver => new Guid("2a2e927b-6691-4df8-8de1-f0a819cc37ca");
 		public static Guid CompletionGold => new Guid("345434d1-ccfc-458f-90a4-3077094c8b8a");
+		public static Guid MoveUp => new Guid("545120f9-d9b4-4224-95b0-b2fa0bdbcdcb");
+		public static Guid MoveDown => new Guid("72131d3d-739d-4a8f-8c3f-52a69e522663");
 
 		#endregion
 

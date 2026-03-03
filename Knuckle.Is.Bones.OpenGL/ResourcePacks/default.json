@@ -124,6 +124,22 @@
       ]
     },
     {
+      "ID": "545120f9-d9b4-4224-95b0-b2fa0bdbcdcb",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/StartGame/up_1",
+        "Views/StartGame/up_2"
+      ]
+    },
+    {
+      "ID": "72131d3d-739d-4a8f-8c3f-52a69e522663",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/StartGame/down_1",
+        "Views/StartGame/down_2"
+      ]
+    },
+    {
       "ID": "d6032478-b6ec-483e-8750-5976830d66b2",
       "FrameTime": 750,
       "Contents": [

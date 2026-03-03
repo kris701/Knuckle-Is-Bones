@@ -39,7 +39,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 
 			_gametypePanel = new StackPanelControl(new System.Collections.Generic.List<IControl>()
 			{
-				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame2(Parent, Core.Models.Saves.LastGameSetupModel.LastGameSetupType.PvE)))
+				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent, Core.Models.Saves.LastGameSetupModel.LastGameSetupType.PvE)))
 				{
 					Text = "PvE",
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
@@ -49,7 +49,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 					Height = 50,
 					Width = 100
 				},
-				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame2(Parent, Core.Models.Saves.LastGameSetupModel.LastGameSetupType.PvP)))
+				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent, Core.Models.Saves.LastGameSetupModel.LastGameSetupType.PvP)))
 				{
 					Text = "PvP",
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),

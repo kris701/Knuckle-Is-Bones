@@ -1,12 +1,7 @@
-﻿using Knuckle.Is.Bones.Core.Engines;
-using Knuckle.Is.Bones.Core.Engines.Game;
+﻿using Knuckle.Is.Bones.Core.Engines.Game;
 using Knuckle.Is.Bones.Core.Helpers;
-using Knuckle.Is.Bones.Core.Models;
-using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
-using Knuckle.Is.Bones.OpenGL.Controls;
-using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using System;
@@ -17,71 +12,90 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
 	public partial class StartGame : BaseNavigatableView
 	{
-		private Guid _selectedBoard = Guid.Empty;
-		private AnimatedAudioButton? _selectedBoardButton;
-		private Guid _selectedFirstOpponent = Guid.Empty;
-		private AnimatedAudioButton? _selectedFirstOpponentButton;
-		private Guid _selectedSecondOpponent = Guid.Empty;
-		private AnimatedAudioButton? _selectedSecondOpponentButton;
-		private Guid _selectedDice = Guid.Empty;
-		private AnimatedAudioButton? _selectedDiceButton;
-
 		private readonly LastGameSetupModel.LastGameSetupType _type;
 
-		public StartGame(KnuckleBoneWindow parent, LastGameSetupModel.LastGameSetupType type) : base(parent, new Guid("9ba30a3d-f77c-4aa4-b390-8c8789dba4c0"), new List<int>() { 0, 1, 2, 3, 4 })
+		private Guid? _selectedBoard = null;
+		private Guid? _selectedDice = null;
+		private Guid? _selectedFirstOpponent = null;
+		private Guid? _selectedSecondOpponent = null;
+
+		public StartGame(KnuckleBoneWindow parent, LastGameSetupModel.LastGameSetupType type) : base(parent, new Guid("b350e448-f201-46ce-baee-1df03f1dbf5c"), new List<int>() { 0 })
 		{
 			BackAction = () => SwitchView(new MainMenu(Parent));
 			AcceptAction = () => Start();
 			_type = type;
 			Initialize();
 
-			if (Parent.User.LastGameSetup.ContainsKey(type))
+			switch (_type)
 			{
-				foreach(var control in GetAll(1))
-					if (control is AnimatedAudioButton but)
-						if (but.Tag is BoardDefinition board && board.ID == Parent.User.LastGameSetup[type].BoardID)
-							but.DoClickNoSound();
-				foreach (var control in GetAll(2))
-					if (control is AnimatedAudioButton but)
-						if (but.Tag is DiceDefinition dice && dice.ID == Parent.User.LastGameSetup[type].DiceID)
-							but.DoClickNoSound();
-				foreach (var control in GetAll(3))
-					if (control is AnimatedAudioButton but)
-						if (but.Tag is OpponentDefinition opponent && opponent.ID == Parent.User.LastGameSetup[type].FirstOpponentID)
-							but.DoClickNoSound();
-				foreach (var control in GetAll(4))
-					if (control is AnimatedAudioButton but)
-						if (but.Tag is OpponentDefinition opponent && opponent.ID == Parent.User.LastGameSetup[type].SecondOpponentID)
-							but.DoClickNoSound();
+				case LastGameSetupModel.LastGameSetupType.PvP:
+					_selectedFirstOpponent = new Guid("d6032478-b6ec-483e-8750-5976830d66b2");
+					_selectedSecondOpponent = new Guid("d6032478-b6ec-483e-8750-5976830d66b2");
+
+					if (parent.User.LastGameSetup.ContainsKey(LastGameSetupModel.LastGameSetupType.PvP))
+					{
+						var last = parent.User.LastGameSetup[LastGameSetupModel.LastGameSetupType.PvP];
+						_boardSelector?.SetByID(last.BoardID);
+						_diceSelector?.SetByID(last.DiceID);
+					}
+					break;
+				case LastGameSetupModel.LastGameSetupType.PvE:
+					_selectedFirstOpponent = new Guid("d6032478-b6ec-483e-8750-5976830d66b2");
+
+					if (parent.User.LastGameSetup.ContainsKey(LastGameSetupModel.LastGameSetupType.PvE))
+					{
+						var last = parent.User.LastGameSetup[LastGameSetupModel.LastGameSetupType.PvE];
+						_boardSelector?.SetByID(last.BoardID);
+						_diceSelector?.SetByID(last.DiceID);
+						_secondOpponentSelector?.SetByID(last.SecondOpponentID);
+					}
+					break;
+				case LastGameSetupModel.LastGameSetupType.EvE:
+					if (parent.User.LastGameSetup.ContainsKey(LastGameSetupModel.LastGameSetupType.EvE))
+					{
+						var last = parent.User.LastGameSetup[LastGameSetupModel.LastGameSetupType.EvE];
+						_boardSelector?.SetByID(last.BoardID);
+						_diceSelector?.SetByID(last.DiceID);
+						_firstOpponentSelector?.SetByID(last.FirstOpponentID);
+						_secondOpponentSelector?.SetByID(last.SecondOpponentID);
+					}
+					break;
 			}
 		}
 
 		private void Start()
 		{
-			if (_selectedBoard == Guid.Empty)
-				return;
-			if (_selectedFirstOpponent == Guid.Empty)
-				return;
-			if (_selectedSecondOpponent == Guid.Empty)
-				return;
-			if (_selectedDice == Guid.Empty)
+			var boardId = _selectedBoard;
+			if (boardId == null)
+				boardId = _boardSelector?.CurrentDefinition.ID;
+			var diceId = _selectedDice;
+			if (diceId == null)
+				diceId = _diceSelector?.CurrentDefinition.ID;
+			var firstOpponentId = _selectedFirstOpponent;
+			if (firstOpponentId == null)
+				firstOpponentId = _firstOpponentSelector?.CurrentDefinition.ID;
+			var secondOpponentId = _selectedSecondOpponent;
+			if (secondOpponentId == null)
+				secondOpponentId = _secondOpponentSelector?.CurrentDefinition.ID;
+
+			if (boardId == null || diceId == null || firstOpponentId == null || secondOpponentId == null)
 				return;
 
-			Parent.User.LastGameSetup[_type] = new Core.Models.Saves.LastGameSetupModel()
+			Parent.User.LastGameSetup[_type] = new LastGameSetupModel()
 			{
-				BoardID = _selectedBoard,
-				DiceID = _selectedDice,
-				FirstOpponentID = _selectedFirstOpponent,
-				SecondOpponentID = _selectedSecondOpponent
+				BoardID = (Guid)boardId,
+				DiceID = (Guid)diceId,
+				FirstOpponentID = (Guid)firstOpponentId,
+				SecondOpponentID = (Guid)secondOpponentId
 			};
 			UserSaveHelpers.Save(Parent.User);
 
 			var state = new GameState(
-				ResourceManager.Opponents.GetResource(_selectedFirstOpponent).Clone(),
-				ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
-				ResourceManager.Opponents.GetResource(_selectedSecondOpponent).Clone(),
-				ResourceManager.Boards.GetResource(_selectedBoard).Clone(),
-				ResourceManager.Dice.GetResource(_selectedDice).Clone(),
+				ResourceManager.Opponents.GetResource((Guid)firstOpponentId).Clone(),
+				ResourceManager.Boards.GetResource((Guid)boardId).Clone(),
+				ResourceManager.Opponents.GetResource((Guid)secondOpponentId).Clone(),
+				ResourceManager.Boards.GetResource((Guid)boardId).Clone(),
+				ResourceManager.Dice.GetResource((Guid)diceId).Clone(),
 				Parent.User.Clone()
 				);
 
@@ -92,88 +106,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			GameSaveHelpers.Save(state);
 
 			SwitchView(new MainGame(Parent, state));
-		}
-
-		private void SelectBoard_Click(AnimatedAudioButton sender)
-		{
-			if (_selectedBoardButton == sender)
-				return;
-			if (sender is AnimatedAudioButton button)
-			{
-				if (button.Tag is IDefinition def)
-				{
-					sender.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
-					if (_selectedBoardButton != null)
-						_selectedBoardButton.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
-					_selectedBoardButton = sender;
-					_selectedBoard = def.ID;
-					_boardsDescription.Text = def.Description;
-				}
-			}
-		}
-
-		private void SelectFirstOpponent_Click(AnimatedAudioButton sender)
-		{
-			if (_selectedFirstOpponentButton == sender)
-				return;
-			if (sender is AnimatedAudioButton button)
-			{
-				if (button.Tag is OpponentDefinition def)
-				{
-					sender.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
-					if (_selectedFirstOpponentButton != null)
-						_selectedFirstOpponentButton.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
-					_selectedFirstOpponentButton = sender;
-					_selectedFirstOpponent = def.ID;
-
-					var sb = new StringBuilder();
-					sb.AppendLine(def.Description);
-					if (def.Difficulty != 1)
-						sb.AppendLine($"Score Multiplier: {def.Difficulty}");
-					_firstOpponentDescription.Text = sb.ToString();
-				}
-			}
-		}
-
-		private void SelectSecondOpponent_Click(AnimatedAudioButton sender)
-		{
-			if (_selectedSecondOpponentButton == sender)
-				return;
-			if (sender is AnimatedAudioButton button)
-			{
-				if (button.Tag is OpponentDefinition def)
-				{
-					sender.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
-					if (_selectedSecondOpponentButton != null)
-						_selectedSecondOpponentButton.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
-					_selectedSecondOpponentButton = sender;
-					_selectedSecondOpponent = def.ID;
-
-					var sb = new StringBuilder();
-					sb.AppendLine(def.Description);
-					if (def.Difficulty != 1)
-						sb.AppendLine($"Score Multiplier: {def.Difficulty}");
-					_secondOpponentDescription.Text = sb.ToString();
-				}
-			}
-		}
-
-		private void SelectDice_Click(AnimatedAudioButton sender)
-		{
-			if (_selectedDiceButton == sender)
-				return;
-			if (sender is AnimatedAudioButton button)
-			{
-				if (button.Tag is IDefinition def)
-				{
-					sender.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmallSelect);
-					if (_selectedDiceButton != null)
-						_selectedDiceButton.TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
-					_selectedDiceButton = sender;
-					_selectedDice = def.ID;
-					_diceDescription.Text = def.Description;
-				}
-			}
 		}
 	}
 }
