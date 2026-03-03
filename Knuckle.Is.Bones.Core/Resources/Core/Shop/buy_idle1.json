@@ -1,0 +1,15 @@
+﻿{
+	"ID": "c288d949-4e42-485b-b5cf-17bfa558b5db",
+	"Name": "Idle Point Generator",
+	"Description": "Passively get 1 point a second while the game is open",
+	"Cost": 1000,
+	"BuyTimes": 3,
+	"ShopType": 8,
+	"Requires": "66b3be30-bee4-412b-83a5-976c4c884a39",
+	"Effects": [
+		{
+			"$type": "UnlockIdlePointEffect",
+			"PointsToAdd": 1
+		}
+	]
+}

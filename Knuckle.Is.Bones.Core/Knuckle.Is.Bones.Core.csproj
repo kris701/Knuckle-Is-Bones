@@ -60,6 +60,7 @@
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_9.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_8.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_dicemult_7.json" />
+	  <EmbeddedResource Include="Resources\Core\Shop\buy_idle1.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_idle_mult_3.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_idle_mult_2.json" />
 	  <EmbeddedResource Include="Resources\Core\Shop\buy_idle_mult_1.json" />
