@@ -52,7 +52,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					{
 						_boardSelected = true;
 						CheckIfAllOptionsChecked();
-					});
+					}, 1);
 			_boardsDescription = new AnimatedTextboxControl()
 			{
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
@@ -79,7 +79,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					{
 						_diceSelected = true;
 						CheckIfAllOptionsChecked();
-					});
+					}, 2);
 			_diceDescription = new AnimatedTextboxControl()
 			{
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
@@ -106,7 +106,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				{
 					_opponentOneSelected = true;
 					CheckIfAllOptionsChecked();
-				});
+				}, 3);
 			_firstOpponentDescription = new AnimatedTextboxControl()
 			{
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
@@ -133,7 +133,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					{
 						_opponentTwoSelected = true;
 						CheckIfAllOptionsChecked();
-					});
+					}, 4);
 			_secondOpponentDescription = new AnimatedTextboxControl()
 			{
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
@@ -178,9 +178,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			}
 		}
 
-		private void SetupPageControl(float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IPurchasable> getMethod, Action<AnimatedAudioButton> clicked, Action onAnySelected)
+		private void SetupPageControl(float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IPurchasable> getMethod, Action<AnimatedAudioButton> clicked, Action onAnySelected, int layer)
 		{
-			AddControl(1, new LabelControl()
+			AddControl(layer, new LabelControl()
 			{
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
 				Text = title,
@@ -259,7 +259,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Width = width,
 				Height = height
 			};
-			AddControl(1, pagehandler);
+			AddControl(layer, pagehandler);
 		}
 	}
 }
