@@ -59,7 +59,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 					Height = 50,
 					Width = 100
 				},
-				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame2(Parent, Core.Models.Saves.LastGameSetupModel.LastGameSetupType.EvE)))
+				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent, Core.Models.Saves.LastGameSetupModel.LastGameSetupType.EvE)))
 				{
 					Text = "EvE",
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),

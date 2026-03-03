@@ -19,12 +19,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private IDefinition _currentDefinition;
 		private int _index = 0;
 		private List<AnimatedLabelControl> _wheelItems = new List<AnimatedLabelControl>();
+		private List<AnimatedTileControl> _wheelMedalItems = new List<AnimatedTileControl>();
 
+		private KnuckleBoneWindow _parent;
 		private LabelControl _selectedName;
 		private TextboxControl _selectedDesc;
 
 		public SelectorWheelControl(KnuckleBoneWindow parent, List<IDefinition> definitions, IDefinition? selected)
 		{
+			_parent = parent;
 			_definitions = definitions;
 			if (selected != null)
 				_currentDefinition = selected;
@@ -98,7 +101,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					index++;
 					continue;
 				}
-				var def = _definitions[(i + _index + middle) % _definitions.Count];
+				var def = _definitions[(i + _index + middle + (_definitions.Count % 2 == 0 ? 0 : 1)) % _definitions.Count];
 				var alpha = index > middle ? (150 / (i - middle)) : (150 / (middle - i));
 				var newItem = new AnimatedLabelControl()
 				{
@@ -112,7 +115,17 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					Y = index * wheelItemHeight + (index >= middle ? 440 : 10),
 					Width = Width
 				};
+				var newMedalItem = new AnimatedTileControl()
+				{
+					X = newItem.X + newItem.Width,
+					Y = newItem.Y,
+					TileSet = parent.Textures.GetTextureSet(TextureHelpers.CompletionBronze),
+					IsVisible = false
+				};
 				_wheelItems.Add(newItem);
+				_wheelMedalItems.Add(newMedalItem);
+				UpdateCompletionControl(newMedalItem, def.ID);
+				Children.Add(newMedalItem);
 				Children.Add(newItem);
 				index++;
 			}
@@ -143,13 +156,38 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			{
 				if (i == middle)
 					continue;
-				var def = _definitions[(i + _index + middle) % _definitions.Count];
-				_wheelItems[i - (i > middle ? 1 : 0)].Text = def.Name;
+				var def = _definitions[(i + _index + middle + (_definitions.Count % 2 == 0 ? 0 : 1)) % _definitions.Count];
+				var wheelIndex = i - (i > middle ? 1 : 0);
+				_wheelItems[wheelIndex].Text = def.Name;
+				UpdateCompletionControl(_wheelMedalItems[wheelIndex], def.ID);
 			}
 
 			_currentDefinition = _definitions[_index];
 			_selectedName.Text = _currentDefinition.Name;
 			_selectedDesc.Text = _currentDefinition.Description;
+			if (_parent.User.CompletedItems.ContainsKey(_currentDefinition.ID))
+				_selectedDesc.Text += $"You have won with this {_parent.User.CompletedItems[_currentDefinition.ID]} times";
+		}
+
+		private void UpdateCompletionControl(AnimatedTileControl tile, Guid id)
+		{
+			Guid? tileSet = null;
+			if (_parent.User.CompletedItems.ContainsKey(id))
+			{
+				switch (_parent.User.CompletedItems[id])
+				{
+					case 1: tileSet = TextureHelpers.CompletionBronze; break;
+					case 2: tileSet = TextureHelpers.CompletionSilver; break;
+					case >= 3: tileSet = TextureHelpers.CompletionGold; break;
+				}
+			}
+			if (tileSet == null)
+				tile.IsVisible = false;
+			else
+			{
+				tile.TileSet = _parent.Textures.GetTextureSet((Guid)tileSet);
+				tile.IsVisible = true;
+			}
 		}
 	}
 }

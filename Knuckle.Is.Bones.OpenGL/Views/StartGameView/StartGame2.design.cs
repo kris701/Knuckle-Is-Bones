@@ -62,7 +62,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			foreach (var id in allItemIds)
 			{
 				var board = ResourceManager.Boards.GetResource(id);
-				if (board.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(id))
+				if (!board.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(id))
 					allItems.Add(board);
 			}
 			_boardSelector = new SelectorWheelControl(Parent, allItems, allItems[0])
@@ -81,7 +81,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			foreach (var id in allItemIds)
 			{
 				var board = ResourceManager.Dice.GetResource(id);
-				if (board.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(id))
+				if (!board.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(id))
 					allItems.Add(board);
 			}
 			_diceSelector = new SelectorWheelControl(Parent, allItems, allItems[0])
