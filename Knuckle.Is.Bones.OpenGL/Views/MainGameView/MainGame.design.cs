@@ -25,6 +25,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		private CanvasPanelControl _gameOverPanel;
 		private LabelControl _winnerLabel;
 		private LabelControl _pointsGainedLabel;
+		private CanvasPanelControl _pointsGainedCanvas;
+		private StackPanelControl _pointsGainedPanel;
 
 		[MemberNotNull(
 			nameof(_diceLabel),
@@ -36,7 +38,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			nameof(_secondOpponentPoints),
 			nameof(_gameOverPanel),
 			nameof(_winnerLabel),
-			nameof(_pointsGainedLabel)
+			nameof(_pointsGainedLabel),
+			nameof(_pointsGainedCanvas),
+			nameof(_pointsGainedPanel)
 			)]
 		public override void Initialize()
 		{
@@ -191,27 +195,53 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		[MemberNotNull(
 			nameof(_gameOverPanel),
 			nameof(_winnerLabel),
-			nameof(_pointsGainedLabel)
+			nameof(_pointsGainedCanvas),
+			nameof(_pointsGainedLabel),
+			nameof(_pointsGainedPanel)
 			)]
 		private void SetupGameOverView()
 		{
 			_winnerLabel = new LabelControl()
 			{
 				Width = 500,
-				Height = 75,
+				Height = 50,
 				HorizontalAlignment = HorizontalAlignment.Middle,
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Text = "",
-				FontColor = Color.White,
+				FontColor = FontHelpers.SecondaryColor,
 			};
 			_pointsGainedLabel = new LabelControl()
 			{
-				Width = 500,
-				Height = 75,
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
+				FontColor = FontHelpers.PrimaryColor,
 				HorizontalAlignment = HorizontalAlignment.Middle,
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				Text = "",
-				FontColor = Color.White,
+				Height = 75,
+				Width = 500
+			};
+			_pointsGainedPanel = new StackPanelControl(new List<IControl>())
+			{
+				Width = 300,
+				X = 50,
+				Y = 50,
+				Height = 400
+			};
+			_pointsGainedCanvas = new CanvasPanelControl(new List<IControl>()
+			{
+				new AnimatedTileControl()
+				{
+					Width = 400,
+					Height = 500,
+					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.GameGameOver)
+				},
+				_pointsGainedPanel
+			})
+			{
+				VerticalAlignment = VerticalAlignment.Middle,
+				Width = 300,
+				Height = 500,
+				X = 1300,
+				IsVisible = false
 			};
 			_gameOverPanel = new CanvasPanelControl(new List<IControl>()
 			{
@@ -281,6 +311,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			};
 			;
 			AddControl(1001, _gameOverPanel);
+			AddControl(1001, _pointsGainedCanvas);
 		}
 	}
 }
