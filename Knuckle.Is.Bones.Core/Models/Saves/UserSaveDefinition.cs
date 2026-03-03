@@ -1,11 +1,13 @@
-﻿namespace Knuckle.Is.Bones.Core.Models.Saves
+﻿using static Knuckle.Is.Bones.Core.Models.Saves.LastGameSetupModel;
+
+namespace Knuckle.Is.Bones.Core.Models.Saves
 {
 	public class UserSaveDefinition : IGenericClonable<UserSaveDefinition>
 	{
 		public int Points { get; set; } = 0;
 		public Dictionary<Guid, int> CompletedItems { get; set; } = new Dictionary<Guid, int>();
 		public Dictionary<Guid, int> PurchasedShopItems { get; set; } = new Dictionary<Guid, int>();
-		public LastGameSetupModel? LastGameSetup { get; set; } = null;
+		public Dictionary<LastGameSetupType, LastGameSetupModel> LastGameSetup { get; set; } = new Dictionary<LastGameSetupType, LastGameSetupModel>();
 
 		public void AppendCompletedItem(Guid id)
 		{

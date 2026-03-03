@@ -1,31 +1,30 @@
-﻿using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL;
+using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
+using Knuckle.Is.Bones.Core.Models;
 using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
+using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
+using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
 	public partial class StartGame : BaseNavigatableView
 	{
-		private AnimatedTextboxControl _boardsDescription;
-		private AnimatedTextboxControl _diceDescription;
-		private AnimatedTextboxControl _firstOpponentDescription;
-		private AnimatedTextboxControl _secondOpponentDescription;
+		private SelectorWheelControl? _boardSelector;
+		private SelectorWheelControl? _diceSelector;
+		private SelectorWheelControl? _firstOpponentSelector;
+		private SelectorWheelControl? _secondOpponentSelector;
 
-		private bool _boardSelected = false;
-		private bool _diceSelected = false;
-		private bool _opponentOneSelected = false;
-		private bool _opponentTwoSelected = false;
-
-		[MemberNotNull(nameof(_boardsDescription), nameof(_diceDescription), nameof(_firstOpponentDescription), nameof(_secondOpponentDescription))]
-		public override void Initialize()
+		public void Initialize()
 		{
 			AddControl(0, new TileControl()
 			{
@@ -34,122 +33,26 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				FillColor = BasicTextures.GetBasicRectange(Color.Black)
 			});
 
-			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.Button);
-
-			var margin = 50;
-			var width = (1920 - margin * 2) / 4 - margin;
-
-			SetupPageControl(
-				margin + (width + margin) * 0,
-				100,
-				width,
-				500,
-				"Boards",
-				ResourceManager.Boards.GetResources(),
-				ResourceManager.Boards.GetResource,
-				SelectBoard_Click,
-				() =>
-					{
-						_boardSelected = true;
-						CheckIfAllOptionsChecked();
-					}, 1);
-			_boardsDescription = new AnimatedTextboxControl()
+			switch (_type)
 			{
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				Margin = 25,
-				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.StartGameDescription),
-				X = margin + (width + margin) * 0,
-				WordWrap = TextboxControl.WordWrapTypes.Word,
-				Y = 600,
-				Width = width,
-				Height = 350,
-			};
-			AddControl(0, _boardsDescription);
-			SetupPageControl(
-				margin + (width + margin) * 1,
-				100,
-				width,
-				500,
-				"Dice",
-				ResourceManager.Dice.GetResources(),
-				ResourceManager.Dice.GetResource,
-				SelectDice_Click,
-				() =>
-					{
-						_diceSelected = true;
-						CheckIfAllOptionsChecked();
-					}, 2);
-			_diceDescription = new AnimatedTextboxControl()
-			{
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				Margin = 25,
-				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.StartGameDescription),
-				X = margin + (width + margin) * 1,
-				WordWrap = TextboxControl.WordWrapTypes.Word,
-				Y = 600,
-				Width = width,
-				Height = 350,
-			};
-			AddControl(0, _diceDescription);
-			SetupPageControl(
-				margin + (width + margin) * 2,
-				100,
-				width,
-				500,
-				"Player 1",
-				ResourceManager.Opponents.GetResources(),
-				ResourceManager.Opponents.GetResource,
-				SelectFirstOpponent_Click,
-				() =>
-				{
-					_opponentOneSelected = true;
-					CheckIfAllOptionsChecked();
-				}, 3);
-			_firstOpponentDescription = new AnimatedTextboxControl()
-			{
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				Margin = 25,
-				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.StartGameDescription),
-				X = margin + (width + margin) * 2,
-				WordWrap = TextboxControl.WordWrapTypes.Word,
-				Y = 600,
-				Width = width,
-				Height = 350,
-			};
-			AddControl(0, _firstOpponentDescription);
-			SetupPageControl(
-				margin + (width + margin) * 3,
-				100,
-				width,
-				500,
-				"Player 2",
-				ResourceManager.Opponents.GetResources(),
-				ResourceManager.Opponents.GetResource,
-				SelectSecondOpponent_Click,
-				() =>
-					{
-						_opponentTwoSelected = true;
-						CheckIfAllOptionsChecked();
-					}, 4);
-			_secondOpponentDescription = new AnimatedTextboxControl()
-			{
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-				Margin = 25,
-				FontColor = Color.White,
-				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.StartGameDescription),
-				X = margin + (width + margin) * 3,
-				WordWrap = TextboxControl.WordWrapTypes.Word,
-				Y = 600,
-				Width = width,
-				Height = 350,
-			};
-			AddControl(0, _secondOpponentDescription);
-
+				case LastGameSetupModel.LastGameSetupType.PvP:
+					SetupBoardSelection(500);
+					SetupDiceSelection(1000);
+					break;
+				case LastGameSetupModel.LastGameSetupType.PvE:
+					SetupBoardSelection(250);
+					SetupDiceSelection(750);
+					SetupSecondOpponentSelection(1250, "Opponent");
+					break;
+				case LastGameSetupModel.LastGameSetupType.EvE:
+					SetupBoardSelection(25);
+					SetupDiceSelection(500);
+					SetupFirstOpponentSelection(975, "First Opponent");
+					SetupSecondOpponentSelection(1450, "Second Opponent");
+					break;
+			}
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new StartGame(Parent)))
+			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new StartGame(Parent, _type)))
 			{
 				X = 0,
 				Y = 0,
@@ -162,104 +65,110 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				FillClickedColor = BasicTextures.GetBasicRectange(Color.Gray)
 			});
 #endif
+
 			base.Initialize();
-			MouseAcceptButton.IsEnabled = false;
-			MouseAcceptButton.Alpha = 100;
-			MouseAcceptButton.FontColor = Color.Gray;
 		}
 
-		private void CheckIfAllOptionsChecked()
+		[MemberNotNull(nameof(_boardSelector))]
+		private void SetupBoardSelection(int x)
 		{
-			if (_boardSelected && _diceSelected && _opponentOneSelected && _opponentTwoSelected)
+			CreateTitle(x, "Board");
+
+			var allItemIds = ResourceManager.Boards.GetResources();
+			var allItems = new List<IDefinition>();
+			foreach (var id in allItemIds)
 			{
-				MouseAcceptButton.IsEnabled = true;
-				MouseAcceptButton.Alpha = 256;
-				MouseAcceptButton.FontColor = Color.White;
+				var item = ResourceManager.Boards.GetResource(id);
+				if (!item.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(id))
+					allItems.Add(item);
 			}
-		}
-
-		private void SetupPageControl(float x, float y, float width, float height, string title, List<Guid> ids, Func<Guid, IPurchasable> getMethod, Action<AnimatedAudioButton> clicked, Action onAnySelected, int layer)
-		{
-			AddControl(layer, new LabelControl()
+			_boardSelector = new SelectorWheelControl(Parent, allItems, allItems[0])
 			{
-				Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
-				Text = title,
 				X = x,
-				Y = y + 10,
-				Height = 50,
-				Width = width,
-				FontColor = FontHelpers.SecondaryColor
-			});
-
-			var items = new List<IPurchasable>();
-			foreach (var id in ids)
-				items.Add(getMethod(id));
-			items = items.OrderByDescending(x => !x.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(x.ID)).ToList();
-
-			var textureSet = Parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
-			var controlList = new List<StackPanelControl>();
-			foreach (var item in items)
-			{
-				var isUnlocked = !item.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(item.ID);
-				Guid? tileSet = null;
-				if (Parent.User.CompletedItems.ContainsKey(item.ID))
-				{
-					switch (Parent.User.CompletedItems[item.ID])
-					{
-						case 1: tileSet = TextureHelpers.CompletionBronze; break;
-						case 2: tileSet = TextureHelpers.CompletionSilver; break;
-						case >= 3: tileSet = TextureHelpers.CompletionGold; break;
-					}
-				}
-				var stackControls = new List<IControl>() {
-					new AnimatedAudioButton(Parent, (x) =>
-					{
-						if (x is AnimatedAudioButton b)
-						{
-							clicked(b);
-							onAnySelected();
-						}
-					})
-					{
-						TileSet = textureSet,
-						FillClickedColor = BasicTextures.GetClickedTexture(),
-						FillDisabledColor = BasicTextures.GetBasicRectange(Color.Transparent),
-						Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-						Text = $"{item.Name}",
-						FontColor = isUnlocked ? Color.White : Color.Gray,
-						Alpha = isUnlocked ? 256 : 100,
-						Tag = item,
-						IsEnabled = isUnlocked
-					}
-				};
-				if (tileSet != null)
-					stackControls.Add(new AnimatedTileControl()
-					{
-						Width = 50,
-						Height = 50,
-						TileSet = Parent.Textures.GetTextureSet((Guid)tileSet)
-					});
-
-				controlList.Add(new StackPanelControl(stackControls)
-				{
-					Width = width - 20,
-					Height = 50,
-					Orientation = StackPanelControl.Orientations.Horizontal
-				});
-			}
-			var pagehandler = new PageHandler<StackPanelControl>(this, controlList)
-			{
-				LeftButtonX = 10,
-				LeftButtonY = -50,
-				RightButtonX = width - 80,
-				RightButtonY = -50,
-				ItemsPrPage = 7,
-				X = x + 10,
-				Y = y + 70,
-				Width = width,
-				Height = height
+				Y = 150
 			};
-			AddControl(layer, pagehandler);
+			AddControl(0, _boardSelector);
+		}
+
+		[MemberNotNull(nameof(_diceSelector))]
+		private void SetupDiceSelection(int x)
+		{
+			CreateTitle(x, "Dice");
+
+			var allItemIds = ResourceManager.Dice.GetResources();
+			var allItems = new List<IDefinition>();
+			foreach (var id in allItemIds)
+			{
+				var item = ResourceManager.Dice.GetResource(id);
+				if (!item.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(id))
+					allItems.Add(item);
+			}
+			_diceSelector = new SelectorWheelControl(Parent, allItems, allItems[0])
+			{
+				X = x,
+				Y = 150
+			};
+			AddControl(0, _diceSelector);
+		}
+
+		[MemberNotNull(nameof(_firstOpponentSelector))]
+		private void SetupFirstOpponentSelection(int x, string title)
+		{
+			CreateTitle(x, title);
+
+			var allItemIds = ResourceManager.Opponents.GetResources();
+			var allItems = new List<IDefinition>();
+			foreach (var id in allItemIds)
+			{
+				var item = ResourceManager.Opponents.GetResource(id);
+				if (item.MoveModule is PlayerMoveModule)
+					continue;
+				if (!item.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(id))
+					allItems.Add(item);
+			}
+			_firstOpponentSelector = new SelectorWheelControl(Parent, allItems, allItems[0])
+			{
+				X = x,
+				Y = 150
+			};
+			AddControl(0, _firstOpponentSelector);
+		}
+
+		[MemberNotNull(nameof(_secondOpponentSelector))]
+		private void SetupSecondOpponentSelection(int x, string title)
+		{
+			CreateTitle(x, title);
+
+			var allItemIds = ResourceManager.Opponents.GetResources();
+			var allItems = new List<IDefinition>();
+			foreach (var id in allItemIds)
+			{
+				var item = ResourceManager.Opponents.GetResource(id);
+				if (item.MoveModule is PlayerMoveModule)
+					continue;
+				if (!item.IsPurchasable || Parent.User.PurchasedShopItems.ContainsKey(id))
+					allItems.Add(item);
+			}
+			_secondOpponentSelector = new SelectorWheelControl(Parent, allItems, allItems[0])
+			{
+				X = x,
+				Y = 150
+			};
+			AddControl(0, _secondOpponentSelector);
+		}
+
+		private void CreateTitle(int x, string title)
+		{
+			AddControl(0, new LabelControl()
+			{
+				Text = title,
+				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
+				FontColor = FontHelpers.SecondaryColor,
+				X = x,
+				Y = 75,
+				Width = 400,
+				Height = 50
+			});
 		}
 	}
 }
