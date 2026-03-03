@@ -10,5 +10,12 @@ namespace Knuckle.Is.Bones.OpenGL.Controls
 		{
 			ClickSound = new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028");
 		}
+
+		public void DoClickNoSound()
+		{
+			ClickSound = Guid.Empty;
+			DoClick();
+			ClickSound = new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028");
+		}
 	}
 }

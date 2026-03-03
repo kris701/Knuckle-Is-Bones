@@ -3,6 +3,7 @@ using Knuckle.Is.Bones.Core.Engines.Game;
 using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models;
 using Knuckle.Is.Bones.Core.Models.Game;
+using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
@@ -25,30 +26,33 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private Guid _selectedDice = Guid.Empty;
 		private AnimatedAudioButton? _selectedDiceButton;
 
-		public StartGame(KnuckleBoneWindow parent) : base(parent, new Guid("9ba30a3d-f77c-4aa4-b390-8c8789dba4c0"), new List<int>() { 0, 1, 2, 3, 4 })
+		private readonly LastGameSetupModel.LastGameSetupType _type;
+
+		public StartGame(KnuckleBoneWindow parent, LastGameSetupModel.LastGameSetupType type) : base(parent, new Guid("9ba30a3d-f77c-4aa4-b390-8c8789dba4c0"), new List<int>() { 0, 1, 2, 3, 4 })
 		{
 			BackAction = () => SwitchView(new MainMenu(Parent));
 			AcceptAction = () => Start();
+			_type = type;
 			Initialize();
 
-			if (Parent.User.LastGameSetup != null)
+			if (Parent.User.LastGameSetup.ContainsKey(type))
 			{
 				foreach(var control in GetAll(1))
 					if (control is AnimatedAudioButton but)
-						if (but.Tag is BoardDefinition board && board.ID == Parent.User.LastGameSetup.BoardID)
-							but.DoClick();
+						if (but.Tag is BoardDefinition board && board.ID == Parent.User.LastGameSetup[type].BoardID)
+							but.DoClickNoSound();
 				foreach (var control in GetAll(2))
 					if (control is AnimatedAudioButton but)
-						if (but.Tag is DiceDefinition dice && dice.ID == Parent.User.LastGameSetup.DiceID)
-							but.DoClick();
+						if (but.Tag is DiceDefinition dice && dice.ID == Parent.User.LastGameSetup[type].DiceID)
+							but.DoClickNoSound();
 				foreach (var control in GetAll(3))
 					if (control is AnimatedAudioButton but)
-						if (but.Tag is OpponentDefinition opponent && opponent.ID == Parent.User.LastGameSetup.FirstOpponentID)
-							but.DoClick();
+						if (but.Tag is OpponentDefinition opponent && opponent.ID == Parent.User.LastGameSetup[type].FirstOpponentID)
+							but.DoClickNoSound();
 				foreach (var control in GetAll(4))
 					if (control is AnimatedAudioButton but)
-						if (but.Tag is OpponentDefinition opponent && opponent.ID == Parent.User.LastGameSetup.SecondOpponentID)
-							but.DoClick();
+						if (but.Tag is OpponentDefinition opponent && opponent.ID == Parent.User.LastGameSetup[type].SecondOpponentID)
+							but.DoClickNoSound();
 			}
 		}
 
@@ -63,7 +67,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			if (_selectedDice == Guid.Empty)
 				return;
 
-			Parent.User.LastGameSetup = new Core.Models.Saves.LastGameSetupModel()
+			Parent.User.LastGameSetup[_type] = new Core.Models.Saves.LastGameSetupModel()
 			{
 				BoardID = _selectedBoard,
 				DiceID = _selectedDice,
