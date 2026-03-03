@@ -4,6 +4,7 @@ using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.Core.Resources;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Knuckle.Is.Bones.Core.Engines.Game
@@ -171,6 +172,7 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 			if (!GameOver)
 				throw new Exception("Game is not over yet!");
 
+			var breakdown = new List<ResultPointsBreakdown>();
 			var playerWon = false;
 			var hadPlayer = false;
 			var pointsGained = 0;
@@ -179,7 +181,9 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 			if ((FirstOpponent.MoveModule is PlayerMoveModule) && (SecondOpponent.MoveModule is not PlayerMoveModule) && Winner == FirstOpponent.MoveModule.OpponentID)
 			{
 				playerWon = true;
-				pointsGained = GetPointsGained(GetFirstOpponentBoardValue(), SecondOpponent.Difficulty, FirstOpponentBoard.ID);
+				var basePoints = GetFirstOpponentBoardValue();
+				breakdown.Add(new ResultPointsBreakdown(basePoints, "Your Board Value"));
+				pointsGained = GetPointsGained(basePoints, SecondOpponent.Difficulty, FirstOpponentBoard.ID, breakdown);
 				completedItems.Add(SecondOpponent.ID);
 				completedItems.Add(FirstOpponentBoard.ID);
 				completedItems.Add(CurrentDice.ID);
@@ -187,7 +191,9 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 			if ((SecondOpponent.MoveModule is PlayerMoveModule) && (FirstOpponent.MoveModule is not PlayerMoveModule) && Winner == SecondOpponent.MoveModule.OpponentID)
 			{
 				playerWon = true;
-				pointsGained = GetPointsGained(GetSecondOpponentBoardValue(), FirstOpponent.Difficulty, FirstOpponentBoard.ID);
+				var basePoints = GetFirstOpponentBoardValue();
+				breakdown.Add(new ResultPointsBreakdown(basePoints, "Your Board Value"));
+				pointsGained = GetPointsGained(basePoints, FirstOpponent.Difficulty, FirstOpponentBoard.ID, breakdown);
 				completedItems.Add(FirstOpponent.ID);
 				completedItems.Add(FirstOpponentBoard.ID);
 				completedItems.Add(CurrentDice.ID);
@@ -202,12 +208,14 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 			else
 				winnerName = $"{SecondOpponent.Name}";
 
-			return new GameResult(playerWon, hadPlayer, pointsGained, winnerName, completedItems);
+			return new GameResult(playerWon, hadPlayer, pointsGained, winnerName, completedItems, breakdown);
 		}
 
-		private int GetPointsGained(int boardValue, double opponentDifficulty, Guid boardId)
+		private int GetPointsGained(int boardValue, double opponentDifficulty, Guid boardId, List<ResultPointsBreakdown> breakdown)
 		{
-			var value = (int)(boardValue * opponentDifficulty);
+			double value = boardValue * opponentDifficulty;
+
+			breakdown.Add(new ResultPointsBreakdown(opponentDifficulty, 1, "Difficulty"));
 
 			var allShopItems = ResourceManager.Shop.GetResources();
 			foreach (var purchaseId in User.PurchasedShopItems.Keys.Where(x => allShopItems.Contains(x)))
@@ -216,15 +224,23 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 				foreach (var effect in item.Effects)
 				{
 					if (effect is PointsMultiplierEffect eff)
+					{
 						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
-							value = (int)(value * eff.Multiplier);
+							value = value * eff.Multiplier;
+
+						breakdown.Add(new ResultPointsBreakdown(eff.Multiplier, User.PurchasedShopItems[purchaseId], "Point Mult"));
+					}
 					else if (effect is PointsBoardMultiplierEffect eff2 && eff2.BoardID == boardId)
+					{
 						for (int i = 0; i < User.PurchasedShopItems[purchaseId]; i++)
-							value = (int)(value * eff2.Multiplier);
+							value = value * eff2.Multiplier;
+
+						breakdown.Add(new ResultPointsBreakdown(eff2.Multiplier, User.PurchasedShopItems[purchaseId], "Board Mult"));
+					}
 				}
 			}
 
-			return value;
+			return (int)value;
 		}
 	}
 }

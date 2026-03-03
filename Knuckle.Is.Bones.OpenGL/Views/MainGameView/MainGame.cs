@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
@@ -268,9 +269,112 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				UserSaveHelpers.Save(Parent.User);
 
 				if (result.PointsGained > 0)
-					_pointsGainedLabel.Text = $"Gained {result.PointsGained} points.";
+				{
+					var breakdownControls = new List<IControl>()
+					{
+						new LabelControl()
+						{
+							Font = Parent.Fonts.GetFont(FontHelpers.Ptx12),
+							FontColor = FontHelpers.PrimaryColor,
+							Text = "You gained:",
+							Height = 20,
+							FitTextWidth = true
+						}
+					};
+
+					foreach(var item in result.PointBreakdown)
+					{
+						var newLabelSet = new List<IControl>();
+						if (item.Value == 0)
+						{
+							newLabelSet.Add(new LabelControl()
+							{
+								Text = "x ",
+								Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+								FontColor = FontHelpers.PrimaryColor,
+								Height = 20,
+								FitTextWidth = true
+							});
+							newLabelSet.Add(new LabelControl()
+							{
+								Text = item.Count == 1 ? $"{item.Multiplier}" : $"{item.Multiplier}^{item.Count}",
+								Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+								FontColor = FontHelpers.SecondaryColor,
+								Height = 20,
+								FitTextWidth = true
+							});
+						}
+						else
+						{
+							newLabelSet.Add(new LabelControl()
+							{
+								Text = $"{item.Value}",
+								Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+								FontColor = FontHelpers.SecondaryColor,
+								Height = 20,
+								FitTextWidth = true
+							});
+						}
+						newLabelSet.Add(new LabelControl()
+						{
+							Text = $" ({item.Type})",
+							Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+							FontColor = FontHelpers.PrimaryColor,
+							Height = 20,
+							FitTextWidth = true
+						});
+
+						breakdownControls.Add(new StackPanelControl(newLabelSet)
+						{
+							Orientation = StackPanelControl.Orientations.Horizontal,
+							Height = 20,
+							Width = _pointsGainedPanel.Width
+						});
+					}
+
+					breakdownControls.Add(new StackPanelControl(new List<IControl>()
+						{
+							new LabelControl()
+							{
+								Text = " = ",
+								Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+								FontColor = FontHelpers.PrimaryColor,
+								Height = 20,
+								FitTextWidth = true
+							},
+							new LabelControl()
+							{
+								Text = $"{result.PointsGained}",
+								Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+								FontColor = FontHelpers.SecondaryColor,
+								Height = 20,
+								FitTextWidth = true
+							},
+							new LabelControl()
+							{
+								Text = $" points",
+								Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
+								FontColor = FontHelpers.PrimaryColor,
+								Height = 20,
+								FitTextWidth = true
+							}
+						})
+					{
+						Orientation = StackPanelControl.Orientations.Horizontal,
+						Height = 20,
+						Width = _pointsGainedPanel.Width
+					});
+					_pointsGainedPanel.Children = breakdownControls;
+					_pointsGainedPanel.Initialize();
+
+					_pointsGainedCanvas.IsVisible = true;
+
+					_pointsGainedLabel.Text = $"Gained {result.PointsGained} points";
+				}
 				else
-					_pointsGainedLabel.Text = "No points awarded";
+				{
+					_pointsGainedLabel.Text = "No points gained";
+				}
 
 				if (result.HadPlayer)
 				{
