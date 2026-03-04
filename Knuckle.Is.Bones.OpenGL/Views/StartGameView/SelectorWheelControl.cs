@@ -25,6 +25,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private KnuckleBoneWindow _parent;
 		private LabelControl _selectedName;
 		private TextboxControl _selectedDesc;
+		private AnimatedTileControl _selectedIcon;
 		private AnimatedTileControl _selectedMedal;
 
 		public SelectorWheelControl(KnuckleBoneWindow parent, List<IDefinition> definitions, IDefinition? selected)
@@ -57,10 +58,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Font = parent.Fonts.GetFont(FontHelpers.Ptx8),
 				Text = $"{CurrentDefinition.Description}",
 				FontColor = FontHelpers.PrimaryColor,
-				Height = 200,
+				Height = 125,
 				Width = Width,
 				Margin = 20,
-				Y = Height / 2 - 350 / 2 + 75,
+				Y = Height / 2 - 350 / 2 + 50,
 				WordWrap = TextboxControl.WordWrapTypes.Word
 			};
 			Children.Add(_selectedDesc);
@@ -72,6 +73,16 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Y = _selectedDesc.Y + _selectedDesc.Height / 2 - 50 / 2
 			};
 			Children.Add(_selectedMedal);
+			_selectedIcon = new AnimatedTileControl()
+			{
+				Y = _selectedDesc.Y + _selectedDesc.Height,
+				Height = 150,
+				Width = 150,
+				X = 125,
+				TileSet = _parent.Textures.GetTextureSet(TextureHelpers.Button),
+				IsVisible = false
+			};
+			Children.Add(_selectedIcon);
 			UpdateCompletionControl(_selectedMedal, CurrentDefinition.ID);
 			Children.Add(new AnimatedTileControl()
 			{
@@ -202,6 +213,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			CurrentDefinition = _definitions[_index];
 			_selectedName.Text = CurrentDefinition.Name;
 			_selectedDesc.Text = CurrentDefinition.Description;
+
+			if (_parent.Textures.ContainsTextureSet(CurrentDefinition.ID))
+			{
+				_selectedIcon.TileSet = _parent.Textures.GetTextureSet(CurrentDefinition.ID);
+				_selectedIcon.IsVisible = true;
+			}
+			else
+				_selectedIcon.IsVisible = false;
+
 			UpdateCompletionControl(_selectedMedal, CurrentDefinition.ID);
 		}
 

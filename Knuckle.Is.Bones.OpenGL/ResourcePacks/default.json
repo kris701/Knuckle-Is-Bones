@@ -451,6 +451,86 @@
         "Views/GameShop/middlemouse_1",
         "Views/GameShop/middlemouse_2"
       ]
+    },
+    {
+      "ID": "e7b71762-e102-4287-8ae7-80c11e711979",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/Boards/bomberman_1",
+        "Views/Boards/bomberman_2"
+      ]
+    },
+    {
+      "ID": "aff95738-a568-4628-9b04-c3f8d649fd6f",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/Boards/giant_1",
+        "Views/Boards/giant_2"
+      ]
+    },
+    {
+      "ID": "7d7a3947-eed2-4e79-b20d-f75235fb04e2",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/Boards/gigacombo_1",
+        "Views/Boards/gigacombo_2"
+      ]
+    },
+    {
+      "ID": "9d79c775-8e03-46a9-b98e-b3821a0299d3",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/Boards/happy_1",
+        "Views/Boards/happy_2"
+      ]
+    },
+    {
+      "ID": "09144a57-a719-47bd-a36c-1cfb287c295d",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/Boards/large_1",
+        "Views/Boards/large_2"
+      ]
+    },
+    {
+      "ID": "907bddf8-cbe1-49f4-a1f8-92ad5266f116",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/Boards/normal_1",
+        "Views/Boards/normal_2"
+      ]
+    },
+    {
+      "ID": "9cbc4760-d71b-482c-ab06-f05fecedd741",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/Boards/small_1",
+        "Views/Boards/small_2"
+      ]
+    },
+    {
+      "ID": "a501943e-e6be-47d8-9b2c-01ca54c01c36",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/Boards/steps_1",
+        "Views/Boards/steps_2"
+      ]
+    },
+    {
+      "ID": "322dbaa5-c806-4b56-af9d-164b135a6d42",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/Boards/tall_1",
+        "Views/Boards/tall_2"
+      ]
+    },
+    {
+      "ID": "0ac3da70-4cb8-4e97-9af9-4b9759499dd7",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/Boards/wave_1",
+        "Views/Boards/wave_2"
+      ]
     }
   ],
   "Songs": [
