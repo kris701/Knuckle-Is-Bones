@@ -28,6 +28,9 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 		public static Guid MoveUp => new Guid("545120f9-d9b4-4224-95b0-b2fa0bdbcdcb");
 		public static Guid MoveDown => new Guid("72131d3d-739d-4a8f-8c3f-52a69e522663");
 		public static Guid GameTypeSelect => new Guid("43668848-73fd-4719-939c-88d2b646ccfb");
+		public static Guid GameTypeSelectPvE => new Guid("473c8a99-8169-4db1-912a-d850a711c99e");
+		public static Guid GameTypeSelectPvP => new Guid("f973441c-5029-4b8f-a1df-4f3bc6ba570e");
+		public static Guid GameTypeSelectEvE => new Guid("f865529b-c967-460d-9e5d-d98298c3b1ba");
 
 		#endregion
 

@@ -64,6 +64,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 
 			var titleText = "";
 			var sb = new StringBuilder();
+			var targetTileSet = Guid.Empty;
 			switch (type)
 			{
 				case LastGameSetupModel.LastGameSetupType.PvE:
@@ -71,18 +72,21 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					sb.AppendLine("Play against an AI opponent");
 					sb.AppendLine(" ");
 					sb.AppendLine("Winning in this gamemode gives you points that you can use in the Shop!");
+					targetTileSet = TextureHelpers.GameTypeSelectPvE;
 					break;
 				case LastGameSetupModel.LastGameSetupType.PvP:
 					titleText = "PvP";
 					sb.AppendLine("Play against your friend on this device");
 					sb.AppendLine(" ");
 					sb.AppendLine("(Does not reward any points)");
+					targetTileSet = TextureHelpers.GameTypeSelectPvP;
 					break;
 				case LastGameSetupModel.LastGameSetupType.EvE:
 					titleText = "EvE";
 					sb.AppendLine("Watch two AIs play against eachother");
 					sb.AppendLine(" ");
 					sb.AppendLine("(Does not reward any points)");
+					targetTileSet = TextureHelpers.GameTypeSelectEvE;
 					break;
 			}
 			controls.Add(new LabelControl()
@@ -104,6 +108,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Y = 100,
 				Width = 400,
 				Height = 200
+			});
+			controls.Add(new AnimatedTileControl()
+			{
+				TileSet = Parent.Textures.GetTextureSet(targetTileSet),
+				X = 25,
+				Y = 250
 			});
 			controls.Add(new AnimatedAudioButton(Parent, (s) => SwitchView(new StartGame(Parent, type)))
 			{

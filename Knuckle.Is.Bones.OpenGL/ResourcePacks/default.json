@@ -148,6 +148,30 @@
       ]
     },
     {
+      "ID": "473c8a99-8169-4db1-912a-d850a711c99e",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/StartGame/pve_1",
+        "Views/StartGame/pve_2"
+      ]
+    },
+    {
+      "ID": "f973441c-5029-4b8f-a1df-4f3bc6ba570e",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/StartGame/pvp_1",
+        "Views/StartGame/pvp_2"
+      ]
+    },
+    {
+      "ID": "f865529b-c967-460d-9e5d-d98298c3b1ba",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/StartGame/eve_1",
+        "Views/StartGame/eve_2"
+      ]
+    },
+    {
       "ID": "d6032478-b6ec-483e-8750-5976830d66b2",
       "FrameTime": 750,
       "Contents": [
