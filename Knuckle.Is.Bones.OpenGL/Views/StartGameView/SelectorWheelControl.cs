@@ -83,8 +83,14 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Width = 150,
 				X = 125,
 				TileSet = _parent.Textures.GetTextureSet(TextureHelpers.Button),
-				IsVisible = false
 			};
+			if (parent.Textures.ContainsTextureSet(CurrentDefinition.ID))
+			{
+				_selectedIcon.TileSet = parent.Textures.GetTextureSet(CurrentDefinition.ID);
+				_selectedIcon.IsVisible = true;
+			}
+			else
+				_selectedIcon.IsVisible = false;
 			Children.Add(_selectedIcon);
 			UpdateCompletionControl(_selectedMedal, CurrentDefinition.ID);
 			Children.Add(new AnimatedTileControl()
