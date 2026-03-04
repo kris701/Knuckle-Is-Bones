@@ -6,6 +6,7 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 	{
 		#region Interface
 
+		public static Guid Selector => new Guid("ef67087a-f335-4baf-826a-41f47aa9a8f4");
 		public static Guid Button => new Guid("d9d352d4-ee90-4d1e-98b4-c06c043e6dce");
 		public static Guid ButtonSmall => new Guid("de7f2a5a-82c7-4700-b2ba-926bceb1689a");
 		public static Guid ButtonSmallSelect => new Guid("cfa11efd-0284-4abb-bd12-9df0837081b0");
