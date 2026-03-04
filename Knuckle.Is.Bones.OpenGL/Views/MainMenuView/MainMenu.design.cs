@@ -16,9 +16,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 	public partial class MainMenu : BaseNavigatableView
 	{
 		private StackPanelControl _menuPanel;
-		private StackPanelControl _gametypePanel;
 
-		[MemberNotNull(nameof(_menuPanel),nameof(_gametypePanel))]
+		[MemberNotNull(nameof(_menuPanel))]
 		public override void Initialize()
 		{
 			AddControl(0, new TileControl()
@@ -36,48 +35,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 				Height = 264,
 				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Title)
 			});
-
-			_gametypePanel = new StackPanelControl(new System.Collections.Generic.List<IControl>()
-			{
-				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent, Core.Models.Saves.LastGameSetupModel.LastGameSetupType.PvE)))
-				{
-					Text = "PvE",
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					FontColor = FontHelpers.SecondaryColor,
-					FillClickedColor = BasicTextures.GetClickedTexture(),
-					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-					Height = 50,
-					Width = 100
-				},
-				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent, Core.Models.Saves.LastGameSetupModel.LastGameSetupType.PvP)))
-				{
-					Text = "PvP",
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					FontColor = FontHelpers.SecondaryColor,
-					FillClickedColor = BasicTextures.GetClickedTexture(),
-					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-					Height = 50,
-					Width = 100
-				},
-				new AnimatedAudioButton(Parent, (x) => SwitchView(new StartGame(Parent, Core.Models.Saves.LastGameSetupModel.LastGameSetupType.EvE)))
-				{
-					Text = "EvE",
-					Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
-					FontColor = FontHelpers.SecondaryColor,
-					FillClickedColor = BasicTextures.GetClickedTexture(),
-					TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
-					Height = 50,
-					Width = 100
-				}
-			})
-			{
-				IsVisible = false,
-				Orientation = StackPanelControl.Orientations.Horizontal,
-				Width = 300,
-				Height = 50,
-				Gap = 25
-			};
-			AddControl(0, _gametypePanel);
 
 			_menuPanel = new StackPanelControl(new System.Collections.Generic.List<IControl>()
 			{
@@ -101,18 +58,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 					IsVisible = GameSaveHelpers.DoesSaveExist(),
 					Height = GameSaveHelpers.DoesSaveExist() ? 100 : 0
 				},
-				new AnimatedAudioButton(Parent, (x) =>
-				{
-					if (_gametypePanel.IsVisible)
-						_gametypePanel.IsVisible = false;
-					else
-					{
-						_gametypePanel.Y = x.Y + x.Height / 2 - _gametypePanel.Height / 2;
-						_gametypePanel.X = x.X + x.Width + 50;
-						_gametypePanel.IsVisible = true;
-						_gametypePanel.Initialize();
-					}
-				})
+				new AnimatedAudioButton(Parent, (x) => SwitchView(new GametypeSelect(Parent)))
 				{
 					Text = "New Game",
 					Font = Parent.Fonts.GetFont(FontHelpers.Ptx24),
