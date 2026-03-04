@@ -347,7 +347,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 
 		private KeyboardNavigator CreateKeyboardNavigator(IView view, List<int> layers)
 		{
-			var selector = new TileControl() { FillColor = BasicTextures.GetBasicCircle(FontHelpers.SecondaryColor, 10), Width = 20, Height = 20 };
+			var selector = new AnimatedTileControl() { TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Selector), Width = 25, Height = 25 };
 			view.AddControl(9999, selector);
 			var navigator = new KeyboardNavigator(
 				view,
@@ -366,7 +366,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 
 		private GamepadNavigator CreateGamepadNavigator(IView view, List<int> layers)
 		{
-			var selector = new TileControl() { FillColor = BasicTextures.GetBasicCircle(FontHelpers.SecondaryColor, 10), Width = 20, Height = 20 };
+			var selector = new AnimatedTileControl() { TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Selector), Width = 25, Height = 25 };
 			view.AddControl(9999, selector);
 			var navigator = new GamepadNavigator(
 				view,
