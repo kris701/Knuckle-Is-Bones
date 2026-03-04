@@ -140,6 +140,14 @@
       ]
     },
     {
+      "ID": "43668848-73fd-4719-939c-88d2b646ccfb",
+      "FrameTime": 750,
+      "Contents": [
+        "Views/StartGame/gametype_1",
+        "Views/StartGame/gametype_2"
+      ]
+    },
+    {
       "ID": "d6032478-b6ec-483e-8750-5976830d66b2",
       "FrameTime": 750,
       "Contents": [

@@ -24,7 +24,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private SelectorWheelControl? _firstOpponentSelector;
 		private SelectorWheelControl? _secondOpponentSelector;
 
-		public void Initialize()
+		public override void Initialize()
 		{
 			AddControl(0, new TileControl()
 			{
