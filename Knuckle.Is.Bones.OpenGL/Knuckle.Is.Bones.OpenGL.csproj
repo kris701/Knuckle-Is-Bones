@@ -66,10 +66,17 @@
     <None Update="Steamworks.NET.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-	  <None Update="steam_appid.txt">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
   </ItemGroup>
+
+	<Choose>
+		<When Condition=" '$(Configuration)'=='Debug'">
+			<ItemGroup>
+				<None Update="steam_appid.txt">
+					<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+				</None>
+			</ItemGroup>
+		</When>
+	</Choose>
 
 	<ItemGroup>
 		<None Update="steam_api64.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
