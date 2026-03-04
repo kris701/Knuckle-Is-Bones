@@ -1,4 +1,5 @@
 ﻿using FormMatter.OpenGL.Controls;
+using FormMatter.OpenGL.Controls.Elements;
 using FormMatter.OpenGL.Helpers;
 using Knuckle.Is.Bones.Core.Models;
 using Knuckle.Is.Bones.OpenGL.Controls;
@@ -27,6 +28,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private TextboxControl _selectedDesc;
 		private AnimatedTileControl _selectedIcon;
 		private AnimatedTileControl _selectedMedal;
+
+		private ScrollWatcherElement _scrollWatcher;
 
 		public SelectorWheelControl(KnuckleBoneWindow parent, List<IDefinition> definitions, IDefinition? selected)
 		{
@@ -155,6 +158,30 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Children.Add(newItem);
 				index++;
 			}
+
+			_scrollWatcher = new ScrollWatcherElement(parent);
+			_scrollWatcher.ScrollChanged += (o, n) =>
+			{
+				if (n > o)
+					MoveUp();
+				else if (n < o)
+					MoveDown();
+			};
+		}
+
+		public override void Initialize()
+		{
+			base.Initialize();
+			_scrollWatcher.X = X;
+			_scrollWatcher.Y = Y;
+			_scrollWatcher.Width = Width;
+			_scrollWatcher.Height = Height;
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			_scrollWatcher.Update(gameTime);
+			base.Update(gameTime);
 		}
 
 		private int GetCircularIndex(int value)
