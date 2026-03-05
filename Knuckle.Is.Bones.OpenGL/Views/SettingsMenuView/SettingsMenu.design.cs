@@ -67,7 +67,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 			_resolutionPanel = CreateResolutionPanel();
 			CreateMainSettingsPanel();
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new SettingsMenu(Parent)))
+			AddControl(9999, new ButtonControl(Parent, (x) => SwitchView(new SettingsMenu(Parent)))
 			{
 				X = 0,
 				Y = 0,

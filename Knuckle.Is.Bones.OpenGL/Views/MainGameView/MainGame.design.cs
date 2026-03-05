@@ -51,7 +51,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			SetupDice();
 
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new MainGame(Parent, Engine.State)))
+			AddControl(9999, new ButtonControl(Parent, (x) => SwitchView(new MainGame(Parent, Engine.State)))
 			{
 				X = 0,
 				Y = 0,

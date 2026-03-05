@@ -53,7 +53,7 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 			AddControl(0, _timeLeftLabel);
 
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new AcceptView(Parent, _oldSettings, _newSettings)))
+			AddControl(9999, new ButtonControl(Parent, (x) => SwitchView(new AcceptView(Parent, _oldSettings, _newSettings)))
 			{
 				X = 0,
 				Y = 0,

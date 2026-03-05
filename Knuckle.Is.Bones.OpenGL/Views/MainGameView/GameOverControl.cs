@@ -157,6 +157,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 		{
 			IsVisible = true;
 			UpdateVisibility();
+			Initialize();
 			_pointsGainedCanvas.IsVisible = false;
 
 			if (result.PointsGained > 0)

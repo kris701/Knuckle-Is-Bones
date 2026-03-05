@@ -52,7 +52,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 					break;
 			}
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new StartGame(Parent, _type)))
+			AddControl(9999, new ButtonControl(Parent, (x) => SwitchView(new StartGame(Parent, _type)))
 			{
 				X = 0,
 				Y = 0,
