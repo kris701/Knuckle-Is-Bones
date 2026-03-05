@@ -309,6 +309,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			}
 
 			base.Initialize();
+
+			GotoNearestIfApplicable();
 		}
 
 		internal void UpdateControlsVisual()
@@ -328,6 +330,21 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				case InputTypes.Gamepad:
 					_controlsPanel.Children = _gamepadControls;
 					_controlsPanel.Initialize();
+					break;
+			}
+		}
+
+		public void GotoNearestIfApplicable()
+		{
+			switch (InputType)
+			{
+				case InputTypes.Gamepad:
+					_gamepadNavigator.GotoClosest(this);
+					_gamepadNavigator.Selector.IsVisible = true;
+					break;
+				case InputTypes.Keyboard:
+					_keyboardNavigator.GotoClosest(this);
+					_keyboardNavigator.Selector.IsVisible = true;
 					break;
 			}
 		}

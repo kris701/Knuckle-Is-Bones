@@ -37,7 +37,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			SetupGamemodeBox(1200, LastGameSetupModel.LastGameSetupType.EvE);
 
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new GametypeSelect(Parent)))
+			AddControl(9999, new ButtonControl(Parent, (x) => SwitchView(new GametypeSelect(Parent)))
 			{
 				X = 0,
 				Y = 0,

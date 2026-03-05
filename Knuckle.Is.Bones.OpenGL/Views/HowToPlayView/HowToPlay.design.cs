@@ -52,7 +52,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.HowToPlayView
 			});
 
 #if DEBUG
-			AddControl(0, new ButtonControl(Parent, (x) => SwitchView(new HowToPlay(Parent)))
+			AddControl(9999, new ButtonControl(Parent, (x) => SwitchView(new HowToPlay(Parent)))
 			{
 				X = 0,
 				Y = 0,

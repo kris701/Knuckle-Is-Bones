@@ -125,7 +125,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			AddControl(10, _overallDescriptionControl);
 
 #if DEBUG
-			AddControl(10, new ButtonControl(Parent, (x) => SwitchView(new GameShop(Parent)))
+			AddControl(9999, new ButtonControl(Parent, (x) => SwitchView(new GameShop(Parent)))
 			{
 				X = 0,
 				Y = 0,

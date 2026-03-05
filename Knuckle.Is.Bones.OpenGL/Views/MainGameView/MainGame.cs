@@ -259,7 +259,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 			if (Engine.State.GameOver)
 			{
 				_keyboardNavigator.SelectorLocation = NavigatorSelectorLocations.Left;
+				_keyboardNavigator.Focused = null;
 				_gamepadNavigator.SelectorLocation = NavigatorSelectorLocations.Left;
+				_gamepadNavigator.Focused = null;
 
 				var result = Engine.State.GetGameResult();
 
@@ -271,6 +273,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 				AchievementHelper.UpdateAchievements(Parent.User);
 
 				_gameOverControl.Show(result);
+				GotoNearestIfApplicable();
 				return;
 			}
 
