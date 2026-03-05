@@ -21,6 +21,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 
 		public StartGame(KnuckleBoneWindow parent, LastGameSetupModel.LastGameSetupType type) : base(parent, new Guid("b350e448-f201-46ce-baee-1df03f1dbf5c"), new List<int>() { 0 })
 		{
+			_gamepadNavigator.SelectorOffsetX = -30;
+			_keyboardNavigator.SelectorOffsetX = -30;
+
 			BackAction = () => SwitchView(new GametypeSelect(Parent));
 			AcceptAction = () => Start();
 			_type = type;
