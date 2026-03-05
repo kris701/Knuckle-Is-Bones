@@ -8,8 +8,6 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
@@ -17,19 +15,19 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 	{
 		public IDefinition CurrentDefinition { get; private set; }
 
-		private int _wheelSize = 9;
+		private readonly int _wheelSize = 9;
 		private readonly List<IDefinition> _definitions;
 		private int _index = 0;
-		private List<AnimatedLabelControl> _wheelItems = new List<AnimatedLabelControl>();
-		private List<AnimatedTileControl> _wheelMedalItems = new List<AnimatedTileControl>();
+		private readonly List<AnimatedLabelControl> _wheelItems = new List<AnimatedLabelControl>();
+		private readonly List<AnimatedTileControl> _wheelMedalItems = new List<AnimatedTileControl>();
 
-		private KnuckleBoneWindow _parent;
-		private LabelControl _selectedName;
-		private TextboxControl _selectedDesc;
-		private AnimatedTileControl _selectedIcon;
-		private AnimatedTileControl _selectedMedal;
+		private readonly KnuckleBoneWindow _parent;
+		private readonly LabelControl _selectedName;
+		private readonly TextboxControl _selectedDesc;
+		private readonly AnimatedTileControl _selectedIcon;
+		private readonly AnimatedTileControl _selectedMedal;
 
-		private ScrollWatcherElement _scrollWatcher;
+		private readonly ScrollWatcherElement _scrollWatcher;
 
 		public SelectorWheelControl(KnuckleBoneWindow parent, List<IDefinition> definitions, IDefinition? selected)
 		{
@@ -128,7 +126,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 			var textureSet = parent.Textures.GetTextureSet(TextureHelpers.ButtonSmall);
 			var index = 0;
 			var middle = _wheelSize / 2;
-			for(int i = 0; i < _wheelSize; i++)
+			for (int i = 0; i < _wheelSize; i++)
 			{
 				if (i == middle)
 				{

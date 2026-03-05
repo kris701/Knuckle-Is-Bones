@@ -58,7 +58,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		{
 			var controls = new List<IControl>();
 			controls.Add(new AnimatedTileControl()
-			{			
+			{
 				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.GameTypeSelect)
 			});
 
@@ -127,7 +127,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Height = 100
 			});
 
-			var panel = new CanvasPanelControl(controls) { 
+			var panel = new CanvasPanelControl(controls)
+			{
 				Y = 150,
 				X = x
 			};

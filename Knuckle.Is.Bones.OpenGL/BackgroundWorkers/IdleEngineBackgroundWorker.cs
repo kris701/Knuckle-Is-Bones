@@ -3,9 +3,6 @@ using Knuckle.Is.Bones.Core.Engines.Idle;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.BackgroundWorkers
 {

@@ -2,9 +2,6 @@
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Models.Shop.PurchaseEffects;
 using Knuckle.Is.Bones.Core.Resources;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Knuckle.Is.Bones.Core.Engines.Idle
 {
@@ -21,13 +18,13 @@ namespace Knuckle.Is.Bones.Core.Engines.Idle
 
 				int pointsToAdd = 0;
 				double pointsToAddMult = 1;
-				foreach(var shopItemId in shopItemIds)
+				foreach (var shopItemId in shopItemIds)
 				{
 					var shopItem = ResourceManager.Shop.GetResource(shopItemId);
-					foreach(var effect in shopItem.Effects)
+					foreach (var effect in shopItem.Effects)
 					{
 						if (effect is UnlockIdlePointEffect eff)
-							for(int i = 0; i < user.PurchasedShopItems[shopItemId]; i++)
+							for (int i = 0; i < user.PurchasedShopItems[shopItemId]; i++)
 								pointsToAdd += eff.PointsToAdd;
 						else if (effect is IdlePointMultiplierEffect eff2)
 							for (int i = 0; i < user.PurchasedShopItems[shopItemId]; i++)

@@ -3,10 +3,8 @@ using Knuckle.Is.Bones.Core.Helpers;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
-using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
@@ -14,10 +12,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 	{
 		private readonly LastGameSetupModel.LastGameSetupType _type;
 
-		private Guid? _selectedBoard = null;
-		private Guid? _selectedDice = null;
-		private Guid? _selectedFirstOpponent = null;
-		private Guid? _selectedSecondOpponent = null;
+		private readonly Guid? _selectedBoard = null;
+		private readonly Guid? _selectedDice = null;
+		private readonly Guid? _selectedFirstOpponent = null;
+		private readonly Guid? _selectedSecondOpponent = null;
 
 		public StartGame(KnuckleBoneWindow parent, LastGameSetupModel.LastGameSetupType type) : base(parent, new Guid("b350e448-f201-46ce-baee-1df03f1dbf5c"), new List<int>() { 0 })
 		{

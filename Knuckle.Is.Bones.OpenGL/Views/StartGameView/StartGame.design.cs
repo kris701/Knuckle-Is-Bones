@@ -1,19 +1,13 @@
-﻿using FormMatter.OpenGL;
-using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
 using Knuckle.Is.Bones.Core.Models;
-using Knuckle.Is.Bones.Core.Models.Game;
 using Knuckle.Is.Bones.Core.Models.Game.MoveModules;
 using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
-using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
-using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
