@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {
@@ -18,8 +17,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 	{
 		private IControl? _lastFocus;
 
-		private int _lastPoints = 0;
-		private GameTimer _updatePointsTimer;
+		private readonly int _lastPoints = 0;
+		private readonly GameTimer _updatePointsTimer;
 		private FloatPoint _origin = new FloatPoint(0, 0);
 		private FloatPoint _lastOffset = new FloatPoint(0, 0);
 		private readonly Dictionary<AnimatedAudioButton, Point> _buttonOrigins = new Dictionary<AnimatedAudioButton, Point>();

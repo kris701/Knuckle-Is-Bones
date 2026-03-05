@@ -1,8 +1,6 @@
-﻿using Knuckle.Is.Bones.Core.Models.Saves;
-using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
+﻿using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {

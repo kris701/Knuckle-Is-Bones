@@ -8,16 +8,15 @@ using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 {
 	public class GameOverControl : CollectionControl
 	{
-		private LabelControl _winnerLabel;
-		private LabelControl _pointsGainedLabel;
-		private CanvasPanelControl _pointsGainedCanvas;
-		private StackPanelControl _pointsGainedPanel;
+		private readonly LabelControl _winnerLabel;
+		private readonly LabelControl _pointsGainedLabel;
+		private readonly CanvasPanelControl _pointsGainedCanvas;
+		private readonly StackPanelControl _pointsGainedPanel;
 
 		private readonly GameState _initialState;
 		private readonly MainGame _parent;

@@ -1,11 +1,8 @@
-﻿using FormMatter.OpenGL;
-using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL.Controls;
 using Knuckle.Is.Bones.Core.Models.Shop;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 {
