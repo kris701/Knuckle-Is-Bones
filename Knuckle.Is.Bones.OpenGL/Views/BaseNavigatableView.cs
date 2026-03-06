@@ -38,9 +38,9 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 		public static InputTypes InputType = InputTypes.Mouse;
 
 		internal StackPanelControl _controlsPanel;
-		internal List<IControl> _mouseControls;
-		internal List<IControl> _keyboardControls;
-		internal List<IControl> _gamepadControls;
+		internal List<IControl> _mouseControls = new List<IControl>();
+		internal List<IControl> _keyboardControls = new List<IControl>();
+		internal List<IControl> _gamepadControls = new List<IControl>();
 
 		public BaseNavigatableView(KnuckleBoneWindow parent, int navigationLayer, Action? backAction = null, Action? acceptAction = null) : this(parent, new List<int>() { navigationLayer }, backAction, acceptAction)
 		{
@@ -108,13 +108,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				PlayerIndexes = new List<int>() { 0, 1, 2, 3 }
 			};
 
-			_keyboardNavigator = CreateKeyboardNavigator(this, navigationLayers);
+			_keyboardNavigator = CreateKeyboardNavigator(navigationLayers);
 			_keyboardNavigator.OnUpKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnDownKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnLeftKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnRightKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnEnterKeyDown += () => InputType = InputTypes.Keyboard;
-			_gamepadNavigator = CreateGamepadNavigator(this, navigationLayers);
+			_gamepadNavigator = CreateGamepadNavigator(navigationLayers);
 			_gamepadNavigator.OnUpKeyDown += UpdateGamepadNavigator;
 			_gamepadNavigator.OnDownKeyDown += UpdateGamepadNavigator;
 			_gamepadNavigator.OnLeftKeyDown += UpdateGamepadNavigator;
@@ -379,12 +379,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			_mouseWatcher.Update();
 		}
 
-		private KeyboardNavigator CreateKeyboardNavigator(IView view, List<int> layers)
+		private KeyboardNavigator CreateKeyboardNavigator(List<int> layers)
 		{
 			var selector = new AnimatedTileControl() { TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Selector), Width = 25, Height = 25 };
-			view.AddControl(9999, selector);
+			AddControl(9999, selector);
 			var navigator = new KeyboardNavigator(
-				view,
+				this,
 				selector,
 				Keys.Left,
 				Keys.Right,
@@ -398,12 +398,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			return navigator;
 		}
 
-		private GamepadNavigator CreateGamepadNavigator(IView view, List<int> layers)
+		private GamepadNavigator CreateGamepadNavigator(List<int> layers)
 		{
 			var selector = new AnimatedTileControl() { TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Selector), Width = 25, Height = 25 };
-			view.AddControl(9999, selector);
+			AddControl(9999, selector);
 			var navigator = new GamepadNavigator(
-				view,
+				this,
 				selector,
 				new List<Buttons>() { Buttons.DPadLeft, Buttons.LeftThumbstickLeft },
 				new List<Buttons>() { Buttons.DPadRight, Buttons.LeftThumbstickRight },

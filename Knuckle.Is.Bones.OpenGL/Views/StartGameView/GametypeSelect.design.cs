@@ -113,6 +113,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Text = "Start",
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				FontColor = FontHelpers.SecondaryColor,
+				FillClickedColor = BasicTextures.GetClickedTexture(),
 				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 				Y = 650,
 				X = 50,

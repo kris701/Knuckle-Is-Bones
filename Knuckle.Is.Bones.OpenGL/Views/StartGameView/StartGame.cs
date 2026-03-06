@@ -65,19 +65,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 
 		private void Start()
 		{
-			var boardId = _selectedBoard;
-			if (boardId == null)
-				boardId = _boardSelector?.CurrentDefinition.ID;
-			var diceId = _selectedDice;
-			if (diceId == null)
-				diceId = _diceSelector?.CurrentDefinition.ID;
-			var firstOpponentId = _selectedFirstOpponent;
-			if (firstOpponentId == null)
-				firstOpponentId = _firstOpponentSelector?.CurrentDefinition.ID;
-			var secondOpponentId = _selectedSecondOpponent;
-			if (secondOpponentId == null)
-				secondOpponentId = _secondOpponentSelector?.CurrentDefinition.ID;
-
+			var boardId = _selectedBoard ?? (_boardSelector?.CurrentDefinition.ID);
+			var diceId = _selectedDice ?? (_diceSelector?.CurrentDefinition.ID);
+			var firstOpponentId = _selectedFirstOpponent ?? (_firstOpponentSelector?.CurrentDefinition.ID);
+			var secondOpponentId = _selectedSecondOpponent ?? (_secondOpponentSelector?.CurrentDefinition.ID);
 			if (boardId == null || diceId == null || firstOpponentId == null || secondOpponentId == null)
 				return;
 
