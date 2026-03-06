@@ -57,13 +57,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 		[MemberNotNull(nameof(_resolutionPanel), nameof(_settingsPanel))]
 		public override void Initialize()
 		{
-			AddControl(0, new TileControl()
-			{
-				Width = IWindow.BaseScreenSize.X,
-				Height = IWindow.BaseScreenSize.Y,
-				FillColor = BasicTextures.GetBasicRectange(Color.Black)
-			});
-
 			_resolutionPanel = CreateResolutionPanel();
 			CreateMainSettingsPanel();
 #if DEBUG

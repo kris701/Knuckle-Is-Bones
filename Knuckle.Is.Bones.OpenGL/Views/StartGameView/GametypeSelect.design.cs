@@ -14,13 +14,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 	{
 		public override void Initialize()
 		{
-			AddControl(0, new TileControl()
-			{
-				Width = 1920,
-				Height = 1080,
-				FillColor = BasicTextures.GetBasicRectange(Color.Black)
-			});
-
 			AddControl(0, new LabelControl()
 			{
 				Text = "Select a gametype to play",

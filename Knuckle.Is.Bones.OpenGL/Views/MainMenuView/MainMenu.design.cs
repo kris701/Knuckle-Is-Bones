@@ -20,13 +20,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 		[MemberNotNull(nameof(_menuPanel))]
 		public override void Initialize()
 		{
-			AddControl(0, new TileControl()
-			{
-				Width = 1920,
-				Height = 1080,
-				FillColor = BasicTextures.GetBasicRectange(Color.Black)
-			});
-
 			AddControl(0, new AnimatedTileControl()
 			{
 				Y = 25,

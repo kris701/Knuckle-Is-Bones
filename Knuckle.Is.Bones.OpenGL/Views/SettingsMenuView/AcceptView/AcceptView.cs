@@ -14,7 +14,7 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 		private readonly SettingsDefinition _oldSettings;
 		private TimeSpan _waitFor = TimeSpan.FromSeconds(10);
 		private int _secsLeft = 10;
-		public AcceptView(KnuckleBoneWindow parent, SettingsDefinition oldSettings, SettingsDefinition newSettings) : base(parent, new Guid("937b4268-87fc-4f72-a180-e53ebd47a18d"), new List<int>() { 0 })
+		public AcceptView(KnuckleBoneWindow parent, SettingsDefinition oldSettings, SettingsDefinition newSettings) : base(parent, 0)
 		{
 			_oldSettings = oldSettings;
 			_newSettings = newSettings;

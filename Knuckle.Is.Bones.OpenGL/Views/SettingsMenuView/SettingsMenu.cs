@@ -10,10 +10,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 	{
 		private readonly SettingsDefinition _newSettings;
 
-		public SettingsMenu(KnuckleBoneWindow parent) : base(
-			parent,
-			new Guid("356b5d18-1aaf-4c98-aa73-2b27fe82ed1f"),
-			new List<int>() { 0 })
+		public SettingsMenu(KnuckleBoneWindow parent) : base(parent, 0)
 		{
 			_newSettings = Parent.Settings.Clone();
 			BackAction = () => SwitchView(new MainMenu(Parent));

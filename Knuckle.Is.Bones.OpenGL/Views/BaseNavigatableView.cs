@@ -1,4 +1,5 @@
-﻿using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL;
+using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
 using FormMatter.OpenGL.Input;
 using FormMatter.OpenGL.Views;
@@ -11,9 +12,11 @@ using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views
 {
-	public abstract class BaseNavigatableView : BaseTransitionView
+	public abstract class BaseNavigatableView : BaseAnimatedView
 	{
 		public enum InputTypes { Mouse, Keyboard, Gamepad }
+
+		public new KnuckleBoneWindow Parent { get; set; }
 
 		internal readonly MouseWatcher _mouseWatcher;
 
@@ -39,8 +42,15 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 		internal List<IControl> _keyboardControls;
 		internal List<IControl> _gamepadControls;
 
-		public BaseNavigatableView(KnuckleBoneWindow parent, Guid id, List<int> navigationLayers, Action? backAction = null, Action? acceptAction = null) : base(parent, id)
+		public BaseNavigatableView(KnuckleBoneWindow parent, int navigationLayer, Action? backAction = null, Action? acceptAction = null) : this(parent, new List<int>() { navigationLayer }, backAction, acceptAction)
 		{
+
+		}
+
+		public BaseNavigatableView(KnuckleBoneWindow parent, List<int> navigationLayers, Action? backAction = null, Action? acceptAction = null) : base(parent, Guid.NewGuid(), parent.Textures.GetTextureSet(TextureHelpers.TransitionIn), parent.Textures.GetTextureSet(TextureHelpers.TransitionOut))
+		{
+			Parent = parent;
+
 			BackAction = backAction;
 			AcceptAction = acceptAction;
 
@@ -142,6 +152,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 
 		public override void Initialize()
 		{
+			AddControl(-1, new TileControl()
+			{
+				Width = IWindow.BaseScreenSize.X,
+				Height = IWindow.BaseScreenSize.Y,
+				FillColor = BasicTextures.GetBasicRectange(Color.Black)
+			});
+
 			MouseAcceptButton = new AnimatedAudioButton(Parent, (a) => AcceptAction?.Invoke())
 			{
 				Text = "Accept",
