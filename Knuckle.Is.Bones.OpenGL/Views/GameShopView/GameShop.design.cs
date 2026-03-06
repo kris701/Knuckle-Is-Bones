@@ -101,6 +101,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			_descriptionControl = new ShopItemDescription(Parent);
 			AddControl(6, _descriptionControl);
 
+			var overallDesc = BuildUpgradeList();
 			_overallDescriptionControl = new AnimatedTextboxControl()
 			{
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx8),
@@ -108,10 +109,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				FontColor = Color.White,
 				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.ShopOverallDescription),
 				WordWrap = TextboxControl.WordWrapTypes.Word,
-				Text = BuildUpgradeList(),
+				Text = overallDesc,
 				Width = 500,
 				Height = 900,
-				IsVisible = Parent.User.PurchasedShopItems.Count > 0,
+				IsVisible = overallDesc != "",
 				VerticalAlignment = VerticalAlignment.Middle,
 				X = 1400
 			};
@@ -142,6 +143,8 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			sb.AppendLine("Current Upgrades");
 			sb.AppendLine(" ");
 
+			var any = false;
+
 			var shopItemIds = ResourceManager.Shop.GetResources();
 			var effects = new List<IPurchaseEffect>();
 			foreach (var purchaseId in Parent.User.PurchasedShopItems.Keys.Where(x => shopItemIds.Contains(x)))
@@ -156,6 +159,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 					totalMult *= effect.Multiplier;
 				sb.AppendLine($"Overall point modifier: {Math.Round(totalMult, 2)}x");
 				sb.AppendLine(" ");
+				any = true;
 			}
 
 			var allDiceMult = effects.Where(x => x is DiceMultiplierEffect).Cast<DiceMultiplierEffect>();
@@ -169,6 +173,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 						totalMult *= mult;
 					sb.AppendLine($"Dice modifier for {group.Key}'s: {Math.Round(totalMult, 2)}x");
 					sb.AppendLine(" ");
+					any = true;
 				}
 			}
 
@@ -183,6 +188,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 						totalMult *= mult;
 					sb.AppendLine($"Point modifier for board '{ResourceManager.Boards.GetResource(group.Key).Name}': {Math.Round(totalMult, 2)}x");
 					sb.AppendLine(" ");
+					any = true;
 				}
 			}
 
@@ -191,6 +197,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			{
 				sb.AppendLine($"You have {allIdleGenerators.Count()} idle point generators making {allIdleGenerators.Sum(x => x.PointsToAdd)} points/S");
 				sb.AppendLine(" ");
+				any = true;
 			}
 
 			var allIdleMultipliers = effects.Where(x => x is IdlePointMultiplierEffect).Cast<IdlePointMultiplierEffect>();
@@ -201,7 +208,11 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 					total *= eff.Multiplier;
 				sb.AppendLine($"Multiplier for idle point generators: {Math.Round(total, 2)}x");
 				sb.AppendLine(" ");
+				any = true;
 			}
+
+			if (!any)
+				return "";
 
 			return sb.ToString();
 		}

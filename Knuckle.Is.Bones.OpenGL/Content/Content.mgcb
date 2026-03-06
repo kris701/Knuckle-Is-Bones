@@ -395,7 +395,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color16Bit
+/processorParam:TextureFormat=Color
 /build:Transitions/transition_1.png
 
 #begin Transitions/transition_10.png
@@ -407,7 +407,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color16Bit
+/processorParam:TextureFormat=Color
 /build:Transitions/transition_10.png
 
 #begin Transitions/transition_2.png
@@ -419,7 +419,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color16Bit
+/processorParam:TextureFormat=Color
 /build:Transitions/transition_2.png
 
 #begin Transitions/transition_3.png
@@ -431,7 +431,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color16Bit
+/processorParam:TextureFormat=Color
 /build:Transitions/transition_3.png
 
 #begin Transitions/transition_4.png
@@ -443,7 +443,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color16Bit
+/processorParam:TextureFormat=Color
 /build:Transitions/transition_4.png
 
 #begin Transitions/transition_5.png
@@ -455,7 +455,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color16Bit
+/processorParam:TextureFormat=Color
 /build:Transitions/transition_5.png
 
 #begin Transitions/transition_6.png
@@ -467,7 +467,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color16Bit
+/processorParam:TextureFormat=Color
 /build:Transitions/transition_6.png
 
 #begin Transitions/transition_7.png
@@ -479,7 +479,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color16Bit
+/processorParam:TextureFormat=Color
 /build:Transitions/transition_7.png
 
 #begin Transitions/transition_8.png
@@ -491,7 +491,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color16Bit
+/processorParam:TextureFormat=Color
 /build:Transitions/transition_8.png
 
 #begin Transitions/transition_9.png
@@ -503,7 +503,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color16Bit
+/processorParam:TextureFormat=Color
 /build:Transitions/transition_9.png
 
 #begin Views/Boards/bomberman_1.png

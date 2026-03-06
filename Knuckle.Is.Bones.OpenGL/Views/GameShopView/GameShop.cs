@@ -80,6 +80,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 				if (_lastFocus != null)
 					UpdateItemDescription(_lastFocus, item);
 				_overallDescriptionControl.Text = BuildUpgradeList();
+				_overallDescriptionControl.IsVisible = _overallDescriptionControl.Text != "";
 			}
 		}
 
