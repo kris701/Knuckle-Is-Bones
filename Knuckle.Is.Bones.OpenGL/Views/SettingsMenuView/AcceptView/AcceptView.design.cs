@@ -1,5 +1,4 @@
-﻿using FormMatter.OpenGL;
-using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Views;
@@ -15,13 +14,6 @@ namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 		[MemberNotNull(nameof(_timeLeftLabel))]
 		public override void Initialize()
 		{
-			AddControl(0, new TileControl()
-			{
-				Width = IWindow.BaseScreenSize.X,
-				Height = IWindow.BaseScreenSize.Y,
-				FillColor = BasicTextures.GetBasicRectange(Color.Black)
-			});
-
 			AddControl(0, new LabelControl()
 			{
 				HorizontalAlignment = HorizontalAlignment.Middle,

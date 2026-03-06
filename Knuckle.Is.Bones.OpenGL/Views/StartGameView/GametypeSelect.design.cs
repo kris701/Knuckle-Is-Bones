@@ -14,13 +14,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 	{
 		public override void Initialize()
 		{
-			AddControl(0, new TileControl()
-			{
-				Width = 1920,
-				Height = 1080,
-				FillColor = BasicTextures.GetBasicRectange(Color.Black)
-			});
-
 			AddControl(0, new LabelControl()
 			{
 				Text = "Select a gametype to play",
@@ -120,6 +113,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 				Text = "Start",
 				Font = Parent.Fonts.GetFont(FontHelpers.Ptx16),
 				FontColor = FontHelpers.SecondaryColor,
+				FillClickedColor = BasicTextures.GetClickedTexture(),
 				TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Button),
 				Y = 650,
 				X = 50,

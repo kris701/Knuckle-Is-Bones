@@ -4,7 +4,6 @@ using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using System;
-using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {
@@ -17,7 +16,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 		private readonly Guid? _selectedFirstOpponent = null;
 		private readonly Guid? _selectedSecondOpponent = null;
 
-		public StartGame(KnuckleBoneWindow parent, LastGameSetupModel.LastGameSetupType type) : base(parent, new Guid("b350e448-f201-46ce-baee-1df03f1dbf5c"), new List<int>() { 0 })
+		public StartGame(KnuckleBoneWindow parent, LastGameSetupModel.LastGameSetupType type) : base(parent, 0)
 		{
 			_gamepadNavigator.SelectorOffsetX = -30;
 			_keyboardNavigator.SelectorOffsetX = -30;
@@ -66,19 +65,10 @@ namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 
 		private void Start()
 		{
-			var boardId = _selectedBoard;
-			if (boardId == null)
-				boardId = _boardSelector?.CurrentDefinition.ID;
-			var diceId = _selectedDice;
-			if (diceId == null)
-				diceId = _diceSelector?.CurrentDefinition.ID;
-			var firstOpponentId = _selectedFirstOpponent;
-			if (firstOpponentId == null)
-				firstOpponentId = _firstOpponentSelector?.CurrentDefinition.ID;
-			var secondOpponentId = _selectedSecondOpponent;
-			if (secondOpponentId == null)
-				secondOpponentId = _secondOpponentSelector?.CurrentDefinition.ID;
-
+			var boardId = _selectedBoard ?? (_boardSelector?.CurrentDefinition.ID);
+			var diceId = _selectedDice ?? (_diceSelector?.CurrentDefinition.ID);
+			var firstOpponentId = _selectedFirstOpponent ?? (_firstOpponentSelector?.CurrentDefinition.ID);
+			var secondOpponentId = _selectedSecondOpponent ?? (_secondOpponentSelector?.CurrentDefinition.ID);
 			if (boardId == null || diceId == null || firstOpponentId == null || secondOpponentId == null)
 				return;
 

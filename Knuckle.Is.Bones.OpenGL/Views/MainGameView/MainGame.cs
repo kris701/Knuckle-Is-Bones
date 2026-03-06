@@ -39,7 +39,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 		private readonly List<LabelControl> _pointsGainedControls = new List<LabelControl>();
 
-		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, new Guid("d5b46cf0-03bd-4226-a765-b00f39fdf361"), new List<int>() { 10, 20, 1001 })
+		public MainGame(KnuckleBoneWindow parent, GameState state) : base(parent, new List<int>() { 10, 20, 1001 })
 		{
 			Engine = new GameEngine(state);
 			Engine.OnOpponentDiceRemoved += () =>

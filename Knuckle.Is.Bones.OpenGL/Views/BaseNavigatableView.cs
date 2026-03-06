@@ -1,4 +1,5 @@
-﻿using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL;
+using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
 using FormMatter.OpenGL.Input;
 using FormMatter.OpenGL.Views;
@@ -11,9 +12,11 @@ using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views
 {
-	public abstract class BaseNavigatableView : BaseTransitionView
+	public abstract class BaseNavigatableView : BaseAnimatedView
 	{
 		public enum InputTypes { Mouse, Keyboard, Gamepad }
+
+		public new KnuckleBoneWindow Parent { get; set; }
 
 		internal readonly MouseWatcher _mouseWatcher;
 
@@ -35,12 +38,19 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 		public static InputTypes InputType = InputTypes.Mouse;
 
 		internal StackPanelControl _controlsPanel;
-		internal List<IControl> _mouseControls;
-		internal List<IControl> _keyboardControls;
-		internal List<IControl> _gamepadControls;
+		internal List<IControl> _mouseControls = new List<IControl>();
+		internal List<IControl> _keyboardControls = new List<IControl>();
+		internal List<IControl> _gamepadControls = new List<IControl>();
 
-		public BaseNavigatableView(KnuckleBoneWindow parent, Guid id, List<int> navigationLayers, Action? backAction = null, Action? acceptAction = null) : base(parent, id)
+		public BaseNavigatableView(KnuckleBoneWindow parent, int navigationLayer, Action? backAction = null, Action? acceptAction = null) : this(parent, new List<int>() { navigationLayer }, backAction, acceptAction)
 		{
+
+		}
+
+		public BaseNavigatableView(KnuckleBoneWindow parent, List<int> navigationLayers, Action? backAction = null, Action? acceptAction = null) : base(parent, Guid.NewGuid(), parent.Textures.GetTextureSet(TextureHelpers.TransitionIn), parent.Textures.GetTextureSet(TextureHelpers.TransitionOut))
+		{
+			Parent = parent;
+
 			BackAction = backAction;
 			AcceptAction = acceptAction;
 
@@ -55,7 +65,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				if (BackAction != null)
 				{
 					BackAction.Invoke();
-					parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+					parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 				}
 				InputType = InputTypes.Keyboard;
 				UpdateControlsVisual();
@@ -65,7 +75,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				if (BackAction != null)
 				{
 					BackAction.Invoke();
-					parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+					parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 				}
 				InputType = InputTypes.Gamepad;
 				UpdateControlsVisual();
@@ -79,7 +89,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				if (AcceptAction != null)
 				{
 					AcceptAction.Invoke();
-					parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+					parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 				}
 				InputType = InputTypes.Keyboard;
 				UpdateControlsVisual();
@@ -89,7 +99,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				if (AcceptAction != null)
 				{
 					AcceptAction.Invoke();
-					parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+					parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 				}
 				InputType = InputTypes.Gamepad;
 				UpdateControlsVisual();
@@ -98,13 +108,13 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				PlayerIndexes = new List<int>() { 0, 1, 2, 3 }
 			};
 
-			_keyboardNavigator = CreateKeyboardNavigator(this, navigationLayers);
+			_keyboardNavigator = CreateKeyboardNavigator(navigationLayers);
 			_keyboardNavigator.OnUpKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnDownKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnLeftKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnRightKeyDown += UpdateKeyboardNavigator;
 			_keyboardNavigator.OnEnterKeyDown += () => InputType = InputTypes.Keyboard;
-			_gamepadNavigator = CreateGamepadNavigator(this, navigationLayers);
+			_gamepadNavigator = CreateGamepadNavigator(navigationLayers);
 			_gamepadNavigator.OnUpKeyDown += UpdateGamepadNavigator;
 			_gamepadNavigator.OnDownKeyDown += UpdateGamepadNavigator;
 			_gamepadNavigator.OnLeftKeyDown += UpdateGamepadNavigator;
@@ -121,7 +131,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				_keyboardNavigator.Focused = _gamepadNavigator.Focused;
 				_gamepadNavigator.Selector.IsVisible = false;
 			}
-			Parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+			Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 			InputType = InputTypes.Keyboard;
 			UpdateControlsVisual();
 		}
@@ -135,13 +145,20 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				_gamepadNavigator.Focused = _keyboardNavigator.Focused;
 				_keyboardNavigator.Selector.IsVisible = false;
 			}
-			Parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+			Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 			InputType = InputTypes.Gamepad;
 			UpdateControlsVisual();
 		}
 
 		public override void Initialize()
 		{
+			AddControl(-1, new TileControl()
+			{
+				Width = IWindow.BaseScreenSize.X,
+				Height = IWindow.BaseScreenSize.Y,
+				FillColor = BasicTextures.GetBasicRectange(Color.Black)
+			});
+
 			MouseAcceptButton = new AnimatedAudioButton(Parent, (a) => AcceptAction?.Invoke())
 			{
 				Text = "Accept",
@@ -362,12 +379,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			_mouseWatcher.Update();
 		}
 
-		private KeyboardNavigator CreateKeyboardNavigator(IView view, List<int> layers)
+		private KeyboardNavigator CreateKeyboardNavigator(List<int> layers)
 		{
 			var selector = new AnimatedTileControl() { TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Selector), Width = 25, Height = 25 };
-			view.AddControl(9999, selector);
+			AddControl(9999, selector);
 			var navigator = new KeyboardNavigator(
-				view,
+				this,
 				selector,
 				Keys.Left,
 				Keys.Right,
@@ -381,12 +398,12 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 			return navigator;
 		}
 
-		private GamepadNavigator CreateGamepadNavigator(IView view, List<int> layers)
+		private GamepadNavigator CreateGamepadNavigator(List<int> layers)
 		{
 			var selector = new AnimatedTileControl() { TileSet = Parent.Textures.GetTextureSet(TextureHelpers.Selector), Width = 25, Height = 25 };
-			view.AddControl(9999, selector);
+			AddControl(9999, selector);
 			var navigator = new GamepadNavigator(
-				view,
+				this,
 				selector,
 				new List<Buttons>() { Buttons.DPadLeft, Buttons.LeftThumbstickLeft },
 				new List<Buttons>() { Buttons.DPadRight, Buttons.LeftThumbstickRight },

@@ -33,13 +33,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 			)]
 		public override void Initialize()
 		{
-			AddControl(0, new TileControl()
-			{
-				Width = 1920,
-				Height = 1080,
-				FillColor = BasicTextures.GetBasicRectange(Color.Black)
-			});
-
 			AddControl(9, new TileControl()
 			{
 				Width = 1920,

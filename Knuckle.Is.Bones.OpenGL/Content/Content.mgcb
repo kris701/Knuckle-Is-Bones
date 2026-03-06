@@ -22,7 +22,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/a_1.png
 
 #begin Controls/a_2.png
@@ -34,7 +34,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/a_2.png
 
 #begin Controls/arrows_1.png
@@ -46,7 +46,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/arrows_1.png
 
 #begin Controls/arrows_2.png
@@ -58,7 +58,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/arrows_2.png
 
 #begin Controls/b_1.png
@@ -70,7 +70,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/b_1.png
 
 #begin Controls/b_2.png
@@ -82,7 +82,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/b_2.png
 
 #begin Controls/dpad_1.png
@@ -94,7 +94,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/dpad_1.png
 
 #begin Controls/dpad_2.png
@@ -106,7 +106,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/dpad_2.png
 
 #begin Controls/enter_1.png
@@ -118,7 +118,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/enter_1.png
 
 #begin Controls/enter_2.png
@@ -130,7 +130,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/enter_2.png
 
 #begin Controls/esc_1.png
@@ -142,7 +142,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/esc_1.png
 
 #begin Controls/esc_2.png
@@ -154,7 +154,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/esc_2.png
 
 #begin Controls/space_1.png
@@ -166,7 +166,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/space_1.png
 
 #begin Controls/space_2.png
@@ -178,7 +178,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/space_2.png
 
 #begin Controls/start_1.png
@@ -190,7 +190,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/start_1.png
 
 #begin Controls/start_2.png
@@ -202,7 +202,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Controls/start_2.png
 
 #begin Fonts/DefaultFont10.spritefont
@@ -263,7 +263,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Shared/button_1.png
 
 #begin Shared/button_2.png
@@ -275,7 +275,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Shared/button_2.png
 
 #begin Shared/button_small_1_select.png
@@ -287,7 +287,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Shared/button_small_1_select.png
 
 #begin Shared/button_small_1.png
@@ -299,7 +299,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Shared/button_small_1.png
 
 #begin Shared/button_small_2_select.png
@@ -311,7 +311,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Shared/button_small_2_select.png
 
 #begin Shared/button_small_2.png
@@ -323,7 +323,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Shared/button_small_2.png
 
 #begin Shared/click.wav
@@ -347,7 +347,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Shared/selector_1.png
 
 #begin Shared/selector_2.png
@@ -359,7 +359,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Shared/selector_2.png
 
 #begin Shared/square_1.png
@@ -371,7 +371,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Shared/square_1.png
 
 #begin Shared/square_2.png
@@ -383,7 +383,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Shared/square_2.png
 
 #begin Transitions/transition_1.png
@@ -395,7 +395,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Transitions/transition_1.png
 
 #begin Transitions/transition_10.png
@@ -407,7 +407,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Transitions/transition_10.png
 
 #begin Transitions/transition_2.png
@@ -419,7 +419,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Transitions/transition_2.png
 
 #begin Transitions/transition_3.png
@@ -431,7 +431,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Transitions/transition_3.png
 
 #begin Transitions/transition_4.png
@@ -443,7 +443,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Transitions/transition_4.png
 
 #begin Transitions/transition_5.png
@@ -455,7 +455,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Transitions/transition_5.png
 
 #begin Transitions/transition_6.png
@@ -467,7 +467,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Transitions/transition_6.png
 
 #begin Transitions/transition_7.png
@@ -479,7 +479,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Transitions/transition_7.png
 
 #begin Transitions/transition_8.png
@@ -491,7 +491,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Transitions/transition_8.png
 
 #begin Transitions/transition_9.png
@@ -503,7 +503,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Transitions/transition_9.png
 
 #begin Views/Boards/bomberman_1.png
@@ -515,7 +515,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/bomberman_1.png
 
 #begin Views/Boards/bomberman_2.png
@@ -527,7 +527,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/bomberman_2.png
 
 #begin Views/Boards/giant_1.png
@@ -539,7 +539,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/giant_1.png
 
 #begin Views/Boards/giant_2.png
@@ -551,7 +551,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/giant_2.png
 
 #begin Views/Boards/gigacombo_1.png
@@ -563,7 +563,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/gigacombo_1.png
 
 #begin Views/Boards/gigacombo_2.png
@@ -575,7 +575,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/gigacombo_2.png
 
 #begin Views/Boards/happy_1.png
@@ -587,7 +587,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/happy_1.png
 
 #begin Views/Boards/happy_2.png
@@ -599,7 +599,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/happy_2.png
 
 #begin Views/Boards/large_1.png
@@ -611,7 +611,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/large_1.png
 
 #begin Views/Boards/large_2.png
@@ -623,7 +623,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/large_2.png
 
 #begin Views/Boards/normal_1.png
@@ -635,7 +635,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/normal_1.png
 
 #begin Views/Boards/normal_2.png
@@ -647,7 +647,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/normal_2.png
 
 #begin Views/Boards/small_1.png
@@ -659,7 +659,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/small_1.png
 
 #begin Views/Boards/small_2.png
@@ -671,7 +671,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/small_2.png
 
 #begin Views/Boards/steps_1.png
@@ -683,7 +683,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/steps_1.png
 
 #begin Views/Boards/steps_2.png
@@ -695,7 +695,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/steps_2.png
 
 #begin Views/Boards/tall_1.png
@@ -707,7 +707,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/tall_1.png
 
 #begin Views/Boards/tall_2.png
@@ -719,7 +719,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/tall_2.png
 
 #begin Views/Boards/wave_1.png
@@ -731,7 +731,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/wave_1.png
 
 #begin Views/Boards/wave_2.png
@@ -743,7 +743,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Boards/wave_2.png
 
 #begin Views/Dice/D10_1.png
@@ -755,7 +755,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/D10_1.png
 
 #begin Views/Dice/D10_2.png
@@ -767,7 +767,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/D10_2.png
 
 #begin Views/Dice/D2_1.png
@@ -779,7 +779,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/D2_1.png
 
 #begin Views/Dice/D2_2.png
@@ -791,7 +791,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/D2_2.png
 
 #begin Views/Dice/D3_1.png
@@ -803,7 +803,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/D3_1.png
 
 #begin Views/Dice/D3_2.png
@@ -815,7 +815,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/D3_2.png
 
 #begin Views/Dice/D50_1.png
@@ -827,7 +827,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/D50_1.png
 
 #begin Views/Dice/D50_2.png
@@ -839,7 +839,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/D50_2.png
 
 #begin Views/Dice/D6_1.png
@@ -851,7 +851,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/D6_1.png
 
 #begin Views/Dice/D6_2.png
@@ -863,7 +863,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/D6_2.png
 
 #begin Views/Dice/DSquare_1.png
@@ -875,7 +875,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/DSquare_1.png
 
 #begin Views/Dice/DSquare_2.png
@@ -887,7 +887,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Dice/DSquare_2.png
 
 #begin Views/GameShop/item_1.png
@@ -899,7 +899,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/item_1.png
 
 #begin Views/GameShop/item_2.png
@@ -911,7 +911,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/item_2.png
 
 #begin Views/GameShop/itempartialpurchased_1.png
@@ -923,7 +923,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/itempartialpurchased_1.png
 
 #begin Views/GameShop/itempartialpurchased_2.png
@@ -935,7 +935,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/itempartialpurchased_2.png
 
 #begin Views/GameShop/itempurchased_1.png
@@ -947,7 +947,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/itempurchased_1.png
 
 #begin Views/GameShop/itempurchased_2.png
@@ -959,7 +959,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/itempurchased_2.png
 
 #begin Views/GameShop/middlemouse_1.png
@@ -971,7 +971,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/middlemouse_1.png
 
 #begin Views/GameShop/middlemouse_2.png
@@ -983,7 +983,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/middlemouse_2.png
 
 #begin Views/GameShop/purchase.wav
@@ -1001,7 +1001,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/shopdesc_1.png
 
 #begin Views/GameShop/shopdesc_2.png
@@ -1013,7 +1013,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/shopdesc_2.png
 
 #begin Views/GameShop/shopoverall_1.png
@@ -1025,7 +1025,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/shopoverall_1.png
 
 #begin Views/GameShop/shopoverall_2.png
@@ -1037,7 +1037,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/GameShop/shopoverall_2.png
 
 #begin Views/MainGame/combo_2_1.png
@@ -1049,7 +1049,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/combo_2_1.png
 
 #begin Views/MainGame/combo_2_2.png
@@ -1061,7 +1061,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/combo_2_2.png
 
 #begin Views/MainGame/combo_3_1.png
@@ -1073,7 +1073,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/combo_3_1.png
 
 #begin Views/MainGame/combo_3_2.png
@@ -1085,7 +1085,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/combo_3_2.png
 
 #begin Views/MainGame/combo_4_1.png
@@ -1097,7 +1097,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/combo_4_1.png
 
 #begin Views/MainGame/combo_4_2.png
@@ -1109,7 +1109,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/combo_4_2.png
 
 #begin Views/MainGame/combo.wav
@@ -1127,7 +1127,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/gameover_1.png
 
 #begin Views/MainGame/gameover_2.png
@@ -1139,7 +1139,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/gameover_2.png
 
 #begin Views/MainGame/hurt.wav
@@ -1163,7 +1163,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/modifying_1.png
 
 #begin Views/MainGame/modifying_2.png
@@ -1175,7 +1175,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/modifying_2.png
 
 #begin Views/MainGame/modifying.wav
@@ -1211,7 +1211,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/score_1.png
 
 #begin Views/MainGame/score_2.png
@@ -1223,7 +1223,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainGame/score_2.png
 
 #begin Views/MainMenu/title_1.png
@@ -1235,7 +1235,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainMenu/title_1.png
 
 #begin Views/MainMenu/title_2.png
@@ -1247,7 +1247,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/MainMenu/title_2.png
 
 #begin Views/Opponents/charlie_1.png
@@ -1259,7 +1259,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/charlie_1.png
 
 #begin Views/Opponents/charlie_2.png
@@ -1271,7 +1271,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/charlie_2.png
 
 #begin Views/Opponents/chuck_1.png
@@ -1283,7 +1283,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/chuck_1.png
 
 #begin Views/Opponents/chuck_2.png
@@ -1295,7 +1295,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/chuck_2.png
 
 #begin Views/Opponents/frank_1.png
@@ -1307,7 +1307,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/frank_1.png
 
 #begin Views/Opponents/frank_2.png
@@ -1319,7 +1319,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/frank_2.png
 
 #begin Views/Opponents/jerry_1.png
@@ -1331,7 +1331,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/jerry_1.png
 
 #begin Views/Opponents/jerry_2.png
@@ -1343,7 +1343,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/jerry_2.png
 
 #begin Views/Opponents/john_1.png
@@ -1355,7 +1355,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/john_1.png
 
 #begin Views/Opponents/john_2.png
@@ -1367,7 +1367,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/john_2.png
 
 #begin Views/Opponents/player_1.png
@@ -1379,7 +1379,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/player_1.png
 
 #begin Views/Opponents/player_2.png
@@ -1391,7 +1391,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/player_2.png
 
 #begin Views/Opponents/spicyjerry_1.png
@@ -1403,7 +1403,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/spicyjerry_1.png
 
 #begin Views/Opponents/spicyjerry_2.png
@@ -1415,7 +1415,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/Opponents/spicyjerry_2.png
 
 #begin Views/StartGame/bronze_1.png
@@ -1427,7 +1427,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/bronze_1.png
 
 #begin Views/StartGame/bronze_2.png
@@ -1439,7 +1439,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/bronze_2.png
 
 #begin Views/StartGame/description_1.png
@@ -1451,7 +1451,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/description_1.png
 
 #begin Views/StartGame/description_2.png
@@ -1463,7 +1463,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/description_2.png
 
 #begin Views/StartGame/down_1.png
@@ -1475,7 +1475,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/down_1.png
 
 #begin Views/StartGame/down_2.png
@@ -1487,7 +1487,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/down_2.png
 
 #begin Views/StartGame/eve_1.png
@@ -1499,7 +1499,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/eve_1.png
 
 #begin Views/StartGame/eve_2.png
@@ -1511,7 +1511,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/eve_2.png
 
 #begin Views/StartGame/gametype_1.png
@@ -1523,7 +1523,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/gametype_1.png
 
 #begin Views/StartGame/gametype_2.png
@@ -1535,7 +1535,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/gametype_2.png
 
 #begin Views/StartGame/gold_1.png
@@ -1547,7 +1547,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/gold_1.png
 
 #begin Views/StartGame/gold_2.png
@@ -1559,7 +1559,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/gold_2.png
 
 #begin Views/StartGame/pve_1.png
@@ -1571,7 +1571,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/pve_1.png
 
 #begin Views/StartGame/pve_2.png
@@ -1583,7 +1583,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/pve_2.png
 
 #begin Views/StartGame/pvp_1.png
@@ -1595,7 +1595,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/pvp_1.png
 
 #begin Views/StartGame/pvp_2.png
@@ -1607,7 +1607,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/pvp_2.png
 
 #begin Views/StartGame/silver_1.png
@@ -1619,7 +1619,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/silver_1.png
 
 #begin Views/StartGame/silver_2.png
@@ -1631,7 +1631,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/silver_2.png
 
 #begin Views/StartGame/up_1.png
@@ -1643,7 +1643,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/up_1.png
 
 #begin Views/StartGame/up_2.png
@@ -1655,6 +1655,6 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color16Bit
 /build:Views/StartGame/up_2.png
 

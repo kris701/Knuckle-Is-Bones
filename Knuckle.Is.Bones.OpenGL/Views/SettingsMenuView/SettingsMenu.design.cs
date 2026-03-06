@@ -1,5 +1,4 @@
-﻿using FormMatter.OpenGL;
-using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;
@@ -41,15 +40,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 			0.2f,
 			0f
 		};
-		private static readonly List<int> _gamepadIndexes = new List<int>()
-		{
-			0,
-			1,
-			2,
-			3,
-			4,
-			5
-		};
 		private static readonly int _buttonWidth = 250;
 		private StackPanelControl _settingsPanel;
 		private CanvasPanelControl _resolutionPanel;
@@ -57,13 +47,6 @@ namespace Knuckle.Is.Bones.OpenGL.Views.SettingsMenuView
 		[MemberNotNull(nameof(_resolutionPanel), nameof(_settingsPanel))]
 		public override void Initialize()
 		{
-			AddControl(0, new TileControl()
-			{
-				Width = IWindow.BaseScreenSize.X,
-				Height = IWindow.BaseScreenSize.Y,
-				FillColor = BasicTextures.GetBasicRectange(Color.Black)
-			});
-
 			_resolutionPanel = CreateResolutionPanel();
 			CreateMainSettingsPanel();
 #if DEBUG

@@ -25,7 +25,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views.GameShopView
 		private readonly Dictionary<LineControl, LineOrigin> _lineOrigins = new Dictionary<LineControl, LineOrigin>();
 		private bool _mouseDown = false;
 
-		public GameShop(KnuckleBoneWindow parent) : base(parent, new Guid("169e9e54-b45f-41d4-9845-f8519d256033"), new List<int>() { 6 })
+		public GameShop(KnuckleBoneWindow parent) : base(parent, 6)
 		{
 			_keyboardNavigator.MaxDistance = 500;
 			_gamepadNavigator.MaxDistance = 500;
