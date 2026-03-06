@@ -4,7 +4,6 @@ using Knuckle.Is.Bones.Core.Models.Saves;
 using Knuckle.Is.Bones.Core.Resources;
 using Knuckle.Is.Bones.OpenGL.Views.MainGameView;
 using System;
-using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Views.StartGameView
 {

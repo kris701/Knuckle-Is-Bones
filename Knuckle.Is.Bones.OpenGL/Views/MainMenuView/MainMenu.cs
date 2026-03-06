@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
+﻿namespace Knuckle.Is.Bones.OpenGL.Views.MainMenuView
 {
 	public partial class MainMenu : BaseNavigatableView
 	{

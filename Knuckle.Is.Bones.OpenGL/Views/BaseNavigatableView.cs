@@ -65,7 +65,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				if (BackAction != null)
 				{
 					BackAction.Invoke();
-					parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+					parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 				}
 				InputType = InputTypes.Keyboard;
 				UpdateControlsVisual();
@@ -75,7 +75,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				if (BackAction != null)
 				{
 					BackAction.Invoke();
-					parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+					parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 				}
 				InputType = InputTypes.Gamepad;
 				UpdateControlsVisual();
@@ -89,7 +89,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				if (AcceptAction != null)
 				{
 					AcceptAction.Invoke();
-					parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+					parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 				}
 				InputType = InputTypes.Keyboard;
 				UpdateControlsVisual();
@@ -99,7 +99,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				if (AcceptAction != null)
 				{
 					AcceptAction.Invoke();
-					parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+					parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 				}
 				InputType = InputTypes.Gamepad;
 				UpdateControlsVisual();
@@ -131,7 +131,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				_keyboardNavigator.Focused = _gamepadNavigator.Focused;
 				_gamepadNavigator.Selector.IsVisible = false;
 			}
-			Parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+			Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 			InputType = InputTypes.Keyboard;
 			UpdateControlsVisual();
 		}
@@ -145,7 +145,7 @@ namespace Knuckle.Is.Bones.OpenGL.Views
 				_gamepadNavigator.Focused = _keyboardNavigator.Focused;
 				_keyboardNavigator.Selector.IsVisible = false;
 			}
-			Parent.Audio.PlaySoundEffectOnce(new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028"));
+			Parent.Audio.PlaySoundEffectOnce(SoundEffectHelpers.ClickSound);
 			InputType = InputTypes.Gamepad;
 			UpdateControlsVisual();
 		}

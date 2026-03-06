@@ -4,7 +4,6 @@ using Knuckle.Is.Bones.OpenGL.Views;
 using Knuckle.Is.Bones.OpenGL.Views.MainMenuView;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
 
 namespace Knuckle.Is.Bones.OpenGL.Screens.SettingsView.AcceptView
 {

@@ -1,5 +1,4 @@
-﻿using FormMatter.OpenGL;
-using FormMatter.OpenGL.Controls;
+﻿using FormMatter.OpenGL.Controls;
 using FormMatter.OpenGL.Helpers;
 using Knuckle.Is.Bones.OpenGL.Controls;
 using Knuckle.Is.Bones.OpenGL.Helpers;

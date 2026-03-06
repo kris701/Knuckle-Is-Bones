@@ -4,6 +4,8 @@ namespace Knuckle.Is.Bones.OpenGL.Helpers
 {
 	public static class SoundEffectHelpers
 	{
+		public static Guid ClickSound => new Guid("19f2fb41-6cd2-4c59-ad74-6a15773f4028");
+
 		public static Guid ShopBuySound => new Guid("83fe89c5-745e-4f76-aa87-02ed76b37b1b");
 		public static Guid GameOnDiceRemove => new Guid("4e53cd32-7af6-47a1-a331-ec2096505c78");
 		public static Guid GameOnCombo => new Guid("74ea48c8-cb6f-4a22-8226-e5d6142b1f76");
