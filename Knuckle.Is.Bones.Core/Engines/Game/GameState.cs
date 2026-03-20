@@ -12,6 +12,7 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 	{
 		public bool GameOver { get; internal set; }
 		public Guid Winner { get; internal set; }
+		public bool IsTie { get; internal set; }
 		public Guid Turn { get; internal set; }
 		public int TurnIndex { get; internal set; }
 		public OpponentDefinition FirstOpponent { get; internal set; }
@@ -207,7 +208,7 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 			else
 				winnerName = $"{SecondOpponent.Name}";
 
-			return new GameResult(playerWon, hadPlayer, pointsGained, winnerName, completedItems, breakdown);
+			return new GameResult(playerWon, IsTie, hadPlayer, pointsGained, winnerName, completedItems, breakdown);
 		}
 
 		private int GetPointsGained(int boardValue, double opponentDifficulty, Guid boardId, List<ResultPointsBreakdown> breakdown)

@@ -55,8 +55,14 @@ namespace Knuckle.Is.Bones.Core.Engines.Game
 				var opponent2Value = State.GetSecondOpponentBoardValue();
 				if (opponent1Value > opponent2Value)
 					State.Winner = State.FirstOpponent.MoveModule.OpponentID;
-				else
+				else if (opponent1Value < opponent2Value)
 					State.Winner = State.SecondOpponent.MoveModule.OpponentID;
+				else
+				{
+					State.Winner = Guid.Empty;
+					State.IsTie = true;
+				}
+
 				GameSaveHelpers.Save(State);
 				return true;
 			}

@@ -269,13 +269,23 @@ namespace Knuckle.Is.Bones.OpenGL.Views.MainGameView
 
 			if (result.HadPlayer)
 			{
-				if (result.PlayerWon)
-					_winnerLabel.Text = $"You Won!";
+				if (result.IsTie)
+					_winnerLabel.Text = $"Game tied!";
 				else
-					_winnerLabel.Text = $"You lost to {result.WinnerName}!";
+				{
+					if (result.PlayerWon)
+						_winnerLabel.Text = $"You Won!";
+					else
+						_winnerLabel.Text = $"You lost to {result.WinnerName}!";
+				}
 			}
 			else
-				_winnerLabel.Text = $"{result.WinnerName} Won!";
+			{
+				if (result.IsTie)
+					_winnerLabel.Text = $"Game tied!";
+				else
+					_winnerLabel.Text = $"{result.WinnerName} Won!";
+			}
 		}
 	}
 }
