@@ -2,7 +2,7 @@
   "ID": "3e2ffc1b-745c-4b11-84e3-66fa8e186ecf",
   "Name": "20% more points",
   "Description": "Get 20% more points for winning on the 'Tall' board",
-  "Cost": 7500,
+  "Cost": 1000,
   "BuyTimes": 2,
   "ShopType": 7,
   "Requires": "b49bb00b-c74a-4516-92e1-79bcc7c3120b",

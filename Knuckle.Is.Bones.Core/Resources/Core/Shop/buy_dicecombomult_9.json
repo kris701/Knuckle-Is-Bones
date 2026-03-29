@@ -2,7 +2,7 @@
 	"ID": "de6d56a9-9afd-474a-91da-88364c964517",
 	"Name": "9's combos worth 2x more",
 	"Description": "Permanently make all combos of 9's you throw be worth 2x as much!",
-	"Cost": 22000,
+	"Cost": 9000,
 	"BuyTimes": 2,
 	"ShopType": 4,
 	"Requires": "689fe502-8f98-462b-b887-713c8e8abb1f",

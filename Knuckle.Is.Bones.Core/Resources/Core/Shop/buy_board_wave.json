@@ -2,7 +2,7 @@
   "ID": "23949e0f-886a-4224-841d-77fe6f3f382a",
   "Name": "Wave",
   "Description": "A weird wavy board.",
-  "Cost": 250,
+  "Cost": 100,
   "BuyTimes": 1,
   "Requires": "b0b9f33b-e330-41c8-9021-2815e40d232f",
   "ShopType": 1,

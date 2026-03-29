@@ -2,7 +2,7 @@
   "ID": "7907eaca-f7b7-4438-92c6-dfe8ef4d66e4",
   "Name": "20% more points",
   "Description": "Get 20% more points for winning on the 'Giant' board",
-  "Cost": 50000,
+  "Cost": 2000,
   "BuyTimes": 2,
   "ShopType": 7,
   "Requires": "88fd6b85-3d1b-405e-9d04-a848762370c6",

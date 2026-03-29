@@ -2,7 +2,7 @@
   "ID": "3a7644b2-d2a5-4cd4-81eb-58515734510b",
   "Name": "20% more points",
   "Description": "Get 20% more points for winning on the 'Steps' board",
-  "Cost": 10000,
+  "Cost": 750,
   "BuyTimes": 2,
   "ShopType": 7,
   "Requires": "cfa265b3-64fb-4749-b35a-646fe253dafe",

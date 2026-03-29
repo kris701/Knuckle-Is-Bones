@@ -2,7 +2,7 @@
   "ID": "063dec66-c008-4556-8587-b3035722b562",
   "Name": "20% more points",
   "Description": "Get 20% more points for winning on the 'Wave' board",
-  "Cost": 5000,
+  "Cost": 750,
   "BuyTimes": 2,
   "ShopType": 7,
   "Requires": "23949e0f-886a-4224-841d-77fe6f3f382a",
