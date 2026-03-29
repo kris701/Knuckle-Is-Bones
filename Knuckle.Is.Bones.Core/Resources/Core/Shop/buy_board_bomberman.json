@@ -2,7 +2,7 @@
   "ID": "85f711a7-f83a-412e-b2f9-5b1b247b9664",
   "Name": "Bomberman",
   "Description": "A large bomberman inspired board.",
-  "Cost": 1000,
+  "Cost": 500,
   "BuyTimes": 1,
   "Requires": "b0b9f33b-e330-41c8-9021-2815e40d232f",
   "ShopType": 1,

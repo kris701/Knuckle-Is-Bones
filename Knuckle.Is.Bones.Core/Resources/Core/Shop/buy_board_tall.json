@@ -2,7 +2,7 @@
   "ID": "b49bb00b-c74a-4516-92e1-79bcc7c3120b",
   "Name": "Tall",
   "Description": "A tall 3x4 field.",
-  "Cost": 750,
+  "Cost": 250,
   "BuyTimes": 1,
   "Requires": "b0b9f33b-e330-41c8-9021-2815e40d232f",
   "ShopType": 1,

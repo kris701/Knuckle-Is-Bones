@@ -2,7 +2,7 @@
   "ID": "ee47f7db-1261-4fdd-9118-d3ab8cc27a03",
   "Name": "D^2",
   "Description": "A dice with the values 2, 4, 16, 32 and 64",
-  "Cost": 10000,
+  "Cost": 2000,
   "BuyTimes": 1,
   "ShopType": 2,
   "Requires": "e78732e6-d539-4f8a-a8da-fe8ddbf9772b",

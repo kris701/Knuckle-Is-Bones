@@ -2,7 +2,7 @@
   "ID": "07e7d452-6fa5-41bd-9ec4-98778931a4c0",
   "Name": "20% more points",
   "Description": "Get 20% more points for winning on the 'Normal' board",
-  "Cost": 2500,
+  "Cost": 1000,
   "BuyTimes": 2,
   "ShopType": 7,
   "Requires": "23f4991e-3fdf-4fff-8ebd-1f5af20567d0",

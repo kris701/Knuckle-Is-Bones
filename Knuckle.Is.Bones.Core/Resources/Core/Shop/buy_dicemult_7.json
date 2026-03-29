@@ -2,7 +2,7 @@
 	"ID": "76d9e61e-4869-4fc4-8a06-22a743f7b22f",
 	"Name": "7's worth 2x more",
 	"Description": "Permanently make all 7's you throw be worth 2x as much!",
-	"Cost": 8000,
+	"Cost": 7000,
 	"BuyTimes": 2,
 	"ShopType": 4,
 	"Requires": "689fe502-8f98-462b-b887-713c8e8abb1f",

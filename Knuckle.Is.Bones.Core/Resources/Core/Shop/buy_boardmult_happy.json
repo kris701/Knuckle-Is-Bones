@@ -2,7 +2,7 @@
   "ID": "10f2de94-a4f9-46c8-b36b-d97c4a5cf26c",
   "Name": "20% more points",
   "Description": "Get 20% more points for winning on the 'Happy' board",
-  "Cost": 5000,
+  "Cost": 1000,
   "BuyTimes": 2,
   "ShopType": 7,
   "Requires": "a38d4b5d-1008-4cb9-95dc-3805cb2c48d2",

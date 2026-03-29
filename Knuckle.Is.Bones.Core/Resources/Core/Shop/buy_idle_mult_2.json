@@ -2,7 +2,7 @@
 	"ID": "84282bb4-2782-4876-bbbe-762cd65078c0",
 	"Name": "40% more",
 	"Description": "Multiply your idle point generation by 40% (stacks)",
-	"Cost": 5000,
+	"Cost": 2500,
 	"BuyTimes": 2,
 	"ShopType": 9,
 	"Requires": "5404e06d-b931-46ed-9556-9d25393f3ca6",
